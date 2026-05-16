@@ -1,243 +1,108 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
-model Account {
-  id                String  @id @default(uuid())
-  userId            String  @map("customerId")
-  type              String
-  provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
+enum UserRole {
+  USER
+  ADMIN
 }
-
-model Session {
-  id           String   @id @default(uuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("customerId")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
+enum UserPosition {
+  DOCTOR
+  PATIENT
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  id String @id @default(uuid())
 
-  phone String?
+  name     String
+  email    String @unique
   password String?
-  image         String?
-  imageId         String?
-  isDone Boolean @default(false)
-  role Role
 
-  customerId String? @unique
+  role UserRole @default(USER)
+  position UserPosition?
 
-  subscription       Subscription?
-
-  patientDetails PatientDetails?
-  doctorDetails  DoctorDetails?
-
-  accounts      Account[]
-  sessions      Session[]
-
-  @@map("users")
-}
-
-enum Role {
-  patient
-  doctor
-  admin
-}
-
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@unique([identifier, token])
-  @@map("verification_tokens")
-}
-
-model DoctorDetails {
-   userId                    String  @id 
-  specialty                 String?
-  phone                     String? 
-  name                     String?
-  email                     String?
-  licenseNumber             String?
-  privacyConsent            Boolean?
-  imageProfileUrl String?
-  imageProfileId String?
-  cpf String?
-  identificationDocumentId String?
-  identificationDocumentType  String?
-  identificationDocumentUrl String?
+  phone     String?
+  cpf       String?
   birthDate DateTime?
-  gender Gender?
-  address                   String?
+  gender    Gender?
 
+  address String?
 
-  user User @relation(fields: [userId], references: [id])
+  imageUrl String?
+  imageId  String?
 
-  appointments Appointment[]
-}
+  specialty     String?
+  licenseNumber String?
 
-model PatientDetails {
-  userId                    String  @id 
-  phone                     String? 
-  name                     String?
-  email                     String?
-  gender                    Gender?
-  birthDate                 DateTime?
-  address                   String?
-  occupation                String?
-  emergencyContactName      String?
-  emergencyContactNumber    String?
-  allergies                 String?
-  currentMedication         String?
-  familyMedicalHistory      String?
-  pastMedicalHistory        String?
-  privacyConsent            Boolean?
-  treatmentConsent Boolean?
-  disclosureConsent Boolean?
-  cpf String?
-  imageProfileUrl String?
-  imageProfileId String?
-  identificationDocumentId String?
-  identificationDocumentType  String?
-  identificationDocumentUrl String?
+  occupation String?
 
+  emergencyContactName  String?
+  emergencyContactPhone String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  allergies            String?
+  currentMedication    String?
+  familyMedicalHistory String?
+  pastMedicalHistory   String?
 
-  appointments Appointment[]
-}
-
-model Appointment {
-  id                 String   @id @default(uuid())
-  schedule           DateTime
-  reason             String?
-  note               String?
-  status             Status   @default(scheduled)
-  patientId          String
-  doctorId           String
-  cancellationReason String?
-  createdAt          DateTime @default(now())
-
-  patient PatientDetails @relation(fields: [patientId], references: [userId])
-  doctor  DoctorDetails  @relation(fields: [doctorId], references: [userId])
-}
-
-enum Status {
-  scheduled
-  pending
-  canceled
-  finalized
-}
-
-enum Gender {
-  male
-  female
-  other
-}
-
-model Subscription {
-  id     String             @id @default(cuid()) @map("_id")
-  userId String             @unique
-  plan   Plan
-  period SubscriptionPeriod
-
-  startDate DateTime @default(now())
-  endDate   DateTime
+  privacyConsent    Boolean @default(false)
+  treatmentConsent  Boolean @default(false)
+  disclosureConsent Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [userId], references: [id])
+  patientAppointments Appointment[] @relation("PatientAppointments")
+  doctorAppointments  Appointment[] @relation("DoctorAppointments")
+
+  @@index([role])
+  @@map("users")
 }
 
-enum Plan {
-  free
-  pro
+model Appointment {
+  id String @id @default(uuid())
+
+  patientId String
+  doctorId  String
+
+  scheduledAt DateTime
+
+  reason String?
+  notes  String?
+
+  status AppointmentStatus @default(PENDING)
+
+  cancellationReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient User @relation("PatientAppointments", fields: [patientId], references: [id])
+
+  doctor User @relation("DoctorAppointments", fields: [doctorId], references: [id])
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([scheduledAt])
+
+  @@map("appointments")
 }
 
-enum SubscriptionPeriod {
-  monthly
-  yearly
-}
-model payments {
-  id               Int      @id @default(autoincrement())
-  created_time     DateTime @default(now())
-  stripe_id        String
-  email            String
-  amount           String
-  payment_time     String
-  payment_date     String
-  currency         String
-  customerId          String
-  customer_details String
-  payment_intent   String
+enum AppointmentStatus {
+  PENDING
+  SCHEDULED
+  CANCELED
+  FINALIZED
 }
 
-model subscriptions {
-  id                        Int      @id @default(autoincrement())
-  created_time              DateTime @default(now())
-  subscription_id           String
-  stripe_customerId            String
-  status                    String
-  start_date                String
-  end_date                  String?
-  plan_id                   String
-  default_payment_method_id String?
-  email                     String
-  customerId                   String
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
-model subscriptions_plans {
-  id           Int      @id @default(autoincrement())
-  created_time DateTime @default(now())
-  plan_id      String
-  name         String
-  description  String
-  amount       String
-  currency     String
-  interval     String
-}
-
-model invoices {
-  id              Int      @id @default(autoincrement())
-  created_time    DateTime @default(now())
-  invoice_id      String
-  subscription_id String
-  amount_paid     String
-  amount_due      String?
-  currency        String
-  status          String
-  email           String
-  customerId         String?
-}
