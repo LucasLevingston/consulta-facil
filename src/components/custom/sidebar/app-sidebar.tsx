@@ -13,6 +13,7 @@ import {
 	LogOut,
 	Settings,
 	User,
+	UserRound,
 	Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -61,6 +62,7 @@ const doctorNav = [
 	{ title: "Início", url: "/dashboard", icon: Home },
 	{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 	{ title: "Prontuários", url: "/dashboard/records", icon: FileText },
+	{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
 ];
 
 const doctorSecondaryNav = [
