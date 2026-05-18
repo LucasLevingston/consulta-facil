@@ -1,7 +1,9 @@
 "use client";
 
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,101 +15,111 @@ import {
 } from "@/components/ui/select";
 import { specialties } from "@/utils/constants";
 
-const locations = [
-	"São Paulo",
-	"Rio de Janeiro",
-	"Belo Horizonte",
-	"Porto Alegre",
-]; 
-const availabilities = ["Manhã", "Tarde", "Noite"];
-
 export default function DoctorFilters() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
+	const [name, setName] = useState(searchParams.get("name") || "");
 	const [specialty, setSpecialty] = useState(
 		searchParams.get("specialty") || "",
 	);
-	const [location, setLocation] = useState(searchParams.get("location") || "");
-	const [availability, setAvailability] = useState(
-		searchParams.get("availability") || "",
-	);
-	const [name, setName] = useState(searchParams.get("name") || ""); 
+
+	const isFirstRender = useRef(true);
 
 	useEffect(() => {
-		const params = new URLSearchParams(searchParams);
-		if (specialty) params.set("specialty", specialty);
-		else params.delete("specialty");
-		if (location) params.set("location", location);
-		else params.delete("location");
-		if (availability) params.set("availability", availability);
-		else params.delete("availability");
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return;
+		}
+		const params = new URLSearchParams();
 		if (name) params.set("name", name);
-		else params.delete("name");
+		if (specialty) params.set("specialty", specialty);
+		router.replace(`/professionals?${params.toString()}`);
+	}, [name, specialty, router]);
 
-		router.push(`/profissionais?${params.toString()}`);
-	}, [specialty, location, availability, name, router, searchParams]);
-
-	const clearFilters = () => {
-		setSpecialty("");
-		setLocation("");
-		setAvailability("");
-		setName("");
-	};
+	const hasFilters = !!(name || specialty);
 
 	return (
-		<div className="flex flex-wrap gap-4 items-center">
-			<Input
-				type="text"
-				placeholder="Pesquisar por nome"
-				value={name}
-				onChange={(e) => setName(e.target.value)}
-				className="border rounded p-2"
-			/>
+		<div className="space-y-3">
+			<div className="flex flex-wrap gap-3 items-center">
+				<div className="relative flex-1 min-w-[220px] max-w-sm">
+					<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+					<Input
+						type="text"
+						placeholder="Pesquisar por nome..."
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						className="pl-9 rounded-xl"
+					/>
+				</div>
 
-			<Select value={specialty} onValueChange={setSpecialty}>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="Especialidade" />
-				</SelectTrigger>
-				<SelectContent>
-					{specialties.map((s) => (
-						<SelectItem key={s} value={s}>
-							{s}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
+				<Select value={specialty} onValueChange={setSpecialty}>
+					<SelectTrigger className="w-[220px] rounded-xl">
+						<div className="flex items-center gap-2">
+							<SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
+							<SelectValue placeholder="Especialidade" />
+						</div>
+					</SelectTrigger>
+					<SelectContent className="rounded-xl">
+						{specialties.map((s) => (
+							<SelectItem key={s} value={s}>
+								{s}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 
-			<Select value={location} onValueChange={setLocation}>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="Localização" />
-				</SelectTrigger>
-				<SelectContent>
-					{locations.map((l) => (
-						<SelectItem key={l} value={l}>
-							{l}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
+				{hasFilters && (
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => {
+							setName("");
+							setSpecialty("");
+						}}
+						className="text-muted-foreground gap-1.5 rounded-xl"
+					>
+						<X className="h-3.5 w-3.5" />
+						Limpar filtros
+					</Button>
+				)}
+			</div>
 
-			<Select value={availability} onValueChange={setAvailability}>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="Disponibilidade" />
-				</SelectTrigger>
-				<SelectContent>
-					{availabilities.map((a) => (
-						<SelectItem key={a} value={a}>
-							{a}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
-
-			{(specialty || location || availability || name) && (
-				<Button variant="destructive" onClick={clearFilters}>
-					Limpar Filtros
-				</Button>
+			{hasFilters && (
+				<div className="flex flex-wrap gap-2">
+					{specialty && (
+						<Badge
+							variant="secondary"
+							className="gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+						>
+							<SlidersHorizontal className="h-3 w-3" />
+							{specialty}
+							<button
+								type="button"
+								onClick={() => setSpecialty("")}
+								className="ml-0.5 rounded-full hover:opacity-70 transition-opacity"
+							>
+								<X className="h-3 w-3" />
+							</button>
+						</Badge>
+					)}
+					{name && (
+						<Badge
+							variant="secondary"
+							className="gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+						>
+							<Search className="h-3 w-3" />
+							&ldquo;{name}&rdquo;
+							<button
+								type="button"
+								onClick={() => setName("")}
+								className="ml-0.5 rounded-full hover:opacity-70 transition-opacity"
+							>
+								<X className="h-3 w-3" />
+							</button>
+						</Badge>
+					)}
+				</div>
 			)}
 		</div>
 	);

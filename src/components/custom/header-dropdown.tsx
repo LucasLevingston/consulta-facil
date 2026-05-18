@@ -4,7 +4,7 @@ import { BadgeCheck, LogOut, Settings, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -22,6 +22,7 @@ interface HeaderDropdownProps {
     id: string;
     email: string;
     role: "USER" | "ADMIN";
+    imageUrl?: string | null;
   };
 }
 
@@ -42,6 +43,11 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
           <Avatar className="h-9 w-9 border border-primary/30">
+          <AvatarImage
+          src={user.imageUrl ?? undefined}
+          alt="@shadcn"
+          className="grayscale"
+        />
             <AvatarFallback className="bg-primary/15 text-primary text-xs font-bold">
               {initials}
             </AvatarFallback>

@@ -30,7 +30,7 @@ export default function RequestSuccess() {
 					className="shad-primary-btn font-bold"
 					asChild
 				>
-					<Link href="/agendar-consulta">Nova Consulta</Link>
+					<Link href="/dashboard/appointments/create">Nova Consulta</Link>
 				</Button>
 			</div>
 		</div>

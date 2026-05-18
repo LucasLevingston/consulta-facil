@@ -1,29 +1,71 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format, setHours, setMinutes } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import {
+	CalendarIcon,
+	Check,
+	ChevronsUpDown,
+	Clock,
+	FileText,
+	Search,
+	Stethoscope,
+	X,
+} from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-
-import DoctorCard from "@/components/custom/doctor/doctorCard";
-import { Form } from "@/components/ui/form";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
-  useCancelAppointment,
-  useScheduleAppointment,
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from "@/components/ui/command";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
+import {
+	useCancelAppointment,
+	useScheduleAppointment,
 } from "@/hooks/api/use-appointments";
 import { useDoctors } from "@/hooks/api/use-doctors";
 import { toast } from "@/hooks/use-toast";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-
-import "react-datepicker/dist/react-datepicker.css";
-
+import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
-import CustomFormField, {
-  FormFieldType,
-} from "../../forms-components/custom-form-field";
-import { CustomSubmitButton } from "../../forms-components/custom-submit-button";
 import { CreateAppointmentSchema } from "./CreateAppointmentSchema";
+
+const TIME_SLOTS = [
+	{ label: "08:00", hours: 8, minutes: 0 },
+	{ label: "09:00", hours: 9, minutes: 0 },
+	{ label: "10:00", hours: 10, minutes: 0 },
+	{ label: "11:00", hours: 11, minutes: 0 },
+	{ label: "13:00", hours: 13, minutes: 0 },
+	{ label: "14:00", hours: 14, minutes: 0 },
+	{ label: "15:00", hours: 15, minutes: 0 },
+	{ label: "16:00", hours: 16, minutes: 0 },
+	{ label: "17:00", hours: 17, minutes: 0 },
+];
 
 export const AppointmentForm = ({
 	type = "create",
@@ -39,17 +81,20 @@ export const AppointmentForm = ({
 	const doctorIdParam = searchParams.get("doctorid");
 	const { user: authUser } = useUserStore();
 
-	const { data: doctorsPage, isLoading: doctorsLoading } = useDoctors(0, 50);
+	const { data: doctorsPage, isLoading: doctorsLoading } = useDoctors(0, 100);
 	const doctors = doctorsPage?.content ?? [];
 
 	const scheduleAppointment = useScheduleAppointment();
 	const cancelAppointment = useCancelAppointment();
 
+	const [doctorOpen, setDoctorOpen] = useState(false);
+	const [selectedTime, setSelectedTime] = useState<string>("");
+
 	const form = useForm<z.infer<typeof CreateAppointmentSchema>>({
 		resolver: zodResolver(CreateAppointmentSchema),
 		defaultValues: {
 			doctorId: appointment?.doctorId ?? doctorIdParam ?? "",
-			scheduledAt: appointment ? new Date(appointment.scheduledAt) : new Date(),
+			scheduledAt: appointment ? new Date(appointment.scheduledAt) : undefined,
 			reason: appointment?.reason ?? "",
 			notes: appointment?.notes ?? "",
 			cancellationReason: "",
@@ -58,20 +103,35 @@ export const AppointmentForm = ({
 	});
 
 	const selectedDoctorId = form.watch("doctorId");
-	const preselectedDoctor = doctors.find((d) => d.userId === selectedDoctorId);
+	const selectedDate = form.watch("scheduledAt");
+	const selectedDoctor = doctors.find(
+		(d) => d.id === selectedDoctorId || d.userId === selectedDoctorId,
+	);
+
+	const handleTimeSelect = (slot: (typeof TIME_SLOTS)[number]) => {
+		setSelectedTime(slot.label);
+		if (selectedDate) {
+			const newDate = setMinutes(setHours(selectedDate, slot.hours), slot.minutes);
+			form.setValue("scheduledAt", newDate);
+		} else {
+			const base = new Date();
+			const newDate = setMinutes(setHours(base, slot.hours), slot.minutes);
+			form.setValue("scheduledAt", newDate);
+		}
+	};
 
 	const onSubmit = async (values: z.infer<typeof CreateAppointmentSchema>) => {
 		try {
 			if (type === "create" || type === "schedule") {
 				await scheduleAppointment.mutateAsync({
-					doctorId: values.doctorId,
+					doctorId: selectedDoctor?.id ?? values.doctorId,
 					scheduledAt: (values.scheduledAt as Date).toISOString(),
 					reason: values.reason ?? undefined,
 					notes: values.notes ?? undefined,
 				});
 				if (type === "create") {
 					form.reset();
-					router.push("/agendar-consulta/success");
+					router.push("/dashboard/appointments/create/success");
 				} else {
 					setOpen?.(false);
 					form.reset();
@@ -95,87 +155,367 @@ export const AppointmentForm = ({
 		}
 	};
 
-	const isLoading =
-		scheduleAppointment.isPending ||
-		cancelAppointment.isPending ||
-		doctorsLoading;
+	const isPending =
+		scheduleAppointment.isPending || cancelAppointment.isPending;
 
-	const buttonLabel =
-		type === "cancel"
-			? "Cancelar Consulta"
-			: type === "schedule"
-				? "Agendar Consulta"
-				: "Enviar Consulta";
+	if (type === "cancel") {
+		return (
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+					<FormField
+						control={form.control}
+						name="cancellationReason"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className="text-sm font-semibold text-primary">
+									Motivo do cancelamento
+								</FormLabel>
+								<FormControl>
+									<Textarea
+										placeholder="Descreva o motivo do cancelamento..."
+										className="min-h-[120px] resize-none rounded-xl border-border"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button
+						type="submit"
+						variant="destructive"
+						className="w-full rounded-xl"
+						disabled={isPending}
+					>
+						{isPending ? "Cancelando..." : "Cancelar Consulta"}
+					</Button>
+				</form>
+			</Form>
+		);
+	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
-				{type === "create" && (
-					<section className="mb-12 space-y-4">
-						<h1 className="header">Nova Consulta</h1>
-						<p className="opacity-80">
-							Solicite uma nova consulta em 10 segundos.
-						</p>
-					</section>
-				)}
-
-				{type !== "cancel" && (
-					<>
-						{preselectedDoctor && doctorIdParam ? (
-							<DoctorCard
-								doctor={preselectedDoctor}
-								isActiveAppointmentButton={false}
-							/>
-						) : (
-							<CustomFormField
-								fieldType={FormFieldType.SELECT}
-								name="doctorId"
-								form={form}
-							>
-								{doctors.map((doctor) =>
-									doctor.name ? (
-										<option key={doctor.id} value={doctor.userId}>
-											Dr. {doctor.name} — {doctor.specialty}
-										</option>
-									) : null,
-								)}
-							</CustomFormField>
-						)}
-
-						<CustomFormField
-							fieldType={FormFieldType.DATE_PICKER}
-							name="scheduledAt"
-							form={form}
-						/>
-
-						<div
-							className={`flex flex-col gap-6 ${type === "create" && "xl:flex-row"}`}
-						>
-							<CustomFormField
-								fieldType={FormFieldType.TEXTAREA}
-								name="reason"
-								form={form}
-								disabled={type === "schedule"}
-							/>
-							<CustomFormField
-								fieldType={FormFieldType.TEXTAREA}
-								name="notes"
-								form={form}
-								disabled={type === "schedule"}
-							/>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+				{/* Step 1 — Doctor */}
+				<div className="space-y-3">
+					<div className="flex items-center gap-2">
+						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+							1
 						</div>
-					</>
-				)}
+						<h3 className="font-semibold text-foreground">Escolha o médico</h3>
+					</div>
 
-				{type === "cancel" && (
-					<CustomFormField
-						fieldType={FormFieldType.TEXTAREA}
-						name="cancellationReason"
-						form={form}
+					<FormField
+						control={form.control}
+						name="doctorId"
+						render={({ field }) => (
+							<FormItem>
+								<FormControl>
+									<Popover open={doctorOpen} onOpenChange={setDoctorOpen}>
+										<PopoverTrigger asChild>
+											<Button
+												variant="outline"
+												role="combobox"
+												aria-expanded={doctorOpen}
+												disabled={doctorsLoading || !!doctorIdParam}
+												className={cn(
+													"w-full justify-between rounded-xl border-border h-auto py-3 px-4",
+													!field.value && "text-muted-foreground",
+												)}
+											>
+												{selectedDoctor ? (
+													<div className="flex items-center gap-3">
+														<Avatar className="h-8 w-8 rounded-lg">
+															<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
+																{selectedDoctor.name
+																	?.split(" ")
+																	.map((n) => n[0])
+																	.join("")
+																	.slice(0, 2)
+																	.toUpperCase() ?? "Dr"}
+															</AvatarFallback>
+														</Avatar>
+														<div className="text-left">
+															<p className="text-sm font-medium">
+																Dr. {selectedDoctor.name}
+															</p>
+															<p className="text-xs text-muted-foreground">
+																{selectedDoctor.specialty}
+															</p>
+														</div>
+													</div>
+												) : (
+													<div className="flex items-center gap-2">
+														<Search className="h-4 w-4" />
+														<span>Buscar médico...</span>
+													</div>
+												)}
+												<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+											</Button>
+										</PopoverTrigger>
+										<PopoverContent className="w-full p-0 rounded-xl" align="start">
+											<Command>
+												<CommandInput placeholder="Pesquisar por nome ou especialidade..." />
+												<CommandList>
+													<CommandEmpty>
+														{doctorsLoading
+															? "Carregando..."
+															: "Nenhum médico encontrado."}
+													</CommandEmpty>
+													<CommandGroup>
+														{doctors
+															.filter((d) => d.name)
+															.map((doctor) => (
+																<CommandItem
+																	key={doctor.id}
+																	value={`${doctor.name} ${doctor.specialty}`}
+																	onSelect={() => {
+																		field.onChange(doctor.id);
+																		setDoctorOpen(false);
+																	}}
+																>
+																	<div className="flex items-center gap-3 flex-1">
+																		<Avatar className="h-8 w-8 rounded-lg">
+																			<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
+																				{doctor.name
+																					?.split(" ")
+																					.map((n) => n[0])
+																					.join("")
+																					.slice(0, 2)
+																					.toUpperCase() ?? "Dr"}
+																			</AvatarFallback>
+																		</Avatar>
+																		<div>
+																			<p className="text-sm font-medium">
+																				Dr. {doctor.name}
+																			</p>
+																			<p className="text-xs text-muted-foreground">
+																				{doctor.specialty}
+																			</p>
+																		</div>
+																	</div>
+																	<Check
+																		className={cn(
+																			"ml-auto h-4 w-4",
+																			field.value === doctor.id
+																				? "opacity-100"
+																				: "opacity-0",
+																		)}
+																	/>
+																</CommandItem>
+															))}
+													</CommandGroup>
+												</CommandList>
+											</Command>
+										</PopoverContent>
+									</Popover>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
 					/>
-				)}
 
-				<CustomSubmitButton form={form}>{buttonLabel}</CustomSubmitButton>
+					{selectedDoctor && (
+						<div className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+							<Stethoscope className="h-4 w-4 text-primary shrink-0" />
+							<div className="flex-1 min-w-0">
+								<p className="text-sm font-medium">Dr. {selectedDoctor.name}</p>
+								<p className="text-xs text-muted-foreground">
+									{selectedDoctor.specialty}
+								</p>
+							</div>
+							{!doctorIdParam && (
+								<button
+									type="button"
+									onClick={() => form.setValue("doctorId", "")}
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									<X className="h-4 w-4" />
+								</button>
+							)}
+						</div>
+					)}
+				</div>
+
+				{/* Step 2 — Date & Time */}
+				<div className="space-y-3">
+					<div className="flex items-center gap-2">
+						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+							2
+						</div>
+						<h3 className="font-semibold text-foreground">Data e horário</h3>
+					</div>
+
+					<FormField
+						control={form.control}
+						name="scheduledAt"
+						render={({ field }) => (
+							<FormItem>
+								<FormControl>
+									<Popover>
+										<PopoverTrigger asChild>
+											<Button
+												type="button"
+												variant="outline"
+												className={cn(
+													"w-full justify-start rounded-xl border-border h-11 px-4",
+													!field.value && "text-muted-foreground",
+												)}
+											>
+												<CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
+												{field.value
+													? format(field.value, "EEEE, d 'de' MMMM 'de' yyyy", {
+															locale: ptBR,
+														})
+													: "Selecione uma data"}
+											</Button>
+										</PopoverTrigger>
+										<PopoverContent className="w-auto p-0 rounded-2xl" align="start">
+											<Calendar
+												mode="single"
+												selected={field.value}
+												onSelect={(date) => {
+													if (!date) return;
+													if (selectedTime) {
+														const slot = TIME_SLOTS.find(
+															(s) => s.label === selectedTime,
+														);
+														if (slot) {
+															field.onChange(
+																setMinutes(
+																	setHours(date, slot.hours),
+																	slot.minutes,
+																),
+															);
+															return;
+														}
+													}
+													field.onChange(date);
+												}}
+												disabled={(date) =>
+													date < new Date(new Date().setHours(0, 0, 0, 0))
+												}
+												locale={ptBR}
+											/>
+										</PopoverContent>
+									</Popover>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<div className="space-y-2">
+						<p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+							<Clock className="h-3.5 w-3.5" />
+							Horário disponível
+						</p>
+						<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+							{TIME_SLOTS.map((slot) => (
+								<button
+									key={slot.label}
+									type="button"
+									onClick={() => handleTimeSelect(slot)}
+									className={cn(
+										"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
+										selectedTime === slot.label
+											? "border-primary bg-primary text-primary-foreground shadow-sm"
+											: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
+									)}
+								>
+									{slot.label}
+								</button>
+							))}
+						</div>
+					</div>
+
+					{selectedDate && selectedTime && (
+						<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
+							<Check className="h-4 w-4 text-green-500 shrink-0" />
+							<span className="text-green-700 dark:text-green-400">
+								{format(selectedDate, "EEEE, d 'de' MMMM", { locale: ptBR })} às{" "}
+								{selectedTime}
+							</span>
+						</div>
+					)}
+				</div>
+
+				{/* Step 3 — Details */}
+				<div className="space-y-3">
+					<div className="flex items-center gap-2">
+						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+							3
+						</div>
+						<h3 className="font-semibold text-foreground">Detalhes</h3>
+						<Badge variant="secondary" className="text-xs">
+							Opcional
+						</Badge>
+					</div>
+
+					<FormField
+						control={form.control}
+						name="reason"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+									<FileText className="h-3.5 w-3.5" />
+									Motivo da consulta
+								</FormLabel>
+								<FormControl>
+									<Textarea
+										placeholder="Ex.: dor de cabeça frequente, check-up anual, retorno..."
+										className="min-h-[100px] resize-none rounded-xl border-border focus-visible:ring-primary/30"
+										maxLength={500}
+										{...field}
+										value={field.value ?? ""}
+									/>
+								</FormControl>
+								<div className="flex justify-between items-center">
+									<FormMessage />
+									<span className="text-xs text-muted-foreground ml-auto">
+										{(field.value ?? "").length}/500
+									</span>
+								</div>
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
+						name="notes"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+									<FileText className="h-3.5 w-3.5" />
+									Observações adicionais
+								</FormLabel>
+								<FormControl>
+									<Textarea
+										placeholder="Informações relevantes, alergias, medicações em uso..."
+										className="min-h-[90px] resize-none rounded-xl border-border focus-visible:ring-primary/30"
+										{...field}
+										value={field.value ?? ""}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+
+				<Button
+					type="submit"
+					className="w-full h-12 rounded-xl text-base font-semibold gap-2"
+					disabled={isPending}
+				>
+					<Stethoscope className="h-5 w-5" />
+					{isPending
+						? "Agendando..."
+						: type === "schedule"
+							? "Agendar Consulta"
+							: "Confirmar Agendamento"}
+				</Button>
 			</form>
 		</Form>
 	);
