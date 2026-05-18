@@ -8,7 +8,7 @@ import {
 	Stethoscope,
 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { CustomButton } from "@/components/custom/custom-button";
 import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
 	useCompleteAppointment,
@@ -19,7 +19,6 @@ import {
 import { toast } from "@/hooks/use-toast";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
-
 import { AppointmentsList } from "./appointments-list";
 import { StatCard } from "./stat-card";
 
@@ -107,10 +106,10 @@ function DashboardLayout({
 					</div>
 					{!isDoctor && (
 						<Link href="/dashboard/appointments/create">
-							<Button className="shrink-0 gap-2">
+							<CustomButton>
 								<Stethoscope className="h-4 w-4" />
 								Agendar consulta
-							</Button>
+							</CustomButton>
 						</Link>
 					)}
 				</div>

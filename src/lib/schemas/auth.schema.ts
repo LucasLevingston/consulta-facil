@@ -25,14 +25,14 @@ export const loginResponseSchema = z.object({
   expiresIn: z.number(),
   userId: z.string(),
   email: z.string(),
-  role: z.enum(["USER", "ADMIN"]),
+  role: z.enum(["USER", "DOCTOR", "ADMIN"]),
 });
 
 export const userResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string(),
-  role: z.enum(["USER", "ADMIN"]),
+  role: z.enum(["USER", "DOCTOR", "ADMIN"]),
   phone: z.string().nullable().optional(),
   cpf: z.string().nullable().optional(),
   birthDate: z.string().nullable().optional(),

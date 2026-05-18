@@ -14,12 +14,12 @@ import { useUserStore } from "@/store/useUserStore";
 export default function ConsultasPage() {
 	const { user } = useUserStore();
 	const userId = user?.id ?? "";
-	const isAdmin = user?.role === "ADMIN";
+	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
 
-	const patientQuery = usePatientAppointments(isAdmin ? "" : userId);
-	const doctorQuery = useDoctorAppointments(isAdmin ? userId : "");
+	const patientQuery = usePatientAppointments(isDoctor ? "" : userId);
+	const doctorQuery = useDoctorAppointments(isDoctor ? userId : "");
 
-	const query = isAdmin ? doctorQuery : patientQuery;
+	const query = isDoctor ? doctorQuery : patientQuery;
 	const appointments = query.data?.content ?? [];
 
 	return (

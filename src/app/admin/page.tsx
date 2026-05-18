@@ -1,47 +1,44 @@
-import Image from "next/image";
+"use client";
 
-import { auth } from "@/auth";
+import { BadgeCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
-import HeaderSection from "@/components/HeaderSection";
-import Loading from "@/components/loading";
-import { ExtendUser } from "@/next-auth";
+import PageHeader from "@/components/custom/page-header";
+import { useDoctorAppointments } from "@/hooks/api/use-appointments";
+import { QueryBoundary } from "@/providers/query-boundary";
+import { useAuthStore } from "@/store/auth.store";
+import { useUserStore } from "@/store/useUserStore";
 
-const AppointmentsPage = async () => {
-  const session = await auth();
+export default function AdminPage() {
+	const { isAuthenticated } = useAuthStore();
+	const { user } = useUserStore();
+	const router = useRouter();
 
-  return (
-    <div className="flex">
-      <section className="remove-scrollbar container">
-        <HeaderSection
-          label={
-            <>
-              <span className="rounded-full bg-red-700 p-2 text-white">Admin</span>{" "}
-              <span>Consultas</span>
-            </>
-          }
-        />
-        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
-          <section className="w-full space-y-4">
-            <h1 className="header">Olá, {session?.user.name} 👋</h1>
-            <p className="">Aqui estão todas as consultas agendadas.</p>
-          </section>
-          {session?.user ? (
-            <AppointmentsDashboard user={session?.user as ExtendUser} role="admin" />
-          ) : (
-            <Loading />
-          )}
-        </div>
-      </section>
+	const doctorQuery = useDoctorAppointments(user?.id ?? "");
+	const appointments = doctorQuery.data?.content ?? [];
 
-      <Image
-        src="/assets/images/register-img.png"
-        height={1000}
-        width={1000}
-        alt="paciente"
-        className="side-img max-w-[390px]"
-      />
-    </div>
-  );
-};
+	useEffect(() => {
+		if (!isAuthenticated) router.push("/auth");
+	}, [isAuthenticated, router]);
 
-export default AppointmentsPage;
+	return (
+		<div className="space-y-6">
+			<PageHeader
+				title="Painel Administrativo"
+				description="Gerencie todas as consultas da plataforma."
+				icon={<BadgeCheck className="h-6 w-6" />}
+				count={appointments.length}
+				countLabel="consulta"
+			/>
+
+			<QueryBoundary
+				isLoading={doctorQuery.isLoading}
+				error={doctorQuery.error}
+			>
+				<AppointmentsDashboard appointments={appointments} />
+			</QueryBoundary>
+		</div>
+	);
+}

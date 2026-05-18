@@ -1,118 +1,79 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import Loading from "@/components/loading";
 import { StatCard } from "@/components/StatCard";
 import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
-import {
-  getAppointments,
-  getAppointmentsByDoctorId,
-  getAppointmentsByPatientId,
-} from "@/lib/actions/appointment.actions";
-import { ExtendUser } from "@/next-auth";
-import { AppointmentCount, CompleteAppointment } from "@/types";
+import type { AppointmentResponse, AppointmentStatus } from "@/lib/schemas/appointment.schema";
 
 interface AppointmentsDashboardProps {
-  user: ExtendUser;
-  role: "patient" | "doctor" | "admin";
+  appointments: AppointmentResponse[];
 }
 
-const AppointmentsDashboard: React.FC<AppointmentsDashboardProps> = ({ user, role }) => {
-  const [appointments, setAppointments] = useState<AppointmentCount | null>(null);
-  const [filteredAppointments, setFilteredAppointments] = useState<CompleteAppointment[]>(
-    []
-  );
-  const [activeType, setActiveType] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+const AppointmentsDashboard = ({ appointments }: AppointmentsDashboardProps) => {
+  const [activeStatus, setActiveStatus] = useState<AppointmentStatus | null>(null);
 
-  let data: AppointmentCount;
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      setIsLoading(true);
-      if (role === "patient") data = await getAppointmentsByPatientId(user.id);
-
-      if (role === "doctor") data = await getAppointmentsByDoctorId(user.id);
-
-      if (role === "admin") data = await getAppointments();
-
-      if (data) {
-        setAppointments(data);
-        setFilteredAppointments(data.documents);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchAppointments();
-  }, [user.id]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (!appointments) {
-    return <p>Failed to load appointments. Please try again later.</p>;
-  }
-
-  const handleFilter = (type: string) => {
-    const filtered = appointments.documents.filter(
-      (appointment: CompleteAppointment) => appointment.status === type
-    );
-    setFilteredAppointments(filtered);
-    setActiveType(type);
+  const counts = {
+    total: appointments.length,
+    confirmed: appointments.filter((a) => a.status === "CONFIRMED").length,
+    pending: appointments.filter((a) => a.status === "PENDING").length,
+    canceled: appointments.filter((a) => a.status === "CANCELED").length,
+    completed: appointments.filter((a) => a.status === "COMPLETED").length,
   };
 
-  return (
-    <main className="admin-main">
-      <section className="admin-stat">
-        <StatCard
-          count={appointments.totalCount}
-          label="Todas as consultas"
-          icon="/assets/icons/appointments.svg"
-          onClick={() => {
-            setFilteredAppointments(appointments.documents);
-            setActiveType(null);
-          }}
-          onActive={activeType === null}
-        />
-        <StatCard
-          type="scheduled"
-          count={appointments.scheduledCount}
-          label="Consultas marcadas"
-          icon="/assets/icons/scheduled.svg"
-          onClick={() => handleFilter("scheduled")}
-          onActive={activeType === "scheduled"}
-        />
-        <StatCard
-          type="pending"
-          count={appointments.pendingCount}
-          label="Consultas pendentes"
-          icon="/assets/icons/pending.svg"
-          onClick={() => handleFilter("pending")}
-          onActive={activeType === "pending"}
-        />
-        <StatCard
-          type="canceled"
-          count={appointments.cancelledCount}
-          label="Consultas canceladas"
-          icon="/assets/icons/cancelled.svg"
-          onClick={() => handleFilter("canceled")}
-          onActive={activeType === "canceled"}
-        />
-        <StatCard
-          type="finalized"
-          count={appointments.finalizedCount}
-          label="Consultas finalizadas"
-          icon="/assets/icons/finalized.svg"
-          onClick={() => handleFilter("finalized")}
-          onActive={activeType === "finalized"}
-        />
-      </section>
+  const filtered = activeStatus
+    ? appointments.filter((a) => a.status === activeStatus)
+    : appointments;
 
-      <DataTable columns={columns} data={filteredAppointments} />
-    </main>
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <StatCard
+          count={counts.total}
+          label="Todas"
+          icon=""
+          onClick={() => setActiveStatus(null)}
+          onActive={activeStatus === null}
+        />
+        <StatCard
+          type="CONFIRMED"
+          count={counts.confirmed}
+          label="Confirmadas"
+          icon=""
+          onClick={() => setActiveStatus("CONFIRMED")}
+          onActive={activeStatus === "CONFIRMED"}
+        />
+        <StatCard
+          type="PENDING"
+          count={counts.pending}
+          label="Pendentes"
+          icon=""
+          onClick={() => setActiveStatus("PENDING")}
+          onActive={activeStatus === "PENDING"}
+        />
+        <StatCard
+          type="CANCELED"
+          count={counts.canceled}
+          label="Canceladas"
+          icon=""
+          onClick={() => setActiveStatus("CANCELED")}
+          onActive={activeStatus === "CANCELED"}
+        />
+        <StatCard
+          type="COMPLETED"
+          count={counts.completed}
+          label="Concluídas"
+          icon=""
+          onClick={() => setActiveStatus("COMPLETED")}
+          onActive={activeStatus === "COMPLETED"}
+        />
+      </div>
+
+      <div className="rounded-2xl border border-border bg-card shadow-sm">
+        <DataTable columns={columns} data={filtered} />
+      </div>
+    </div>
   );
 };
 

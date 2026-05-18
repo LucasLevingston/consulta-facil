@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { CustomButton } from "../custom-button";
@@ -35,7 +35,7 @@ export default function DoctorCard({
 				.toUpperCase()
 		: "Dr";
 
-	return (
+    return (
 		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200">
 			<CardHeader className="flex flex-row items-center gap-4 pb-3">
 				<Avatar className="size-14 rounded-xl border border-border">

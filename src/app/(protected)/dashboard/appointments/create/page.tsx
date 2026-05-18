@@ -13,7 +13,7 @@ export default function AgendarConsultaPage() {
 				icon={<CalendarPlus className="h-6 w-6" />}
 			/>
 
-			<div className="mx-auto max-w-2xl">
+			<div>
 				<div className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8">
 					<AppointmentForm type="create" />
 				</div>

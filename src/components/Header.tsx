@@ -1,150 +1,146 @@
-"use server";
+"use client";
 
-import {
-  LogOut,
-  Settings,
-  CalendarCheck,
-  CalendarCheck2,
-  User,
-  Stethoscope,
-} from "lucide-react";
+import { Bell, CalendarPlus, Menu, Search } from "lucide-react";
 import Link from "next/link";
 
-import { auth } from "@/auth";
-
-import LogoFull from "./logo/LogoFull";
-import LogOutButton from "./LogOutButton";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useUserStore } from "@/store/useUserStore";
+import { CustomButton } from "./custom/custom-button";
+import { CustomInput } from "./custom/custom-input";
+import { HeaderDropdown } from "./custom/header-dropdown";
+import { ThemeSwitcher } from "./custom/Theme-Switcher";
+import { Logo } from "./logo";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-} from "./ui/dropdown-menu";
-import ThemeToggle from "./layout/ThemeToggle/theme-toggle";
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "./ui/sheet";
+import { SidebarTrigger } from "./ui/sidebar";
 
-export async function Header() {
-  const session = await auth();
+export function Header() {
+	const { user } = useUserStore();
 
-  return (
-    <header className=" top-0 flex h-16 items-center gap-4 border-b bg-white px-4 dark:bg-dark-200 md:px-6">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-4">
-        <LogoFull />
-        <Link
-          href="/"
-          className="text-foreground hover:text-foreground transition-colors"
-        >
-          <Button variant="ghost" className="flex gap-2">
-            Início
-          </Button>
-        </Link>
-        {session?.user.role != "doctor" && (
-          <Link
-            href="/agendar-consulta"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Button variant="ghost" className="flex gap-2">
-              Agendar consulta
-            </Button>
-          </Link>
-        )}
-        <Link
-          href="/consultas"
-          className="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Button variant="ghost" className="flex gap-2">
-            Minhas consultas
-          </Button>
-        </Link>
-        <Link
-          href="/profissionais"
-          className="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Button variant="ghost" className="flex gap-2">
-            Profissionais
-          </Button>
-        </Link>
-        <Link
-          href="/clinicas"
-          className="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Button variant="ghost" className="flex gap-2">
-            Clinicas e organizações
-          </Button>
-        </Link>
-      </nav>
-      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <form className="ml-auto flex-1 sm:flex-initial">
-          <div className="flex items-center">
-            {/* <Input
-              type="search"
-              placeholder="Search products..."
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-            /> */}
-          </div>
-        </form>
-        <ThemeToggle />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <Avatar>
-                {session?.user.image && <AvatarImage src={session?.user?.image} />}
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>{" "}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel className="flex items-center justify-between gap-3">
-              <div>
-                <h1 className="font-bold text-base">Opções</h1>
-                <p className="text-sm fornt-semibold">{session?.user.name}</p>
-                <p className="text-xs font-normal">{session?.user.email}</p>
-              </div>
-              <span>{session?.user?.role === "doctor" ? <Stethoscope /> : <User />}</span>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {session?.user ? (
-              <>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link href="/consultas" className="flex items-center">
-                      <CalendarCheck className="mr-2 size-4" />
-                      <span>Ver minhas consultas</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/agendar-consulta" className="flex items-center">
-                      <CalendarCheck2 className="mr-2 size-4" />
-                      <span>Agendar consulta</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link href="/settings" className="flex items-center">
-                      <Settings className="mr-2 size-4" />
-                      <span>Configurações</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <LogOutButton />
-              </>
-            ) : (
-              <DropdownMenuItem asChild>
-                <Link href="/auth" className="flex items-center">
-                  <LogOut className="mr-2 size-4" />
-                  <span>Logar ou criar conta</span>
-                </Link>
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </header>
-  );
+	return (
+		<header className="sticky top-0 z-50 flex items-center justify-between border-b border-border bg-background/80 px-3 py-3 backdrop-blur-xl sm:px-6">
+			{/* Left */}
+			<div className="flex items-center gap-2">
+				{user && <SidebarTrigger />}
+				{user && (
+					<Separator orientation="vertical" className="hidden h-6 sm:block" />
+				)}
+				<Logo />
+			</div>
+
+			{/* Desktop right */}
+			<div className="hidden items-center gap-3 lg:flex">
+				<ThemeSwitcher />
+
+				{user ? (
+					<>
+						<Link href="/agendar-consulta">
+							<CustomButton
+							>
+								<CalendarPlus className="mr-2 h-4 w-4" />
+								Agendar
+							</CustomButton>
+						</Link>
+
+						<Button
+							size="icon"
+							className="h-10 w-10 rounded-2xl border border-border bg-background/60 text-foreground backdrop-blur hover:bg-primary/10 hover:text-primary"
+						>
+							<Bell className="h-4 w-4" />
+						</Button>
+
+						<HeaderDropdown user={user} />
+					</>
+				) : (
+					<div className="flex items-center gap-2">
+						<Link href="/auth/register">
+										<CustomButton>
+											Criar conta
+										</CustomButton>
+									</Link>
+									<Link href="/auth/login">
+										<CustomButton>
+											Entrar
+										</CustomButton>
+									</Link>
+					</div>
+				)}
+			</div>
+
+			{/* Mobile right */}
+			<div className="flex items-center gap-2 lg:hidden">
+				<ThemeSwitcher />
+
+				<Sheet>
+					<SheetTrigger asChild>
+						<Button
+							size="icon"
+							className="h-10 w-10 rounded-2xl border border-border bg-background/60 text-foreground backdrop-blur hover:bg-primary/10 hover:text-primary"
+						>
+							<Menu className="h-5 w-5" />
+						</Button>
+					</SheetTrigger>
+
+					<SheetContent
+						side="right"
+						className="w-[300px] border-l border-border bg-background/95 backdrop-blur-xl"
+					>
+						<SheetHeader>
+							<SheetTitle>
+								<Logo />
+							</SheetTitle>
+						</SheetHeader>
+
+						<div className="mt-8 space-y-4">
+							<CustomInput
+								type="text"
+								placeholder="Buscar médicos..."
+								icon={Search}
+							/>
+
+							{user ? (
+								<div className="space-y-3">
+									<Link href="/agendar-consulta" className="block">
+										<Button className="h-11 w-full justify-start rounded-2xl bg-primary text-background">
+											<CalendarPlus className="mr-2 h-4 w-4" />
+											Agendar Consulta
+										</Button>
+									</Link>
+									<Button
+										variant="outline"
+										className="h-11 w-full justify-start rounded-2xl"
+									>
+										<Bell className="mr-2 h-4 w-4" />
+										Notificações
+									</Button>
+									<div className="pt-2">
+										<HeaderDropdown user={user} />
+									</div>
+								</div>
+							) : (
+								<div className="flex flex-col gap-3">
+									<Link href="/auth/register">
+										<Button className="h-11 w-full rounded-2xl bg-primary text-background">
+											Criar conta
+										</Button>
+									</Link>
+									<Link href="/auth/login">
+										<Button className="h-11 w-full rounded-2xl bg-primary text-background">
+											Entrar
+										</Button>
+									</Link>
+								</div>
+							)}
+						</div>
+					</SheetContent>
+				</Sheet>
+			</div>
+		</header>
+	);
 }

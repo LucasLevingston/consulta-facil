@@ -21,7 +21,7 @@ interface HeaderDropdownProps {
   user: {
     id: string;
     email: string;
-    role: "USER" | "ADMIN";
+    role: "USER" | "DOCTOR" | "ADMIN";
     imageUrl?: string | null;
   };
 }
@@ -35,7 +35,7 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
   const handleLogout = () => {
     logout();
     document.cookie = "auth_token=; Max-Age=0; path=/";
-    router.push("/auth");
+    router.push("/");
   };
 
   return (
@@ -60,7 +60,7 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold text-foreground">{user.email}</p>
             <p className="text-xs text-muted-foreground">
-              {user.role === "ADMIN" ? "Médico / Admin" : "Paciente"}
+              {user.role === "ADMIN" ? "Administrador" : user.role === "DOCTOR" ? "Médico" : "Paciente"}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -85,6 +85,14 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
               <Link href="/admin" className="flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4" />
                 <span>Painel Admin</span>
+              </Link>
+            </DropdownMenuItem>
+          )}
+          {user.role === "DOCTOR" && (
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/profile" className="flex items-center gap-2">
+                <BadgeCheck className="h-4 w-4" />
+                <span>Meu Perfil Médico</span>
               </Link>
             </DropdownMenuItem>
           )}

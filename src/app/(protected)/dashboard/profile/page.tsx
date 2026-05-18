@@ -8,13 +8,11 @@ import {
 	CalendarDays,
 	Camera,
 	FileText,
-	Mail,
-	MapPin,
-	Pencil,
+	Mail, Pencil,
 	Phone,
 	Settings,
 	Shield,
-	User,
+	User
 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -24,14 +22,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/config/api";
 import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
-	usePatientAppointments,
 	useDoctorAppointments,
+	usePatientAppointments,
 } from "@/hooks/api/use-appointments";
 import { useMyProfile } from "@/hooks/api/use-patients";
 import { toast } from "@/hooks/use-toast";
-import { api } from "@/config/api";
+import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
 const GENDER_LABELS: Record<string, string> = {
@@ -68,7 +67,7 @@ export default function ProfilePage() {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [uploading, setUploading] = useState(false);
 
-	const isDoctor = user?.role === "ADMIN";
+	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
 
 	const patientQuery = usePatientAppointments(isDoctor ? "" : (user?.id ?? ""));
 	const doctorQuery = useDoctorAppointments(isDoctor ? (user?.id ?? "") : "");
@@ -99,11 +98,9 @@ export default function ProfilePage() {
 				.join("")
 				.slice(0, 2)
 				.toUpperCase()
-		: user?.email?.slice(0, 2).toUpperCase() ?? "CF";
+		: (user?.email?.slice(0, 2).toUpperCase() ?? "CF");
 
-	const handleAvatarUpload = async (
-		e: React.ChangeEvent<HTMLInputElement>,
-	) => {
+	const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
 		if (!file.type.startsWith("image/")) {
@@ -136,7 +133,7 @@ export default function ProfilePage() {
 	}
 
 	return (
-		<div className="max-w-3xl mx-auto space-y-6">
+		<QueryBoundary isLoading={patientQuery.isLoading || doctorQuery.isLoading} error={patientQuery.error || doctorQuery.error}>
 			{/* Hero */}
 			<Card className="overflow-hidden">
 				<div className="h-28 bg-gradient-to-br from-primary/25 via-primary/10 to-secondary/20 relative">
@@ -169,13 +166,23 @@ export default function ProfilePage() {
 						</div>
 
 						<div className="flex gap-2 sm:mb-1">
-							<Button variant="outline" size="sm" asChild className="gap-1.5 rounded-xl">
+							<Button
+								variant="outline"
+								size="sm"
+								asChild
+								className="gap-1.5 rounded-xl"
+							>
 								<Link href="/settings">
 									<Pencil className="h-3.5 w-3.5" />
 									Editar perfil
 								</Link>
 							</Button>
-							<Button variant="outline" size="sm" asChild className="gap-1.5 rounded-xl">
+							<Button
+								variant="outline"
+								size="sm"
+								asChild
+								className="gap-1.5 rounded-xl"
+							>
 								<Link href="/settings">
 									<Settings className="h-3.5 w-3.5" />
 									Configurações
@@ -241,7 +248,9 @@ export default function ProfilePage() {
 							}
 							className="shrink-0 rounded-full text-xs"
 						>
-							{nextAppointment.status === "CONFIRMED" ? "Confirmada" : "Pendente"}
+							{nextAppointment.status === "CONFIRMED"
+								? "Confirmada"
+								: "Pendente"}
 						</Badge>
 					</CardContent>
 				</Card>
@@ -286,7 +295,12 @@ export default function ProfilePage() {
 								<p className="text-sm text-muted-foreground">
 									Perfil incompleto
 								</p>
-								<Button variant="outline" size="sm" asChild className="rounded-xl">
+								<Button
+									variant="outline"
+									size="sm"
+									asChild
+									className="rounded-xl"
+								>
 									<Link href="/settings">Completar perfil</Link>
 								</Button>
 							</div>
@@ -314,20 +328,40 @@ export default function ProfilePage() {
 									<InfoRow
 										icon={FileText}
 										label="Alergias"
-										value={(patientProfile.data as Record<string, string> | undefined)?.allergies}
+										value={
+											(
+												patientProfile.data as
+													| Record<string, string>
+													| undefined
+											)?.allergies
+										}
 									/>
 									<InfoRow
 										icon={FileText}
 										label="Medicações"
-										value={(patientProfile.data as Record<string, string> | undefined)?.currentMedication}
+										value={
+											(
+												patientProfile.data as
+													| Record<string, string>
+													| undefined
+											)?.currentMedication
+										}
 									/>
 									<InfoRow
 										icon={FileText}
 										label="Histórico médico"
-										value={(patientProfile.data as Record<string, string> | undefined)?.pastMedicalHistory}
+										value={
+											(
+												patientProfile.data as
+													| Record<string, string>
+													| undefined
+											)?.pastMedicalHistory
+										}
 									/>
-									{!(patientProfile.data as Record<string, string> | undefined)?.allergies &&
-										!(patientProfile.data as Record<string, string> | undefined)?.currentMedication && (
+									{!(patientProfile.data as Record<string, string> | undefined)
+										?.allergies &&
+										!(patientProfile.data as Record<string, string> | undefined)
+											?.currentMedication && (
 											<div className="py-4 text-center space-y-2">
 												<p className="text-sm text-muted-foreground">
 													Nenhuma informação médica registrada
@@ -363,23 +397,31 @@ export default function ProfilePage() {
 								},
 								{
 									label: "Pendentes",
-									value: appointments.filter((a) => a.status === "PENDING").length,
+									value: appointments.filter((a) => a.status === "PENDING")
+										.length,
 									color: "text-yellow-500",
 								},
 								{
 									label: "Confirmadas",
-									value: appointments.filter((a) => a.status === "CONFIRMED").length,
+									value: appointments.filter((a) => a.status === "CONFIRMED")
+										.length,
 									color: "text-green-500",
 								},
 								{
 									label: "Concluídas",
-									value: appointments.filter((a) => a.status === "COMPLETED").length,
+									value: appointments.filter((a) => a.status === "COMPLETED")
+										.length,
 									color: "text-blue-500",
 								},
 							].map(({ label, value, color }) => (
-								<div key={label} className="flex items-center justify-between py-1">
+								<div
+									key={label}
+									className="flex items-center justify-between py-1"
+								>
 									<span className="text-sm text-muted-foreground">{label}</span>
-									<span className={`text-sm font-semibold ${color}`}>{value}</span>
+									<span className={`text-sm font-semibold ${color}`}>
+										{value}
+									</span>
 								</div>
 							))}
 							<Separator />
@@ -434,6 +476,6 @@ export default function ProfilePage() {
 					</Card>
 				))}
 			</div>
-		</div>
+		</QueryBoundary>
 	);
 }

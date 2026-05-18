@@ -81,7 +81,7 @@ export default function AppSidebar() {
 
 	if (!mounted) return null;
 
-	const isDoctor = user?.role === "ADMIN";
+	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
 	const mainNav = isDoctor ? doctorNav : patientNav;
 	const secondaryNav = isDoctor ? doctorSecondaryNav : patientSecondaryNav;
 

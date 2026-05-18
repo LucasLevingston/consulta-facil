@@ -10,7 +10,7 @@ export default function DashboardPage() {
     <Dashboard
       firstName={user?.name?.split(" ")[0] ?? "usuário"}
       userId={user?.id ?? ""}
-      isDoctor={user?.role === "ADMIN"}
+      isDoctor={user?.role === "DOCTOR" || user?.role === "ADMIN"}
     />
   );
 }

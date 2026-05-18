@@ -1,4 +1,6 @@
-import Image from "next/image";
+import { Loader2 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 import { Button } from "./ui/button";
 
@@ -13,19 +15,16 @@ const SubmitButton = ({ isLoading, className, children }: ButtonProps) => {
     <Button
       type="submit"
       disabled={isLoading}
-      className={className ?? "shad-primary-btn w-full bg-mainColor font-bold"}
+      className={cn(
+        "h-12 w-full rounded-xl bg-primary font-semibold text-background hover:bg-primary/90 transition-all",
+        className,
+      )}
     >
       {isLoading ? (
-        <div className="flex items-center gap-4">
-          <Image
-            src="/assets/icons/loader.svg"
-            alt="loader"
-            width={24}
-            height={24}
-            className="animate-spin"
-          />
+        <span className="flex items-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin" />
           Carregando...
-        </div>
+        </span>
       ) : (
         children
       )}
