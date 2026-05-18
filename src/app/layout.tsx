@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { Inter } from "next/font/google";
+import Providers from "@/providers";
 
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Toaster } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
-import { AuthProvider } from "@/providers/authprovider";
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-sans",
+const inter = Inter({
+	variable: "--font-sans",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -25,26 +18,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <AuthProvider>
-      <html lang="en">
-        <ThemeProvider attribute="class" defaultTheme="system">
-          <body
-            className={cn(
-              "min-h-screen flex flex-col font-work-sans antialiased",
-              fontSans.variable
-            )}
-          >
-            <Header />
-            <main className="flex-grow">{children}</main> <Footer />
-            <Toaster />
-          </body>
-        </ThemeProvider>
-      </html>
-    </AuthProvider>
-  );
+	return (
+		<html lang="pt-BR" className={`${inter.variable} font-sans h-full antialiased`}>
+			<head>
+				<link rel="icon" href="/logo.png" />
+			</head>
+			<body className="min-h-screen">
+				<Providers>{children}</Providers>
+			</body>
+		</html>
+	);
 }

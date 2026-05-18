@@ -1,51 +1,40 @@
-import { Status } from "@prisma/client";
-import clsx from "clsx";
-import Image from "next/image";
+import type { AppointmentStatus } from "@/lib/schemas/appointment.schema";
+import { cn } from "@/lib/utils";
 
-import { StatusIcon } from "@/constants";
+const statusConfig: Record<
+  AppointmentStatus,
+  { label: string; classes: string }
+> = {
+  CONFIRMED: {
+    label: "Confirmada",
+    classes: "bg-green-500/15 text-green-400 border-green-500/30",
+  },
+  PENDING: {
+    label: "Pendente",
+    classes: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
+  },
+  CANCELED: {
+    label: "Cancelada",
+    classes: "bg-red-500/15 text-red-400 border-red-500/30",
+  },
+  COMPLETED: {
+    label: "Concluída",
+    classes: "bg-blue-500/15 text-blue-400 border-blue-500/30",
+  },
+};
 
-export const StatusBadge = ({ status }: { status: Status }) => {
-  const renderStatus = (status: Status) => {
-    switch (status) {
-      case "scheduled":
-        return <>Agendada</>;
-      case "finalized":
-        return <>Finalizada</>;
-      case "pending":
-        return <>Pendente</>;
-      case "canceled":
-        return <>Cancelada</>;
-      default:
-        return <>Desconhecido</>;
-    }
-  };
+export const StatusBadge = ({ status }: { status: AppointmentStatus }) => {
+  const config = statusConfig[status] ?? statusConfig.PENDING;
 
   return (
-    <div
-      className={clsx("status-badge", {
-        "bg-green-600": status === "scheduled",
-        "bg-blue-600": status === "pending",
-        "bg-red-600": status === "canceled",
-        "bg-yellow-600": status === "finalized",
-      })}
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold",
+        config.classes,
+      )}
     >
-      <Image
-        src={StatusIcon[status]}
-        alt="doctor"
-        width={24}
-        height={24}
-        className="h-fit w-3"
-      />
-      <p
-        className={clsx("text-12-semibold capitalize", {
-          "text-green-500": status === "scheduled",
-          "text-blue-500": status === "pending",
-          "text-red-500": status === "canceled",
-          "text-yellow-500": status === "finalized",
-        })}
-      >
-        <div>{renderStatus(status)}</div>
-      </p>
-    </div>
+      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+      {config.label}
+    </span>
   );
 };

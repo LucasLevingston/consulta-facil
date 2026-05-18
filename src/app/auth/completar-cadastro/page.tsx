@@ -1,46 +1,41 @@
-import Image from "next/image";
+"use client";
 
-import { auth } from "@/auth";
-import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
-import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
-import HeaderSection from "@/components/HeaderSection";
-import Loading from "@/components/loading";
-import { ExtendUser } from "@/next-auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-const Register = async () => {
-  const session = await auth();
+import { Loading } from "@/components/custom/loading";
+import PatientDetailsForm from "@/components/custom/forms/PatientDetails/PatientDetailsForm";
+import { Logo } from "@/components/logo";
+import { useAuthStore } from "@/store/auth.store";
+import { useUserStore } from "@/store/useUserStore";
+
+export default function CompletarCadastroPage() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    if (!isAuthenticated) router.push("/auth/login");
+  }, [isAuthenticated, router]);
+
+  if (!user) return <Loading />;
 
   return (
-    <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
-          <HeaderSection label="Completar Cadastro" />
-          <section className="space-y-4">
-            <h1 className="header">Bem-vindo 👋</h1>
-            <p className="text-dark-700">Conte-nos mais sobre você.</p>
-          </section>
-          {session?.user ? (
-            session.user.role === "doctor" ? (
-              <DoctorDetailsForm user={session.user as ExtendUser} type="create" />
-            ) : (
-              <PatientDetailsForm user={session.user as ExtendUser} type="create" />
-            )
-          ) : (
-            <Loading />
-          )}
-          <p className="copyright py-12">© 2024 CarePluse</p>
+    <div className="flex min-h-screen flex-col items-center px-4 py-10">
+      <Logo className="mb-8" />
+      <div className="w-full max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8">
+        <div className="mb-8 space-y-1">
+          <h1 className="text-2xl font-bold text-foreground">Complete seu cadastro</h1>
+          <p className="text-sm text-muted-foreground">
+            Preencha suas informações para começar a agendar consultas.
+          </p>
         </div>
-      </section>
-
-      <Image
-        src="/assets/images/register-img.png"
-        height={1000}
-        width={1000}
-        alt="patient"
-        className="side-img max-w-[390px]"
-      />
+        <PatientDetailsForm
+          userId={user.id}
+          userEmail={user.email}
+          type="create"
+        />
+      </div>
     </div>
   );
-};
-
-export default Register;
+}
