@@ -11,23 +11,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { AppointmentForm } from "./forms/Appointments/AppointmentForm";
+import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { Appointment, DoctorDetails } from "@prisma/client";
 
-import { ExtendUser } from "@/next-auth";
+import { AppointmentForm } from "./custom/forms/Appointments/AppointmentForm";
+import { CancelAppointmentForm } from "./custom/forms/Appointments/CancelAppointmentForm";
 
 export const AppointmentModal = ({
   appointment,
   type,
-  user,
-  doctors,
+  title,
+  description,
 }: {
-  user: ExtendUser;
-  doctors: DoctorDetails[];
-  appointment?: Appointment;
+  appointment?: AppointmentResponse;
   type: "schedule" | "cancel";
   title: string;
   description: string;
@@ -39,26 +36,28 @@ export const AppointmentModal = ({
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className={`capitalize ${type === "schedule" && "text-green-500"}`}
+          size="sm"
+          className={type === "schedule" ? "text-green-500 hover:text-green-400" : "text-destructive hover:text-destructive/80"}
         >
-          {type}
+          {type === "schedule" ? "Agendar" : "Cancelar"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="shad-dialog sm:max-w-md">
+
+      <DialogContent className="sm:max-w-md">
         <DialogHeader className="mb-4 space-y-3">
-          <DialogTitle className="capitalize">{type} Appointment</DialogTitle>
-          <DialogDescription>
-            Please fill in the following details to {type} appointment
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <AppointmentForm
-          user={user}
-          doctors={doctors}
-          type={type}
-          appointment={appointment}
-          setOpen={setOpen}
-        />
+        {type === "cancel" && appointment ? (
+          <CancelAppointmentForm appointment={appointment} setOpen={setOpen} />
+        ) : (
+          <AppointmentForm
+            type={type}
+            appointment={appointment}
+            setOpen={setOpen}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

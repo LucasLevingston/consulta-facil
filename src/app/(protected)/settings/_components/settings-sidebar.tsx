@@ -1,41 +1,37 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  DashboardSidebarNav,
-  DashboardSidebarNavLink,
-  DashboardSidebarNavMain,
-} from "@/components/dashboard/sidebar";
+import { cn } from "@/lib/utils";
+
+const links = [
+  { href: "/settings", label: "Meu perfil" },
+  { href: "/settings/theme", label: "Tema" },
+  { href: "/settings/billing", label: "Assinatura" },
+];
 
 export function SettingsSidebar() {
   const pathname = usePathname();
 
-  const isActive = (path: string) => {
-    return pathname === path;
-  };
-
   return (
-    <aside>
-      <DashboardSidebarNav>
-        <DashboardSidebarNavMain>
-          <DashboardSidebarNavLink href="/settings" active={isActive("/settings")}>
-            Meu perfil
-          </DashboardSidebarNavLink>
-          <DashboardSidebarNavLink
-            href="/settings/theme"
-            active={isActive("/settings/theme")}
+    <aside className="w-48 shrink-0">
+      <nav className="flex flex-col gap-1">
+        {links.map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className={cn(
+              "rounded-xl px-3 py-2 text-sm font-medium transition-colors",
+              pathname === href
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
           >
-            Tema
-          </DashboardSidebarNavLink>
-          <DashboardSidebarNavLink
-            href="/settings/billing"
-            active={isActive("/settings/billing")}
-          >
-            Assinatura
-          </DashboardSidebarNavLink>
-        </DashboardSidebarNavMain>
-      </DashboardSidebarNav>
+            {label}
+          </Link>
+        ))}
+      </nav>
     </aside>
   );
 }

@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config) => {
-    config.externals = [...config.externals, "bcrypt"];
+const nextConfig = {};
 
-    return config;
-  },
-};
+export default nextConfig;

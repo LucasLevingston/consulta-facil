@@ -1,99 +1,175 @@
-import { Role, Status, PatientDetails, DoctorDetails, Appointment } from "@prisma/client";
+import type React from "react";
 
 declare type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-declare type Gender = "male" | "female" | "other";
+// Enums alinhados ao backend
+declare type UserRole = "USER" | "ADMIN";
+declare type Gender = "MALE" | "FEMALE" | "OTHER";
+declare type AppointmentStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "COMPLETED";
 
-declare interface CreateUserParams {
-  name: string | null;
+// Auth
+declare type AuthUser = {
+  userId: string;
   email: string;
-  phone: string | null;
-  password: string;
-  role: "doctor" | "patient" | "admin";
-}
-
-declare type CreateAppointmentParams = {
-  doctorId: string;
-  patientId: string;
-  reason?: string; // Use optional instead of undefined
-  schedule: Date;
-  note?: string; // Use optional instead of undefined
-};
-declare type UpdateAppointmentParams = {
-  appointmentId: string;
-  timeZone: string; // Defina o tipo do timeZone se for específico
-  appointment: {
-    doctorId: string; // Se necessário
-    schedule: Date;
-    status: Status; // Use o tipo Status
-    cancellationReason?: string; // Use optional
-  };
-  type: "schedule" | "cancel"; // Use tipos literais
+  role: UserRole;
 };
 
-declare interface RegisterPatientParams extends Patient {
-  identificationDocument?: FormData;
-  imageFile?: FormData;
-}
-
-export interface RegisterDoctorParams extends Doctor {
-  identificationDocument?: FormData;
-  imageFile?: FormData;
-}
-
-export interface User {
-  name?: string | null;
-  id: string;
-  phone?: string | null;
-  email?: string | null;
-  role: $Enums.Role;
-  image?: string | null;
-  emailVerified: Date | null;
-  password?: string | null;
-  isDone: boolean;
-}
-export interface Doctor extends User {
-  role: Role;
-  doctorDetails: DoctorDetails;
-}
-
-export interface Patient extends User {
-  role: Role;
-  patientDetails: PatientDetails;
-}
-
-export interface CompleteAppointment extends Appointment {
-  patient: PatientDetails;
-  doctor: DoctorDetails;
-}
-
-export interface AppointmentCount {
-  documents: CompleteAppointment[];
-  scheduledCount: number;
-  pendingCount: number;
-  cancelledCount: number;
-  finalizedCount: number;
-  totalCount: number;
-}
-
-export interface Plan {
+// User
+declare type UserResponse = {
   id: string;
   name: string;
-  amount: number;
-  interval: string;
-  currency: string;
-  features: string[];
-  recurring: any;
-}
+  email: string;
+  role: UserRole;
+  phone?: string | null;
+  cpf?: string | null;
+  birthDate?: string | null;
+  gender?: Gender | null;
+  imageUrl?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
 
+declare type CreateUserInput = {
+  name: string;
+  email: string;
+  password: string;
+  cpf?: string;
+  phone?: string;
+  birthDate?: string;
+  gender?: Gender;
+};
+
+declare type LoginInput = {
+  email: string;
+  password: string;
+};
+
+declare type LoginResponse = {
+  token: string;
+  type: string;
+  expiresIn: number;
+  userId: string;
+  email: string;
+  role: UserRole;
+};
+
+// Address
+declare type AddressInput = {
+  zipCode: string;
+  street: string;
+  number: string;
+  district?: string;
+  city: string;
+  state: string;
+  country?: string;
+};
+
+// Doctor
+declare type DoctorResponse = {
+  id: string;
+  userId: string;
+  name?: string | null;
+  email?: string | null;
+  specialty: string;
+  licenseNumber?: string | null;
+  phone?: string | null;
+};
+
+declare type CreateDoctorInput = {
+  specialty: string;
+  licenseNumber: string;
+};
+
+// Patient
+declare type PatientProfile = {
+  id?: string;
+  userId?: string;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  cpf?: string | null;
+  birthDate?: string | null;
+  gender?: Gender | null;
+  occupation?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
+
+declare type UpdatePatientInput = {
+  occupation?: string;
+};
+
+declare type MedicalRecord = {
+  id?: string;
+  allergies?: string | null;
+  currentMedication?: string | null;
+  familyMedicalHistory?: string | null;
+  pastMedicalHistory?: string | null;
+  privacyConsent?: boolean | null;
+  treatmentConsent?: boolean | null;
+  disclosureConsent?: boolean | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
+
+declare type UpdateMedicalRecordInput = {
+  allergies?: string;
+  currentMedication?: string;
+  familyMedicalHistory?: string;
+  pastMedicalHistory?: string;
+  privacyConsent?: boolean;
+  treatmentConsent?: boolean;
+  disclosureConsent?: boolean;
+};
+
+// Appointment
+declare type AppointmentResponse = {
+  id: string;
+  patientName?: string | null;
+  patientId: string;
+  doctorName?: string | null;
+  doctorId: string;
+  specialty?: string | null;
+  scheduledAt: string;
+  reason?: string | null;
+  notes?: string | null;
+  status: AppointmentStatus;
+  cancellationReason?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
+
+declare type CreateAppointmentInput = {
+  doctorId: string;
+  scheduledAt: string;
+  reason?: string;
+  notes?: string;
+};
+
+declare type CancelAppointmentInput = {
+  cancellationReason: string;
+};
+
+// Pagination
+declare type ApiPage<T> = {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  first?: boolean;
+  last?: boolean;
+};
+
+// UI
 export interface NavItem {
   title: string;
   url: string;
   disabled?: boolean;
   external?: boolean;
-  icon?: keyof typeof Icons;
+  icon?: string;
   label?: string;
   description?: string;
   isActive?: boolean;
