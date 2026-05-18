@@ -4,8 +4,8 @@ export const DoctorFormValidation = z.object({
   name: z.string().min(1, "Nome é obrigatório."),
   email: z.string().email("Endereço de e-mail inválido."),
   phone: z.string().min(10, "Número de telefone deve ter pelo menos 10 caracteres."),
-  imageProfile: z.custom<File[]>().optional() || z.string().optional(),
-  gender: z.enum(["male", "female", "other"]),
+  imageProfile: z.union([z.custom<File[]>(), z.string()]).optional(),
+  gender: z.enum(["MALE", "FEMALE", "OTHER"]),
   birthDate: z.date(),
   cpf: z.string().min(1, "CPF é obrigatório."),
   address: z
@@ -15,7 +15,7 @@ export const DoctorFormValidation = z.object({
   specialty: z.string().min(1, "Especialidade é obrigatório."),
   licenseNumber: z.string().min(1, "Número de licença é obrigatório."),
   identificationDocumentType: z.string(),
-  identificationDocument: z.custom<File[]>().optional() || z.string().optional(),
+  identificationDocument: z.union([z.custom<File[]>(), z.string()]).optional(),
   privacyConsent: z.boolean().refine((val) => val === true, {
     message: "Você deve consentir com a política de privacidade.",
   }),

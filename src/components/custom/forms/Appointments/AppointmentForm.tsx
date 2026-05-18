@@ -17,7 +17,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { z } from "zod";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -50,10 +49,9 @@ import {
 } from "@/hooks/api/use-appointments";
 import { useDoctors } from "@/hooks/api/use-doctors";
 import { toast } from "@/hooks/use-toast";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import { appointmentFormSchema, type AppointmentFormValues, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
-import { CreateAppointmentSchema } from "./CreateAppointmentSchema";
 
 const TIME_SLOTS = [
 	{ label: "08:00", hours: 8, minutes: 0 },
@@ -90,8 +88,8 @@ export const AppointmentForm = ({
 	const [doctorOpen, setDoctorOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState<string>("");
 
-	const form = useForm<z.infer<typeof CreateAppointmentSchema>>({
-		resolver: zodResolver(CreateAppointmentSchema),
+	const form = useForm<AppointmentFormValues>({
+		resolver: zodResolver(appointmentFormSchema),
 		defaultValues: {
 			doctorId: appointment?.doctorId ?? doctorIdParam ?? "",
 			scheduledAt: appointment ? new Date(appointment.scheduledAt) : undefined,
@@ -120,7 +118,7 @@ export const AppointmentForm = ({
 		}
 	};
 
-	const onSubmit = async (values: z.infer<typeof CreateAppointmentSchema>) => {
+	const onSubmit = async (values: AppointmentFormValues) => {
 		try {
 			if (type === "create" || type === "schedule") {
 				await scheduleAppointment.mutateAsync({

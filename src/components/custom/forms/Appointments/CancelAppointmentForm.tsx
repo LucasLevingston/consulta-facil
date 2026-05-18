@@ -5,16 +5,14 @@ import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import CustomFormField, {
+	FormFieldType,
+} from "@/components/custom/forms-components/custom-form-field";
+import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCancelAppointment } from "@/hooks/api/use-appointments";
 import { toast } from "@/hooks/use-toast";
-import { cancelAppointmentSchema } from "@/lib/schemas/appointment.schema";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-
-import CustomFormField, {
-	FormFieldType,
-} from "../../forms-components/custom-form-field";
-import { CustomSubmitButton } from "../../forms-components/custom-submit-button";
+import { cancelAppointmentSchema, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 interface CancelAppointmentFormProps {
 	appointment: AppointmentResponse;

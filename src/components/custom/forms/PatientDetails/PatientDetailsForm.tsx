@@ -6,18 +6,12 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { FileUploader } from "@/components/FileUploader";
+import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
+import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import { useUpdateMyProfile } from "@/hooks/api/use-patients";
 import { toast } from "@/hooks/use-toast";
 import { GenderOptions, IdentificationTypes } from "@/utils/constants";
-
-import CustomFormField, {
-	FormFieldType,
-} from "../../forms-components/custom-form-field";
-import { CustomSubmitButton } from "../../forms-components/custom-submit-button";
 import { PatientFormValidation } from "./FormValidation";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -47,7 +41,7 @@ const PatientDetailsForm = ({
 			email: defaultData?.email ?? userEmail,
 			phone: defaultData?.phone ?? "",
 			birthDate: defaultData?.birthDate ?? new Date(),
-			gender: defaultData?.gender ?? "male",
+			gender: defaultData?.gender ?? "MALE",
 			address: defaultData?.address ?? "",
 			occupation: defaultData?.occupation ?? "",
 			emergencyContactName: defaultData?.emergencyContactName ?? "",
@@ -89,7 +83,7 @@ const PatientDetailsForm = ({
 			});
 			toast({ title: "Dados salvos com sucesso!" });
 			if (type === "create") {
-				setTimeout(() => router.push("/"), 1000);
+				router.push("/");
 			}
 		} catch (error: unknown) {
 			toast({
@@ -156,33 +150,18 @@ const PatientDetailsForm = ({
 								)}
 							/>
 
-							<FormField
-								control={form.control}
+							<CustomFormField
+								form={form}
 								name="gender"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-sm font-semibold text-primary">
-											Gênero
-										</FormLabel>
-										<FormControl>
-											<RadioGroup
-												className="flex h-11 gap-6"
-												onValueChange={field.onChange}
-												defaultValue={field.value}
-											>
-												{GenderOptions.map((option) => (
-													<div key={option.value} className="flex items-center gap-2">
-														<RadioGroupItem value={option.value} id={option.value} />
-														<Label htmlFor={option.value} className="cursor-pointer">
-															{option.label}
-														</Label>
-													</div>
-												))}
-											</RadioGroup>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
+								fieldType={FormFieldType.SELECT}
+								label="Gênero"
+							>
+								{GenderOptions.map((option) => (
+									<option key={option.value} value={option.value}>
+										{option.label}
+									</option>
+								))}
+							</CustomFormField>
 						</div>
 					</div>
 

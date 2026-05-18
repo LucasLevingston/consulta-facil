@@ -5,20 +5,14 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
+import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
+import { Form } from "@/components/ui/form";
 import { SelectItem } from "@/components/ui/select";
-
 import { useCreateDoctor, useUpdateDoctor } from "@/hooks/api/use-doctors";
 import { toast } from "@/hooks/use-toast";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { GenderOptions, specialties } from "@/utils/constants";
-
-import CustomFormField, {
-	FormFieldType,
-} from "../../forms-components/custom-form-field";
-import { CustomSubmitButton } from "../../forms-components/custom-submit-button";
 import { DoctorFormValidation } from "./FormValidation";
 
 interface DoctorDetailsProps {
@@ -45,7 +39,7 @@ function DoctorDetailsForm({
 			name: defaultData?.name ?? "",
 			email: defaultData?.email ?? userEmail,
 			phone: defaultData?.phone ?? "",
-			gender: "male",
+			gender: "MALE",
 			birthDate: new Date(),
 			cpf: "",
 			address: "",
@@ -69,12 +63,12 @@ function DoctorDetailsForm({
 		try {
 			if (type === "create") {
 				await createDoctor.mutateAsync(payload);
-				setTimeout(() => router.push("/"), 1000);
+				toast({ title: "Dados salvos com sucesso!" });
+				router.push("/");
 			} else {
 				await updateDoctor.mutateAsync({ doctorId: userId, data: payload });
+				toast({ title: "Dados salvos com sucesso!" });
 			}
-
-			toast({ title: "Dados salvos com sucesso!" });
 		} catch (error: unknown) {
 			toast({
 				title: error instanceof Error ? error.message : "Erro ao salvar os dados",
@@ -115,44 +109,18 @@ function DoctorDetailsForm({
 							fieldType={FormFieldType.INPUT}
 						/>
 
-						<FormField
-							control={form.control}
+						<CustomFormField
+							form={form}
 							name="gender"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<Label className="mb-3 block text-sm font-semibold text-primary">
-										Gênero
-									</Label>
-
-									<FormControl>
-										<RadioGroup
-											className="flex h-11 flex-wrap gap-6"
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
-											{GenderOptions.map((option) => (
-												<div
-													key={option.value}
-													className="flex items-center gap-2"
-												>
-													<RadioGroupItem
-														value={option.value}
-														id={option.value}
-													/>
-
-													<Label
-														htmlFor={option.value}
-														className="cursor-pointer"
-													>
-														{option.label}
-													</Label>
-												</div>
-											))}
-										</RadioGroup>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
+							fieldType={FormFieldType.SELECT}
+							label="Gênero"
+						>
+							{GenderOptions.map((option) => (
+								<option key={option.value} value={option.value}>
+									{option.label}
+								</option>
+							))}
+						</CustomFormField>
 					</div>
 
 					<div className="flex flex-col gap-6 xl:flex-row">
