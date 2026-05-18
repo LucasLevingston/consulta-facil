@@ -34,7 +34,18 @@ export const cancelAppointmentSchema = z.object({
   cancellationReason: z.string().min(1, "Motivo é obrigatório"),
 });
 
+// Form schema — scheduledAt is a Date object (converted to ISO string on submit)
+export const appointmentFormSchema = z.object({
+  doctorId: z.string().min(1, "Selecione o médico"),
+  userId: z.string().optional(),
+  scheduledAt: z.date(),
+  reason: z.string().max(500, "Motivo deve ter no máximo 500 caracteres").nullable().optional(),
+  notes: z.string().optional(),
+  cancellationReason: z.string().optional(),
+});
+
 export type AppointmentStatus = z.infer<typeof appointmentStatusSchema>;
 export type AppointmentResponse = z.infer<typeof appointmentResponseSchema>;
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;
 export type CancelAppointmentInput = z.infer<typeof cancelAppointmentSchema>;
+export type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;

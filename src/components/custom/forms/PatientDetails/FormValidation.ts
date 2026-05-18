@@ -5,7 +5,7 @@ export const PatientFormValidation = z.object({
   email: z.string().email("Endereço de e-mail inválido"),
   phone: z.string().min(1, "Telefone é obrigatório"),
   birthDate: z.date(),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum(["MALE", "FEMALE", "OTHER"]),
   address: z.string().min(5, "Endereço deve ter pelo menos 5 caracteres").max(500),
   occupation: z.string().min(2, "Ocupação deve ter pelo menos 2 caracteres").max(500),
   emergencyContactName: z.string().min(2, "Nome deve ter pelo menos 2 caracteres").max(50),

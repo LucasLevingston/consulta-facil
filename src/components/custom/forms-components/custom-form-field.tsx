@@ -32,7 +32,7 @@ export enum FormFieldType {
 }
 
 interface CustomFormFieldProps {
-	// biome-ignore lint/suspicious/noExplicitAny: generic form hook
+	// biome-ignore lint/suspicious/noExplicitAny: shared field component works with any form schema
 	form: UseFormReturn<any, any, any>;
 	name: string;
 	label?: string;

@@ -3,13 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Form } from "@/components/ui/form";
-import { type LoginInput, loginSchema } from "@/lib/schemas/auth.schema";
-
 import CustomFormField, {
 	FormFieldType,
-} from "../../forms-components/custom-form-field";
-import { CustomSubmitButton } from "../../forms-components/custom-submit-button";
+} from "@/components/custom/forms-components/custom-form-field";
+import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
+import { Form } from "@/components/ui/form";
+import { type LoginInput, loginSchema } from "@/lib/schemas/auth.schema";
 
 interface LoginFormProps {
 	onSubmit: (values: LoginInput) => Promise<void>;
