@@ -39,7 +39,7 @@ export default function DoctorCard({
 		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200">
 			<CardHeader className="flex flex-row items-center gap-4 pb-3">
 				<Avatar className="size-14 rounded-xl border border-border">
-					<AvatarImage src={undefined} alt={doctor.name ?? "Médico"} />
+					<AvatarImage src={doctor.imageUrl ?? undefined} alt={doctor.name ?? "Médico"} />
 					<AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-sm">
 						{initials}
 					</AvatarFallback>

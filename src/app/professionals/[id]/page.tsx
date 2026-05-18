@@ -9,7 +9,7 @@ import {
 	Stethoscope,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,7 +63,11 @@ export default function DoctorProfilePage() {
 				<div className="h-24 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20" />
 				<CardContent className="relative pt-0 pb-6 px-6">
 					<div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-10">
-						<Avatar className="size-20 rounded-2xl border-4 border-card shadow-md bg-primary/10">
+						<Avatar className="size-20 rounded-2xl border-4 border-card shadow-md">
+							<AvatarImage
+								src={doctor.imageUrl ?? undefined}
+								alt={doctor.name ?? "Médico"}
+							/>
 							<AvatarFallback className="rounded-2xl bg-primary/15 text-primary font-bold text-2xl">
 								{initials}
 							</AvatarFallback>

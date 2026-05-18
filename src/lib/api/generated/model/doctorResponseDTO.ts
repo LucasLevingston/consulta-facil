@@ -14,4 +14,5 @@ export interface DoctorResponseDTO {
 	specialty?: string;
 	licenseNumber?: string;
 	phone?: string;
+	imageUrl?: string;
 }
