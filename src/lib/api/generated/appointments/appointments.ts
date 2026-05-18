@@ -30,6 +30,8 @@ import type {
 import { customInstance } from "../../mutator";
 import type { ErrorType, BodyType } from "../../mutator";
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 export type confirmAppointmentResponse200 = {
 	data: AppointmentResponseDTO;
 	status: 200;
@@ -79,16 +81,18 @@ export const getConfirmAppointmentQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getConfirmAppointmentQueryKey(appointmentId);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof confirmAppointment>>
-	> = ({ signal }) => confirmAppointment(appointmentId, { signal });
+	> = ({ signal }) =>
+		confirmAppointment(appointmentId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -128,6 +132,7 @@ export function useConfirmAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -154,6 +159,7 @@ export function useConfirmAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -172,6 +178,7 @@ export function useConfirmAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -194,6 +201,7 @@ export function useConfirmAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -261,16 +269,18 @@ export const getCompleteAppointmentQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getCompleteAppointmentQueryKey(appointmentId);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof completeAppointment>>
-	> = ({ signal }) => completeAppointment(appointmentId, { signal });
+	> = ({ signal }) =>
+		completeAppointment(appointmentId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -310,6 +320,7 @@ export function useCompleteAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -336,6 +347,7 @@ export function useCompleteAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -354,6 +366,7 @@ export function useCompleteAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -376,6 +389,7 @@ export function useCompleteAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -453,9 +467,10 @@ export const getCancelAppointmentQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ??
@@ -464,7 +479,10 @@ export const getCancelAppointmentQueryOptions = <
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof cancelAppointment>>
 	> = ({ signal }) =>
-		cancelAppointment(appointmentId, cancelAppointmentDTO, { signal });
+		cancelAppointment(appointmentId, cancelAppointmentDTO, {
+			signal,
+			...requestOptions,
+		});
 
 	return {
 		queryKey,
@@ -505,6 +523,7 @@ export function useCancelAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -532,6 +551,7 @@ export function useCancelAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -551,6 +571,7 @@ export function useCancelAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -574,6 +595,7 @@ export function useCancelAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -647,9 +669,10 @@ export const getScheduleAppointmentQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ??
@@ -657,7 +680,8 @@ export const getScheduleAppointmentQueryOptions = <
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof scheduleAppointment>>
-	> = ({ signal }) => scheduleAppointment(createAppointmentDTO, { signal });
+	> = ({ signal }) =>
+		scheduleAppointment(createAppointmentDTO, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof scheduleAppointment>>,
@@ -692,6 +716,7 @@ export function useScheduleAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -718,6 +743,7 @@ export function useScheduleAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -736,6 +762,7 @@ export function useScheduleAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -758,6 +785,7 @@ export function useScheduleAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -825,16 +853,18 @@ export const getGetAppointmentByIdQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getGetAppointmentByIdQueryKey(appointmentId);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof getAppointmentById>>
-	> = ({ signal }) => getAppointmentById(appointmentId, { signal });
+	> = ({ signal }) =>
+		getAppointmentById(appointmentId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -874,6 +904,7 @@ export function useGetAppointmentById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -900,6 +931,7 @@ export function useGetAppointmentById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -918,6 +950,7 @@ export function useGetAppointmentById<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -940,6 +973,7 @@ export function useGetAppointmentById<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1006,16 +1040,18 @@ export const getDeleteAppointmentQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getDeleteAppointmentQueryKey(appointmentId);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof deleteAppointment>>
-	> = ({ signal }) => deleteAppointment(appointmentId, { signal });
+	> = ({ signal }) =>
+		deleteAppointment(appointmentId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -1055,6 +1091,7 @@ export function useDeleteAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1081,6 +1118,7 @@ export function useDeleteAppointment<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1099,6 +1137,7 @@ export function useDeleteAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1121,6 +1160,7 @@ export function useDeleteAppointment<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1209,16 +1249,18 @@ export const getGetPatientAppointmentsQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getGetPatientAppointmentsQueryKey(userId, params);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof getPatientAppointments>>
-	> = ({ signal }) => getPatientAppointments(userId, params, { signal });
+	> = ({ signal }) =>
+		getPatientAppointments(userId, params, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -1259,6 +1301,7 @@ export function useGetPatientAppointments<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1286,6 +1329,7 @@ export function useGetPatientAppointments<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1305,6 +1349,7 @@ export function useGetPatientAppointments<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1328,6 +1373,7 @@ export function useGetPatientAppointments<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1420,9 +1466,10 @@ export const getGetDoctorAppointmentsQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ??
@@ -1430,7 +1477,8 @@ export const getGetDoctorAppointmentsQueryOptions = <
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof getDoctorAppointments>>
-	> = ({ signal }) => getDoctorAppointments(doctorId, params, { signal });
+	> = ({ signal }) =>
+		getDoctorAppointments(doctorId, params, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -1471,6 +1519,7 @@ export function useGetDoctorAppointments<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1498,6 +1547,7 @@ export function useGetDoctorAppointments<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1517,6 +1567,7 @@ export function useGetDoctorAppointments<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1540,6 +1591,7 @@ export function useGetDoctorAppointments<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {

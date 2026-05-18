@@ -28,6 +28,8 @@ import type {
 import { customInstance } from "../../mutator";
 import type { ErrorType, BodyType } from "../../mutator";
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 export type registerResponse200 = {
 	data: UserResponseDTO;
 	status: 200;
@@ -74,15 +76,16 @@ export const getRegisterQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getRegisterQueryKey(createUserDTO);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof register>>> = ({
 		signal,
-	}) => register(createUserDTO, { signal });
+	}) => register(createUserDTO, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof register>>,
@@ -113,6 +116,7 @@ export function useRegister<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -135,6 +139,7 @@ export function useRegister<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -149,6 +154,7 @@ export function useRegister<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -167,6 +173,7 @@ export function useRegister<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -228,15 +235,16 @@ export const getLoginQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getLoginQueryKey(loginRequestDTO);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof login>>> = ({
 		signal,
-	}) => login(loginRequestDTO, { signal });
+	}) => login(loginRequestDTO, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof login>>,
@@ -265,6 +273,7 @@ export function useLogin<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -287,6 +296,7 @@ export function useLogin<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -301,6 +311,7 @@ export function useLogin<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -319,6 +330,7 @@ export function useLogin<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {

@@ -28,6 +28,8 @@ import type {
 import { customInstance } from "../../mutator";
 import type { ErrorType, BodyType } from "../../mutator";
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 export type webhookResponse200 = {
 	data: void;
 	status: 200;
@@ -71,15 +73,16 @@ export const getWebhookQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getWebhookQueryKey(webhookBody);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof webhook>>> = ({
 		signal,
-	}) => webhook(webhookBody, { signal });
+	}) => webhook(webhookBody, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof webhook>>,
@@ -110,6 +113,7 @@ export function useWebhook<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -132,6 +136,7 @@ export function useWebhook<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -146,6 +151,7 @@ export function useWebhook<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -164,6 +170,7 @@ export function useWebhook<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -224,16 +231,17 @@ export const getCreateCheckoutQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getCreateCheckoutQueryKey(createCheckoutDTO);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof createCheckout>>> = ({
 		signal,
-	}) => createCheckout(createCheckoutDTO, { signal });
+	}) => createCheckout(createCheckoutDTO, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof createCheckout>>,
@@ -264,6 +272,7 @@ export function useCreateCheckout<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -286,6 +295,7 @@ export function useCreateCheckout<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -300,6 +310,7 @@ export function useCreateCheckout<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -318,6 +329,7 @@ export function useCreateCheckout<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -378,14 +390,15 @@ export const getGetMySubscriptionQueryOptions = <
 			TData
 		>
 	>;
+	request?: SecondParameter<typeof customInstance>;
 }) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetMySubscriptionQueryKey();
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof getMySubscription>>
-	> = ({ signal }) => getMySubscription({ signal });
+	> = ({ signal }) => getMySubscription({ signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getMySubscription>>,
@@ -419,6 +432,7 @@ export function useGetMySubscription<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -444,6 +458,7 @@ export function useGetMySubscription<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -461,6 +476,7 @@ export function useGetMySubscription<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -482,6 +498,7 @@ export function useGetMySubscription<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {

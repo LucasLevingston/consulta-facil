@@ -23,6 +23,8 @@ import type { UploadAvatarBody, UserResponseDTO } from "../model";
 import { customInstance } from "../../mutator";
 import type { ErrorType, BodyType } from "../../mutator";
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 export type uploadAvatarResponse200 = {
 	data: UserResponseDTO;
 	status: 200;
@@ -72,16 +74,17 @@ export const getUploadAvatarQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getUploadAvatarQueryKey(uploadAvatarBody);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof uploadAvatar>>> = ({
 		signal,
-	}) => uploadAvatar(uploadAvatarBody, { signal });
+	}) => uploadAvatar(uploadAvatarBody, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof uploadAvatar>>,
@@ -112,6 +115,7 @@ export function useUploadAvatar<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -134,6 +138,7 @@ export function useUploadAvatar<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -148,6 +153,7 @@ export function useUploadAvatar<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -166,6 +172,7 @@ export function useUploadAvatar<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -222,15 +229,16 @@ export const getGetUserByIdQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getUserById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetUserByIdQueryKey(userId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserById>>> = ({
 		signal,
-	}) => getUserById(userId, { signal });
+	}) => getUserById(userId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -266,6 +274,7 @@ export function useGetUserById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -288,6 +297,7 @@ export function useGetUserById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -302,6 +312,7 @@ export function useGetUserById<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getUserById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -320,6 +331,7 @@ export function useGetUserById<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getUserById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -376,15 +388,16 @@ export const getDeleteUserQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteUser>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getDeleteUserQueryKey(userId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof deleteUser>>> = ({
 		signal,
-	}) => deleteUser(userId, { signal });
+	}) => deleteUser(userId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -420,6 +433,7 @@ export function useDeleteUser<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -442,6 +456,7 @@ export function useDeleteUser<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -456,6 +471,7 @@ export function useDeleteUser<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteUser>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -474,6 +490,7 @@ export function useDeleteUser<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteUser>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -527,14 +544,15 @@ export const getGetCurrentUserQueryOptions = <
 	query?: Partial<
 		UseQueryOptions<Awaited<ReturnType<typeof getCurrentUser>>, TError, TData>
 	>;
+	request?: SecondParameter<typeof customInstance>;
 }) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetCurrentUserQueryKey();
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentUser>>> = ({
 		signal,
-	}) => getCurrentUser({ signal });
+	}) => getCurrentUser({ signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getCurrentUser>>,
@@ -564,6 +582,7 @@ export function useGetCurrentUser<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -585,6 +604,7 @@ export function useGetCurrentUser<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -598,6 +618,7 @@ export function useGetCurrentUser<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getCurrentUser>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -615,6 +636,7 @@ export function useGetCurrentUser<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getCurrentUser>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {

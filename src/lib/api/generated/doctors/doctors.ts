@@ -29,6 +29,8 @@ import type {
 import { customInstance } from "../../mutator";
 import type { ErrorType, BodyType } from "../../mutator";
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 export type getDoctorByIdResponse200 = {
 	data: DoctorResponseDTO;
 	status: 200;
@@ -70,15 +72,16 @@ export const getGetDoctorByIdQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getDoctorById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetDoctorByIdQueryKey(doctorId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof getDoctorById>>> = ({
 		signal,
-	}) => getDoctorById(doctorId, { signal });
+	}) => getDoctorById(doctorId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -114,6 +117,7 @@ export function useGetDoctorById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -136,6 +140,7 @@ export function useGetDoctorById<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -150,6 +155,7 @@ export function useGetDoctorById<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getDoctorById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -168,6 +174,7 @@ export function useGetDoctorById<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getDoctorById>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -231,9 +238,10 @@ export const getUpdateDoctorQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ??
@@ -241,7 +249,7 @@ export const getUpdateDoctorQueryOptions = <
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof updateDoctor>>> = ({
 		signal,
-	}) => updateDoctor(doctorId, createDoctorDTO, { signal });
+	}) => updateDoctor(doctorId, createDoctorDTO, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -278,6 +286,7 @@ export function useUpdateDoctor<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -301,6 +310,7 @@ export function useUpdateDoctor<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -316,6 +326,7 @@ export function useUpdateDoctor<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -335,6 +346,7 @@ export function useUpdateDoctor<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -395,15 +407,16 @@ export const getDeleteDoctorQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getDeleteDoctorQueryKey(doctorId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof deleteDoctor>>> = ({
 		signal,
-	}) => deleteDoctor(doctorId, { signal });
+	}) => deleteDoctor(doctorId, { signal, ...requestOptions });
 
 	return {
 		queryKey,
@@ -439,6 +452,7 @@ export function useDeleteDoctor<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -461,6 +475,7 @@ export function useDeleteDoctor<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -475,6 +490,7 @@ export function useDeleteDoctor<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -493,6 +509,7 @@ export function useDeleteDoctor<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof deleteDoctor>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -562,15 +579,16 @@ export const getGetAllDoctorsQueryOptions = <
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getAllDoctors>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetAllDoctorsQueryKey(params);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllDoctors>>> = ({
 		signal,
-	}) => getAllDoctors(params, { signal });
+	}) => getAllDoctors(params, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getAllDoctors>>,
@@ -601,6 +619,7 @@ export function useGetAllDoctors<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -623,6 +642,7 @@ export function useGetAllDoctors<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -637,6 +657,7 @@ export function useGetAllDoctors<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getAllDoctors>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -655,6 +676,7 @@ export function useGetAllDoctors<
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof getAllDoctors>>, TError, TData>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -724,16 +746,18 @@ export const getCreateDoctorProfileQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getCreateDoctorProfileQueryKey(createDoctorDTO);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof createDoctorProfile>>
-	> = ({ signal }) => createDoctorProfile(createDoctorDTO, { signal });
+	> = ({ signal }) =>
+		createDoctorProfile(createDoctorDTO, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof createDoctorProfile>>,
@@ -768,6 +792,7 @@ export function useCreateDoctorProfile<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -794,6 +819,7 @@ export function useCreateDoctorProfile<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -812,6 +838,7 @@ export function useCreateDoctorProfile<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -834,6 +861,7 @@ export function useCreateDoctorProfile<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -914,16 +942,17 @@ export const getSearchBySpecialtyQueryOptions = <
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 ) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
 		queryOptions?.queryKey ?? getSearchBySpecialtyQueryKey(params);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof searchBySpecialty>>
-	> = ({ signal }) => searchBySpecialty(params, { signal });
+	> = ({ signal }) => searchBySpecialty(params, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof searchBySpecialty>>,
@@ -958,6 +987,7 @@ export function useSearchBySpecialty<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -984,6 +1014,7 @@ export function useSearchBySpecialty<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1002,6 +1033,7 @@ export function useSearchBySpecialty<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1024,6 +1056,7 @@ export function useSearchBySpecialty<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1085,14 +1118,15 @@ export const getGetMyDoctorProfileQueryOptions = <
 			TData
 		>
 	>;
+	request?: SecondParameter<typeof customInstance>;
 }) => {
-	const { query: queryOptions } = options ?? {};
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetMyDoctorProfileQueryKey();
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof getMyDoctorProfile>>
-	> = ({ signal }) => getMyDoctorProfile({ signal });
+	> = ({ signal }) => getMyDoctorProfile({ signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getMyDoctorProfile>>,
@@ -1126,6 +1160,7 @@ export function useGetMyDoctorProfile<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1151,6 +1186,7 @@ export function useGetMyDoctorProfile<
 				>,
 				"initialData"
 			>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1168,6 +1204,7 @@ export function useGetMyDoctorProfile<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -1189,6 +1226,7 @@ export function useGetMyDoctorProfile<
 				TData
 			>
 		>;
+		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
