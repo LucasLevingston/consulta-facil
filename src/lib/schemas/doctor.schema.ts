@@ -15,6 +15,13 @@ export const doctorResponseSchema = z.object({
   rating: z.number().nullable().optional(),
   consultationCount: z.number().nullable().optional(),
   status: doctorProfileStatusSchema.nullable().optional(),
+  city: z.string().nullable().optional(),
+  state: z.string().nullable().optional(),
+  address: z.string().nullable().optional(),
+  latitude: z.number().nullable().optional(),
+  longitude: z.number().nullable().optional(),
+  clinicId: z.string().nullable().optional(),
+  clinicName: z.string().nullable().optional(),
 });
 
 export const createDoctorSchema = z.object({

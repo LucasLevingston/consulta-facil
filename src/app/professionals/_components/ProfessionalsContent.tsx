@@ -1,14 +1,19 @@
 "use client";
 
-import { Users } from "lucide-react";
+import { LayoutList, Loader2, MapIcon, Navigation, Users, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
-import PageHeader from "@/components/custom/page-header";
 import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
 import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
-import { useDoctors } from "@/hooks/api/use-doctors";
+import { DoctorsMap } from "@/components/custom/map/DoctorsMap";
+import PageHeader from "@/components/custom/page-header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useDoctors, useDoctorsNearby } from "@/hooks/api/use-doctors";
 import { QueryBoundary } from "@/providers/query-boundary";
+
+type ViewMode = "list" | "map";
 
 export default function ProfessionalsContent() {
 	const searchParams = useSearchParams();
@@ -17,10 +22,29 @@ export default function ProfessionalsContent() {
 	const minRating = Number(searchParams.get("minRating") ?? "0");
 	const minConsultations = Number(searchParams.get("minConsultations") ?? "0");
 
-	const { data, isLoading, error } = useDoctors(0, 200);
+	const [viewMode, setViewMode] = useState<ViewMode>("list");
+	const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+	const [locationLoading, setLocationLoading] = useState(false);
+	const radiusKm = 50;
+
+	const isNearbyMode = userLocation !== null;
+
+	const { data: allData, isLoading: allLoading, error: allError } = useDoctors(0, 200);
+	const { data: nearbyDoctors = [], isLoading: nearbyLoading, error: nearbyError } =
+		useDoctorsNearby(
+			userLocation?.lat ?? null,
+			userLocation?.lng ?? null,
+			radiusKm,
+			specialty || undefined
+		);
+
+	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
+	const error = isNearbyMode ? nearbyError : allError;
 
 	const filtered = useMemo(() => {
-		const all = data?.content ?? [];
+		if (isNearbyMode) return nearbyDoctors;
+
+		const all = allData?.content ?? [];
 		return all.filter((d) => {
 			if (name && !d.name?.toLowerCase().includes(name.toLowerCase())) return false;
 			if (specialty && d.specialty !== specialty) return false;
@@ -28,7 +52,28 @@ export default function ProfessionalsContent() {
 			if (minConsultations > 0 && (d.consultationCount ?? 0) < minConsultations) return false;
 			return true;
 		});
-	}, [data, name, specialty, minRating, minConsultations]);
+	}, [allData, nearbyDoctors, isNearbyMode, name, specialty, minRating, minConsultations]);
+
+	const doctorsWithLocation = filtered.filter((d) => d.latitude != null && d.longitude != null);
+
+	function requestLocation() {
+		if (!navigator.geolocation) return;
+		setLocationLoading(true);
+		navigator.geolocation.getCurrentPosition(
+			(pos) => {
+				setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+				setViewMode("map");
+				setLocationLoading(false);
+			},
+			() => {
+				setLocationLoading(false);
+			}
+		);
+	}
+
+	function clearLocation() {
+		setUserLocation(null);
+	}
 
 	return (
 		<QueryBoundary isLoading={isLoading} error={error}>
@@ -41,8 +86,81 @@ export default function ProfessionalsContent() {
 			/>
 
 			<div className="space-y-4">
-				<DoctorFilters />
-				<DoctorsList doctors={filtered} />
+				<div className="flex flex-wrap items-center justify-between gap-3">
+					<DoctorFilters />
+
+					<div className="flex items-center gap-2 shrink-0">
+						{isNearbyMode ? (
+							<Badge variant="secondary" className="gap-1.5 px-3 py-1.5 rounded-full text-sm">
+								<Navigation className="h-3.5 w-3.5 text-primary" />
+								Mais perto de você ({radiusKm}km)
+								<button
+									type="button"
+									onClick={clearLocation}
+									className="ml-0.5 hover:opacity-70 transition-opacity"
+								>
+									<X className="h-3.5 w-3.5" />
+								</button>
+							</Badge>
+						) : (
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={requestLocation}
+								disabled={locationLoading}
+								className="rounded-xl gap-2"
+							>
+								{locationLoading ? (
+									<Loader2 className="h-4 w-4 animate-spin" />
+								) : (
+									<Navigation className="h-4 w-4" />
+								)}
+								Mais perto de você
+							</Button>
+						)}
+
+						<div className="flex rounded-xl border overflow-hidden">
+							<Button
+								variant={viewMode === "list" ? "default" : "ghost"}
+								size="sm"
+								onClick={() => setViewMode("list")}
+								className="rounded-none"
+							>
+								<LayoutList className="h-4 w-4" />
+							</Button>
+							<Button
+								variant={viewMode === "map" ? "default" : "ghost"}
+								size="sm"
+								onClick={() => setViewMode("map")}
+								className="rounded-none"
+							>
+								<MapIcon className="h-4 w-4" />
+							</Button>
+						</div>
+					</div>
+				</div>
+
+				{viewMode === "map" ? (
+					<div className="space-y-3">
+						{doctorsWithLocation.length === 0 && (
+							<p className="text-sm text-muted-foreground">
+								Nenhum médico com localização cadastrada encontrado.
+							</p>
+						)}
+						<DoctorsMap
+							doctors={filtered}
+							center={
+								userLocation
+									? [userLocation.lat, userLocation.lng]
+									: undefined
+							}
+							zoom={userLocation ? 10 : 5}
+							className="h-[520px] w-full"
+						/>
+					</div>
+				) : (
+					<DoctorsList doctors={filtered} />
+				)}
 			</div>
 		</QueryBoundary>
 	);

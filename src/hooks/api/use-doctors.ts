@@ -11,6 +11,8 @@ export const doctorKeys = {
     [...doctorKeys.all, "list", { page, size }] as const,
   search: (specialty: string) => [...doctorKeys.all, "search", specialty] as const,
   detail: (id: string) => [...doctorKeys.all, id] as const,
+  nearby: (lat: number, lng: number, radiusKm: number, specialty?: string) =>
+    [...doctorKeys.all, "nearby", { lat, lng, radiusKm, specialty }] as const,
 };
 
 export function useDoctors(page = 0, size = 20) {
@@ -100,5 +102,18 @@ export function useRejectApplication() {
       queryClient.invalidateQueries({ queryKey: applicationKeys.all });
       queryClient.invalidateQueries({ queryKey: doctorKeys.all });
     },
+  });
+}
+
+export function useDoctorsNearby(
+  lat: number | null,
+  lng: number | null,
+  radiusKm = 50,
+  specialty?: string
+) {
+  return useQuery({
+    queryKey: doctorKeys.nearby(lat ?? 0, lng ?? 0, radiusKm, specialty),
+    queryFn: () => doctorsApi.getNearby(lat ?? 0, lng ?? 0, radiusKm, specialty),
+    enabled: lat !== null && lng !== null,
   });
 }

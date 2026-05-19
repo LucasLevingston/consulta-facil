@@ -2,7 +2,9 @@
 
 import Cookies from "js-cookie";
 import {
-	BadgeCheck, CalendarDays,
+	BadgeCheck,
+	Building2,
+	CalendarDays,
 	CalendarPlus,
 	ChevronsUpDown,
 	CreditCard,
@@ -11,7 +13,7 @@ import {
 	Settings,
 	User,
 	UserRound,
-	Users
+	Users,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -108,7 +110,16 @@ const doctorNav = [
 			},
 		],
 	},
-	
+	{
+		label: "Clínica",
+		items: [
+			{
+				title: "Minha Clínica",
+				url: "/dashboard/my-clinic",
+				icon: Building2,
+			},
+		],
+	},
 ];
 
 const adminNav = [
@@ -303,13 +314,20 @@ export default function AppSidebar() {
 										</DropdownMenuItem>
 										<Separator />
 										{isDoctor && (
-												
+											<>
 												<DropdownMenuItem asChild>
 													<Link href="/settings/billing">
 														<CreditCard className="mr-2 h-4 w-4" />
-														Assinatura
+														Assinatura Pro
 													</Link>
 												</DropdownMenuItem>
+												<DropdownMenuItem asChild>
+													<Link href="/settings/billing/clinic">
+														<Building2 className="mr-2 h-4 w-4" />
+														Plano Clínica
+													</Link>
+												</DropdownMenuItem>
+											</>
 										)}
 										
 									</DropdownMenuGroup>

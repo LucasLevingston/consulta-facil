@@ -62,4 +62,16 @@ export const doctorsApi = {
     const response = await api.put<DoctorResponse>(`/doctors/${doctorId}/reject`);
     return response.data;
   },
+
+  getNearby: async (
+    lat: number,
+    lng: number,
+    radiusKm = 50,
+    specialty?: string
+  ): Promise<DoctorResponse[]> => {
+    const response = await api.get<DoctorResponse[]>("/doctors/nearby", {
+      params: { lat, lng, radiusKm, specialty },
+    });
+    return response.data;
+  },
 };
