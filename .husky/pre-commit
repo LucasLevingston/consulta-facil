@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+echo ""
+echo "╔══════════════════════════════════════╗"
+echo "║        Verificações pré-commit       ║"
+echo "╚══════════════════════════════════════╝"
+echo ""
+
+# 1. Checagem de tipos TypeScript
+echo "▶ [1/4] Checagem de tipos (TypeScript)..."
+npx tsc --noEmit
+echo "✓ Sem erros de tipagem"
+echo ""
+
+# 2. Lint (só nos arquivos staged)
+echo "▶ [2/4] Lint + format (staged files)..."
+npx lint-staged
+echo "✓ Lint passou"
+echo ""
+
+# 3. Testes + cobertura
+echo "▶ [3/4] Testes com cobertura..."
+npm run test:coverage
+echo "✓ Testes passaram"
+echo ""
+
+# 4. Build
+echo "▶ [4/4] Build de produção..."
+npm run build
+echo "✓ Build concluído"
+echo ""
+
+echo "✅ Todas as verificações passaram. Commit liberado."
+echo ""
