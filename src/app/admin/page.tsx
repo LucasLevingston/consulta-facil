@@ -37,7 +37,7 @@ export default function AdminPage() {
 				isLoading={doctorQuery.isLoading}
 				error={doctorQuery.error}
 			>
-				<AppointmentsDashboard appointments={appointments} />
+				<AppointmentsDashboard appointments={appointments} userRole="ADMIN" />
 			</QueryBoundary>
 		</div>
 	);

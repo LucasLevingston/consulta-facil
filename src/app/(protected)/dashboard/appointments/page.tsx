@@ -1,10 +1,10 @@
 "use client";
 
 import { CalendarDays } from "lucide-react";
-import { useState } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
+import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
 	useDoctorAppointments,
 	usePatientAppointments,
@@ -12,20 +12,24 @@ import {
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
-const PAGE_SIZE = 20;
-
 export default function ConsultasPage() {
 	const { user } = useUserStore();
 	const userId = user?.id ?? "";
-	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
-	const [page, setPage] = useState(0);
+	const role = (user?.role ?? "PATIENT") as "PATIENT" | "DOCTOR" | "ADMIN";
+	const isDoctor = role === "DOCTOR" || role === "ADMIN";
 
-	const patientQuery = usePatientAppointments(isDoctor ? "" : userId, page, PAGE_SIZE);
-	const doctorQuery = useDoctorAppointments(isDoctor ? userId : "", page, PAGE_SIZE);
+	const doctorProfileQuery = useMyDoctorProfile(isDoctor);
+	const doctorProfileId = doctorProfileQuery.data?.id ?? "";
+
+	const patientQuery = usePatientAppointments(isDoctor ? "" : userId, 0, 200);
+	const doctorQuery = useDoctorAppointments(isDoctor ? doctorProfileId : "", 0, 200);
 
 	const query = isDoctor ? doctorQuery : patientQuery;
 	const appointments = query.data?.content ?? [];
-	const totalPages = query.data?.totalPages ?? 1;
+
+	const isLoading = isDoctor
+		? doctorProfileQuery.isLoading || doctorQuery.isLoading
+		: patientQuery.isLoading;
 
 	return (
 		<div className="space-y-6">
@@ -37,13 +41,8 @@ export default function ConsultasPage() {
 				countLabel="consulta"
 			/>
 
-			<QueryBoundary isLoading={query.isLoading} error={query.error}>
-				<AppointmentsDashboard
-					appointments={appointments}
-					totalPages={totalPages}
-					currentPage={page}
-					onPageChange={setPage}
-				/>
+			<QueryBoundary isLoading={isLoading} error={query.error}>
+				<AppointmentsDashboard appointments={appointments} userRole={role} />
 			</QueryBoundary>
 		</div>
 	);

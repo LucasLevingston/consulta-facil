@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLogin } from "@/hooks/api/auth/use-login";
 import { useRegister } from "@/hooks/api/auth/use-register";
-import { toast } from "@/hooks/use-toast";
 import type { LoginInput, RegisterInput } from "@/lib/schemas/auth.schema";
+
 import { LoginForm } from "./auth/LoginForm";
 import { RegisterForm } from "./auth/registerForm";
 
@@ -19,7 +21,7 @@ export const UserForm = () => {
 			await login.mutateAsync(values);
 			router.push("/dashboard");
 		} catch {
-			toast({ title: "E-mail ou senha incorretos.", variant: "destructive" });
+			toast.error("E-mail ou senha incorretos.");
 		}
 	}
 
@@ -29,7 +31,7 @@ export const UserForm = () => {
 			await login.mutateAsync({ email: data.email, password: data.password });
 			router.push("/auth/completar-cadastro");
 		} catch {
-			toast({ title: "Erro ao registrar usuário.", variant: "destructive" });
+			toast.error("Erro ao registrar usuário.");
 		}
 	}
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { LoginForm } from "@/components/custom/forms/auth/LoginForm";
 import { Logo } from "@/components/logo";
@@ -12,7 +13,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useLogin } from "@/hooks/api/auth/use-login";
-import { toast } from "@/hooks/use-toast";
 import type { LoginInput } from "@/lib/schemas/auth.schema";
 
 export default function LoginPage() {
@@ -22,10 +22,10 @@ export default function LoginPage() {
 	async function handleSubmit(values: LoginInput) {
 		try {
 			await login.mutateAsync(values);
-			toast({ title: "Login feito com sucesso!" });
+			toast.success("Login feito com sucesso!");
 			router.push("/dashboard");
 		} catch {
-			toast({ title: "E-mail ou senha incorretos.", variant: "destructive" });
+			toast.error("E-mail ou senha incorretos.");
 		}
 	}
 

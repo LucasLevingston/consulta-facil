@@ -1,6 +1,8 @@
 "use client";
 
 import { CalendarPlus } from "lucide-react";
+import { Suspense } from "react";
+
 import { AppointmentForm } from "@/components/custom/forms/Appointments/AppointmentForm";
 import PageHeader from "@/components/custom/page-header";
 
@@ -15,7 +17,9 @@ export default function AgendarConsultaPage() {
 
 			<div>
 				<div className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8">
-					<AppointmentForm type="create" />
+					<Suspense>
+						<AppointmentForm type="create" />
+					</Suspense>
 				</div>
 			</div>
 		</div>

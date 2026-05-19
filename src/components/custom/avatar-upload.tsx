@@ -2,10 +2,10 @@
 
 import { Camera, Loader2 } from "lucide-react";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { api } from "@/config/api";
-import { toast } from "@/hooks/use-toast";
 import { useUserStore } from "@/store/useUserStore";
 
 interface AvatarUploadProps {
@@ -33,7 +33,7 @@ export function AvatarUpload({ size = "md" }: AvatarUploadProps) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      toast({ title: "Selecione uma imagem válida.", variant: "destructive" });
+      toast.error("Selecione uma imagem válida.");
       return;
     }
 
@@ -45,9 +45,9 @@ export function AvatarUpload({ size = "md" }: AvatarUploadProps) {
         headers: { "Content-Type": "multipart/form-data" },
       });
       await loadUser();
-      toast({ title: "Foto atualizada com sucesso!" });
+      toast.success("Foto atualizada com sucesso!");
     } catch {
-      toast({ title: "Erro ao enviar a foto.", variant: "destructive" });
+      toast.error("Erro ao enviar a foto.");
     } finally {
       setUploading(false);
       e.target.value = "";

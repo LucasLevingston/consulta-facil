@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { RegisterForm } from "@/components/custom/forms/auth/registerForm";
 import { Logo } from "@/components/logo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLogin } from "@/hooks/api/auth/use-login";
 import { useRegister } from "@/hooks/api/auth/use-register";
-import { toast } from "@/hooks/use-toast";
 import type { RegisterInput } from "@/lib/schemas/auth.schema";
 
 export default function RegisterPage() {
@@ -19,13 +19,10 @@ export default function RegisterPage() {
 		try {
 			await register.mutateAsync(data);
 			await login.mutateAsync({ email: data.email, password: data.password });
-			toast({ title: "Usuário registrado com sucesso!" });
+			toast.success("Usuário registrado com sucesso!");
 			router.push("/auth/completar-cadastro");
 		} catch {
-			toast({
-				title: "Erro ao registrar usuário. Tente novamente.",
-				variant: "destructive",
-			});
+			toast.error("Erro ao registrar usuário. Tente novamente.");
 		}
 	}
 

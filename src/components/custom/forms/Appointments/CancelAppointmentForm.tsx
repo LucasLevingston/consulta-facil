@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type { z } from "zod";
 
 import CustomFormField, {
@@ -11,7 +12,6 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCancelAppointment } from "@/hooks/api/use-appointments";
-import { toast } from "@/hooks/use-toast";
 import { cancelAppointmentSchema, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 interface CancelAppointmentFormProps {
@@ -39,12 +39,9 @@ export function CancelAppointmentForm({
 			setOpen(false);
 			form.reset();
 		} catch (error: unknown) {
-			toast({
-				title:
-					(error instanceof Error ? error.message : null) ??
-					"Erro ao cancelar consulta.",
-				variant: "destructive",
-			});
+			toast.error(
+				(error instanceof Error ? error.message : null) ?? "Erro ao cancelar consulta.",
+			);
 		}
 	};
 

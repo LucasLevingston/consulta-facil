@@ -1,4 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
+
 import {
   Card,
   CardContent,
@@ -7,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
 import type { UserResponse } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 import { CustomButton } from "../custom-button";
@@ -108,7 +109,7 @@ export const PlanCard = ({
 							if (user?.id) {
 								handleCheckout(isYearly ? priceIdYearly : priceIdMonthly, true);
 							} else {
-								toast({ title: "Please login or sign up to purchase" });
+								toast.info("Please login or sign up to purchase");
 
 								//   , {
 								//   description: "You must be logged in to make a purchase",
