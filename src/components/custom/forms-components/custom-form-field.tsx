@@ -19,6 +19,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn, getLabelByFormName, getPlaceholderByFormName } from "@/lib/utils";
 export enum FormFieldType {
@@ -42,6 +43,7 @@ interface CustomFormFieldProps {
 	disabled?: boolean;
 	children?: React.ReactNode;
 	className?: string;
+	selectOptions?: { value: string; label: string }[];
 }
 
 export default function CustomFormField({
@@ -54,6 +56,7 @@ export default function CustomFormField({
 	disabled,
 	children,
 	className,
+	selectOptions,
 }: CustomFormFieldProps) {
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -136,18 +139,31 @@ export default function CustomFormField({
 						</FormControl>
 					)}
 
-					{fieldType === FormFieldType.SELECT && children && (
-						<FormControl>
-							<select
-								disabled={disabled}
-								className="h-12 w-full appearance-none rounded-xl border border-border bg-bg-input px-4 text-sm text-foreground focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
-								{...field}
-							>
-								<option value="">{finalPlaceholder}</option>
-								{children}
-							</select>
-						</FormControl>
-					)}
+				{fieldType === FormFieldType.SELECT && (
+	<Select
+		disabled={disabled}
+		onValueChange={field.onChange}
+		defaultValue={field.value || selectOptions?.[0]?.value}
+		
+
+	>
+		<FormControl>
+			<SelectTrigger className="h-12 w-full rounded-xl border-border bg-bg-input">
+				<SelectValue placeholder={finalPlaceholder} />
+			</SelectTrigger>
+		</FormControl>
+
+		<SelectContent className="rounded-xl border-border " >
+			<SelectGroup >
+				{selectOptions?.map((option) => (
+					<SelectItem key={option.value} value={option.value}>
+						{option.label}
+					</SelectItem>
+				))}
+			</SelectGroup>
+		</SelectContent>
+	</Select>
+)}
 
 					{fieldType === FormFieldType.DATE_PICKER && (
 						<FormControl>

@@ -9,6 +9,7 @@ export const patientProfileSchema = z.object({
   cpf: z.string().nullable().optional(),
   birthDate: z.string().nullable().optional(),
   gender: z.enum(["MALE", "FEMALE", "OTHER"]).nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
   occupation: z.string().nullable().optional(),
   createdAt: z.string().nullable().optional(),
   updatedAt: z.string().nullable().optional(),

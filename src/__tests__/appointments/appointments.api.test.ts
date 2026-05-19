@@ -11,6 +11,7 @@ import { appointmentKeys } from "@/hooks/api/use-appointments";
 const mockGet = vi.mocked(api.get);
 const mockPost = vi.mocked(api.post);
 const mockPut = vi.mocked(api.put);
+const mockDelete = vi.mocked(api.delete);
 
 const appointment = {
   id: "a-1",
@@ -34,6 +35,25 @@ describe("appointmentsApi", () => {
     expect(result.content).toHaveLength(1);
   });
 
+  it("getById — chama GET /appointments/:id e retorna a consulta", async () => {
+    mockGet.mockResolvedValueOnce({ data: appointment });
+
+    const result = await appointmentsApi.getById("a-1");
+
+    expect(mockGet).toHaveBeenCalledWith("/appointments/a-1");
+    expect(result.id).toBe("a-1");
+    expect(result.status).toBe("PENDING");
+  });
+
+  it("getByDoctor — chama GET /appointments/doctor/:id com paginação", async () => {
+    mockGet.mockResolvedValueOnce({ data: page });
+
+    const result = await appointmentsApi.getByDoctor("d-1", 0, 20);
+
+    expect(mockGet).toHaveBeenCalledWith("/appointments/doctor/d-1", { params: { page: 0, size: 20 } });
+    expect(result.totalElements).toBe(1);
+  });
+
   it("schedule — chama POST /appointments e retorna a consulta criada", async () => {
     mockPost.mockResolvedValueOnce({ data: appointment });
 
@@ -46,6 +66,16 @@ describe("appointmentsApi", () => {
     expect(result.status).toBe("PENDING");
   });
 
+  it("confirm — chama PUT /appointments/:id/confirm e retorna confirmada", async () => {
+    const confirmed = { ...appointment, status: "CONFIRMED" as const };
+    mockPut.mockResolvedValueOnce({ data: confirmed });
+
+    const result = await appointmentsApi.confirm("a-1");
+
+    expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/confirm");
+    expect(result.status).toBe("CONFIRMED");
+  });
+
   it("cancel — chama PUT /appointments/:id/cancel com o motivo", async () => {
     const canceled = { ...appointment, status: "CANCELED" as const };
     mockPut.mockResolvedValueOnce({ data: canceled });
@@ -55,11 +85,33 @@ describe("appointmentsApi", () => {
     expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/cancel", { cancellationReason: "Viagem" });
     expect(result.status).toBe("CANCELED");
   });
+
+  it("complete — chama PUT /appointments/:id/complete e retorna concluída", async () => {
+    const completed = { ...appointment, status: "COMPLETED" as const };
+    mockPut.mockResolvedValueOnce({ data: completed });
+
+    const result = await appointmentsApi.complete("a-1");
+
+    expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/complete");
+    expect(result.status).toBe("COMPLETED");
+  });
+
+  it("delete — chama DELETE /appointments/:id", async () => {
+    mockDelete.mockResolvedValueOnce({ data: undefined });
+
+    await appointmentsApi.delete("a-1");
+
+    expect(mockDelete).toHaveBeenCalledWith("/appointments/a-1");
+  });
 });
 
 describe("appointmentKeys", () => {
   it("byPatient gera a query key correta", () => {
     expect(appointmentKeys.byPatient("p-1")).toEqual(["appointments", "patient", "p-1"]);
+  });
+
+  it("byDoctor gera a query key correta", () => {
+    expect(appointmentKeys.byDoctor("d-1")).toEqual(["appointments", "doctor", "d-1"]);
   });
 
   it("detail gera a query key correta", () => {

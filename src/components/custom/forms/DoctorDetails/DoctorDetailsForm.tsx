@@ -8,7 +8,6 @@ import type { z } from "zod";
 import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { SelectItem } from "@/components/ui/select";
 import { useCreateDoctor, useUpdateDoctor } from "@/hooks/api/use-doctors";
 import { toast } from "@/hooks/use-toast";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
@@ -114,13 +113,8 @@ function DoctorDetailsForm({
 							name="gender"
 							fieldType={FormFieldType.SELECT}
 							label="Gênero"
-						>
-							{GenderOptions.map((option) => (
-								<option key={option.value} value={option.value}>
-									{option.label}
-								</option>
-							))}
-						</CustomFormField>
+							selectOptions={GenderOptions}
+						/>
 					</div>
 
 					<div className="flex flex-col gap-6 xl:flex-row">
@@ -150,13 +144,11 @@ function DoctorDetailsForm({
 							form={form}
 							name="specialty"
 							fieldType={FormFieldType.SELECT}
-						>
-							{specialties.map((speciality) => (
-								<SelectItem key={speciality} value={speciality}>
-									{speciality}
-								</SelectItem>
-							))}
-						</CustomFormField>
+							selectOptions={specialties.map((specialty) => ({
+								value: specialty,
+								label: specialty,
+							}))}
+						/>
 
 						<CustomFormField
 							form={form}

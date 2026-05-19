@@ -20,7 +20,7 @@ export function QueryBoundary({
    }
 
    if (error) {
-      return <div className={className}>Erro ao carregar dados</div>;
+      return <div className={cn(className, "flex flex-col items-center justify-center p-6 text-destructive")}>Erro ao carregar dados</div>;
    }
 
    return (<PageLayout className={cn(className, "")}>

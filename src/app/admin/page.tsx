@@ -20,8 +20,8 @@ export default function AdminPage() {
 	const appointments = doctorQuery.data?.content ?? [];
 
 	useEffect(() => {
-		if (!isAuthenticated) router.push("/auth");
-	}, [isAuthenticated, router]);
+		if (!isAuthenticated || user?.role !== "ADMIN") router.push("/auth");
+	}, [isAuthenticated, user?.role, router]);
 
 	return (
 		<div className="space-y-6">

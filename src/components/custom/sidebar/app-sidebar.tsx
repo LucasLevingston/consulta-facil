@@ -2,19 +2,16 @@
 
 import Cookies from "js-cookie";
 import {
-	BadgeCheck,
-	Bell,
-	CalendarDays,
+	BadgeCheck, CalendarDays,
 	CalendarPlus,
 	ChevronsUpDown,
 	CreditCard,
-	FileText,
 	Home,
 	LogOut,
 	Settings,
 	User,
 	UserRound,
-	Users,
+	Users
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -30,6 +27,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import {
 	Sidebar,
 	SidebarContent,
@@ -46,28 +44,109 @@ import {
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
 
-const patientNav = [
-	{ title: "Início", url: "/dashboard", icon: Home },
-	{ title: "Minhas Consultas", url: "/dashboard/appointments", icon: CalendarDays },
-	{ title: "Agendar Consulta", url: "/dashboard/appointments/create", icon: CalendarPlus },
-	{ title: "Profissionais", url: "/professionals", icon: Users },
-];
+const defaultNav =[
+	{
+		label: "Home",
+		items:[
+			{
+				title: "Dashboard",
+				url: "/dashboard",
+				icon: Home,
+				tooltip: "Visão geral da sua conta e atividades recentes"
+			},
+			{
+				title: "Profissionais",
+				url: "/professionals",
+				icon: Users,
+				tooltip: "Profissionais cadastrados na plataforma"
+			}
+		]
+	}
+]
 
-const patientSecondaryNav = [
-	{ title: "Meu Perfil", url: "/dashboard/profile", icon: User },
-	{ title: "Configurações", url: "/settings", icon: Settings },
+const patientNav = [
+	{
+		label: "Consultas",
+		items: [
+			{
+				title: "Minhas Consultas",
+				url: "/dashboard/appointments",
+				icon: CalendarDays,
+			},
+			{
+				title: "Agendar Consulta",
+				url: "/dashboard/appointments/create",
+				icon: CalendarPlus,
+			},
+		],
+	},
 ];
 
 const doctorNav = [
-	{ title: "Início", url: "/dashboard", icon: Home },
-	{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
-	{ title: "Prontuários", url: "/dashboard/records", icon: FileText },
-	{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+	{
+		label: "Consultas",
+		items: [
+			{
+				title: "Consultas",
+				url: "/dashboard/appointments",
+				icon: CalendarDays,
+			},
+			{
+				title: "Agendar Consulta",
+				url: "/dashboard/appointments/create",
+				icon: CalendarPlus,
+			},
+		],
+	},
+	{
+		label: "Pacientes",
+		items: [
+			{
+				title: "Pacientes",
+				url: "/dashboard/patients",
+				icon: UserRound,
+			},
+		],
+	},
+	
 ];
 
-const doctorSecondaryNav = [
-	{ title: "Meu Perfil", url: "/dashboard/profile", icon: User },
-	{ title: "Configurações", url: "/settings", icon: Settings },
+const adminNav = [
+	{
+		label: "Administração",
+		items: [
+			{
+				title: "Consultas",
+				url: "/dashboard/appointments",
+				icon: CalendarDays,
+			},
+			{
+				title: "Pacientes",
+				url: "/dashboard/patients",
+				icon: BadgeCheck,
+			},
+			{
+				title: "Admin Dashboard",
+				url: "/admin",
+				icon: Settings,
+			},
+		],
+	},
+	{
+		label: "Conta",
+		items: [
+			{
+				title: "Meu Perfil",
+				url: "/dashboard/profile",
+				icon: User,
+			},
+			{
+				title: "Configurações",
+				url: "/settings",
+				icon: Settings,
+			},
+		],
+	},
 ];
 
 export default function AppSidebar() {
@@ -83,13 +162,20 @@ export default function AppSidebar() {
 
 	if (!mounted) return null;
 
-	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
-	const mainNav = isDoctor ? doctorNav : patientNav;
-	const secondaryNav = isDoctor ? doctorSecondaryNav : patientSecondaryNav;
+	const isDoctor = user?.role === "DOCTOR";
+	const isAdmin = user?.role === "ADMIN";
+
+	const roleNav = isAdmin ? adminNav : isDoctor ? doctorNav : patientNav;
+	const navigation = [...defaultNav, ...roleNav];
 
 	const initials = user?.name
-		? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
-		: user?.email?.slice(0, 2).toUpperCase() ?? "CF";
+		? user.name
+				.split(" ")
+				.map((n) => n[0])
+				.join("")
+				.slice(0, 2)
+				.toUpperCase()
+		: (user?.email?.slice(0, 2).toUpperCase() ?? "CF");
 
 	const displayName = user?.name ?? user?.email ?? "Usuário";
 
@@ -113,49 +199,32 @@ export default function AppSidebar() {
 			</SidebarHeader>
 
 			<SidebarContent>
-				<SidebarGroup>
-					<SidebarGroupLabel>
-						{isDoctor ? "Médico" : "Paciente"}
-					</SidebarGroupLabel>
-					<SidebarMenu>
-						{mainNav.map((item) => (
-							<SidebarMenuItem key={item.title}>
-								<SidebarMenuButton
-									asChild
-									tooltip={item.title}
-									isActive={isActive(item.url)}
-								>
-									<Link href={item.url} className="flex items-center gap-2">
-										<item.icon className="h-4 w-4" />
-										<span>{item.title}</span>
-									</Link>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
-						))}
-					</SidebarMenu>
-				</SidebarGroup>
+				{navigation.map((group) => (
+					<React.Fragment key={group.label}>
+						<SidebarGroup>
+							<SidebarGroupLabel>{group.label}</SidebarGroupLabel>
 
-				<SidebarSeparator />
+							<SidebarMenu>
+								{group.items.map((item) => (
+									<SidebarMenuItem key={item.title}>
+										<SidebarMenuButton
+											asChild
+											tooltip={item.title}
+											isActive={isActive(item.url)}
+										>
+											<Link href={item.url} className="flex items-center gap-2">
+												<item.icon className="h-4 w-4" />
+												<span>{item.title}</span>
+											</Link>
+										</SidebarMenuButton>
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarGroup>
 
-				<SidebarGroup>
-					<SidebarGroupLabel>Conta</SidebarGroupLabel>
-					<SidebarMenu>
-						{secondaryNav.map((item) => (
-							<SidebarMenuItem key={item.title}>
-								<SidebarMenuButton
-									asChild
-									tooltip={item.title}
-									isActive={isActive(item.url)}
-								>
-									<Link href={item.url} className="flex items-center gap-2">
-										<item.icon className="h-4 w-4" />
-										<span>{item.title}</span>
-									</Link>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
-						))}
-					</SidebarMenu>
-				</SidebarGroup>
+						<SidebarSeparator />
+					</React.Fragment>
+				))}
 			</SidebarContent>
 
 			<SidebarFooter>
@@ -169,7 +238,10 @@ export default function AppSidebar() {
 										className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 									>
 										<Avatar className="h-8 w-8 rounded-lg border border-primary/30">
-											<AvatarImage src={user.imageUrl ?? undefined} alt={displayName} />
+											<AvatarImage
+												src={user.imageUrl ?? undefined}
+												alt={displayName}
+											/>
 											<AvatarFallback className="rounded-lg bg-primary/15 text-xs font-bold text-primary">
 												{initials}
 											</AvatarFallback>
@@ -195,14 +267,21 @@ export default function AppSidebar() {
 									<DropdownMenuLabel className="p-0 font-normal">
 										<div className="flex items-center gap-2 px-2 py-2">
 											<Avatar className="h-8 w-8 rounded-lg border border-primary/30">
-												<AvatarImage src={user.imageUrl ?? undefined} alt={displayName} />
+												<AvatarImage
+													src={user.imageUrl ?? undefined}
+													alt={displayName}
+												/>
 												<AvatarFallback className="rounded-lg bg-primary/15 text-xs font-bold text-primary">
 													{initials}
 												</AvatarFallback>
 											</Avatar>
 											<div className="grid flex-1 text-left text-sm leading-tight">
-												<span className="truncate text-xs font-medium">{displayName}</span>
-												<span className="truncate text-xs text-muted-foreground">{user.email}</span>
+												<span className="truncate text-xs font-medium">
+													{displayName}
+												</span>
+												<span className="truncate text-xs text-muted-foreground">
+													{user.email}
+												</span>
 											</div>
 										</div>
 									</DropdownMenuLabel>
@@ -218,20 +297,21 @@ export default function AppSidebar() {
 										</DropdownMenuItem>
 										<DropdownMenuItem asChild>
 											<Link href="/settings">
-												<BadgeCheck className="mr-2 h-4 w-4" />
-												Conta
+												<Settings className="mr-2 h-4 w-4" />
+												Configurações
 											</Link>
 										</DropdownMenuItem>
-										<DropdownMenuItem asChild>
-											<Link href="/settings/billing">
-												<CreditCard className="mr-2 h-4 w-4" />
-												Assinatura
-											</Link>
-										</DropdownMenuItem>
-										<DropdownMenuItem disabled>
-											<Bell className="mr-2 h-4 w-4" />
-											Notificações
-										</DropdownMenuItem>
+										<Separator />
+										{isDoctor && (
+												
+												<DropdownMenuItem asChild>
+													<Link href="/settings/billing">
+														<CreditCard className="mr-2 h-4 w-4" />
+														Assinatura
+													</Link>
+												</DropdownMenuItem>
+										)}
+										
 									</DropdownMenuGroup>
 
 									<DropdownMenuSeparator />

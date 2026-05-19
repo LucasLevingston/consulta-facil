@@ -2,63 +2,68 @@
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CalendarDays, FileText, Search, User, UserRound } from "lucide-react";
+import {
+	CalendarDays,
+	ChevronLeft,
+	ChevronRight, Search,
+	User,
+	UserRound
+} from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-
+import { useEffect, useState } from "react";
+import { CustomButton } from "@/components/custom/custom-button";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useDoctorAppointments } from "@/hooks/api/use-appointments";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { useDoctorPatients } from "@/hooks/api/use-patients";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
 type SortOption = "name" | "recent";
 
+const PAGE_SIZE = 20;
+
 export default function PatientsPage() {
 	const { user } = useUserStore();
 	const doctorId = user?.id ?? "";
 
-	const { data, isLoading, error } = useDoctorAppointments(doctorId, 0, 200);
-
 	const [search, setSearch] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [sort, setSort] = useState<SortOption>("recent");
+	const [page, setPage] = useState(0);
 
-	const patients = useMemo(() => {
-		const map = new Map<
-			string,
-			{ id: string; name: string; lastAppointment: string; totalAppointments: number }
-		>();
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+			setPage(0);
+		}, 400);
+		return () => clearTimeout(timer);
+	}, [search]);
 
-		for (const a of data?.content ?? []) {
-			const existing = map.get(a.patientId);
-			if (!existing) {
-				map.set(a.patientId, {
-					id: a.patientId,
-					name: a.patientName ?? "Paciente",
-					lastAppointment: a.scheduledAt,
-					totalAppointments: 1,
-				});
-			} else {
-				existing.totalAppointments += 1;
-				if (new Date(a.scheduledAt) > new Date(existing.lastAppointment)) {
-					existing.lastAppointment = a.scheduledAt;
-				}
-			}
-		}
+	const { data, isLoading, error } = useDoctorPatients(doctorId, {
+		page,
+		size: PAGE_SIZE,
+		search: debouncedSearch,
+		sort,
+	});
 
-		let result = Array.from(map.values()).filter((p) =>
-			p.name.toLowerCase().includes(search.toLowerCase()),
-		);
+	const patients = data?.content ?? [];
+	const totalPages = data?.totalPages ?? 0;
+	const totalElements = data?.totalElements ?? 0;
 
-		if (sort === "name") result = result.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
-		else result = result.sort((a, b) => new Date(b.lastAppointment).getTime() - new Date(a.lastAppointment).getTime());
-
-		return result;
-	}, [data, search, sort]);
+	function handleSortChange(value: SortOption) {
+		setSort(value);
+		setPage(0);
+	}
 
 	return (
 		<div className="space-y-6">
@@ -66,7 +71,7 @@ export default function PatientsPage() {
 				title="Pacientes"
 				description="Lista de pacientes com consultas agendadas com você."
 				icon={<UserRound className="h-6 w-6" />}
-				count={patients.length}
+				count={totalElements}
 				countLabel="paciente"
 			/>
 
@@ -82,7 +87,10 @@ export default function PatientsPage() {
 						/>
 					</div>
 
-					<Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
+					<Select
+						value={sort}
+						onValueChange={(v) => handleSortChange(v as SortOption)}
+					>
 						<SelectTrigger className="w-full rounded-xl sm:w-[180px]">
 							<SelectValue placeholder="Ordenar por" />
 						</SelectTrigger>
@@ -95,12 +103,17 @@ export default function PatientsPage() {
 
 				{patients.length === 0 ? (
 					<div className="flex h-48 items-center justify-center rounded-2xl border border-dashed border-border">
-						<p className="text-sm text-muted-foreground">Nenhum paciente encontrado.</p>
+						<p className="text-sm text-muted-foreground">
+							Nenhum paciente encontrado.
+						</p>
 					</div>
 				) : (
 					<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 						{patients.map((p) => (
-							<Card key={p.id} className="border-border transition-shadow hover:shadow-md">
+							<Card
+								key={p.id}
+								className="border-border transition-shadow hover:shadow-md"
+							>
 								<CardContent className="p-5">
 									<div className="flex items-start gap-4">
 										<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
@@ -108,7 +121,9 @@ export default function PatientsPage() {
 										</div>
 
 										<div className="min-w-0 flex-1">
-											<p className="truncate font-semibold text-foreground">{p.name}</p>
+											<p className="truncate font-semibold text-foreground">
+												{p.name}
+											</p>
 
 											<div className="mt-1.5 flex flex-wrap gap-2">
 												<Badge variant="secondary" className="gap-1 text-xs">
@@ -120,28 +135,52 @@ export default function PatientsPage() {
 
 											<p className="mt-2 text-xs text-muted-foreground">
 												Última:{" "}
-												{format(new Date(p.lastAppointment), "dd/MM/yyyy", { locale: ptBR })}
+												{format(new Date(p.lastAppointment), "dd/MM/yyyy", {
+													locale: ptBR,
+												})}
 											</p>
 										</div>
 									</div>
 
 									<div className="mt-4 flex gap-2">
-										<Button variant="outline" size="sm" className="flex-1 rounded-xl gap-1.5" asChild>
-											<Link href={`/dashboard/records?patient=${p.id}`}>
-												<FileText className="h-3.5 w-3.5" />
-												Prontuário
+										<CustomButton
+											asChild
+										>
+											<Link href={`/dashboard/patients/${p.id}`}>
+												<User  />
+												Ver perfil
 											</Link>
-										</Button>
-										<Button variant="outline" size="sm" className="flex-1 rounded-xl gap-1.5" asChild>
-											<Link href={`/dashboard/appointments?patient=${p.id}`}>
-												<CalendarDays className="h-3.5 w-3.5" />
-												Consultas
-											</Link>
-										</Button>
+										</CustomButton>
 									</div>
 								</CardContent>
 							</Card>
 						))}
+					</div>
+				)}
+
+				{totalPages > 1 && (
+					<div className="flex items-center justify-center gap-2 pt-2">
+						<Button
+							variant="outline"
+							size="icon"
+							className="h-8 w-8 rounded-xl"
+							disabled={page === 0}
+							onClick={() => setPage((p) => p - 1)}
+						>
+							<ChevronLeft className="h-4 w-4" />
+						</Button>
+						<span className="text-sm text-muted-foreground">
+							Página {page + 1} de {totalPages}
+						</span>
+						<Button
+							variant="outline"
+							size="icon"
+							className="h-8 w-8 rounded-xl"
+							disabled={page >= totalPages - 1}
+							onClick={() => setPage((p) => p + 1)}
+						>
+							<ChevronRight className="h-4 w-4" />
+						</Button>
 					</div>
 				)}
 			</QueryBoundary>

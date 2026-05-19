@@ -1,7 +1,9 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+import { env } from "@/env";
 
 export const api = axios.create({
-   baseURL: process.env.NEXT_PUBLIC_API_URL || "/api",
+   baseURL: env.NEXT_PUBLIC_API_URL || "/api",
 });
 
 api.interceptors.request.use(
@@ -22,8 +24,12 @@ api.interceptors.response.use(
    (response) => response,
    (error) => {
       if (typeof window !== "undefined" && error.response?.status === 401) {
+         // Clear all stored credentials so the middleware redirects on the next navigation.
+         // Do NOT use window.location.href here — it aborts in-flight RSC fetches
+         // and causes "Failed to fetch RSC payload" errors in Next.js App Router.
          localStorage.removeItem("authToken");
-         window.location.href = "/auth/login";
+         Cookies.remove("auth_token");
+         Cookies.remove("token");
       }
       return Promise.reject(error);
    },

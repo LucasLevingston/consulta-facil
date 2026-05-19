@@ -1,10 +1,25 @@
 import { api } from "@/config/api";
+import type { ApiPage } from "@/lib/schemas/doctor.schema";
 import type {
   MedicalRecord,
   PatientProfile,
   UpdateMedicalRecordInput,
   UpdatePatientInput,
 } from "@/lib/schemas/patient.schema";
+
+export interface PatientSummary {
+  id: string;
+  name: string;
+  lastAppointment: string;
+  totalAppointments: number;
+}
+
+export interface DoctorPatientsParams {
+  page?: number;
+  size?: number;
+  search?: string;
+  sort?: "name" | "recent";
+}
 
 export const patientsApi = {
   getMyProfile: async (): Promise<PatientProfile> => {
@@ -38,6 +53,17 @@ export const patientsApi = {
     const response = await api.put<MedicalRecord>(
       `/patients/${userId}/medical-records`,
       data,
+    );
+    return response.data;
+  },
+
+  getDoctorPatients: async (
+    doctorId: string,
+    params: DoctorPatientsParams,
+  ): Promise<ApiPage<PatientSummary>> => {
+    const response = await api.get<ApiPage<PatientSummary>>(
+      `/patients/doctor/${doctorId}`,
+      { params },
     );
     return response.data;
   },

@@ -6,30 +6,27 @@ import {
 	BadgeCheck,
 	Calendar,
 	CalendarDays,
-	Camera,
 	FileText,
-	Mail, Pencil,
+	Mail,
+	Pencil,
 	Phone,
 	Settings,
 	Shield,
-	User
+	User,
 } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarUpload } from "@/components/custom/avatar-upload";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/config/api";
 import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
 	useDoctorAppointments,
 	usePatientAppointments,
 } from "@/hooks/api/use-appointments";
 import { useMyProfile } from "@/hooks/api/use-patients";
-import { toast } from "@/hooks/use-toast";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -63,16 +60,14 @@ function InfoRow({
 }
 
 export default function ProfilePage() {
-	const { user, loadUser } = useUserStore();
-	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [uploading, setUploading] = useState(false);
+	const { user } = useUserStore();
 
 	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
 
 	const patientQuery = usePatientAppointments(isDoctor ? "" : (user?.id ?? ""));
 	const doctorQuery = useDoctorAppointments(isDoctor ? (user?.id ?? "") : "");
 	const doctorProfile = useMyDoctorProfile(isDoctor);
-	const patientProfile = useMyProfile();
+	const patientProfile = useMyProfile(!isDoctor);
 
 	const appointments = isDoctor
 		? (doctorQuery.data?.content ?? [])
@@ -90,38 +85,6 @@ export default function ProfilePage() {
 		);
 
 	const nextAppointment = upcoming[0];
-
-	const initials = user?.name
-		? user.name
-				.split(" ")
-				.map((n) => n[0])
-				.join("")
-				.slice(0, 2)
-				.toUpperCase()
-		: (user?.email?.slice(0, 2).toUpperCase() ?? "CF");
-
-	const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (!file) return;
-		if (!file.type.startsWith("image/")) {
-			toast({ title: "Selecione uma imagem válida.", variant: "destructive" });
-			return;
-		}
-		const formData = new FormData();
-		formData.append("file", file);
-		setUploading(true);
-		try {
-			await api.post("/users/me/avatar", formData, {
-				headers: { "Content-Type": "multipart/form-data" },
-			});
-			await loadUser();
-			toast({ title: "Foto atualizada com sucesso!" });
-		} catch {
-			toast({ title: "Erro ao enviar a foto.", variant: "destructive" });
-		} finally {
-			setUploading(false);
-		}
-	};
 
 	if (!user) {
 		return (
@@ -141,29 +104,7 @@ export default function ProfilePage() {
 				</div>
 				<CardContent className="relative pt-0 pb-6 px-6">
 					<div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-12">
-						<div className="relative w-fit">
-							<Avatar className="size-24 rounded-2xl border-4 border-card shadow-lg">
-								<AvatarImage src={user.imageUrl ?? undefined} alt={user.name} />
-								<AvatarFallback className="rounded-2xl bg-primary/15 text-primary font-bold text-2xl">
-									{initials}
-								</AvatarFallback>
-							</Avatar>
-							<button
-								type="button"
-								onClick={() => fileInputRef.current?.click()}
-								disabled={uploading}
-								className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-card bg-primary text-primary-foreground shadow hover:opacity-90 transition-opacity disabled:opacity-50"
-							>
-								<Camera className="h-3.5 w-3.5" />
-							</button>
-							<input
-								ref={fileInputRef}
-								type="file"
-								accept="image/*"
-								className="hidden"
-								onChange={handleAvatarUpload}
-							/>
-						</div>
+						<AvatarUpload size="lg" />
 
 						<div className="flex gap-2 sm:mb-1">
 							<Button
