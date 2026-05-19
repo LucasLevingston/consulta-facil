@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+export const doctorProfileStatusSchema = z.enum(["PENDING_REVIEW", "ACTIVE", "REJECTED"]);
+export type DoctorProfileStatus = z.infer<typeof doctorProfileStatusSchema>;
+
 export const doctorResponseSchema = z.object({
   id: z.string(),
   userId: z.string(),
@@ -11,6 +14,7 @@ export const doctorResponseSchema = z.object({
   imageUrl: z.string().nullable().optional(),
   rating: z.number().nullable().optional(),
   consultationCount: z.number().nullable().optional(),
+  status: doctorProfileStatusSchema.nullable().optional(),
 });
 
 export const createDoctorSchema = z.object({
