@@ -1,16 +1,17 @@
 "use client";
 
-import { FileCheck, Mail, Phone, Stethoscope } from "lucide-react";
+import { FileCheck, Mail, Phone, Star, Stethoscope } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { CustomButton } from "../custom-button";
@@ -35,7 +36,10 @@ export default function DoctorCard({
 				.toUpperCase()
 		: "Dr";
 
-    return (
+	const rating = doctor.rating ?? null;
+	const consultationCount = doctor.consultationCount ?? 0;
+
+	return (
 		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200">
 			<CardHeader className="flex flex-row items-center gap-4 pb-3">
 				<Avatar className="size-14 rounded-xl border border-border">
@@ -57,6 +61,15 @@ export default function DoctorCard({
 			</CardHeader>
 
 			<CardContent className="grid gap-2 flex-1 pb-3">
+				{rating !== null && (
+					<div className="flex items-center gap-2 text-sm">
+						<Star className="size-3.5 shrink-0 fill-amber-400 text-amber-400" />
+						<span className="font-medium text-foreground">{rating.toFixed(1)}</span>
+						<span className="text-muted-foreground">
+							· {consultationCount} consulta{consultationCount !== 1 ? "s" : ""}
+						</span>
+					</div>
+				)}
 				{doctor.phone && (
 					<div className="flex items-center gap-2 text-sm text-muted-foreground">
 						<Phone className="size-3.5 shrink-0" />
@@ -82,9 +95,7 @@ export default function DoctorCard({
 					<CustomButton
 						className="w-full"
 						onClick={() =>
-							router.push(
-								`/dashboard/appointments/create?doctorid=${doctor.id}`,
-							)
+							router.push(`/dashboard/appointments/create?doctorid=${doctor.id}`)
 						}
 					>
 						<Stethoscope className="size-4" />

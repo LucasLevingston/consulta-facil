@@ -1,66 +1,170 @@
 "use client";
 
 import {
-	CalendarCheck,
-	CalendarClock,
+	ArrowRight,
+	BadgeCheck,
 	CalendarDays,
-	Clock,
+	CalendarPlus,
+	CreditCard,
+	LayoutDashboard,
 	Stethoscope,
+	User,
+	UserRound,
 } from "lucide-react";
 import Link from "next/link";
-import { CustomButton } from "@/components/custom/custom-button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
-import {
-	useCompleteAppointment,
-	useConfirmAppointment,
-	useDoctorAppointments,
-	usePatientAppointments,
-} from "@/hooks/api/use-appointments";
-import { toast } from "@/hooks/use-toast";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import { QueryBoundary } from "@/providers/query-boundary";
-import { AppointmentsList } from "./appointments-list";
-import { StatCard } from "./stat-card";
+
+interface QuickCard {
+	title: string;
+	description: string;
+	href: string;
+	icon: React.ElementType;
+	accent: string;
+}
+
+function QuickAccessCard({ title, description, href, icon: Icon, accent }: QuickCard) {
+	return (
+		<Link href={href} className="group block">
+			<Card className="h-full border-border transition-all hover:border-primary/40 hover:shadow-md">
+				<CardContent className="flex items-start gap-4 p-5">
+					<div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent}`}>
+						<Icon className="h-5 w-5" />
+					</div>
+					<div className="min-w-0 flex-1">
+						<p className="font-semibold text-foreground">{title}</p>
+						<p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
+					</div>
+					<ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+				</CardContent>
+			</Card>
+		</Link>
+	);
+}
+
+const patientCards: QuickCard[] = [
+	{
+		title: "Minhas Consultas",
+		description: "Veja o histórico e status das suas consultas.",
+		href: "/dashboard/appointments",
+		icon: CalendarDays,
+		accent: "bg-primary/10 text-primary",
+	},
+	{
+		title: "Agendar Consulta",
+		description: "Escolha um médico e agende um horário.",
+		href: "/dashboard/appointments/create",
+		icon: CalendarPlus,
+		accent: "bg-green-500/10 text-green-500",
+	},
+	{
+		title: "Profissionais",
+		description: "Explore médicos cadastrados na plataforma.",
+		href: "/professionals",
+		icon: Stethoscope,
+		accent: "bg-blue-500/10 text-blue-500",
+	},
+	{
+		title: "Meu Perfil",
+		description: "Atualize seus dados pessoais e preferências.",
+		href: "/dashboard/profile",
+		icon: User,
+		accent: "bg-purple-500/10 text-purple-500",
+	},
+];
+
+const doctorCards: QuickCard[] = [
+	{
+		title: "Minhas Consultas",
+		description: "Gerencie e confirme suas consultas agendadas.",
+		href: "/dashboard/appointments",
+		icon: CalendarDays,
+		accent: "bg-primary/10 text-primary",
+	},
+	{
+		title: "Meus Pacientes",
+		description: "Veja o histórico e perfil dos seus pacientes.",
+		href: "/dashboard/patients",
+		icon: UserRound,
+		accent: "bg-green-500/10 text-green-500",
+	},
+	{
+		title: "Meu Perfil",
+		description: "Atualize seus dados e foto de perfil.",
+		href: "/dashboard/profile",
+		icon: User,
+		accent: "bg-purple-500/10 text-purple-500",
+	},
+	{
+		title: "Assinatura",
+		description: "Gerencie seu plano e faturamento.",
+		href: "/settings/billing",
+		icon: CreditCard,
+		accent: "bg-orange-500/10 text-orange-500",
+	},
+];
+
+const adminCards: QuickCard[] = [
+	{
+		title: "Consultas",
+		description: "Visão geral de todas as consultas.",
+		href: "/dashboard/appointments",
+		icon: CalendarDays,
+		accent: "bg-primary/10 text-primary",
+	},
+	{
+		title: "Pacientes",
+		description: "Gerencie os pacientes cadastrados.",
+		href: "/dashboard/patients",
+		icon: UserRound,
+		accent: "bg-green-500/10 text-green-500",
+	},
+	{
+		title: "Profissionais",
+		description: "Veja todos os médicos da plataforma.",
+		href: "/professionals",
+		icon: Stethoscope,
+		accent: "bg-blue-500/10 text-blue-500",
+	},
+	{
+		title: "Painel Admin",
+		description: "Acesso às configurações administrativas.",
+		href: "/admin",
+		icon: LayoutDashboard,
+		accent: "bg-red-500/10 text-red-500",
+	},
+];
 
 interface DashboardProps {
 	firstName: string;
-	userId: string;
-	isDoctor: boolean;
+	role: "PATIENT" | "DOCTOR" | "ADMIN";
 }
 
-function stats(appointments: AppointmentResponse[]) {
-	return {
-		total: appointments.length,
-		pending: appointments.filter((a) => a.status === "PENDING"),
-		confirmed: appointments.filter((a) => a.status === "CONFIRMED"),
-		completed: appointments.filter((a) => a.status === "COMPLETED"),
-		recent: [...appointments]
-			.sort(
-				(a, b) =>
-					new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime(),
-			)
-			.slice(0, 5),
-	};
+function DoctorHeroSubtitle() {
+	const { data } = useMyDoctorProfile(true);
+	if (!data) return null;
+	return (
+		<p className="mt-1 text-sm text-muted-foreground">
+			{data.specialty}
+			{data.licenseNumber ? ` · CRM ${data.licenseNumber}` : ""}
+		</p>
+	);
 }
 
-interface DashboardLayoutProps {
-	firstName: string;
-	isDoctor: boolean;
-	subtitle?: string;
-	appointments: AppointmentResponse[];
-	onConfirm?: (id: string) => void;
-	onComplete?: (id: string) => void;
-}
+export function Dashboard({ firstName, role }: DashboardProps) {
+	const isDoctor = role === "DOCTOR";
+	const isAdmin = role === "ADMIN";
+	const isPatient = role === "PATIENT";
 
-function DashboardLayout({
-	firstName,
-	isDoctor,
-	subtitle,
-	appointments,
-	onConfirm,
-	onComplete,
-}: DashboardLayoutProps) {
-	const { pending, confirmed, completed, recent } = stats(appointments);
+	const cards = isAdmin ? adminCards : isDoctor ? doctorCards : patientCards;
+
+	const heroLabel = isAdmin
+		? "Painel administrativo"
+		: isDoctor
+			? "Painel do médico"
+			: "Bem-vindo de volta";
+
+	const heroName = isDoctor ? `Dr. ${firstName}` : firstName;
 
 	return (
 		<div className="space-y-6">
@@ -68,159 +172,51 @@ function DashboardLayout({
 			<div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-6 sm:p-8">
 				<div className="pointer-events-none absolute right-0 top-0 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
 				<div className="pointer-events-none absolute bottom-0 left-0 h-32 w-32 rounded-full bg-secondary/10 blur-3xl" />
-				<div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-					<div>
-						<p className="text-sm font-medium text-primary">
-							{isDoctor ? "Painel do médico" : "Bem-vindo de volta"}
-						</p>
-						<h1 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">
-							Olá, {isDoctor ? `Dr. ${firstName}` : firstName}!
-						</h1>
-						{subtitle && (
-							<p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
-						)}
+				<div className="relative z-10">
+					<p className="text-sm font-medium text-primary">{heroLabel}</p>
+					<h1 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">
+						Olá, {heroName}!
+					</h1>
+					{isDoctor && <DoctorHeroSubtitle />}
+					{isPatient && (
 						<p className="mt-1 text-sm text-muted-foreground">
-							{isDoctor ? (
-								<>
-									<span className="font-semibold text-foreground">
-										{pending.length}
-									</span>{" "}
-									consulta{pending.length !== 1 ? "s" : ""} aguardando
-									confirmação.
-								</>
-							) : (
-								<>
-									Você tem{" "}
-									<span className="font-semibold text-foreground">
-										{pending.length}
-									</span>{" "}
-									consulta{pending.length !== 1 ? "s" : ""} pendente
-									{pending.length !== 1 ? "s" : ""} e{" "}
-									<span className="font-semibold text-foreground">
-										{confirmed.length}
-									</span>{" "}
-									confirmada{confirmed.length !== 1 ? "s" : ""}.
-								</>
-							)}
+							O que você quer fazer hoje?
 						</p>
-					</div>
-					{!isDoctor && (
-						<Link href="/dashboard/appointments/create">
-							<CustomButton>
-								<Stethoscope className="h-4 w-4" />
-								Agendar consulta
-							</CustomButton>
-						</Link>
+					)}
+					{isAdmin && (
+						<p className="mt-1 text-sm text-muted-foreground">
+							Acesso completo à plataforma.
+						</p>
 					)}
 				</div>
 			</div>
 
-			{/* Stats */}
-			<div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-				<StatCard
-					icon={<CalendarDays className="h-5 w-5" />}
-					count={appointments.length}
-					label="Total"
-					colorClass="bg-primary/10 text-primary"
-				/>
-				<StatCard
-					icon={<Clock className="h-5 w-5" />}
-					count={pending.length}
-					label="Pendentes"
-					colorClass="bg-yellow-500/10 text-yellow-500"
-				/>
-				<StatCard
-					icon={<CalendarCheck className="h-5 w-5" />}
-					count={confirmed.length}
-					label="Confirmadas"
-					colorClass="bg-green-500/10 text-green-500"
-				/>
-				<StatCard
-					icon={<CalendarClock className="h-5 w-5" />}
-					count={completed.length}
-					label="Concluídas"
-					colorClass="bg-blue-500/10 text-blue-500"
-				/>
+			{/* Quick access cards */}
+			<div className="grid gap-3 sm:grid-cols-2">
+				{cards.map((card) => (
+					<QuickAccessCard key={card.href} {...card} />
+				))}
 			</div>
 
-			{/* List — receives already-processed data from parent */}
-			<AppointmentsList
-				appointments={recent}
-				isDoctor={isDoctor}
-				onConfirm={onConfirm}
-				onComplete={onComplete}
-			/>
+			{/* Patient CTA to become doctor */}
+			{isPatient && (
+				<Link href="/dashboard/become-doctor" className="group block">
+					<Card className="border-dashed border-border transition-all hover:border-primary/40 hover:shadow-sm">
+						<CardContent className="flex items-center gap-4 p-5">
+							<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+								<BadgeCheck className="h-5 w-5" />
+							</div>
+							<div className="flex-1">
+								<p className="font-semibold text-foreground">É profissional de saúde?</p>
+								<p className="text-xs text-muted-foreground">
+									Cadastre-se como médico e comece a atender pacientes.
+								</p>
+							</div>
+							<ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+						</CardContent>
+					</Card>
+				</Link>
+			)}
 		</div>
 	);
-}
-
-function DoctorDashboard({ firstName }: { firstName: string }) {
-	const doctorProfile = useMyDoctorProfile(true);
-	const doctorId = doctorProfile.data?.id ?? "";
-	const query = useDoctorAppointments(doctorId);
-	const confirm = useConfirmAppointment();
-	const complete = useCompleteAppointment();
-
-	async function handleConfirm(id: string) {
-		try {
-			await confirm.mutateAsync(id);
-			toast({ title: "Consulta confirmada!" });
-		} catch {
-			toast({ title: "Erro ao confirmar consulta.", variant: "destructive" });
-		}
-	}
-
-	async function handleComplete(id: string) {
-		try {
-			await complete.mutateAsync(id);
-			toast({ title: "Consulta concluída!" });
-		} catch {
-			toast({ title: "Erro ao concluir consulta.", variant: "destructive" });
-		}
-	}
-
-	return (
-		<QueryBoundary
-			isLoading={doctorProfile.isLoading || query.isLoading}
-			error={query.error}
-		>
-			<DashboardLayout
-				firstName={firstName}
-				isDoctor
-				appointments={query.data?.content ?? []}
-				subtitle={
-					doctorProfile.data
-						? `${doctorProfile.data.specialty} · CRM ${doctorProfile.data.licenseNumber}`
-						: undefined
-				}
-				onConfirm={handleConfirm}
-				onComplete={handleComplete}
-			/>
-		</QueryBoundary>
-	);
-}
-
-function PatientDashboard({
-	firstName,
-	userId,
-}: {
-	firstName: string;
-	userId: string;
-}) {
-	const query = usePatientAppointments(userId);
-
-	return (
-		<QueryBoundary isLoading={query.isLoading} error={query.error}>
-			<DashboardLayout
-				firstName={firstName}
-				isDoctor={false}
-				appointments={query.data?.content ?? []}
-			/>
-		</QueryBoundary>
-	);
-}
-
-export function Dashboard({ firstName, userId, isDoctor }: DashboardProps) {
-	if (isDoctor) return <DoctorDashboard firstName={firstName} />;
-	return <PatientDashboard firstName={firstName} userId={userId} />;
 }

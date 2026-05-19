@@ -1,8 +1,9 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
-import { toast } from "@/hooks/use-toast";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 import { PLANS } from "./constants";
@@ -16,7 +17,7 @@ export default function Plans() {
   function handleSelect(planId: string) {
     checkout.mutate(planId, {
       onError: () =>
-        toast({ title: "Erro ao iniciar checkout.", variant: "destructive" }),
+        toast.error("Erro ao iniciar checkout."),
     });
   }
 

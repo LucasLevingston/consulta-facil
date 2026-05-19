@@ -65,13 +65,13 @@ describe("patientsApi", () => {
 
   describe("updateMyProfile", () => {
     it("chama PUT /patients/me e retorna o perfil atualizado", async () => {
-      const updated = { ...profile, phone: "11977776666" };
+      const updated = { ...profile, occupation: "Engenheiro" };
       mockPut.mockResolvedValueOnce({ data: updated });
 
-      const result = await patientsApi.updateMyProfile({ phone: "11977776666" });
+      const result = await patientsApi.updateMyProfile({ occupation: "Engenheiro" });
 
-      expect(mockPut).toHaveBeenCalledWith("/patients/me", { phone: "11977776666" });
-      expect(result.phone).toBe("11977776666");
+      expect(mockPut).toHaveBeenCalledWith("/patients/me", { occupation: "Engenheiro" });
+      expect(result.occupation).toBe("Engenheiro");
     });
   });
 

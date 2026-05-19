@@ -6,6 +6,7 @@ import { appointmentsApi } from "@/lib/api/appointments.api";
 import type {
   CancelAppointmentInput,
   CreateAppointmentInput,
+  RateAppointmentInput,
 } from "@/lib/schemas/appointment.schema";
 
 export const appointmentKeys = {
@@ -69,6 +70,18 @@ export function useCompleteAppointment() {
   return useMutation({
     mutationFn: (id: string) => appointmentsApi.complete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+  });
+}
+
+export function useRateAppointment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: RateAppointmentInput }) =>
+      appointmentsApi.rate(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: appointmentKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["doctors"] });
+    },
   });
 }
 

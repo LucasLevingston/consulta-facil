@@ -1,20 +1,22 @@
 "use client";
+
+import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import DoctorCard from "./doctorCard";
 
-export default function DoctorsList({doctors}: {doctors: any[]}) {
-  if (doctors.length === 0) {
-    return (
-      <p className="text-center text-muted-foreground">
-        Nenhum médico encontrado com os filtros selecionados.
-      </p>
-    );
-  }
+export default function DoctorsList({ doctors }: { doctors: DoctorResponse[] }) {
+	if (doctors.length === 0) {
+		return (
+			<p className="text-center text-muted-foreground py-12">
+				Nenhum médico encontrado com os filtros selecionados.
+			</p>
+		);
+	}
 
-  return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {doctors.map((doctor) => (
-        <DoctorCard doctor={doctor} key={doctor.id} />
-      ))}
-    </div>
-  );
+	return (
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+			{doctors.map((doctor) => (
+				<DoctorCard doctor={doctor} key={doctor.id} />
+			))}
+		</div>
+	);
 }

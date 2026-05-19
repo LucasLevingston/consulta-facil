@@ -5,7 +5,7 @@ declare type SearchParamProps = {
 };
 
 // Enums alinhados ao backend
-declare type UserRole = "USER" | "ADMIN";
+declare type UserRole = "PATIENT" | "DOCTOR" | "ADMIN";
 declare type Gender = "MALE" | "FEMALE" | "OTHER";
 declare type AppointmentStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "COMPLETED";
 

@@ -25,7 +25,7 @@ describe("registerApi", () => {
       id: "u-1",
       name: baseInput.name,
       email: baseInput.email,
-      role: "USER" as const,
+      role: "PATIENT" as const,
     };
     mockPost.mockResolvedValueOnce({ data: responseData });
 

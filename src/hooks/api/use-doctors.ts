@@ -60,3 +60,45 @@ export function useDeleteDoctor() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: doctorKeys.all }),
   });
 }
+
+export const applicationKeys = {
+  all: ["doctor-applications"] as const,
+  status: () => [...applicationKeys.all, "status"] as const,
+};
+
+export function usePendingApplications(page = 0, size = 20) {
+  return useQuery({
+    queryKey: [...applicationKeys.all, "list", { page, size }],
+    queryFn: () => doctorsApi.getPendingApplications(page, size),
+  });
+}
+
+export function useApplicationStatus() {
+  return useQuery({
+    queryKey: applicationKeys.status(),
+    queryFn: () => doctorsApi.getApplicationStatus(),
+    retry: false,
+  });
+}
+
+export function useApproveApplication() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (doctorId: string) => doctorsApi.approve(doctorId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: applicationKeys.all });
+      queryClient.invalidateQueries({ queryKey: doctorKeys.all });
+    },
+  });
+}
+
+export function useRejectApplication() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (doctorId: string) => doctorsApi.reject(doctorId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: applicationKeys.all });
+      queryClient.invalidateQueries({ queryKey: doctorKeys.all });
+    },
+  });
+}

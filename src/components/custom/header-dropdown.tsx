@@ -21,7 +21,7 @@ interface HeaderDropdownProps {
   user: {
     id: string;
     email: string;
-    role: "USER" | "DOCTOR" | "ADMIN";
+    role: "PATIENT" | "DOCTOR" | "ADMIN";
     imageUrl?: string | null;
   };
 }

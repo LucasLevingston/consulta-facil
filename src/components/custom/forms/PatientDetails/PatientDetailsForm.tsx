@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type { z } from "zod";
 
 import { FileUploader } from "@/components/FileUploader";
@@ -10,7 +11,6 @@ import CustomFormField, { FormFieldType } from "@/components/custom/forms-compon
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useUpdateMyProfile } from "@/hooks/api/use-patients";
-import { toast } from "@/hooks/use-toast";
 import { GenderOptions, IdentificationTypes } from "@/utils/constants";
 import { PatientFormValidation } from "./FormValidation";
 
@@ -81,15 +81,12 @@ const PatientDetailsForm = ({
 				treatmentConsent: values.treatmentConsent,
 				disclosureConsent: values.disclosureConsent,
 			});
-			toast({ title: "Dados salvos com sucesso!" });
+			toast.success("Dados salvos com sucesso!");
 			if (type === "create") {
 				router.push("/");
 			}
 		} catch (error: unknown) {
-			toast({
-				title: error instanceof Error ? error.message : "Erro ao salvar os dados",
-				variant: "destructive",
-			});
+			toast.error(error instanceof Error ? error.message : "Erro ao salvar os dados");
 		}
 	};
 

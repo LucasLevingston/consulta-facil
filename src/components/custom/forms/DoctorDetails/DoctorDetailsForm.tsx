@@ -3,13 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type { z } from "zod";
 
 import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCreateDoctor, useUpdateDoctor } from "@/hooks/api/use-doctors";
-import { toast } from "@/hooks/use-toast";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { GenderOptions, specialties } from "@/utils/constants";
 import { DoctorFormValidation } from "./FormValidation";
@@ -62,17 +62,14 @@ function DoctorDetailsForm({
 		try {
 			if (type === "create") {
 				await createDoctor.mutateAsync(payload);
-				toast({ title: "Dados salvos com sucesso!" });
+				toast.success("Dados salvos com sucesso!");
 				router.push("/");
 			} else {
 				await updateDoctor.mutateAsync({ doctorId: userId, data: payload });
-				toast({ title: "Dados salvos com sucesso!" });
+				toast.success("Dados salvos com sucesso!");
 			}
 		} catch (error: unknown) {
-			toast({
-				title: error instanceof Error ? error.message : "Erro ao salvar os dados",
-				variant: "destructive",
-			});
+			toast.error(error instanceof Error ? error.message : "Erro ao salvar os dados");
 		}
 	};
 

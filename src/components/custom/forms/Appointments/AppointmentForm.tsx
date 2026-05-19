@@ -17,6 +17,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,7 +50,6 @@ import {
 	useScheduleAppointment,
 } from "@/hooks/api/use-appointments";
 import { useDoctors } from "@/hooks/api/use-doctors";
-import { toast } from "@/hooks/use-toast";
 import { appointmentFormSchema, type AppointmentFormValues, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
@@ -144,12 +145,9 @@ export const AppointmentForm = ({
 				form.reset();
 			}
 		} catch (error: unknown) {
-			toast({
-				title:
-					(error instanceof Error ? error.message : null) ??
-					"Erro ao processar consulta.",
-				variant: "destructive",
-			});
+			toast.error(
+				(error instanceof Error ? error.message : null) ?? "Erro ao processar consulta.",
+			);
 		}
 	};
 

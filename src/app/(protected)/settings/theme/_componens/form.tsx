@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { toast } from "sonner";
+import type { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { toast } from "@/hooks/use-toast";
 
 import { themeFormSchema } from "./schemas";
 
@@ -31,10 +31,7 @@ export function ThemeForm() {
 
   const onSubmit = form.handleSubmit(async (data) => {
     theme.setTheme(data.theme as "light" | "dark");
-    toast({
-      title: "Sucesso",
-      description: `O tema foi alterado para: ${data.theme}`,
-    });
+    toast.success("Sucesso", { description: `O tema foi alterado para: ${data.theme}` });
   });
 
   return (

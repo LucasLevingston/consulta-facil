@@ -20,7 +20,7 @@ describe("loginApi", () => {
       expiresIn: 86400,
       userId: "u-1",
       email: payload.email,
-      role: "USER" as const,
+      role: "PATIENT" as const,
     };
     mockPost.mockResolvedValueOnce({ data: responseData });
 

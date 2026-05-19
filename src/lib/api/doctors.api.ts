@@ -2,6 +2,7 @@ import { api } from "@/config/api";
 import type { ApiPage, CreateDoctorInput, DoctorResponse } from "@/lib/schemas/doctor.schema";
 
 
+
 export const doctorsApi = {
   getAll: async (page = 0, size = 20): Promise<ApiPage<DoctorResponse>> => {
     const response = await api.get<ApiPage<DoctorResponse>>("/doctors", {
@@ -38,5 +39,27 @@ export const doctorsApi = {
 
   delete: async (doctorId: string): Promise<void> => {
     await api.delete(`/doctors/${doctorId}`);
+  },
+
+  getPendingApplications: async (page = 0, size = 20): Promise<ApiPage<DoctorResponse>> => {
+    const response = await api.get<ApiPage<DoctorResponse>>("/doctors/applications", {
+      params: { page, size },
+    });
+    return response.data;
+  },
+
+  getApplicationStatus: async (): Promise<DoctorResponse> => {
+    const response = await api.get<DoctorResponse>("/doctors/application-status");
+    return response.data;
+  },
+
+  approve: async (doctorId: string): Promise<DoctorResponse> => {
+    const response = await api.put<DoctorResponse>(`/doctors/${doctorId}/approve`);
+    return response.data;
+  },
+
+  reject: async (doctorId: string): Promise<DoctorResponse> => {
+    const response = await api.put<DoctorResponse>(`/doctors/${doctorId}/reject`);
+    return response.data;
   },
 };
