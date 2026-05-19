@@ -5,6 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
+import { doctorKeys } from "@/hooks/api/use-doctors";
 import { doctorsApi } from "@/lib/api/doctors.api";
 
 const mockGet = vi.mocked(api.get);
@@ -106,5 +107,27 @@ describe("doctorsApi", () => {
 
       expect(mockDelete).toHaveBeenCalledWith("/doctors/d-1");
     });
+  });
+});
+
+describe("doctorKeys", () => {
+  it("all retorna a chave raiz", () => {
+    expect(doctorKeys.all).toEqual(["doctors"]);
+  });
+
+  it("list inclui page e size na chave", () => {
+    expect(doctorKeys.list(0, 20)).toEqual(["doctors", "list", { page: 0, size: 20 }]);
+  });
+
+  it("list sem argumentos inclui undefined", () => {
+    expect(doctorKeys.list()).toEqual(["doctors", "list", { page: undefined, size: undefined }]);
+  });
+
+  it("search inclui a especialidade na chave", () => {
+    expect(doctorKeys.search("Cardiologia")).toEqual(["doctors", "search", "Cardiologia"]);
+  });
+
+  it("detail inclui o id na chave", () => {
+    expect(doctorKeys.detail("d-42")).toEqual(["doctors", "d-42"]);
   });
 });
