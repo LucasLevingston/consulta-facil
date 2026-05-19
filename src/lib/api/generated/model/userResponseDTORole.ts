@@ -10,7 +10,6 @@ export type UserResponseDTORole =
 	(typeof UserResponseDTORole)[keyof typeof UserResponseDTORole];
 
 export const UserResponseDTORole = {
-	PATIENT: "PATIENT",
-	DOCTOR: "DOCTOR",
+	USER: "USER",
 	ADMIN: "ADMIN",
 } as const;
