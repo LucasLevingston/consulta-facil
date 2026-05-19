@@ -1,12 +1,13 @@
 "use client";
 
-import { Bell, CalendarPlus, Menu, Search } from "lucide-react";
+import { CalendarPlus, Menu, Search } from "lucide-react";
 import Link from "next/link";
 
 import { useUserStore } from "@/store/useUserStore";
 import { CustomButton } from "./custom/custom-button";
 import { CustomInput } from "./custom/custom-input";
 import { HeaderDropdown } from "./custom/header-dropdown";
+import { NotificationBell } from "./custom/notifications/NotificationBell";
 import { ThemeSwitcher } from "./custom/Theme-Switcher";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
@@ -48,12 +49,7 @@ export function Header() {
 							</CustomButton>
 						</Link>
 
-						<Button
-							size="icon"
-							className="h-10 w-10 rounded-2xl border border-border bg-background/60 text-foreground backdrop-blur hover:bg-primary/10 hover:text-primary"
-						>
-							<Bell className="h-4 w-4" />
-						</Button>
+						<NotificationBell />
 
 						<HeaderDropdown user={user} />
 					</>
@@ -112,13 +108,7 @@ export function Header() {
 											Agendar Consulta
 										</Button>
 									</Link>
-									<Button
-										variant="outline"
-										className="h-11 w-full justify-start rounded-2xl"
-									>
-										<Bell className="mr-2 h-4 w-4" />
-										Notificações
-									</Button>
+									<NotificationBell />
 									<div className="pt-2">
 										<HeaderDropdown user={user} />
 									</div>
