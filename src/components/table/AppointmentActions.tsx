@@ -1,9 +1,11 @@
 "use client";
 
+import { Star } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { CancelAppointmentForm } from "@/components/custom/forms/Appointments/CancelAppointmentForm";
+import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -25,6 +27,7 @@ interface AppointmentActionsProps {
 
 export function AppointmentActions({ appointment, userRole }: AppointmentActionsProps) {
 	const [cancelOpen, setCancelOpen] = useState(false);
+	const [rateOpen, setRateOpen] = useState(false);
 	const confirm = useConfirmAppointment();
 	const complete = useCompleteAppointment();
 
@@ -36,8 +39,9 @@ export function AppointmentActions({ appointment, userRole }: AppointmentActions
 	const canCancel = (isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
 	const canConfirm = (isDoctor || isAdmin) && status === "PENDING";
 	const canComplete = (isDoctor || isAdmin) && status === "CONFIRMED";
+	const canRate = isPatient && status === "COMPLETED" && appointment.rating == null;
 
-	if (!canCancel && !canConfirm && !canComplete) return null;
+	if (!canCancel && !canConfirm && !canComplete && !canRate) return null;
 
 	const handleConfirm = async () => {
 		try {
@@ -78,6 +82,30 @@ export function AppointmentActions({ appointment, userRole }: AppointmentActions
 				>
 					{complete.isPending ? "..." : "Concluir"}
 				</Button>
+			)}
+			{canRate && (
+				<>
+					<Button
+						variant="ghost"
+						size="sm"
+						className="text-amber-500 hover:text-amber-400 gap-1"
+						onClick={() => setRateOpen(true)}
+					>
+						<Star className="size-3.5" />
+						Avaliar
+					</Button>
+					<Dialog open={rateOpen} onOpenChange={setRateOpen}>
+						<DialogContent className="sm:max-w-md">
+							<DialogHeader className="mb-2 space-y-1">
+								<DialogTitle>Avaliar consulta</DialogTitle>
+								<DialogDescription>
+									Sua avaliação ajuda outros pacientes a escolher o profissional certo.
+								</DialogDescription>
+							</DialogHeader>
+							<RateAppointmentForm appointment={appointment} setOpen={setRateOpen} />
+						</DialogContent>
+					</Dialog>
+				</>
 			)}
 			{canCancel && (
 				<>

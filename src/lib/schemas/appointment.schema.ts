@@ -19,6 +19,8 @@ export const appointmentResponseSchema = z.object({
   notes: z.string().nullable().optional(),
   status: appointmentStatusSchema,
   cancellationReason: z.string().nullable().optional(),
+  rating: z.number().int().min(1).max(5).nullable().optional(),
+  ratingComment: z.string().nullable().optional(),
   createdAt: z.string().nullable().optional(),
   updatedAt: z.string().nullable().optional(),
 });
@@ -32,6 +34,11 @@ export const createAppointmentSchema = z.object({
 
 export const cancelAppointmentSchema = z.object({
   cancellationReason: z.string().min(1, "Motivo é obrigatório"),
+});
+
+export const rateAppointmentSchema = z.object({
+  stars: z.number().int().min(1).max(5),
+  comment: z.string().max(500).optional(),
 });
 
 // Form schema — scheduledAt is a Date object (converted to ISO string on submit)
@@ -48,4 +55,5 @@ export type AppointmentStatus = z.infer<typeof appointmentStatusSchema>;
 export type AppointmentResponse = z.infer<typeof appointmentResponseSchema>;
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;
 export type CancelAppointmentInput = z.infer<typeof cancelAppointmentSchema>;
+export type RateAppointmentInput = z.infer<typeof rateAppointmentSchema>;
 export type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
