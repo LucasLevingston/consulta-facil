@@ -9,6 +9,8 @@ export const doctorResponseSchema = z.object({
   licenseNumber: z.string().nullable().optional(),
   phone: z.string().nullable().optional(),
   imageUrl: z.string().nullable().optional(),
+  rating: z.number().nullable().optional(),
+  consultationCount: z.number().nullable().optional(),
 });
 
 export const createDoctorSchema = z.object({
