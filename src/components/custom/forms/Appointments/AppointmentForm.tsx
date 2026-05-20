@@ -49,8 +49,12 @@ import {
 	useCancelAppointment,
 	useScheduleAppointment,
 } from "@/hooks/api/use-appointments";
-import { useDoctors } from "@/hooks/api/use-doctors";
-import { appointmentFormSchema, type AppointmentFormValues, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import { useProfessionals } from "@/hooks/api/use-doctors";
+import {
+	type AppointmentFormValues,
+	type AppointmentResponse,
+	appointmentFormSchema,
+} from "@/lib/schemas/appointment.schema";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -77,10 +81,14 @@ export const AppointmentForm = ({
 }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const doctorIdParam = searchParams.get("doctorid");
+	const doctorIdParam =
+		searchParams.get("professionalid") ?? searchParams.get("doctorid");
 	const { user: authUser } = useUserStore();
 
-	const { data: doctorsPage, isLoading: doctorsLoading } = useDoctors(0, 100);
+	const { data: doctorsPage, isLoading: doctorsLoading } = useProfessionals(
+		0,
+		100,
+	);
 	const doctors = doctorsPage?.content ?? [];
 
 	const scheduleAppointment = useScheduleAppointment();
@@ -110,7 +118,10 @@ export const AppointmentForm = ({
 	const handleTimeSelect = (slot: (typeof TIME_SLOTS)[number]) => {
 		setSelectedTime(slot.label);
 		if (selectedDate) {
-			const newDate = setMinutes(setHours(selectedDate, slot.hours), slot.minutes);
+			const newDate = setMinutes(
+				setHours(selectedDate, slot.hours),
+				slot.minutes,
+			);
 			form.setValue("scheduledAt", newDate);
 		} else {
 			const base = new Date();
@@ -146,7 +157,8 @@ export const AppointmentForm = ({
 			}
 		} catch (error: unknown) {
 			toast.error(
-				(error instanceof Error ? error.message : null) ?? "Erro ao processar consulta.",
+				(error instanceof Error ? error.message : null) ??
+					"Erro ao processar consulta.",
 			);
 		}
 	};
@@ -199,7 +211,9 @@ export const AppointmentForm = ({
 						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
 							1
 						</div>
-						<h3 className="font-semibold text-foreground">Escolha o médico</h3>
+						<h3 className="font-semibold text-foreground">
+							Escolha o profissional
+						</h3>
 					</div>
 
 					<FormField
@@ -244,20 +258,23 @@ export const AppointmentForm = ({
 												) : (
 													<div className="flex items-center gap-2">
 														<Search className="h-4 w-4" />
-														<span>Buscar médico...</span>
+														<span>Buscar profissional...</span>
 													</div>
 												)}
 												<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 											</Button>
 										</PopoverTrigger>
-										<PopoverContent className="w-full p-0 rounded-xl" align="start">
+										<PopoverContent
+											className="w-full p-0 rounded-xl"
+											align="start"
+										>
 											<Command>
 												<CommandInput placeholder="Pesquisar por nome ou especialidade..." />
 												<CommandList>
 													<CommandEmpty>
 														{doctorsLoading
 															? "Carregando..."
-															: "Nenhum médico encontrado."}
+															: "Nenhum profissional encontrado."}
 													</CommandEmpty>
 													<CommandGroup>
 														{doctors
@@ -367,7 +384,10 @@ export const AppointmentForm = ({
 													: "Selecione uma data"}
 											</Button>
 										</PopoverTrigger>
-										<PopoverContent className="w-auto p-0 rounded-2xl" align="start">
+										<PopoverContent
+											className="w-auto p-0 rounded-2xl"
+											align="start"
+										>
 											<Calendar
 												mode="single"
 												selected={field.value}

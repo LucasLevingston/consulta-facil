@@ -13,11 +13,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
 import { CustomButton } from "../custom-button";
 
 interface DoctorCardProps {
-	doctor: DoctorResponse;
+	doctor: ProfessionalResponse;
 	isActiveAppointmentButton?: boolean;
 }
 
@@ -43,7 +43,10 @@ export default function DoctorCard({
 		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200">
 			<CardHeader className="flex flex-row items-center gap-4 pb-3">
 				<Avatar className="size-14 rounded-xl border border-border">
-					<AvatarImage src={doctor.imageUrl ?? undefined} alt={doctor.name ?? "Médico"} />
+					<AvatarImage
+						src={doctor.imageUrl ?? undefined}
+						alt={doctor.name ?? "Profissional"}
+					/>
 					<AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-sm">
 						{initials}
 					</AvatarFallback>
@@ -64,7 +67,9 @@ export default function DoctorCard({
 				{rating !== null && (
 					<div className="flex items-center gap-2 text-sm">
 						<Star className="size-3.5 shrink-0 fill-amber-400 text-amber-400" />
-						<span className="font-medium text-foreground">{rating.toFixed(1)}</span>
+						<span className="font-medium text-foreground">
+							{rating.toFixed(1)}
+						</span>
 						<span className="text-muted-foreground">
 							· {consultationCount} consulta{consultationCount !== 1 ? "s" : ""}
 						</span>
@@ -95,7 +100,9 @@ export default function DoctorCard({
 					<CustomButton
 						className="w-full"
 						onClick={() =>
-							router.push(`/dashboard/appointments/create?doctorid=${doctor.id}`)
+							router.push(
+								`/dashboard/appointments/create?professionalid=${doctor.id}`,
+							)
 						}
 					>
 						<Stethoscope className="size-4" />

@@ -1,13 +1,17 @@
 "use client";
 
-import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
 import DoctorCard from "./doctorCard";
 
-export default function DoctorsList({ doctors }: { doctors: DoctorResponse[] }) {
+export default function DoctorsList({
+	doctors,
+}: {
+	doctors: ProfessionalResponse[];
+}) {
 	if (doctors.length === 0) {
 		return (
 			<p className="text-center text-muted-foreground py-12">
-				Nenhum médico encontrado com os filtros selecionados.
+				Nenhum profissional encontrado com os filtros selecionados.
 			</p>
 		);
 	}

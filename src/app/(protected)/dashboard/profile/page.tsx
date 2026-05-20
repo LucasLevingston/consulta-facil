@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
 	useDoctorAppointments,
 	usePatientAppointments,
@@ -62,11 +62,11 @@ function InfoRow({
 export default function ProfilePage() {
 	const { user } = useUserStore();
 
-	const isDoctor = user?.role === "DOCTOR" || user?.role === "ADMIN";
+	const isDoctor = user?.role === "PROFESSIONAL" || user?.role === "ADMIN";
 
 	const patientQuery = usePatientAppointments(isDoctor ? "" : (user?.id ?? ""));
 	const doctorQuery = useDoctorAppointments(isDoctor ? (user?.id ?? "") : "");
-	const doctorProfile = useMyDoctorProfile(isDoctor);
+	const doctorProfile = useMyProfessionalProfile(isDoctor);
 	const patientProfile = useMyProfile(!isDoctor);
 
 	const appointments = isDoctor
@@ -96,7 +96,10 @@ export default function ProfilePage() {
 	}
 
 	return (
-		<QueryBoundary isLoading={patientQuery.isLoading || doctorQuery.isLoading} error={patientQuery.error || doctorQuery.error}>
+		<QueryBoundary
+			isLoading={patientQuery.isLoading || doctorQuery.isLoading}
+			error={patientQuery.error || doctorQuery.error}
+		>
 			{/* Hero */}
 			<Card className="overflow-hidden">
 				<div className="h-28 bg-gradient-to-br from-primary/25 via-primary/10 to-secondary/20 relative">
@@ -140,7 +143,7 @@ export default function ProfilePage() {
 								className="gap-1 rounded-full px-2.5 py-0.5 text-xs"
 							>
 								<BadgeCheck className="h-3 w-3" />
-								{isDoctor ? "Médico" : "Paciente"}
+								{isDoctor ? "Profissional" : "Paciente"}
 							</Badge>
 						</div>
 						<p className="text-sm text-muted-foreground">{user.email}</p>

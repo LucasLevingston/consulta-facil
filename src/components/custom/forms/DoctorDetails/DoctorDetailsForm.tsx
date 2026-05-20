@@ -6,11 +6,16 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 
-import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
+import CustomFormField, {
+	FormFieldType,
+} from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useCreateDoctor, useUpdateDoctor } from "@/hooks/api/use-doctors";
-import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
+import {
+	useCreateProfessional,
+	useUpdateProfessional,
+} from "@/hooks/api/use-doctors";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
 import { GenderOptions, specialties } from "@/utils/constants";
 import { DoctorFormValidation } from "./FormValidation";
 
@@ -18,7 +23,7 @@ interface DoctorDetailsProps {
 	userId: string;
 	userEmail: string;
 	type: "edit" | "create";
-	defaultData?: DoctorResponse;
+	defaultData?: ProfessionalResponse;
 }
 
 function DoctorDetailsForm({
@@ -29,8 +34,8 @@ function DoctorDetailsForm({
 }: DoctorDetailsProps) {
 	const router = useRouter();
 
-	const createDoctor = useCreateDoctor();
-	const updateDoctor = useUpdateDoctor();
+	const createDoctor = useCreateProfessional();
+	const updateDoctor = useUpdateProfessional();
 
 	const form = useForm<z.infer<typeof DoctorFormValidation>>({
 		resolver: zodResolver(DoctorFormValidation),
@@ -65,11 +70,16 @@ function DoctorDetailsForm({
 				toast.success("Dados salvos com sucesso!");
 				router.push("/");
 			} else {
-				await updateDoctor.mutateAsync({ doctorId: userId, data: payload });
+				await updateDoctor.mutateAsync({
+					professionalId: userId,
+					data: payload,
+				});
 				toast.success("Dados salvos com sucesso!");
 			}
 		} catch (error: unknown) {
-			toast.error(error instanceof Error ? error.message : "Erro ao salvar os dados");
+			toast.error(
+				error instanceof Error ? error.message : "Erro ao salvar os dados",
+			);
 		}
 	};
 

@@ -12,21 +12,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDoctorAppointments } from "@/hooks/api/use-appointments";
-import { useApproveApplication, usePendingApplications, useRejectApplication } from "@/hooks/api/use-doctors";
+import {
+	useApproveApplication,
+	usePendingApplications,
+	useRejectApplication,
+} from "@/hooks/api/use-doctors";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
 
 function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
-	const { mutateAsync: approve, isPending: isApproving } = useApproveApplication();
-	const { mutateAsync: reject, isPending: isRejecting } = useRejectApplication();
+	const { mutateAsync: approve, isPending: isApproving } =
+		useApproveApplication();
+	const { mutateAsync: reject, isPending: isRejecting } =
+		useRejectApplication();
 	const isLoading = isApproving || isRejecting;
 
 	async function handleApprove() {
 		try {
 			await approve(doctor.id);
-			toast.success(`${doctor.name ?? "Médico"} aprovado com sucesso`);
+			toast.success(`${doctor.name ?? "Profissional"} aprovado com sucesso`);
 		} catch {
 			toast.error("Erro ao aprovar solicitação");
 		}
@@ -44,7 +50,10 @@ function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
 	return (
 		<div className="flex items-center gap-4 rounded-xl border border-border p-4">
 			<Avatar className="h-10 w-10 shrink-0">
-				<AvatarImage src={doctor.imageUrl ?? undefined} alt={doctor.name ?? ""} />
+				<AvatarImage
+					src={doctor.imageUrl ?? undefined}
+					alt={doctor.name ?? ""}
+				/>
 				<AvatarFallback>{(doctor.name ?? "?")[0]}</AvatarFallback>
 			</Avatar>
 			<div className="min-w-0 flex-1">
@@ -62,7 +71,11 @@ function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
 					onClick={handleReject}
 					disabled={isLoading}
 				>
-					{isRejecting ? <Loader2 className="h-3 w-3 animate-spin" /> : <X className="h-3 w-3" />}
+					{isRejecting ? (
+						<Loader2 className="h-3 w-3 animate-spin" />
+					) : (
+						<X className="h-3 w-3" />
+					)}
 					Recusar
 				</Button>
 				<Button
@@ -71,7 +84,11 @@ function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
 					onClick={handleApprove}
 					disabled={isLoading}
 				>
-					{isApproving ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
+					{isApproving ? (
+						<Loader2 className="h-3 w-3 animate-spin" />
+					) : (
+						<Check className="h-3 w-3" />
+					)}
 					Aprovar
 				</Button>
 			</div>
@@ -139,7 +156,10 @@ export default function AdminPage() {
 
 			<PendingApplications />
 
-			<QueryBoundary isLoading={doctorQuery.isLoading} error={doctorQuery.error}>
+			<QueryBoundary
+				isLoading={doctorQuery.isLoading}
+				error={doctorQuery.error}
+			>
 				<AppointmentsDashboard appointments={appointments} userRole="ADMIN" />
 			</QueryBoundary>
 		</div>

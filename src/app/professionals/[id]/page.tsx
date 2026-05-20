@@ -15,12 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDoctor } from "@/hooks/api/use-doctors";
+import { useProfessional } from "@/hooks/api/use-doctors";
 
 export default function DoctorProfilePage() {
 	const { id } = useParams<{ id: string }>();
 	const router = useRouter();
-	const { data: doctor, isLoading } = useDoctor(id);
+	const { data: doctor, isLoading } = useProfessional(id);
 
 	if (isLoading) {
 		return (
@@ -38,7 +38,7 @@ export default function DoctorProfilePage() {
 				<Stethoscope className="h-12 w-12 text-muted-foreground/40" />
 				<h2 className="text-xl font-semibold">Profissional não encontrado</h2>
 				<p className="text-muted-foreground text-sm">
-					O médico que você está procurando não existe ou foi removido.
+					O profissional que você está procurando não existe ou foi removido.
 				</p>
 				<Button variant="outline" onClick={() => router.push("/professionals")}>
 					Ver todos os profissionais
@@ -66,7 +66,7 @@ export default function DoctorProfilePage() {
 						<Avatar className="size-20 rounded-2xl border-4 border-card shadow-md">
 							<AvatarImage
 								src={doctor.imageUrl ?? undefined}
-								alt={doctor.name ?? "Médico"}
+								alt={doctor.name ?? "Profissional"}
 							/>
 							<AvatarFallback className="rounded-2xl bg-primary/15 text-primary font-bold text-2xl">
 								{initials}
@@ -74,7 +74,9 @@ export default function DoctorProfilePage() {
 						</Avatar>
 						<Button
 							onClick={() =>
-								router.push(`/dashboard/appointments/create?doctorid=${doctor.id}`)
+								router.push(
+									`/dashboard/appointments/create?doctorid=${doctor.id}`,
+								)
 							}
 							className="gap-2 shrink-0"
 						>
