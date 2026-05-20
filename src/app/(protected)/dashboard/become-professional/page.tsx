@@ -9,7 +9,8 @@ import {
 	XCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -25,24 +26,10 @@ import {
 	useCreateProfessional,
 } from "@/hooks/api/use-doctors";
 import { QueryBoundary } from "@/providers/query-boundary";
-
-const SPECIALTIES = [
-	"Cardiologia",
-	"Clínica Geral",
-	"Dermatologia",
-	"Fisioterapia",
-	"Gastroenterologia",
-	"Neurologia",
-	"Nutrição",
-	"Oftalmologia",
-	"Ortopedia",
-	"Pediatria",
-	"Pneumologia",
-	"Psicologia",
-	"Psiquiatria",
-] as const;
+import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants";
 
 const becomeProfessionalSchema = z.object({
+	profession: z.string().min(1, "Selecione uma profissão"),
 	specialty: z.string().min(1, "Selecione uma especialidade"),
 	licenseNumber: z
 		.string()
@@ -73,11 +60,21 @@ function ApplicationStatus() {
 						notificado assim que uma decisão for tomada.
 					</p>
 				</div>
-				<div className="mt-2 rounded-xl border border-amber-200 dark:border-amber-800 bg-white dark:bg-background px-4 py-3 text-left w-full">
-					<p className="text-xs font-medium text-muted-foreground mb-1">
-						Especialidade solicitada
-					</p>
-					<p className="text-sm font-semibold">{application.specialty}</p>
+				<div className="mt-2 rounded-xl border border-amber-200 dark:border-amber-800 bg-white dark:bg-background px-4 py-3 text-left w-full space-y-2">
+					{application.profession && (
+						<div>
+							<p className="text-xs font-medium text-muted-foreground mb-0.5">
+								Profissão
+							</p>
+							<p className="text-sm font-semibold">{application.profession}</p>
+						</div>
+					)}
+					<div>
+						<p className="text-xs font-medium text-muted-foreground mb-0.5">
+							Especialidade
+						</p>
+						<p className="text-sm font-semibold">{application.specialty}</p>
+					</div>
 				</div>
 				<Button variant="outline" asChild className="mt-2">
 					<Link href="/dashboard">Voltar ao início</Link>
@@ -117,8 +114,22 @@ function BecomeProfessionalForm() {
 
 	const form = useForm<BecomeProfessionalValues>({
 		resolver: zodResolver(becomeProfessionalSchema),
-		defaultValues: { specialty: "", licenseNumber: "" },
+		defaultValues: { profession: "", specialty: "", licenseNumber: "" },
 	});
+
+	const selectedProfession = useWatch({
+		control: form.control,
+		name: "profession",
+	});
+	const availableSpecialties = selectedProfession
+		? (PROFESSION_SPECIALTIES[selectedProfession] ?? [])
+		: [];
+
+	useEffect(() => {
+		if (selectedProfession) {
+			form.setValue("specialty", "", { shouldValidate: false });
+		}
+	}, [selectedProfession, form]);
 
 	async function onSubmit(values: BecomeProfessionalValues) {
 		try {
@@ -133,6 +144,17 @@ function BecomeProfessionalForm() {
 		}
 	}
 
+	const licenseHint =
+		selectedProfession === "Médico"
+			? "Ex: CRM/SP 123456"
+			: selectedProfession === "Nutricionista"
+				? "Ex: CRN/SP 1234"
+				: selectedProfession === "Fisioterapeuta"
+					? "Ex: CREFITO/SP 12345"
+					: selectedProfession === "Psicólogo"
+						? "Ex: CRP/SP 123456"
+						: "Ex: CRM/CRN/CRP/CREFITO 123456";
+
 	return (
 		<Card>
 			<CardHeader>
@@ -146,18 +168,36 @@ function BecomeProfessionalForm() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 						<CustomFormField
 							form={form}
+							name="profession"
+							fieldType={FormFieldType.SELECT}
+							label="Profissão"
+							placeholder="Selecione sua profissão"
+							selectOptions={professions.map((p) => ({ value: p, label: p }))}
+						/>
+
+						<CustomFormField
+							form={form}
 							name="specialty"
 							fieldType={FormFieldType.SELECT}
 							label="Especialidade"
-							placeholder="Selecione sua especialidade"
-							selectOptions={SPECIALTIES.map((s) => ({ value: s, label: s }))}
+							placeholder={
+								selectedProfession
+									? "Selecione sua especialidade"
+									: "Primeiro selecione a profissão"
+							}
+							selectOptions={availableSpecialties.map((s) => ({
+								value: s,
+								label: s,
+							}))}
+							disabled={!selectedProfession}
 						/>
+
 						<CustomFormField
 							form={form}
 							name="licenseNumber"
 							fieldType={FormFieldType.INPUT}
-							label="Número de registro (CRM / CRN / CRP / CREFITO...)"
-							placeholder="Ex: CRM/SP 123456"
+							label="Número de registro"
+							placeholder={licenseHint}
 						/>
 
 						<CustomSubmitButton form={form} isSubmitting={isPending}>
@@ -191,8 +231,8 @@ export default function BecomeProfessionalPage() {
 							Cadastro como profissional de saúde
 						</h1>
 						<p className="mt-1 text-sm text-muted-foreground">
-							Informe sua especialidade e número de registro. Sua solicitação
-							passará por análise antes de ser ativada.
+							Selecione sua profissão e especialidade. Sua solicitação passará
+							por análise antes de ser ativada.
 						</p>
 					</div>
 				</div>

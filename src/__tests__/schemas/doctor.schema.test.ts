@@ -4,6 +4,7 @@ import { createDoctorSchema } from "@/lib/schemas/doctor.schema";
 
 describe("createDoctorSchema", () => {
 	const valid = {
+		profession: "Médico",
 		specialty: "Cardiologia",
 		licenseNumber: "CRM-SP-12345",
 	};
@@ -38,7 +39,10 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita número de registro com menos de 5 caracteres", () => {
-		const result = createDoctorSchema.safeParse({ ...valid, licenseNumber: "CRM1" });
+		const result = createDoctorSchema.safeParse({
+			...valid,
+			licenseNumber: "CRM1",
+		});
 		expect(result.success).toBe(false);
 		expect(result.error?.flatten().fieldErrors.licenseNumber).toBeDefined();
 	});
@@ -53,7 +57,10 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita e-mail inválido quando fornecido", () => {
-		const result = createDoctorSchema.safeParse({ ...valid, email: "nao-e-email" });
+		const result = createDoctorSchema.safeParse({
+			...valid,
+			email: "nao-e-email",
+		});
 		expect(result.success).toBe(false);
 		expect(result.error?.flatten().fieldErrors.email).toBeDefined();
 	});

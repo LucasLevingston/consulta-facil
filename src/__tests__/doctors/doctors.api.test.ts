@@ -17,6 +17,7 @@ const doctor = {
 	id: "d-1",
 	name: "Dr. João",
 	email: "joao@clinica.com",
+	profession: "Médico",
 	specialty: "Cardiologia",
 	licenseNumber: "CRM-12345",
 	phone: "11999990000",
@@ -33,9 +34,12 @@ describe("doctorsApi", () => {
 
 			const result = await doctorsApi.getAll();
 
-			expect(mockGet).toHaveBeenCalledWith("/professionals", {
-				params: { page: 0, size: 20 },
-			});
+			expect(mockGet).toHaveBeenCalledWith(
+				"/professionals",
+				expect.objectContaining({
+					params: expect.objectContaining({ page: 0, size: 12 }),
+				}),
+			);
 			expect(result.content).toHaveLength(1);
 		});
 
@@ -44,9 +48,12 @@ describe("doctorsApi", () => {
 
 			await doctorsApi.getAll(2, 5);
 
-			expect(mockGet).toHaveBeenCalledWith("/professionals", {
-				params: { page: 2, size: 5 },
-			});
+			expect(mockGet).toHaveBeenCalledWith(
+				"/professionals",
+				expect.objectContaining({
+					params: expect.objectContaining({ page: 2, size: 5 }),
+				}),
+			);
 		});
 	});
 
@@ -81,6 +88,7 @@ describe("doctorsApi", () => {
 			const result = await doctorsApi.create({
 				name: doctor.name,
 				email: doctor.email,
+				profession: doctor.profession,
 				specialty: doctor.specialty,
 				licenseNumber: doctor.licenseNumber,
 				phone: doctor.phone,

@@ -14,6 +14,7 @@ export const professionalResponseSchema = z.object({
 	userId: z.string(),
 	name: z.string().nullable().optional(),
 	email: z.string().nullable().optional(),
+	profession: z.string().nullable().optional(),
 	specialty: z.string(),
 	licenseNumber: z.string().nullable().optional(),
 	phone: z.string().nullable().optional(),
@@ -34,6 +35,7 @@ export const createProfessionalSchema = z.object({
 	name: z.string().optional(),
 	email: z.string().email().optional(),
 	phone: z.string().optional(),
+	profession: z.string().min(2, "Profissão é obrigatória"),
 	specialty: z
 		.string()
 		.min(3, "Especialidade deve ter pelo menos 3 caracteres")

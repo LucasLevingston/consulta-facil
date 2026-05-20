@@ -19,7 +19,14 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn, getLabelByFormName, getPlaceholderByFormName } from "@/lib/utils";
 export enum FormFieldType {
@@ -139,31 +146,29 @@ export default function CustomFormField({
 						</FormControl>
 					)}
 
-				{fieldType === FormFieldType.SELECT && (
-	<Select
-		disabled={disabled}
-		onValueChange={field.onChange}
-		defaultValue={field.value || selectOptions?.[0]?.value}
-		
+					{fieldType === FormFieldType.SELECT && (
+						<Select
+							disabled={disabled}
+							value={field.value ?? ""}
+							onValueChange={field.onChange}
+						>
+							<FormControl>
+								<SelectTrigger className="h-12 w-full rounded-xl border-border bg-bg-input">
+									<SelectValue placeholder={finalPlaceholder} />
+								</SelectTrigger>
+							</FormControl>
 
-	>
-		<FormControl>
-			<SelectTrigger className="h-12 w-full rounded-xl border-border bg-bg-input">
-				<SelectValue placeholder={finalPlaceholder} />
-			</SelectTrigger>
-		</FormControl>
-
-		<SelectContent className="rounded-xl border-border " >
-			<SelectGroup >
-				{selectOptions?.map((option) => (
-					<SelectItem key={option.value} value={option.value}>
-						{option.label}
-					</SelectItem>
-				))}
-			</SelectGroup>
-		</SelectContent>
-	</Select>
-)}
+							<SelectContent className="rounded-xl border-border ">
+								<SelectGroup>
+									{selectOptions?.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					)}
 
 					{fieldType === FormFieldType.DATE_PICKER && (
 						<FormControl>

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 
@@ -16,7 +16,11 @@ import {
 	useUpdateProfessional,
 } from "@/hooks/api/use-doctors";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
-import { GenderOptions, specialties } from "@/utils/constants";
+import {
+	GenderOptions,
+	PROFESSION_SPECIALTIES,
+	professions,
+} from "@/utils/constants";
 import { DoctorFormValidation } from "./FormValidation";
 
 interface DoctorDetailsProps {
@@ -47,6 +51,7 @@ function DoctorDetailsForm({
 			birthDate: new Date(),
 			cpf: "",
 			address: "",
+			profession: defaultData?.profession ?? "",
 			specialty: defaultData?.specialty ?? "",
 			licenseNumber: defaultData?.licenseNumber ?? "",
 			identificationDocumentType: "",
@@ -55,10 +60,19 @@ function DoctorDetailsForm({
 		},
 	});
 
+	const selectedProfession = useWatch({
+		control: form.control,
+		name: "profession",
+	});
+	const availableSpecialties = selectedProfession
+		? (PROFESSION_SPECIALTIES[selectedProfession] ?? [])
+		: [];
+
 	const onSubmit = async (values: z.infer<typeof DoctorFormValidation>) => {
 		const payload = {
 			name: values.name,
 			email: values.email,
+			profession: values.profession,
 			specialty: values.specialty,
 			licenseNumber: values.licenseNumber,
 			phone: values.phone,
@@ -149,20 +163,36 @@ function DoctorDetailsForm({
 					<div className="flex flex-col gap-6 xl:flex-row">
 						<CustomFormField
 							form={form}
-							name="specialty"
+							name="profession"
 							fieldType={FormFieldType.SELECT}
-							selectOptions={specialties.map((specialty) => ({
-								value: specialty,
-								label: specialty,
-							}))}
+							label="Profissão"
+							placeholder="Selecione a profissão"
+							selectOptions={professions.map((p) => ({ value: p, label: p }))}
 						/>
 
 						<CustomFormField
 							form={form}
-							name="licenseNumber"
-							fieldType={FormFieldType.INPUT}
+							name="specialty"
+							fieldType={FormFieldType.SELECT}
+							label="Especialidade"
+							placeholder={
+								selectedProfession
+									? "Selecione a especialidade"
+									: "Primeiro selecione a profissão"
+							}
+							selectOptions={availableSpecialties.map((s) => ({
+								value: s,
+								label: s,
+							}))}
+							disabled={!selectedProfession}
 						/>
 					</div>
+
+					<CustomFormField
+						form={form}
+						name="licenseNumber"
+						fieldType={FormFieldType.INPUT}
+					/>
 				</section>
 
 				<CustomSubmitButton form={form}>

@@ -8,12 +8,21 @@ import type {
 export const professionalsApi = {
 	getAll: async (
 		page = 0,
-		size = 20,
+		size = 12,
+		profession?: string,
+		specialty?: string,
+		name?: string,
 	): Promise<ApiPage<ProfessionalResponse>> => {
 		const response = await api.get<ApiPage<ProfessionalResponse>>(
 			"/professionals",
 			{
-				params: { page, size },
+				params: {
+					page,
+					size,
+					profession: profession || undefined,
+					specialty: specialty || undefined,
+					name: name || undefined,
+				},
 			},
 		);
 		return response.data;
@@ -104,11 +113,18 @@ export const professionalsApi = {
 		lng: number,
 		radiusKm = 50,
 		specialty?: string,
+		profession?: string,
 	): Promise<ProfessionalResponse[]> => {
 		const response = await api.get<ProfessionalResponse[]>(
 			"/professionals/nearby",
 			{
-				params: { lat, lng, radiusKm, specialty },
+				params: {
+					lat,
+					lng,
+					radiusKm,
+					specialty: specialty || undefined,
+					profession: profession || undefined,
+				},
 			},
 		);
 		return response.data;

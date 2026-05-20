@@ -1,6 +1,8 @@
 "use client";
 
 import {
+	ChevronLeft,
+	ChevronRight,
 	LayoutList,
 	Loader2,
 	MapIcon,
@@ -8,8 +10,8 @@ import {
 	Users,
 	X,
 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
 import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
@@ -24,13 +26,16 @@ import {
 import { QueryBoundary } from "@/providers/query-boundary";
 
 type ViewMode = "list" | "map";
+const PAGE_SIZE = 12;
 
 export default function ProfessionalsContent() {
+	const router = useRouter();
 	const searchParams = useSearchParams();
+
 	const name = searchParams.get("name") ?? "";
+	const profession = searchParams.get("profession") ?? "";
 	const specialty = searchParams.get("specialty") ?? "";
-	const minRating = Number(searchParams.get("minRating") ?? "0");
-	const minConsultations = Number(searchParams.get("minConsultations") ?? "0");
+	const page = Number(searchParams.get("page") ?? "0");
 
 	const [viewMode, setViewMode] = useState<ViewMode>("list");
 	const [userLocation, setUserLocation] = useState<{
@@ -43,10 +48,11 @@ export default function ProfessionalsContent() {
 	const isNearbyMode = userLocation !== null;
 
 	const {
-		data: allData,
-		isLoading: allLoading,
-		error: allError,
-	} = useProfessionals(0, 200);
+		data: pageData,
+		isLoading: listLoading,
+		error: listError,
+	} = useProfessionals(page, PAGE_SIZE, profession, specialty, name);
+
 	const {
 		data: nearbyDoctors = [],
 		isLoading: nearbyLoading,
@@ -56,37 +62,25 @@ export default function ProfessionalsContent() {
 		userLocation?.lng ?? null,
 		radiusKm,
 		specialty || undefined,
+		profession || undefined,
 	);
 
-	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
-	const error = isNearbyMode ? nearbyError : allError;
+	const isLoading = isNearbyMode ? nearbyLoading : listLoading;
+	const error = isNearbyMode ? nearbyError : listError;
 
-	const filtered = useMemo(() => {
-		if (isNearbyMode) return nearbyDoctors;
+	const doctors = isNearbyMode ? nearbyDoctors : (pageData?.content ?? []);
+	const totalPages = pageData?.totalPages ?? 1;
+	const totalElements = pageData?.totalElements ?? 0;
 
-		const all = allData?.content ?? [];
-		return all.filter((d) => {
-			if (name && !d.name?.toLowerCase().includes(name.toLowerCase()))
-				return false;
-			if (specialty && d.specialty !== specialty) return false;
-			if (minRating > 0 && (d.rating ?? 0) < minRating) return false;
-			if (minConsultations > 0 && (d.consultationCount ?? 0) < minConsultations)
-				return false;
-			return true;
-		});
-	}, [
-		allData,
-		nearbyDoctors,
-		isNearbyMode,
-		name,
-		specialty,
-		minRating,
-		minConsultations,
-	]);
-
-	const doctorsWithLocation = filtered.filter(
+	const doctorsWithLocation = doctors.filter(
 		(d) => d.latitude != null && d.longitude != null,
 	);
+
+	function goToPage(p: number) {
+		const params = new URLSearchParams(searchParams.toString());
+		params.set("page", String(p));
+		router.replace(`/professionals?${params.toString()}`);
+	}
 
 	function requestLocation() {
 		if (!navigator.geolocation) return;
@@ -100,9 +94,7 @@ export default function ProfessionalsContent() {
 				setViewMode("map");
 				setLocationLoading(false);
 			},
-			() => {
-				setLocationLoading(false);
-			},
+			() => setLocationLoading(false),
 		);
 	}
 
@@ -116,7 +108,7 @@ export default function ProfessionalsContent() {
 				title="Profissionais"
 				description="Encontre especialistas cadastrados na plataforma."
 				icon={<Users className="h-6 w-6" />}
-				count={filtered.length}
+				count={isNearbyMode ? doctors.length : totalElements}
 				countLabel="profissional"
 			/>
 
@@ -186,7 +178,7 @@ export default function ProfessionalsContent() {
 							</p>
 						)}
 						<DoctorsMap
-							doctors={filtered}
+							doctors={doctors}
 							center={
 								userLocation ? [userLocation.lat, userLocation.lng] : undefined
 							}
@@ -195,7 +187,59 @@ export default function ProfessionalsContent() {
 						/>
 					</div>
 				) : (
-					<DoctorsList doctors={filtered} />
+					<>
+						<DoctorsList doctors={doctors} />
+
+						{!isNearbyMode && totalPages > 1 && (
+							<div className="flex items-center justify-center gap-2 pt-2">
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => goToPage(page - 1)}
+									disabled={page === 0}
+									className="gap-1"
+								>
+									<ChevronLeft className="h-4 w-4" />
+									Anterior
+								</Button>
+
+								<div className="flex items-center gap-1">
+									{Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+										const pageIndex =
+											totalPages <= 7
+												? i
+												: page < 4
+													? i
+													: page > totalPages - 4
+														? totalPages - 7 + i
+														: page - 3 + i;
+										return (
+											<Button
+												key={pageIndex}
+												variant={pageIndex === page ? "default" : "outline"}
+												size="sm"
+												onClick={() => goToPage(pageIndex)}
+												className="h-8 w-8 p-0"
+											>
+												{pageIndex + 1}
+											</Button>
+										);
+									})}
+								</div>
+
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => goToPage(page + 1)}
+									disabled={page >= totalPages - 1}
+									className="gap-1"
+								>
+									Próximo
+									<ChevronRight className="h-4 w-4" />
+								</Button>
+							</div>
+						)}
+					</>
 				)}
 			</div>
 		</QueryBoundary>

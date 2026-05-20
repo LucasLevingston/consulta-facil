@@ -7,26 +7,49 @@ import type { CreateProfessionalInput } from "@/lib/schemas/doctor.schema";
 
 export const professionalKeys = {
 	all: ["professionals"] as const,
-	list: (page?: number, size?: number) =>
-		[...professionalKeys.all, "list", { page, size }] as const,
+	list: (
+		page?: number,
+		size?: number,
+		profession?: string,
+		specialty?: string,
+		name?: string,
+	) =>
+		[
+			...professionalKeys.all,
+			"list",
+			{ page, size, profession, specialty, name },
+		] as const,
 	search: (specialty: string) =>
 		[...professionalKeys.all, "search", specialty] as const,
 	detail: (id: string) => [...professionalKeys.all, id] as const,
-	nearby: (lat: number, lng: number, radiusKm: number, specialty?: string) =>
+	nearby: (
+		lat: number,
+		lng: number,
+		radiusKm: number,
+		specialty?: string,
+		profession?: string,
+	) =>
 		[
 			...professionalKeys.all,
 			"nearby",
-			{ lat, lng, radiusKm, specialty },
+			{ lat, lng, radiusKm, specialty, profession },
 		] as const,
 };
 
 // Backwards-compatible alias
 export const doctorKeys = professionalKeys;
 
-export function useProfessionals(page = 0, size = 20) {
+export function useProfessionals(
+	page = 0,
+	size = 12,
+	profession?: string,
+	specialty?: string,
+	name?: string,
+) {
 	return useQuery({
-		queryKey: professionalKeys.list(page, size),
-		queryFn: () => professionalsApi.getAll(page, size),
+		queryKey: professionalKeys.list(page, size, profession, specialty, name),
+		queryFn: () =>
+			professionalsApi.getAll(page, size, profession, specialty, name),
 	});
 }
 
@@ -130,11 +153,24 @@ export function useProfessionalsNearby(
 	lng: number | null,
 	radiusKm = 50,
 	specialty?: string,
+	profession?: string,
 ) {
 	return useQuery({
-		queryKey: professionalKeys.nearby(lat ?? 0, lng ?? 0, radiusKm, specialty),
+		queryKey: professionalKeys.nearby(
+			lat ?? 0,
+			lng ?? 0,
+			radiusKm,
+			specialty,
+			profession,
+		),
 		queryFn: () =>
-			professionalsApi.getNearby(lat ?? 0, lng ?? 0, radiusKm, specialty),
+			professionalsApi.getNearby(
+				lat ?? 0,
+				lng ?? 0,
+				radiusKm,
+				specialty,
+				profession,
+			),
 		enabled: lat !== null && lng !== null,
 	});
 }
