@@ -42,8 +42,7 @@ export function Header() {
 				{user ? (
 					<>
 						<Link href="/agendar-consulta">
-							<CustomButton
-							>
+							<CustomButton>
 								<CalendarPlus className="mr-2 h-4 w-4" />
 								Agendar
 							</CustomButton>
@@ -56,15 +55,11 @@ export function Header() {
 				) : (
 					<div className="flex items-center gap-2">
 						<Link href="/auth/register">
-										<CustomButton>
-											Criar conta
-										</CustomButton>
-									</Link>
-									<Link href="/auth/login">
-										<CustomButton>
-											Entrar
-										</CustomButton>
-									</Link>
+							<CustomButton>Criar conta</CustomButton>
+						</Link>
+						<Link href="/auth/login">
+							<CustomButton>Entrar</CustomButton>
+						</Link>
 					</div>
 				)}
 			</div>
@@ -96,7 +91,7 @@ export function Header() {
 						<div className="mt-8 space-y-4">
 							<CustomInput
 								type="text"
-								placeholder="Buscar médicos..."
+								placeholder="Buscar profissionais..."
 								icon={Search}
 							/>
 

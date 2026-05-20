@@ -11,7 +11,7 @@ export default function AgendarConsultaPage() {
 		<div className="space-y-6">
 			<PageHeader
 				title="Agendar Consulta"
-				description="Escolha o médico, data e horário para sua consulta."
+				description="Escolha o profissional, data e horário para sua consulta."
 				icon={<CalendarPlus className="h-6 w-6" />}
 			/>
 

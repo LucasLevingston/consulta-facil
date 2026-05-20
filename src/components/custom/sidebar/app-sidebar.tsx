@@ -46,25 +46,31 @@ import {
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
 
-const defaultNav =[
+const defaultNav = [
 	{
 		label: "Home",
-		items:[
+		items: [
 			{
 				title: "Dashboard",
 				url: "/dashboard",
 				icon: Home,
-				tooltip: "Visão geral da sua conta e atividades recentes"
+				tooltip: "Visão geral da sua conta e atividades recentes",
 			},
 			{
 				title: "Profissionais",
 				url: "/professionals",
 				icon: Users,
-				tooltip: "Profissionais cadastrados na plataforma"
-			}
-		]
-	}
-]
+				tooltip: "Profissionais cadastrados na plataforma",
+			},
+			{
+				title: "Clínicas",
+				url: "/clinics",
+				icon: Building2,
+				tooltip: "Clínicas cadastradas na plataforma",
+			},
+		],
+	},
+];
 
 const patientNav = [
 	{
@@ -173,7 +179,7 @@ export default function AppSidebar() {
 
 	if (!mounted) return null;
 
-	const isDoctor = user?.role === "DOCTOR";
+	const isDoctor = user?.role === "PROFESSIONAL";
 	const isAdmin = user?.role === "ADMIN";
 
 	const roleNav = isAdmin ? adminNav : isDoctor ? doctorNav : patientNav;
@@ -262,7 +268,7 @@ export default function AppSidebar() {
 												{displayName}
 											</span>
 											<span className="truncate text-xs text-muted-foreground">
-												{isDoctor ? "Médico" : "Paciente"}
+												{isDoctor ? "Profissional" : "Paciente"}
 											</span>
 										</div>
 										<ChevronsUpDown className="ml-auto size-4" />
@@ -329,7 +335,6 @@ export default function AppSidebar() {
 												</DropdownMenuItem>
 											</>
 										)}
-										
 									</DropdownMenuGroup>
 
 									<DropdownMenuSeparator />

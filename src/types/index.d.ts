@@ -1,183 +1,187 @@
 import type React from "react";
 
 declare type SearchParamProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+	searchParams: { [key: string]: string | string[] | undefined };
 };
 
 // Enums alinhados ao backend
-declare type UserRole = "PATIENT" | "DOCTOR" | "ADMIN";
+declare type UserRole = "PATIENT" | "PROFESSIONAL" | "ADMIN";
 declare type Gender = "MALE" | "FEMALE" | "OTHER";
-declare type AppointmentStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "COMPLETED";
+declare type AppointmentStatus =
+	| "PENDING"
+	| "CONFIRMED"
+	| "CANCELED"
+	| "COMPLETED";
 
 // Auth
 declare type AuthUser = {
-  userId: string;
-  email: string;
-  role: UserRole;
+	userId: string;
+	email: string;
+	role: UserRole;
 };
 
 // User
 declare type UserResponse = {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  phone?: string | null;
-  cpf?: string | null;
-  birthDate?: string | null;
-  gender?: Gender | null;
-  imageUrl?: string | null;
-  createdAt?: string | null;
-  updatedAt?: string | null;
+	id: string;
+	name: string;
+	email: string;
+	role: UserRole;
+	phone?: string | null;
+	cpf?: string | null;
+	birthDate?: string | null;
+	gender?: Gender | null;
+	imageUrl?: string | null;
+	createdAt?: string | null;
+	updatedAt?: string | null;
 };
 
 declare type CreateUserInput = {
-  name: string;
-  email: string;
-  password: string;
-  cpf?: string;
-  phone?: string;
-  birthDate?: string;
-  gender?: Gender;
+	name: string;
+	email: string;
+	password: string;
+	cpf?: string;
+	phone?: string;
+	birthDate?: string;
+	gender?: Gender;
 };
 
 declare type LoginInput = {
-  email: string;
-  password: string;
+	email: string;
+	password: string;
 };
 
 declare type LoginResponse = {
-  token: string;
-  type: string;
-  expiresIn: number;
-  userId: string;
-  email: string;
-  role: UserRole;
+	token: string;
+	type: string;
+	expiresIn: number;
+	userId: string;
+	email: string;
+	role: UserRole;
 };
 
 // Address
 declare type AddressInput = {
-  zipCode: string;
-  street: string;
-  number: string;
-  district?: string;
-  city: string;
-  state: string;
-  country?: string;
+	zipCode: string;
+	street: string;
+	number: string;
+	district?: string;
+	city: string;
+	state: string;
+	country?: string;
 };
 
-// Doctor
-declare type DoctorResponse = {
-  id: string;
-  userId: string;
-  name?: string | null;
-  email?: string | null;
-  specialty: string;
-  licenseNumber?: string | null;
-  phone?: string | null;
+// Professional
+declare type ProfessionalResponse = {
+	id: string;
+	userId: string;
+	name?: string | null;
+	email?: string | null;
+	specialty: string;
+	licenseNumber?: string | null;
+	phone?: string | null;
 };
 
-declare type CreateDoctorInput = {
-  specialty: string;
-  licenseNumber: string;
+declare type CreateProfessionalInput = {
+	specialty: string;
+	licenseNumber: string;
 };
 
 // Patient
 declare type PatientProfile = {
-  id?: string;
-  userId?: string;
-  name?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  cpf?: string | null;
-  birthDate?: string | null;
-  gender?: Gender | null;
-  occupation?: string | null;
-  createdAt?: string | null;
-  updatedAt?: string | null;
+	id?: string;
+	userId?: string;
+	name?: string | null;
+	email?: string | null;
+	phone?: string | null;
+	cpf?: string | null;
+	birthDate?: string | null;
+	gender?: Gender | null;
+	occupation?: string | null;
+	createdAt?: string | null;
+	updatedAt?: string | null;
 };
 
 declare type UpdatePatientInput = {
-  occupation?: string;
+	occupation?: string;
 };
 
 declare type MedicalRecord = {
-  id?: string;
-  allergies?: string | null;
-  currentMedication?: string | null;
-  familyMedicalHistory?: string | null;
-  pastMedicalHistory?: string | null;
-  privacyConsent?: boolean | null;
-  treatmentConsent?: boolean | null;
-  disclosureConsent?: boolean | null;
-  createdAt?: string | null;
-  updatedAt?: string | null;
+	id?: string;
+	allergies?: string | null;
+	currentMedication?: string | null;
+	familyMedicalHistory?: string | null;
+	pastMedicalHistory?: string | null;
+	privacyConsent?: boolean | null;
+	treatmentConsent?: boolean | null;
+	disclosureConsent?: boolean | null;
+	createdAt?: string | null;
+	updatedAt?: string | null;
 };
 
 declare type UpdateMedicalRecordInput = {
-  allergies?: string;
-  currentMedication?: string;
-  familyMedicalHistory?: string;
-  pastMedicalHistory?: string;
-  privacyConsent?: boolean;
-  treatmentConsent?: boolean;
-  disclosureConsent?: boolean;
+	allergies?: string;
+	currentMedication?: string;
+	familyMedicalHistory?: string;
+	pastMedicalHistory?: string;
+	privacyConsent?: boolean;
+	treatmentConsent?: boolean;
+	disclosureConsent?: boolean;
 };
 
 // Appointment
 declare type AppointmentResponse = {
-  id: string;
-  patientName?: string | null;
-  patientId: string;
-  doctorName?: string | null;
-  doctorId: string;
-  specialty?: string | null;
-  scheduledAt: string;
-  reason?: string | null;
-  notes?: string | null;
-  status: AppointmentStatus;
-  cancellationReason?: string | null;
-  createdAt?: string | null;
-  updatedAt?: string | null;
+	id: string;
+	patientName?: string | null;
+	patientId: string;
+	doctorName?: string | null;
+	doctorId: string;
+	specialty?: string | null;
+	scheduledAt: string;
+	reason?: string | null;
+	notes?: string | null;
+	status: AppointmentStatus;
+	cancellationReason?: string | null;
+	createdAt?: string | null;
+	updatedAt?: string | null;
 };
 
 declare type CreateAppointmentInput = {
-  doctorId: string;
-  scheduledAt: string;
-  reason?: string;
-  notes?: string;
+	doctorId: string;
+	scheduledAt: string;
+	reason?: string;
+	notes?: string;
 };
 
 declare type CancelAppointmentInput = {
-  cancellationReason: string;
+	cancellationReason: string;
 };
 
 // Pagination
 declare type ApiPage<T> = {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  first?: boolean;
-  last?: boolean;
+	content: T[];
+	totalElements: number;
+	totalPages: number;
+	size: number;
+	number: number;
+	first?: boolean;
+	last?: boolean;
 };
 
 // UI
 export interface NavItem {
-  title: string;
-  url: string;
-  disabled?: boolean;
-  external?: boolean;
-  icon?: string;
-  label?: string;
-  description?: string;
-  isActive?: boolean;
-  items?: NavItem[];
+	title: string;
+	url: string;
+	disabled?: boolean;
+	external?: boolean;
+	icon?: string;
+	label?: string;
+	description?: string;
+	isActive?: boolean;
+	items?: NavItem[];
 }
 
 export interface Area {
-  name: string;
-  image: string;
-  icon: React.ElementType;
+	name: string;
+	image: string;
+	icon: React.ElementType;
 }

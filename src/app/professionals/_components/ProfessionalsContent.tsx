@@ -1,6 +1,13 @@
 "use client";
 
-import { LayoutList, Loader2, MapIcon, Navigation, Users, X } from "lucide-react";
+import {
+	LayoutList,
+	Loader2,
+	MapIcon,
+	Navigation,
+	Users,
+	X,
+} from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
@@ -10,7 +17,10 @@ import { DoctorsMap } from "@/components/custom/map/DoctorsMap";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useDoctors, useDoctorsNearby } from "@/hooks/api/use-doctors";
+import {
+	useProfessionals,
+	useProfessionalsNearby,
+} from "@/hooks/api/use-doctors";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 type ViewMode = "list" | "map";
@@ -23,20 +33,30 @@ export default function ProfessionalsContent() {
 	const minConsultations = Number(searchParams.get("minConsultations") ?? "0");
 
 	const [viewMode, setViewMode] = useState<ViewMode>("list");
-	const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+	const [userLocation, setUserLocation] = useState<{
+		lat: number;
+		lng: number;
+	} | null>(null);
 	const [locationLoading, setLocationLoading] = useState(false);
 	const radiusKm = 50;
 
 	const isNearbyMode = userLocation !== null;
 
-	const { data: allData, isLoading: allLoading, error: allError } = useDoctors(0, 200);
-	const { data: nearbyDoctors = [], isLoading: nearbyLoading, error: nearbyError } =
-		useDoctorsNearby(
-			userLocation?.lat ?? null,
-			userLocation?.lng ?? null,
-			radiusKm,
-			specialty || undefined
-		);
+	const {
+		data: allData,
+		isLoading: allLoading,
+		error: allError,
+	} = useProfessionals(0, 200);
+	const {
+		data: nearbyDoctors = [],
+		isLoading: nearbyLoading,
+		error: nearbyError,
+	} = useProfessionalsNearby(
+		userLocation?.lat ?? null,
+		userLocation?.lng ?? null,
+		radiusKm,
+		specialty || undefined,
+	);
 
 	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
 	const error = isNearbyMode ? nearbyError : allError;
@@ -46,28 +66,43 @@ export default function ProfessionalsContent() {
 
 		const all = allData?.content ?? [];
 		return all.filter((d) => {
-			if (name && !d.name?.toLowerCase().includes(name.toLowerCase())) return false;
+			if (name && !d.name?.toLowerCase().includes(name.toLowerCase()))
+				return false;
 			if (specialty && d.specialty !== specialty) return false;
 			if (minRating > 0 && (d.rating ?? 0) < minRating) return false;
-			if (minConsultations > 0 && (d.consultationCount ?? 0) < minConsultations) return false;
+			if (minConsultations > 0 && (d.consultationCount ?? 0) < minConsultations)
+				return false;
 			return true;
 		});
-	}, [allData, nearbyDoctors, isNearbyMode, name, specialty, minRating, minConsultations]);
+	}, [
+		allData,
+		nearbyDoctors,
+		isNearbyMode,
+		name,
+		specialty,
+		minRating,
+		minConsultations,
+	]);
 
-	const doctorsWithLocation = filtered.filter((d) => d.latitude != null && d.longitude != null);
+	const doctorsWithLocation = filtered.filter(
+		(d) => d.latitude != null && d.longitude != null,
+	);
 
 	function requestLocation() {
 		if (!navigator.geolocation) return;
 		setLocationLoading(true);
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+				setUserLocation({
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude,
+				});
 				setViewMode("map");
 				setLocationLoading(false);
 			},
 			() => {
 				setLocationLoading(false);
-			}
+			},
 		);
 	}
 
@@ -91,7 +126,10 @@ export default function ProfessionalsContent() {
 
 					<div className="flex items-center gap-2 shrink-0">
 						{isNearbyMode ? (
-							<Badge variant="secondary" className="gap-1.5 px-3 py-1.5 rounded-full text-sm">
+							<Badge
+								variant="secondary"
+								className="gap-1.5 px-3 py-1.5 rounded-full text-sm"
+							>
 								<Navigation className="h-3.5 w-3.5 text-primary" />
 								Mais perto de você ({radiusKm}km)
 								<button
@@ -144,15 +182,13 @@ export default function ProfessionalsContent() {
 					<div className="space-y-3">
 						{doctorsWithLocation.length === 0 && (
 							<p className="text-sm text-muted-foreground">
-								Nenhum médico com localização cadastrada encontrado.
+								Nenhum profissional com localização cadastrada encontrado.
 							</p>
 						)}
 						<DoctorsMap
 							doctors={filtered}
 							center={
-								userLocation
-									? [userLocation.lat, userLocation.lng]
-									: undefined
+								userLocation ? [userLocation.lat, userLocation.lng] : undefined
 							}
 							zoom={userLocation ? 10 : 5}
 							className="h-[520px] w-full"

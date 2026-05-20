@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 
 interface QuickCard {
 	title: string;
@@ -23,17 +23,27 @@ interface QuickCard {
 	accent: string;
 }
 
-function QuickAccessCard({ title, description, href, icon: Icon, accent }: QuickCard) {
+function QuickAccessCard({
+	title,
+	description,
+	href,
+	icon: Icon,
+	accent,
+}: QuickCard) {
 	return (
 		<Link href={href} className="group block">
 			<Card className="h-full border-border transition-all hover:border-primary/40 hover:shadow-md">
 				<CardContent className="flex items-start gap-4 p-5">
-					<div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent}`}>
+					<div
+						className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent}`}
+					>
 						<Icon className="h-5 w-5" />
 					</div>
 					<div className="min-w-0 flex-1">
 						<p className="font-semibold text-foreground">{title}</p>
-						<p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
+						<p className="mt-0.5 text-xs text-muted-foreground">
+							{description}
+						</p>
 					</div>
 					<ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
 				</CardContent>
@@ -52,7 +62,7 @@ const patientCards: QuickCard[] = [
 	},
 	{
 		title: "Agendar Consulta",
-		description: "Escolha um médico e agende um horário.",
+		description: "Escolha um profissional e agende um horário.",
 		href: "/dashboard/appointments/create",
 		icon: CalendarPlus,
 		accent: "bg-green-500/10 text-green-500",
@@ -137,11 +147,11 @@ const adminCards: QuickCard[] = [
 
 interface DashboardProps {
 	firstName: string;
-	role: "PATIENT" | "DOCTOR" | "ADMIN";
+	role: "PATIENT" | "PROFESSIONAL" | "ADMIN";
 }
 
 function DoctorHeroSubtitle() {
-	const { data } = useMyDoctorProfile(true);
+	const { data } = useMyProfessionalProfile(true);
 	if (!data) return null;
 	return (
 		<p className="mt-1 text-sm text-muted-foreground">
@@ -152,7 +162,7 @@ function DoctorHeroSubtitle() {
 }
 
 export function Dashboard({ firstName, role }: DashboardProps) {
-	const isDoctor = role === "DOCTOR";
+	const isDoctor = role === "PROFESSIONAL";
 	const isAdmin = role === "ADMIN";
 	const isPatient = role === "PATIENT";
 
@@ -161,7 +171,7 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 	const heroLabel = isAdmin
 		? "Painel administrativo"
 		: isDoctor
-			? "Painel do médico"
+			? "Painel do profissional"
 			: "Bem-vindo de volta";
 
 	const heroName = isDoctor ? `Dr. ${firstName}` : firstName;
@@ -200,16 +210,19 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 
 			{/* Patient CTA to become doctor */}
 			{isPatient && (
-				<Link href="/dashboard/become-doctor" className="group block">
+				<Link href="/dashboard/become-professional" className="group block">
 					<Card className="border-dashed border-border transition-all hover:border-primary/40 hover:shadow-sm">
 						<CardContent className="flex items-center gap-4 p-5">
 							<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
 								<BadgeCheck className="h-5 w-5" />
 							</div>
 							<div className="flex-1">
-								<p className="font-semibold text-foreground">É profissional de saúde?</p>
+								<p className="font-semibold text-foreground">
+									É profissional de saúde?
+								</p>
 								<p className="text-xs text-muted-foreground">
-									Cadastre-se como médico e comece a atender pacientes.
+									Cadastre-se como profissional de saúde e comece a atender
+									pacientes.
 								</p>
 							</div>
 							<ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
