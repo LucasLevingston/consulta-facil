@@ -81,7 +81,7 @@ export const AppointmentForm = ({
 }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const doctorIdParam =
+	const professionalIdParam =
 		searchParams.get("professionalid") ?? searchParams.get("doctorid");
 	const { user: authUser } = useUserStore();
 
@@ -94,13 +94,13 @@ export const AppointmentForm = ({
 	const scheduleAppointment = useScheduleAppointment();
 	const cancelAppointment = useCancelAppointment();
 
-	const [doctorOpen, setDoctorOpen] = useState(false);
+	const [professionalOpen, setProfessionalOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState<string>("");
 
 	const form = useForm<AppointmentFormValues>({
 		resolver: zodResolver(appointmentFormSchema),
 		defaultValues: {
-			doctorId: appointment?.doctorId ?? doctorIdParam ?? "",
+			professionalId: appointment?.professionalId ?? professionalIdParam ?? "",
 			scheduledAt: appointment ? new Date(appointment.scheduledAt) : undefined,
 			reason: appointment?.reason ?? "",
 			notes: appointment?.notes ?? "",
@@ -109,10 +109,11 @@ export const AppointmentForm = ({
 		},
 	});
 
-	const selectedDoctorId = form.watch("doctorId");
+	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
 	const selectedDoctor = doctors.find(
-		(d) => d.id === selectedDoctorId || d.userId === selectedDoctorId,
+		(d) =>
+			d.id === selectedProfessionalId || d.userId === selectedProfessionalId,
 	);
 
 	const handleTimeSelect = (slot: (typeof TIME_SLOTS)[number]) => {
@@ -134,7 +135,7 @@ export const AppointmentForm = ({
 		try {
 			if (type === "create" || type === "schedule") {
 				await scheduleAppointment.mutateAsync({
-					doctorId: selectedDoctor?.id ?? values.doctorId,
+					professionalId: selectedDoctor?.id ?? values.professionalId,
 					scheduledAt: (values.scheduledAt as Date).toISOString(),
 					reason: values.reason ?? undefined,
 					notes: values.notes ?? undefined,
@@ -218,17 +219,20 @@ export const AppointmentForm = ({
 
 					<FormField
 						control={form.control}
-						name="doctorId"
+						name="professionalId"
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Popover open={doctorOpen} onOpenChange={setDoctorOpen}>
+									<Popover
+										open={professionalOpen}
+										onOpenChange={setProfessionalOpen}
+									>
 										<PopoverTrigger asChild>
 											<Button
 												variant="outline"
 												role="combobox"
-												aria-expanded={doctorOpen}
-												disabled={doctorsLoading || !!doctorIdParam}
+												aria-expanded={professionalOpen}
+												disabled={doctorsLoading || !!professionalIdParam}
 												className={cn(
 													"w-full justify-between rounded-xl border-border h-auto py-3 px-4",
 													!field.value && "text-muted-foreground",
@@ -285,7 +289,7 @@ export const AppointmentForm = ({
 																	value={`${doctor.name} ${doctor.specialty}`}
 																	onSelect={() => {
 																		field.onChange(doctor.id);
-																		setDoctorOpen(false);
+																		setProfessionalOpen(false);
 																	}}
 																>
 																	<div className="flex items-center gap-3 flex-1">
@@ -338,10 +342,10 @@ export const AppointmentForm = ({
 									{selectedDoctor.specialty}
 								</p>
 							</div>
-							{!doctorIdParam && (
+							{!professionalIdParam && (
 								<button
 									type="button"
-									onClick={() => form.setValue("doctorId", "")}
+									onClick={() => form.setValue("professionalId", "")}
 									className="text-muted-foreground hover:text-foreground transition-colors"
 								>
 									<X className="h-4 w-4" />

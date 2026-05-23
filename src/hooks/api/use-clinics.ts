@@ -74,11 +74,11 @@ export function useAddClinicMember() {
 	return useMutation({
 		mutationFn: ({
 			clinicId,
-			doctorProfileId,
+			professionalProfileId,
 		}: {
 			clinicId: string;
-			doctorProfileId: string;
-		}) => clinicsApi.addMember(clinicId, doctorProfileId),
+			professionalProfileId: string;
+		}) => clinicsApi.addMember(clinicId, professionalProfileId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},
@@ -90,11 +90,11 @@ export function useRemoveClinicMember() {
 	return useMutation({
 		mutationFn: ({
 			clinicId,
-			doctorProfileId,
+			professionalProfileId,
 		}: {
 			clinicId: string;
-			doctorProfileId: string;
-		}) => clinicsApi.removeMember(clinicId, doctorProfileId),
+			professionalProfileId: string;
+		}) => clinicsApi.removeMember(clinicId, professionalProfileId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},

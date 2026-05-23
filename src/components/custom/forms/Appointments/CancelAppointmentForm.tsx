@@ -12,7 +12,10 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCancelAppointment } from "@/hooks/api/use-appointments";
-import { cancelAppointmentSchema, type AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import {
+	type AppointmentResponse,
+	cancelAppointmentSchema,
+} from "@/lib/schemas/appointment.schema";
 
 interface CancelAppointmentFormProps {
 	appointment: AppointmentResponse;
@@ -40,7 +43,8 @@ export function CancelAppointmentForm({
 			form.reset();
 		} catch (error: unknown) {
 			toast.error(
-				(error instanceof Error ? error.message : null) ?? "Erro ao cancelar consulta.",
+				(error instanceof Error ? error.message : null) ??
+					"Erro ao cancelar consulta.",
 			);
 		}
 	};
@@ -51,7 +55,9 @@ export function CancelAppointmentForm({
 				<p className="text-sm text-muted-foreground">
 					Tem certeza que deseja cancelar a consulta com{" "}
 					<span className="font-semibold text-foreground">
-						{appointment.doctorName ? `Dr. ${appointment.doctorName}` : "o médico"}
+						{appointment.professionalName
+							? `Dr. ${appointment.professionalName}`
+							: "o médico"}
 					</span>
 					?
 				</p>

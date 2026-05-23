@@ -21,7 +21,7 @@ export function getLabelByFormName(name: string): string {
 		licenseNumber: "Número de Registro",
 		birthDate: "Data de Nascimento",
 		scheduledAt: "Data da Consulta",
-		doctorId: "Profissional",
+		professionalId: "Profissional",
 		reason: "Motivo",
 		notes: "Observações",
 		cancellationReason: "Motivo do Cancelamento",

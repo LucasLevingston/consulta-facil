@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useDoctorAppointments } from "@/hooks/api/use-appointments";
+import { useProfessionalAppointments } from "@/hooks/api/use-appointments";
 import {
 	useApproveApplication,
 	usePendingApplications,
@@ -137,7 +137,7 @@ export default function AdminPage() {
 	const { user } = useUserStore();
 	const router = useRouter();
 
-	const doctorQuery = useDoctorAppointments(user?.id ?? "");
+	const doctorQuery = useProfessionalAppointments(user?.id ?? "");
 	const appointments = doctorQuery.data?.content ?? [];
 
 	useEffect(() => {

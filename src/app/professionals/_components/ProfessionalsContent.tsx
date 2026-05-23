@@ -31,7 +31,6 @@ const PAGE_SIZE = 12;
 export default function ProfessionalsContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-
 	const name = searchParams.get("name") ?? "";
 	const profession = searchParams.get("profession") ?? "";
 	const specialty = searchParams.get("specialty") ?? "";
@@ -54,7 +53,7 @@ export default function ProfessionalsContent() {
 	} = useProfessionals(page, PAGE_SIZE, profession, specialty, name);
 
 	const {
-		data: nearbyDoctors = [],
+		data: nearbyProfessionals = [],
 		isLoading: nearbyLoading,
 		error: nearbyError,
 	} = useProfessionalsNearby(
@@ -68,11 +67,13 @@ export default function ProfessionalsContent() {
 	const isLoading = isNearbyMode ? nearbyLoading : listLoading;
 	const error = isNearbyMode ? nearbyError : listError;
 
-	const doctors = isNearbyMode ? nearbyDoctors : (pageData?.content ?? []);
+	const professionals = isNearbyMode
+		? nearbyProfessionals
+		: (pageData?.content ?? []);
 	const totalPages = pageData?.totalPages ?? 1;
 	const totalElements = pageData?.totalElements ?? 0;
 
-	const doctorsWithLocation = doctors.filter(
+	const professionalsWithLocation = professionals.filter(
 		(d) => d.latitude != null && d.longitude != null,
 	);
 
@@ -108,7 +109,7 @@ export default function ProfessionalsContent() {
 				title="Profissionais"
 				description="Encontre especialistas cadastrados na plataforma."
 				icon={<Users className="h-6 w-6" />}
-				count={isNearbyMode ? doctors.length : totalElements}
+				count={isNearbyMode ? professionals.length : totalElements}
 				countLabel="profissional"
 			/>
 
@@ -172,13 +173,13 @@ export default function ProfessionalsContent() {
 
 				{viewMode === "map" ? (
 					<div className="space-y-3">
-						{doctorsWithLocation.length === 0 && (
+						{professionalsWithLocation.length === 0 && (
 							<p className="text-sm text-muted-foreground">
 								Nenhum profissional com localização cadastrada encontrado.
 							</p>
 						)}
 						<DoctorsMap
-							doctors={doctors}
+							doctors={professionals}
 							center={
 								userLocation ? [userLocation.lat, userLocation.lng] : undefined
 							}
@@ -188,7 +189,7 @@ export default function ProfessionalsContent() {
 					</div>
 				) : (
 					<>
-						<DoctorsList doctors={doctors} />
+						<DoctorsList doctors={professionals} />
 
 						{!isNearbyMode && totalPages > 1 && (
 							<div className="flex items-center justify-center gap-2 pt-2">

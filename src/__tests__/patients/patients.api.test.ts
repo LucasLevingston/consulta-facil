@@ -111,11 +111,11 @@ describe("patientsApi", () => {
 		});
 	});
 
-	describe("getDoctorPatients", () => {
-		it("chama GET /patients/professional/:doctorId com os params e retorna a página", async () => {
+	describe("getProfessionalPatients", () => {
+		it("chama GET /patients/professional/:professionalId com os params e retorna a página", async () => {
 			mockGet.mockResolvedValueOnce({ data: patientSummaryPage });
 
-			const result = await patientsApi.getDoctorPatients("d-1", {
+			const result = await patientsApi.getProfessionalPatients("d-1", {
 				page: 0,
 				size: 20,
 				search: "",
@@ -132,7 +132,7 @@ describe("patientsApi", () => {
 		it("passa parâmetros de busca e sort corretamente", async () => {
 			mockGet.mockResolvedValueOnce({ data: patientSummaryPage });
 
-			await patientsApi.getDoctorPatients("d-1", {
+			await patientsApi.getProfessionalPatients("d-1", {
 				page: 1,
 				size: 10,
 				search: "Maria",

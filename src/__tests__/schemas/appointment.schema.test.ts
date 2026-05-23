@@ -8,7 +8,7 @@ import {
 
 describe("createAppointmentSchema", () => {
 	const valid = {
-		doctorId: "doctor-uuid-123",
+		professionalId: "doctor-uuid-123",
 		scheduledAt: "2026-06-01T10:00:00",
 	};
 
@@ -25,14 +25,20 @@ describe("createAppointmentSchema", () => {
 		expect(result.success).toBe(true);
 	});
 
-	it("rejeita doctorId vazio", () => {
-		const result = createAppointmentSchema.safeParse({ ...valid, doctorId: "" });
+	it("rejeita professionalId vazio", () => {
+		const result = createAppointmentSchema.safeParse({
+			...valid,
+			professionalId: "",
+		});
 		expect(result.success).toBe(false);
-		expect(result.error?.flatten().fieldErrors.doctorId).toBeDefined();
+		expect(result.error?.flatten().fieldErrors.professionalId).toBeDefined();
 	});
 
 	it("rejeita scheduledAt vazio", () => {
-		const result = createAppointmentSchema.safeParse({ ...valid, scheduledAt: "" });
+		const result = createAppointmentSchema.safeParse({
+			...valid,
+			scheduledAt: "",
+		});
 		expect(result.success).toBe(false);
 		expect(result.error?.flatten().fieldErrors.scheduledAt).toBeDefined();
 	});
@@ -51,9 +57,13 @@ describe("cancelAppointmentSchema", () => {
 	});
 
 	it("rejeita motivo vazio", () => {
-		const result = cancelAppointmentSchema.safeParse({ cancellationReason: "" });
+		const result = cancelAppointmentSchema.safeParse({
+			cancellationReason: "",
+		});
 		expect(result.success).toBe(false);
-		expect(result.error?.flatten().fieldErrors.cancellationReason).toBeDefined();
+		expect(
+			result.error?.flatten().fieldErrors.cancellationReason,
+		).toBeDefined();
 	});
 
 	it("rejeita objeto sem o campo obrigatório", () => {
@@ -63,7 +73,7 @@ describe("cancelAppointmentSchema", () => {
 
 describe("appointmentFormSchema", () => {
 	const valid = {
-		doctorId: "doctor-uuid-456",
+		professionalId: "doctor-uuid-456",
 		scheduledAt: new Date("2026-06-01T10:00:00"),
 	};
 
@@ -82,10 +92,13 @@ describe("appointmentFormSchema", () => {
 		expect(result.success).toBe(true);
 	});
 
-	it("rejeita doctorId vazio", () => {
-		const result = appointmentFormSchema.safeParse({ ...valid, doctorId: "" });
+	it("rejeita professionalId vazio", () => {
+		const result = appointmentFormSchema.safeParse({
+			...valid,
+			professionalId: "",
+		});
 		expect(result.success).toBe(false);
-		expect(result.error?.flatten().fieldErrors.doctorId).toBeDefined();
+		expect(result.error?.flatten().fieldErrors.professionalId).toBeDefined();
 	});
 
 	it("rejeita scheduledAt que não é Date", () => {

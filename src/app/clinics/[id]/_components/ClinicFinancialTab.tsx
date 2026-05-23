@@ -31,8 +31,9 @@ export function ClinicFinancialTab({ clinic }: Props) {
 
 	const results = useQueries({
 		queries: members.map((m) => ({
-			queryKey: appointmentKeys.byDoctor(m.doctorProfileId),
-			queryFn: () => appointmentsApi.getByDoctor(m.doctorProfileId, 0, 100),
+			queryKey: appointmentKeys.byProfessional(m.professionalProfileId),
+			queryFn: () =>
+				appointmentsApi.getByProfessional(m.professionalProfileId, 0, 100),
 		})),
 	});
 
@@ -144,18 +145,18 @@ export function ClinicFinancialTab({ clinic }: Props) {
 				</CardHeader>
 				<CardContent className="space-y-4">
 					{memberStats.map(({ member, completed, freeUsed, paidCount }) => (
-						<div key={member.doctorProfileId}>
+						<div key={member.professionalProfileId}>
 							<div className="flex items-center gap-3 mb-2">
 								<Avatar className="h-7 w-7 shrink-0">
 									<AvatarImage src={member.imageUrl ?? undefined} />
 									<AvatarFallback className="text-xs">
-										{member.doctorName?.slice(0, 2).toUpperCase() ?? "DR"}
+										{member.professionalName?.slice(0, 2).toUpperCase() ?? "DR"}
 									</AvatarFallback>
 								</Avatar>
 								<div className="flex-1 min-w-0">
 									<div className="flex items-center justify-between">
 										<p className="text-sm font-medium truncate">
-											{member.doctorName ?? "Médico"}
+											{member.professionalName ?? "Médico"}
 										</p>
 										<div className="flex items-center gap-1.5 shrink-0 ml-2">
 											<span className="text-xs tabular-nums text-muted-foreground">

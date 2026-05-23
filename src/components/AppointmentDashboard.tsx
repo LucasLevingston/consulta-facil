@@ -7,17 +7,25 @@ import { StatCard } from "@/components/StatCard";
 import { makeColumns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
 import { Input } from "@/components/ui/input";
-import type { AppointmentResponse, AppointmentStatus } from "@/lib/schemas/appointment.schema";
+import type {
+	AppointmentResponse,
+	AppointmentStatus,
+} from "@/lib/schemas/appointment.schema";
 
 const ITEMS_PER_PAGE = 10;
 
 interface AppointmentsDashboardProps {
 	appointments: AppointmentResponse[];
-	userRole: "PATIENT" | "DOCTOR" | "ADMIN";
+	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN";
 }
 
-const AppointmentsDashboard = ({ appointments, userRole }: AppointmentsDashboardProps) => {
-	const [activeStatus, setActiveStatus] = useState<AppointmentStatus | null>(null);
+const AppointmentsDashboard = ({
+	appointments,
+	userRole,
+}: AppointmentsDashboardProps) => {
+	const [activeStatus, setActiveStatus] = useState<AppointmentStatus | null>(
+		null,
+	);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState(0);
 
@@ -37,7 +45,7 @@ const AppointmentsDashboard = ({ appointments, userRole }: AppointmentsDashboard
 			result = result.filter(
 				(a) =>
 					a.patientName?.toLowerCase().includes(q) ||
-					a.doctorName?.toLowerCase().includes(q) ||
+					a.professionalName?.toLowerCase().includes(q) ||
 					a.specialty?.toLowerCase().includes(q) ||
 					a.reason?.toLowerCase().includes(q),
 			);
@@ -47,7 +55,10 @@ const AppointmentsDashboard = ({ appointments, userRole }: AppointmentsDashboard
 
 	const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
 	const currentPage = Math.min(page, totalPages - 1);
-	const paginated = filtered.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
+	const paginated = filtered.slice(
+		currentPage * ITEMS_PER_PAGE,
+		(currentPage + 1) * ITEMS_PER_PAGE,
+	);
 
 	const handleStatusClick = (status: AppointmentStatus | null) => {
 		setActiveStatus(status);

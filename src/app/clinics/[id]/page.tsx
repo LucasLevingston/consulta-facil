@@ -28,7 +28,7 @@ export default function ClinicDetailPage() {
 	const isManager = isOwner || isAdmin;
 
 	const myMembership = clinic?.members?.find(
-		(m) => m.doctorProfileId === myDoctorProfile?.id,
+		(m) => m.professionalProfileId === myDoctorProfile?.id,
 	);
 	const isMember = !!myMembership || isManager;
 
@@ -115,7 +115,7 @@ export default function ClinicDetailPage() {
 								<ClinicAppointmentsTab
 									clinic={clinic}
 									isManager={isManager}
-									myDoctorProfileId={myDoctorProfile?.id}
+									myProfessionalProfileId={myDoctorProfile?.id}
 								/>
 							</TabsContent>
 						)}

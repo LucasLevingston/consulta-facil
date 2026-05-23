@@ -133,8 +133,8 @@ declare type AppointmentResponse = {
 	id: string;
 	patientName?: string | null;
 	patientId: string;
-	doctorName?: string | null;
-	doctorId: string;
+	professionalName?: string | null;
+	professionalId: string;
 	specialty?: string | null;
 	scheduledAt: string;
 	reason?: string | null;
@@ -146,7 +146,7 @@ declare type AppointmentResponse = {
 };
 
 declare type CreateAppointmentInput = {
-	doctorId: string;
+	professionalId: string;
 	scheduledAt: string;
 	reason?: string;
 	notes?: string;

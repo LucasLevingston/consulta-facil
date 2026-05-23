@@ -5,6 +5,7 @@ import { ptBR } from "date-fns/locale";
 import {
 	ArrowLeft,
 	CalendarDays,
+	ClipboardList,
 	FileText,
 	MessageSquare,
 	Star,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { use, useState } from "react";
+import { toast } from "sonner";
 
 import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,15 +29,35 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import {
+	useAnamnesis,
+	useProntuario,
+	useSaveAnamnesis,
+	useSaveProntuario,
+} from "@/hooks/api/use-anamnesis";
 import { useAppointment } from "@/hooks/api/use-appointments";
-import type { AppointmentResponse, AppointmentStatus } from "@/lib/schemas/appointment.schema";
+import type {
+	AnamnesisInput,
+	AnamnesisResponse,
+	ProntuarioInput,
+	ProntuarioResponse,
+} from "@/lib/schemas/anamnesis.schema";
+import type {
+	AppointmentResponse,
+	AppointmentStatus,
+} from "@/lib/schemas/appointment.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
 const STATUS_CONFIG: Record<
 	AppointmentStatus,
-	{ label: string; variant: "default" | "secondary" | "destructive" | "outline" }
+	{
+		label: string;
+		variant: "default" | "secondary" | "destructive" | "outline";
+	}
 > = {
 	PENDING: { label: "Pendente", variant: "secondary" },
 	CONFIRMED: { label: "Confirmada", variant: "default" },
@@ -56,16 +78,376 @@ function StarDisplay({ rating }: { rating: number }) {
 	);
 }
 
-function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }) {
+// ──────────────────────────────────────────────────────────────
+// Anamnesis section
+// ──────────────────────────────────────────────────────────────
+
+function AnamnesisSection({
+	appointmentId,
+	canEdit,
+}: {
+	appointmentId: string;
+	canEdit: boolean;
+}) {
+	const { data: anamnesis, isLoading } = useAnamnesis(appointmentId);
+	const { mutateAsync: save, isPending } = useSaveAnamnesis(appointmentId);
+
+	const [editing, setEditing] = useState(false);
+	const [form, setForm] = useState<AnamnesisInput>({
+		chiefComplaint: "",
+		currentMedications: "",
+		allergies: "",
+		medicalHistory: "",
+		familyHistory: "",
+		observations: "",
+	});
+
+	function startEdit() {
+		setForm({
+			chiefComplaint: anamnesis?.chiefComplaint ?? "",
+			currentMedications: anamnesis?.currentMedications ?? "",
+			allergies: anamnesis?.allergies ?? "",
+			medicalHistory: anamnesis?.medicalHistory ?? "",
+			familyHistory: anamnesis?.familyHistory ?? "",
+			observations: anamnesis?.observations ?? "",
+		});
+		setEditing(true);
+	}
+
+	async function handleSave() {
+		try {
+			await save(form);
+			toast.success("Anamnese salva com sucesso!");
+			setEditing(false);
+		} catch {
+			toast.error("Erro ao salvar anamnese.");
+		}
+	}
+
+	if (isLoading) return null;
+
+	return (
+		<Card>
+			<CardHeader>
+				<div className="flex items-center justify-between">
+					<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+						<ClipboardList className="h-4 w-4" />
+						Anamnese
+					</CardTitle>
+					{canEdit && !editing && (
+						<Button variant="outline" size="sm" onClick={startEdit}>
+							{anamnesis ? "Editar" : "Preencher"}
+						</Button>
+					)}
+				</div>
+			</CardHeader>
+			<CardContent className="-mt-2">
+				{editing ? (
+					<div className="space-y-4">
+						<AnamnesisField
+							label="Queixa principal"
+							value={form.chiefComplaint ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, chiefComplaint: v }))}
+						/>
+						<AnamnesisField
+							label="Medicamentos em uso"
+							value={form.currentMedications ?? ""}
+							onChange={(v) =>
+								setForm((f) => ({ ...f, currentMedications: v }))
+							}
+						/>
+						<AnamnesisField
+							label="Alergias"
+							value={form.allergies ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, allergies: v }))}
+						/>
+						<AnamnesisField
+							label="Histórico médico"
+							value={form.medicalHistory ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, medicalHistory: v }))}
+						/>
+						<AnamnesisField
+							label="Histórico familiar"
+							value={form.familyHistory ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, familyHistory: v }))}
+						/>
+						<AnamnesisField
+							label="Observações"
+							value={form.observations ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, observations: v }))}
+						/>
+						<div className="flex gap-2 pt-1">
+							<Button size="sm" onClick={handleSave} disabled={isPending}>
+								{isPending ? "Salvando..." : "Salvar"}
+							</Button>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => setEditing(false)}
+							>
+								Cancelar
+							</Button>
+						</div>
+					</div>
+				) : anamnesis ? (
+					<AnamnesisReadView anamnesis={anamnesis} />
+				) : (
+					<p className="text-sm text-muted-foreground">
+						{canEdit
+							? "Nenhuma anamnese preenchida. Clique em &ldquo;Preencher&rdquo; para adicionar."
+							: "Anamnese não preenchida."}
+					</p>
+				)}
+			</CardContent>
+		</Card>
+	);
+}
+
+function AnamnesisField({
+	label,
+	value,
+	onChange,
+}: {
+	label: string;
+	value: string;
+	onChange: (v: string) => void;
+}) {
+	return (
+		<div className="space-y-1.5">
+			<Label className="text-xs font-semibold text-primary">{label}</Label>
+			<Textarea
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+				rows={2}
+				className="resize-none rounded-xl border-border bg-bg-input text-sm"
+			/>
+		</div>
+	);
+}
+
+function AnamnesisReadView({ anamnesis }: { anamnesis: AnamnesisResponse }) {
+	const fields: [string, string | undefined][] = [
+		["Queixa principal", anamnesis.chiefComplaint],
+		["Medicamentos em uso", anamnesis.currentMedications],
+		["Alergias", anamnesis.allergies],
+		["Histórico médico", anamnesis.medicalHistory],
+		["Histórico familiar", anamnesis.familyHistory],
+		["Observações", anamnesis.observations],
+	];
+
+	const filled = fields.filter(([, v]) => v);
+	if (filled.length === 0)
+		return (
+			<p className="text-sm text-muted-foreground">
+				Sem informações preenchidas.
+			</p>
+		);
+
+	return (
+		<div className="space-y-3">
+			{filled.map(([label, value], i) => (
+				<div key={label}>
+					{i > 0 && <Separator className="mb-3" />}
+					<p className="text-xs text-muted-foreground mb-0.5">{label}</p>
+					<p className="text-sm leading-relaxed whitespace-pre-wrap">{value}</p>
+				</div>
+			))}
+		</div>
+	);
+}
+
+// ──────────────────────────────────────────────────────────────
+// Prontuario section
+// ──────────────────────────────────────────────────────────────
+
+function ProntuarioSection({
+	appointmentId,
+	canEdit,
+}: {
+	appointmentId: string;
+	canEdit: boolean;
+}) {
+	const { data: prontuario, isLoading } = useProntuario(appointmentId);
+	const { mutateAsync: save, isPending } = useSaveProntuario(appointmentId);
+
+	const [editing, setEditing] = useState(false);
+	const [form, setForm] = useState<ProntuarioInput>({
+		clinicalNotes: "",
+		diagnosis: "",
+		diagnosisCid: "",
+		prescription: "",
+		examRequests: "",
+		treatmentPlan: "",
+		followUpInstructions: "",
+	});
+
+	function startEdit() {
+		setForm({
+			clinicalNotes: prontuario?.clinicalNotes ?? "",
+			diagnosis: prontuario?.diagnosis ?? "",
+			diagnosisCid: prontuario?.diagnosisCid ?? "",
+			prescription: prontuario?.prescription ?? "",
+			examRequests: prontuario?.examRequests ?? "",
+			treatmentPlan: prontuario?.treatmentPlan ?? "",
+			followUpInstructions: prontuario?.followUpInstructions ?? "",
+		});
+		setEditing(true);
+	}
+
+	async function handleSave() {
+		try {
+			await save(form);
+			toast.success("Prontuário salvo com sucesso!");
+			setEditing(false);
+		} catch {
+			toast.error("Erro ao salvar prontuário.");
+		}
+	}
+
+	if (isLoading) return null;
+
+	return (
+		<Card>
+			<CardHeader>
+				<div className="flex items-center justify-between">
+					<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+						<FileText className="h-4 w-4" />
+						Prontuário
+					</CardTitle>
+					{canEdit && !editing && (
+						<Button variant="outline" size="sm" onClick={startEdit}>
+							{prontuario ? "Editar" : "Preencher"}
+						</Button>
+					)}
+				</div>
+			</CardHeader>
+			<CardContent className="-mt-2">
+				{editing ? (
+					<div className="space-y-4">
+						<AnamnesisField
+							label="Anotações clínicas / Exame físico"
+							value={form.clinicalNotes ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, clinicalNotes: v }))}
+						/>
+						<AnamnesisField
+							label="Diagnóstico"
+							value={form.diagnosis ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, diagnosis: v }))}
+						/>
+						<AnamnesisField
+							label="CID-10"
+							value={form.diagnosisCid ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, diagnosisCid: v }))}
+						/>
+						<AnamnesisField
+							label="Prescrição"
+							value={form.prescription ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, prescription: v }))}
+						/>
+						<AnamnesisField
+							label="Solicitações de exame"
+							value={form.examRequests ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, examRequests: v }))}
+						/>
+						<AnamnesisField
+							label="Plano terapêutico"
+							value={form.treatmentPlan ?? ""}
+							onChange={(v) => setForm((f) => ({ ...f, treatmentPlan: v }))}
+						/>
+						<AnamnesisField
+							label="Orientações e retorno"
+							value={form.followUpInstructions ?? ""}
+							onChange={(v) =>
+								setForm((f) => ({ ...f, followUpInstructions: v }))
+							}
+						/>
+						<div className="flex gap-2 pt-1">
+							<Button size="sm" onClick={handleSave} disabled={isPending}>
+								{isPending ? "Salvando..." : "Salvar"}
+							</Button>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => setEditing(false)}
+							>
+								Cancelar
+							</Button>
+						</div>
+					</div>
+				) : prontuario ? (
+					<ProntuarioReadView prontuario={prontuario} />
+				) : (
+					<p className="text-sm text-muted-foreground">
+						{canEdit
+							? "Prontuário não preenchido. Clique em &ldquo;Preencher&rdquo; para adicionar."
+							: "Prontuário não disponível."}
+					</p>
+				)}
+			</CardContent>
+		</Card>
+	);
+}
+
+function ProntuarioReadView({
+	prontuario,
+}: {
+	prontuario: ProntuarioResponse;
+}) {
+	const fields: [string, string | undefined][] = [
+		["Anotações clínicas / Exame físico", prontuario.clinicalNotes],
+		["Diagnóstico", prontuario.diagnosis],
+		["CID-10", prontuario.diagnosisCid],
+		["Prescrição", prontuario.prescription],
+		["Solicitações de exame", prontuario.examRequests],
+		["Plano terapêutico", prontuario.treatmentPlan],
+		["Orientações e retorno", prontuario.followUpInstructions],
+	];
+
+	const filled = fields.filter(([, v]) => v);
+	if (filled.length === 0)
+		return (
+			<p className="text-sm text-muted-foreground">
+				Sem informações preenchidas.
+			</p>
+		);
+
+	return (
+		<div className="space-y-3">
+			{filled.map(([label, value], i) => (
+				<div key={label}>
+					{i > 0 && <Separator className="mb-3" />}
+					<p className="text-xs text-muted-foreground mb-0.5">{label}</p>
+					<p className="text-sm leading-relaxed whitespace-pre-wrap">{value}</p>
+				</div>
+			))}
+		</div>
+	);
+}
+
+// ──────────────────────────────────────────────────────────────
+// Main detail view
+// ──────────────────────────────────────────────────────────────
+
+function AppointmentDetail({
+	appointment,
+}: {
+	appointment: AppointmentResponse;
+}) {
 	const { user } = useUserStore();
 	const [rateOpen, setRateOpen] = useState(false);
 
-	const role = (user?.role ?? "PATIENT") as "PATIENT" | "DOCTOR" | "ADMIN";
+	const role = (user?.role ?? "PATIENT") as
+		| "PATIENT"
+		| "PROFESSIONAL"
+		| "ADMIN";
 	const isPatient = role === "PATIENT";
-	const canRate = isPatient && appointment.status === "COMPLETED" && appointment.rating == null;
+	const isProfessional = role === "PROFESSIONAL" || role === "ADMIN";
+	const canRate =
+		isPatient &&
+		appointment.status === "COMPLETED" &&
+		appointment.rating == null;
 
 	const statusConfig = STATUS_CONFIG[appointment.status];
-
 	const scheduledDate = new Date(appointment.scheduledAt);
 
 	return (
@@ -82,9 +464,13 @@ function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }
 			{/* Header */}
 			<div className="flex items-start justify-between gap-4">
 				<div>
-					<h1 className="text-xl font-bold text-foreground">Detalhes da consulta</h1>
+					<h1 className="text-xl font-bold text-foreground">
+						Detalhes da consulta
+					</h1>
 					<p className="text-sm text-muted-foreground mt-0.5">
-						{format(scheduledDate, "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+						{format(scheduledDate, "EEEE, dd 'de' MMMM 'de' yyyy", {
+							locale: ptBR,
+						})}
 					</p>
 				</div>
 				<Badge variant={statusConfig.variant} className="shrink-0">
@@ -102,13 +488,17 @@ function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }
 				</CardHeader>
 				<CardContent className="flex items-center gap-4 -mt-2">
 					<Avatar className="h-12 w-12 shrink-0">
-						<AvatarImage alt={appointment.doctorName ?? ""} />
-						<AvatarFallback>{(appointment.doctorName ?? "?")[0]}</AvatarFallback>
+						<AvatarImage alt={appointment.professionalName ?? ""} />
+						<AvatarFallback>
+							{(appointment.professionalName ?? "?")[0]}
+						</AvatarFallback>
 					</Avatar>
 					<div>
-						<p className="font-semibold">{appointment.doctorName}</p>
+						<p className="font-semibold">{appointment.professionalName}</p>
 						{appointment.specialty && (
-							<p className="text-sm text-muted-foreground">{appointment.specialty}</p>
+							<p className="text-sm text-muted-foreground">
+								{appointment.specialty}
+							</p>
 						)}
 					</div>
 				</CardContent>
@@ -151,7 +541,7 @@ function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }
 						</>
 					)}
 
-					{role !== "PATIENT" && appointment.patientName && (
+					{isProfessional && appointment.patientName && (
 						<>
 							<Separator />
 							<div>
@@ -163,20 +553,17 @@ function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }
 				</CardContent>
 			</Card>
 
-			{/* Notes (visible after completed) */}
-			{appointment.notes && (
-				<Card>
-					<CardHeader>
-						<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-							<FileText className="h-4 w-4" />
-							Observações do médico
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="-mt-2">
-						<p className="text-sm leading-relaxed">{appointment.notes}</p>
-					</CardContent>
-				</Card>
-			)}
+			{/* Anamnesis — editable by patient (and professional) */}
+			<AnamnesisSection
+				appointmentId={appointment.id}
+				canEdit={isPatient || isProfessional}
+			/>
+
+			{/* Prontuario — editable by professional only, visible to patient read-only */}
+			<ProntuarioSection
+				appointmentId={appointment.id}
+				canEdit={isProfessional}
+			/>
 
 			{/* Cancellation reason */}
 			{appointment.status === "CANCELED" && appointment.cancellationReason && (
@@ -230,10 +617,14 @@ function AppointmentDetail({ appointment }: { appointment: AppointmentResponse }
 										<DialogHeader className="mb-2 space-y-1">
 											<DialogTitle>Avaliar consulta</DialogTitle>
 											<DialogDescription>
-												Sua avaliação ajuda outros pacientes a escolher o profissional certo.
+												Sua avaliação ajuda outros pacientes a escolher o
+												profissional certo.
 											</DialogDescription>
 										</DialogHeader>
-										<RateAppointmentForm appointment={appointment} setOpen={setRateOpen} />
+										<RateAppointmentForm
+											appointment={appointment}
+											setOpen={setRateOpen}
+										/>
 									</DialogContent>
 								</Dialog>
 							</div>

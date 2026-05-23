@@ -21,8 +21,8 @@ export function AppointmentRow({
 }: AppointmentRowProps) {
 	const label = isDoctor
 		? (appointment.patientName ?? "Paciente não definido")
-		: appointment.doctorName
-			? `Dr. ${appointment.doctorName}`
+		: appointment.professionalName
+			? `Dr. ${appointment.professionalName}`
 			: "Médico não definido";
 
 	const icon = isDoctor ? (
@@ -52,12 +52,20 @@ export function AppointmentRow({
 				)}
 				<StatusBadge status={appointment.status} />
 				{isDoctor && appointment.status === "PENDING" && onConfirm && (
-					<Button size="sm" variant="outline" onClick={() => onConfirm(appointment.id)}>
+					<Button
+						size="sm"
+						variant="outline"
+						onClick={() => onConfirm(appointment.id)}
+					>
 						Confirmar
 					</Button>
 				)}
 				{isDoctor && appointment.status === "CONFIRMED" && onComplete && (
-					<Button size="sm" variant="outline" onClick={() => onComplete(appointment.id)}>
+					<Button
+						size="sm"
+						variant="outline"
+						onClick={() => onComplete(appointment.id)}
+					>
 						Concluir
 					</Button>
 				)}

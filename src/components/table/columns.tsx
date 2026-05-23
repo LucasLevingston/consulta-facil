@@ -7,7 +7,9 @@ import { AppointmentActions } from "@/components/table/AppointmentActions";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { formatDateTime } from "@/lib/utils";
 
-export function makeColumns(userRole: "PATIENT" | "DOCTOR" | "ADMIN"): ColumnDef<AppointmentResponse>[] {
+export function makeColumns(
+	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN",
+): ColumnDef<AppointmentResponse>[] {
 	return [
 		{
 			header: "#",
@@ -39,11 +41,13 @@ export function makeColumns(userRole: "PATIENT" | "DOCTOR" | "ADMIN"): ColumnDef
 			),
 		},
 		{
-			accessorKey: "doctorName",
+			accessorKey: "professionalName",
 			header: "Profissional",
 			cell: ({ row }) => (
 				<p className="text-14-medium">
-					{row.original.doctorName ? `Dr. ${row.original.doctorName}` : "—"}
+					{row.original.professionalName
+						? `Dr. ${row.original.professionalName}`
+						: "—"}
 				</p>
 			),
 		},

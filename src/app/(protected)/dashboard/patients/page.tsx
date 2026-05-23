@@ -5,9 +5,10 @@ import { ptBR } from "date-fns/locale";
 import {
 	CalendarDays,
 	ChevronLeft,
-	ChevronRight, Search,
+	ChevronRight,
+	Search,
 	User,
-	UserRound
+	UserRound,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -24,7 +25,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useDoctorPatients } from "@/hooks/api/use-patients";
+import { useProfessionalPatients } from "@/hooks/api/use-patients";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -34,7 +35,7 @@ const PAGE_SIZE = 20;
 
 export default function PatientsPage() {
 	const { user } = useUserStore();
-	const doctorId = user?.id ?? "";
+	const professionalId = user?.id ?? "";
 
 	const [search, setSearch] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -49,7 +50,7 @@ export default function PatientsPage() {
 		return () => clearTimeout(timer);
 	}, [search]);
 
-	const { data, isLoading, error } = useDoctorPatients(doctorId, {
+	const { data, isLoading, error } = useProfessionalPatients(professionalId, {
 		page,
 		size: PAGE_SIZE,
 		search: debouncedSearch,
@@ -143,11 +144,9 @@ export default function PatientsPage() {
 									</div>
 
 									<div className="mt-4 flex gap-2">
-										<CustomButton
-											asChild
-										>
+										<CustomButton asChild>
 											<Link href={`/dashboard/patients/${p.id}`}>
-												<User  />
+												<User />
 												Ver perfil
 											</Link>
 										</CustomButton>

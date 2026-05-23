@@ -23,8 +23,8 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
 import {
-	useDoctorAppointments,
 	usePatientAppointments,
+	useProfessionalAppointments,
 } from "@/hooks/api/use-appointments";
 import { useMyProfile } from "@/hooks/api/use-patients";
 import { QueryBoundary } from "@/providers/query-boundary";
@@ -65,7 +65,9 @@ export default function ProfilePage() {
 	const isDoctor = user?.role === "PROFESSIONAL" || user?.role === "ADMIN";
 
 	const patientQuery = usePatientAppointments(isDoctor ? "" : (user?.id ?? ""));
-	const doctorQuery = useDoctorAppointments(isDoctor ? (user?.id ?? "") : "");
+	const doctorQuery = useProfessionalAppointments(
+		isDoctor ? (user?.id ?? "") : "",
+	);
 	const doctorProfile = useMyProfessionalProfile(isDoctor);
 	const patientProfile = useMyProfile(!isDoctor);
 
@@ -176,7 +178,7 @@ export default function ProfilePage() {
 							<p className="text-sm font-semibold text-foreground">
 								{isDoctor
 									? `Paciente: ${nextAppointment.patientName ?? "—"}`
-									: `Dr. ${nextAppointment.doctorName ?? "—"}`}
+									: `Dr. ${nextAppointment.professionalName ?? "—"}`}
 							</p>
 							<p className="text-xs text-muted-foreground">
 								{format(

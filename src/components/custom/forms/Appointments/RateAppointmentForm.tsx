@@ -15,7 +15,10 @@ interface RateAppointmentFormProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export function RateAppointmentForm({ appointment, setOpen }: RateAppointmentFormProps) {
+export function RateAppointmentForm({
+	appointment,
+	setOpen,
+}: RateAppointmentFormProps) {
 	const [stars, setStars] = useState(0);
 	const [hovered, setHovered] = useState(0);
 	const [comment, setComment] = useState("");
@@ -54,14 +57,16 @@ export function RateAppointmentForm({ appointment, setOpen }: RateAppointmentFor
 			<p className="text-sm text-muted-foreground">
 				Como foi sua consulta com{" "}
 				<span className="font-semibold text-foreground">
-					{appointment.doctorName ? `Dr. ${appointment.doctorName}` : "o médico"}
+					{appointment.professionalName
+						? `Dr. ${appointment.professionalName}`
+						: "o médico"}
 				</span>
 				?
 			</p>
 
 			<div className="flex flex-col items-center gap-2">
-				<div
-					className="flex gap-1"
+				<fieldset
+					className="flex gap-1 border-none p-0 m-0"
 					onMouseLeave={() => setHovered(0)}
 				>
 					{[1, 2, 3, 4, 5].map((star) => (
@@ -82,7 +87,7 @@ export function RateAppointmentForm({ appointment, setOpen }: RateAppointmentFor
 							/>
 						</button>
 					))}
-				</div>
+				</fieldset>
 				<span className="text-sm font-medium h-5 text-muted-foreground">
 					{active > 0 ? labels[active] : ""}
 				</span>
@@ -90,7 +95,8 @@ export function RateAppointmentForm({ appointment, setOpen }: RateAppointmentFor
 
 			<div className="space-y-1.5">
 				<label htmlFor="rating-comment" className="text-sm font-medium">
-					Comentário <span className="text-muted-foreground font-normal">(opcional)</span>
+					Comentário{" "}
+					<span className="text-muted-foreground font-normal">(opcional)</span>
 				</label>
 				<Textarea
 					id="rating-comment"
@@ -101,7 +107,9 @@ export function RateAppointmentForm({ appointment, setOpen }: RateAppointmentFor
 					rows={3}
 					className="resize-none"
 				/>
-				<p className="text-xs text-muted-foreground text-right">{comment.length}/500</p>
+				<p className="text-xs text-muted-foreground text-right">
+					{comment.length}/500
+				</p>
 			</div>
 
 			<Button

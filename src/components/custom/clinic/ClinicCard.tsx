@@ -91,7 +91,7 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 					<div className="flex flex-wrap gap-1 mt-1">
 						{clinic.members.slice(0, 3).map((m) => (
 							<Badge
-								key={m.doctorProfileId}
+								key={m.professionalProfileId}
 								variant="secondary"
 								className="text-xs"
 							>

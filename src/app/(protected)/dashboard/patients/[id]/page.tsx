@@ -62,8 +62,10 @@ export default function PatientDetailPage() {
 	const { id } = useParams<{ id: string }>();
 
 	const { data: patient, isLoading: loadingProfile } = usePatientProfile(id);
-	const { data: appointmentsPage, isLoading: loadingApps } = usePatientAppointments(id);
-	const { data: medicalRecord, isLoading: loadingMedical } = useMedicalRecords(id);
+	const { data: appointmentsPage, isLoading: loadingApps } =
+		usePatientAppointments(id);
+	const { data: medicalRecord, isLoading: loadingMedical } =
+		useMedicalRecords(id);
 
 	const isLoading = loadingProfile || loadingApps || loadingMedical;
 
@@ -94,7 +96,12 @@ export default function PatientDetailPage() {
 	}
 
 	const initials = patient.name
-		? patient.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()
+		? patient.name
+				.split(" ")
+				.map((n: string) => n[0])
+				.join("")
+				.slice(0, 2)
+				.toUpperCase()
 		: "PA";
 
 	const appointments = appointmentsPage?.content ?? [];
@@ -120,7 +127,10 @@ export default function PatientDetailPage() {
 				<CardContent className="relative pt-0 pb-6 px-6">
 					<div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 						<Avatar className="size-20 rounded-2xl border-4 border-card shadow-md">
-							<AvatarImage src={patient.imageUrl ?? undefined} alt={patient.name ?? "Paciente"} />
+							<AvatarImage
+								src={patient.imageUrl ?? undefined}
+								alt={patient.name ?? "Paciente"}
+							/>
 							<AvatarFallback className="rounded-2xl bg-primary/15 text-primary font-bold text-2xl">
 								{initials}
 							</AvatarFallback>
@@ -128,7 +138,8 @@ export default function PatientDetailPage() {
 						<div className="flex gap-2 shrink-0">
 							<Badge variant="secondary" className="gap-1.5">
 								<CalendarDays className="h-3 w-3" />
-								{appointments.length} {appointments.length === 1 ? "consulta" : "consultas"}
+								{appointments.length}{" "}
+								{appointments.length === 1 ? "consulta" : "consultas"}
 							</Badge>
 						</div>
 					</div>
@@ -136,7 +147,9 @@ export default function PatientDetailPage() {
 					<div className="mt-4">
 						<h1 className="text-2xl font-bold">{patient.name}</h1>
 						{patient.occupation && (
-							<p className="text-sm text-muted-foreground mt-0.5">{patient.occupation}</p>
+							<p className="text-sm text-muted-foreground mt-0.5">
+								{patient.occupation}
+							</p>
 						)}
 					</div>
 				</CardContent>
@@ -160,14 +173,26 @@ export default function PatientDetailPage() {
 					<InfoRow
 						icon={CalendarDays}
 						label="Data de nascimento"
-						value={patient.birthDate
-							? format(new Date(patient.birthDate), "dd/MM/yyyy", { locale: ptBR })
-							: null}
+						value={
+							patient.birthDate
+								? format(new Date(patient.birthDate), "dd/MM/yyyy", {
+										locale: ptBR,
+									})
+								: null
+						}
 					/>
 					{patient.gender && <Separator />}
-					<InfoRow icon={User} label="Gênero" value={genderLabel(patient.gender)} />
+					<InfoRow
+						icon={User}
+						label="Gênero"
+						value={genderLabel(patient.gender)}
+					/>
 					{patient.occupation && <Separator />}
-					<InfoRow icon={Briefcase} label="Ocupação" value={patient.occupation} />
+					<InfoRow
+						icon={Briefcase}
+						label="Ocupação"
+						value={patient.occupation}
+					/>
 				</CardContent>
 			</Card>
 
@@ -185,7 +210,9 @@ export default function PatientDetailPage() {
 							<div className="rounded-xl bg-destructive/10 border border-destructive/20 p-3">
 								<div className="flex items-center gap-2 mb-1">
 									<AlertCircle className="h-4 w-4 text-destructive" />
-									<p className="text-xs font-semibold text-destructive">Alergias</p>
+									<p className="text-xs font-semibold text-destructive">
+										Alergias
+									</p>
 								</div>
 								<p className="text-sm">{medicalRecord.allergies}</p>
 							</div>
@@ -199,7 +226,9 @@ export default function PatientDetailPage() {
 										Medicação atual
 									</p>
 								</div>
-								<p className="text-sm text-foreground">{medicalRecord.currentMedication}</p>
+								<p className="text-sm text-foreground">
+									{medicalRecord.currentMedication}
+								</p>
 							</div>
 						)}
 
@@ -210,7 +239,9 @@ export default function PatientDetailPage() {
 									<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
 										Histórico médico
 									</p>
-									<p className="text-sm text-foreground">{medicalRecord.pastMedicalHistory}</p>
+									<p className="text-sm text-foreground">
+										{medicalRecord.pastMedicalHistory}
+									</p>
 								</div>
 							</>
 						)}
@@ -222,7 +253,9 @@ export default function PatientDetailPage() {
 									<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
 										Histórico familiar
 									</p>
-									<p className="text-sm text-foreground">{medicalRecord.familyMedicalHistory}</p>
+									<p className="text-sm text-foreground">
+										{medicalRecord.familyMedicalHistory}
+									</p>
 								</div>
 							</>
 						)}
@@ -264,7 +297,9 @@ export default function PatientDetailPage() {
 				<CardContent>
 					{appointments.length === 0 ? (
 						<div className="flex h-24 items-center justify-center rounded-xl border border-dashed border-border">
-							<p className="text-sm text-muted-foreground">Nenhuma consulta registrada.</p>
+							<p className="text-sm text-muted-foreground">
+								Nenhuma consulta registrada.
+							</p>
 						</div>
 					) : (
 						<div className="space-y-2">
@@ -279,7 +314,8 @@ export default function PatientDetailPage() {
 										</p>
 										<p className="text-xs text-muted-foreground">
 											{formatDateTime(new Date(appt.scheduledAt)).dateTime}
-											{appt.doctorName && ` · Dr. ${appt.doctorName}`}
+											{appt.professionalName &&
+												` · Dr. ${appt.professionalName}`}
 										</p>
 										{appt.specialty && (
 											<Badge variant="outline" className="mt-1 text-xs">

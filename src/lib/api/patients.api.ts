@@ -14,7 +14,7 @@ export interface PatientSummary {
 	totalAppointments: number;
 }
 
-export interface DoctorPatientsParams {
+export interface ProfessionalPatientsParams {
 	page?: number;
 	size?: number;
 	search?: string;
@@ -57,12 +57,12 @@ export const patientsApi = {
 		return response.data;
 	},
 
-	getDoctorPatients: async (
-		doctorId: string,
-		params: DoctorPatientsParams,
+	getProfessionalPatients: async (
+		professionalId: string,
+		params: ProfessionalPatientsParams,
 	): Promise<ApiPage<PatientSummary>> => {
 		const response = await api.get<ApiPage<PatientSummary>>(
-			`/patients/professional/${doctorId}`,
+			`/patients/professional/${professionalId}`,
 			{ params },
 		);
 		return response.data;

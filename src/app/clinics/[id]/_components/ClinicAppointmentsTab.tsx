@@ -44,27 +44,27 @@ const ALL = "__all__";
 interface Props {
 	clinic: ClinicResponse;
 	isManager: boolean;
-	myDoctorProfileId?: string;
+	myProfessionalProfileId?: string;
 }
 
 export function ClinicAppointmentsTab({
 	clinic,
 	isManager,
-	myDoctorProfileId,
+	myProfessionalProfileId,
 }: Props) {
-	const [filterDoctorId, setFilterDoctorId] = useState(ALL);
+	const [filterProfessionalId, setFilterProfessionalId] = useState(ALL);
 	const [filterStatus, setFilterStatus] = useState(ALL);
 
 	const targetIds: string[] = isManager
-		? (clinic.members ?? []).map((m) => m.doctorProfileId)
-		: myDoctorProfileId
-			? [myDoctorProfileId]
+		? (clinic.members ?? []).map((m) => m.professionalProfileId)
+		: myProfessionalProfileId
+			? [myProfessionalProfileId]
 			: [];
 
 	const results = useQueries({
 		queries: targetIds.map((id) => ({
-			queryKey: appointmentKeys.byDoctor(id),
-			queryFn: () => appointmentsApi.getByDoctor(id, 0, 100),
+			queryKey: appointmentKeys.byProfessional(id),
+			queryFn: () => appointmentsApi.getByProfessional(id, 0, 100),
 		})),
 	});
 
@@ -77,15 +77,15 @@ export function ClinicAppointmentsTab({
 
 	const filtered = useMemo(() => {
 		let list = appointments;
-		if (filterDoctorId !== ALL)
-			list = list.filter((a) => a.doctorId === filterDoctorId);
+		if (filterProfessionalId !== ALL)
+			list = list.filter((a) => a.professionalId === filterProfessionalId);
 		if (filterStatus !== ALL)
 			list = list.filter((a) => a.status === filterStatus);
 		return list.sort(
 			(a, b) =>
 				new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime(),
 		);
-	}, [appointments, filterDoctorId, filterStatus]);
+	}, [appointments, filterProfessionalId, filterStatus]);
 
 	if (isLoading) {
 		return (
@@ -100,15 +100,21 @@ export function ClinicAppointmentsTab({
 			{/* Filters */}
 			<div className="flex flex-wrap items-center gap-2">
 				{isManager && (
-					<Select value={filterDoctorId} onValueChange={setFilterDoctorId}>
+					<Select
+						value={filterProfessionalId}
+						onValueChange={setFilterProfessionalId}
+					>
 						<SelectTrigger className="w-[200px]">
 							<SelectValue placeholder="Todos os médicos" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectItem value={ALL}>Todos os médicos</SelectItem>
 							{(clinic.members ?? []).map((m) => (
-								<SelectItem key={m.doctorProfileId} value={m.doctorProfileId}>
-									{m.doctorName ?? m.specialty}
+								<SelectItem
+									key={m.professionalProfileId}
+									value={m.professionalProfileId}
+								>
+									{m.professionalName ?? m.specialty}
 								</SelectItem>
 							))}
 						</SelectContent>
@@ -165,7 +171,7 @@ export function ClinicAppointmentsTab({
 										</Badge>
 									</div>
 									<p className="mt-0.5 text-xs text-muted-foreground">
-										Dr. {appt.doctorName ?? "—"} · {appt.specialty ?? "—"}
+										Dr. {appt.professionalName ?? "—"} · {appt.specialty ?? "—"}
 									</p>
 								</div>
 								<div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
