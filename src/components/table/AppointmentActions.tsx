@@ -22,10 +22,13 @@ import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 interface AppointmentActionsProps {
 	appointment: AppointmentResponse;
-	userRole: "PATIENT" | "DOCTOR" | "ADMIN";
+	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN";
 }
 
-export function AppointmentActions({ appointment, userRole }: AppointmentActionsProps) {
+export function AppointmentActions({
+	appointment,
+	userRole,
+}: AppointmentActionsProps) {
 	const [cancelOpen, setCancelOpen] = useState(false);
 	const [rateOpen, setRateOpen] = useState(false);
 	const confirm = useConfirmAppointment();
@@ -33,13 +36,15 @@ export function AppointmentActions({ appointment, userRole }: AppointmentActions
 
 	const { status } = appointment;
 	const isPatient = userRole === "PATIENT";
-	const isDoctor = userRole === "DOCTOR";
+	const isDoctor = userRole === "PROFESSIONAL";
 	const isAdmin = userRole === "ADMIN";
 
-	const canCancel = (isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
+	const canCancel =
+		(isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
 	const canConfirm = (isDoctor || isAdmin) && status === "PENDING";
 	const canComplete = (isDoctor || isAdmin) && status === "CONFIRMED";
-	const canRate = isPatient && status === "COMPLETED" && appointment.rating == null;
+	const canRate =
+		isPatient && status === "COMPLETED" && appointment.rating == null;
 
 	if (!canCancel && !canConfirm && !canComplete && !canRate) return null;
 
@@ -99,10 +104,14 @@ export function AppointmentActions({ appointment, userRole }: AppointmentActions
 							<DialogHeader className="mb-2 space-y-1">
 								<DialogTitle>Avaliar consulta</DialogTitle>
 								<DialogDescription>
-									Sua avaliação ajuda outros pacientes a escolher o profissional certo.
+									Sua avaliação ajuda outros pacientes a escolher o profissional
+									certo.
 								</DialogDescription>
 							</DialogHeader>
-							<RateAppointmentForm appointment={appointment} setOpen={setRateOpen} />
+							<RateAppointmentForm
+								appointment={appointment}
+								setOpen={setRateOpen}
+							/>
 						</DialogContent>
 					</Dialog>
 				</>
@@ -125,7 +134,10 @@ export function AppointmentActions({ appointment, userRole }: AppointmentActions
 									Tem certeza de que deseja cancelar sua consulta?
 								</DialogDescription>
 							</DialogHeader>
-							<CancelAppointmentForm appointment={appointment} setOpen={setCancelOpen} />
+							<CancelAppointmentForm
+								appointment={appointment}
+								setOpen={setCancelOpen}
+							/>
 						</DialogContent>
 					</Dialog>
 				</>

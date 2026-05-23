@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { AppointmentForm } from "@/components/custom/forms/Appointments/AppointmentForm";
 import PageHeader from "@/components/custom/page-header";
 
-export default function AgendarConsultaPage() {
+export default function CreateAppointment() {
 	return (
 		<div className="space-y-6">
 			<PageHeader
