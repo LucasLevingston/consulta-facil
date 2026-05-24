@@ -8,6 +8,13 @@ echo "║        Verificações pré-commit       ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 
+# 0. Regenerar cliente API (orval) a partir do openapi.json local
+echo "▶ [0/4] Gerando integração API (orval)..."
+npm run api:generate
+git add src/lib/api/generated
+echo "✓ Integração API gerada"
+echo ""
+
 # 1. Checagem de tipos TypeScript
 echo "▶ [1/4] Checagem de tipos (TypeScript)..."
 npx tsc --noEmit
