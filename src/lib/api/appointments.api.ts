@@ -6,6 +6,7 @@ import type {
 	QrCheckInToken,
 	RateAppointmentInput,
 	RescheduleAppointmentInput,
+	SetModalityInput,
 } from "@/lib/schemas/appointment.schema";
 import type { ApiPage } from "@/lib/schemas/doctor.schema";
 
@@ -117,6 +118,24 @@ export const appointmentsApi = {
 
 	callPatient: async (appointmentId: string): Promise<AppointmentResponse> => {
 		const response = await api.put<AppointmentResponse>(`/appointments/${appointmentId}/call`);
+		return response.data;
+	},
+
+	setModality: async (
+		id: string,
+		data: SetModalityInput,
+	): Promise<AppointmentResponse> => {
+		const response = await api.put<AppointmentResponse>(
+			`/appointments/${id}/modality`,
+			data,
+		);
+		return response.data;
+	},
+
+	generateMeetLink: async (id: string): Promise<AppointmentResponse> => {
+		const response = await api.post<AppointmentResponse>(
+			`/appointments/${id}/meet-link`,
+		);
 		return response.data;
 	},
 };

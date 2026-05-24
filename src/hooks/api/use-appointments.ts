@@ -8,6 +8,7 @@ import type {
 	CreateAppointmentInput,
 	RateAppointmentInput,
 	RescheduleAppointmentInput,
+	SetModalityInput,
 } from "@/lib/schemas/appointment.schema";
 
 export const appointmentKeys = {
@@ -157,5 +158,24 @@ export function useCallPatient() {
 		mutationFn: (appointmentId: string) => appointmentsApi.callPatient(appointmentId),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
+	});
+}
+
+export function useSetModality() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: ({ id, data }: { id: string; data: SetModalityInput }) =>
+			appointmentsApi.setModality(id, data),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+	});
+}
+
+export function useGenerateMeetLink() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (id: string) => appointmentsApi.generateMeetLink(id),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

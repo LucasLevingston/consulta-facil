@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const appointmentModalitySchema = z.enum(["IN_PERSON", "ONLINE"]);
+
 export const appointmentStatusSchema = z.enum([
 	"PENDING",
 	"CONFIRMED",
@@ -22,6 +24,8 @@ export const appointmentResponseSchema = z.object({
 	calledAt: z.string().nullable().optional(),
 	reason: z.string().nullable().optional(),
 	notes: z.string().nullable().optional(),
+	modality: appointmentModalitySchema.nullable().optional(),
+	meetLink: z.string().nullable().optional(),
 	status: appointmentStatusSchema,
 	cancellationReason: z.string().nullable().optional(),
 	rating: z.number().int().min(1).max(5).nullable().optional(),
@@ -65,12 +69,19 @@ export const appointmentFormSchema = z.object({
 	cancellationReason: z.string().optional(),
 });
 
+export const setModalitySchema = z.object({
+	modality: appointmentModalitySchema,
+	meetLink: z.string().optional(),
+});
+
 export const qrCheckInTokenSchema = z.object({
 	appointmentId: z.string(),
 	token: z.string(),
 });
 
 export type QrCheckInToken = z.infer<typeof qrCheckInTokenSchema>;
+export type AppointmentModality = z.infer<typeof appointmentModalitySchema>;
+export type SetModalityInput = z.infer<typeof setModalitySchema>;
 export type AppointmentStatus = z.infer<typeof appointmentStatusSchema>;
 export type AppointmentResponse = z.infer<typeof appointmentResponseSchema>;
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;

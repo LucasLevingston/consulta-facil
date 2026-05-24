@@ -6,6 +6,7 @@ import {
 	ArrowLeft,
 	CalendarDays,
 	ClipboardList,
+	ExternalLink,
 	FileText,
 	MessageSquare,
 	QrCode,
@@ -13,6 +14,7 @@ import {
 	Star,
 	Stethoscope,
 	User,
+	Video,
 	XCircle,
 } from "lucide-react";
 import Link from "next/link";
@@ -42,7 +44,11 @@ import {
 	useSaveAnamnesis,
 	useSaveProntuario,
 } from "@/hooks/api/use-anamnesis";
-import { useAppointment, useCheckInToken } from "@/hooks/api/use-appointments";
+import {
+	useAppointment,
+	useCheckInToken,
+	useGenerateMeetLink,
+} from "@/hooks/api/use-appointments";
 import type {
 	AnamnesisInput,
 	AnamnesisResponse,
@@ -461,9 +467,13 @@ function AppointmentDetail({
 	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 	const [qrOpen, setQrOpen] = useState(false);
 
+	const { mutateAsync: generateMeetLink, isPending: generatingLink } =
+		useGenerateMeetLink();
+
 	const role = user?.role ?? "PATIENT";
 	const isPatient = role === "PATIENT";
 	const isProfessional = role === "PROFESSIONAL" || role === "ADMIN";
+	const isOnline = appointment.modality === "ONLINE";
 	const canRate =
 		isPatient &&
 		appointment.status === "COMPLETED" &&
@@ -536,8 +546,37 @@ function AppointmentDetail({
 							<CalendarDays className="h-4 w-4" />
 							Agendamento
 						</CardTitle>
-						<div className="flex gap-2">
-							{isPatient && appointment.status === "CONFIRMED" && (
+						<div className="flex flex-wrap gap-2">
+							{isOnline && appointment.meetLink && (
+								<Button
+									size="sm"
+									className="gap-2"
+									asChild
+								>
+									<a
+										href={appointment.meetLink}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<Video className="h-3.5 w-3.5" />
+										Entrar na consulta
+										<ExternalLink className="h-3 w-3" />
+									</a>
+								</Button>
+							)}
+							{isOnline && !appointment.meetLink && isProfessional && (
+								<Button
+									variant="outline"
+									size="sm"
+									className="gap-2"
+									disabled={generatingLink}
+									onClick={() => generateMeetLink(appointment.id)}
+								>
+									<Video className="h-3.5 w-3.5" />
+									{generatingLink ? "Gerando..." : "Gerar link Meet"}
+								</Button>
+							)}
+							{isPatient && appointment.status === "CONFIRMED" && !isOnline && (
 								<Button
 									variant="outline"
 									size="sm"
@@ -574,6 +613,19 @@ function AppointmentDetail({
 							<p className="text-xs text-muted-foreground mb-0.5">Horário</p>
 							<p className="font-medium">
 								{format(scheduledDate, "HH:mm", { locale: ptBR })}
+							</p>
+						</div>
+						<div>
+							<p className="text-xs text-muted-foreground mb-0.5">Modalidade</p>
+							<p className="font-medium flex items-center gap-1">
+								{isOnline ? (
+									<>
+										<Video className="h-3.5 w-3.5 text-blue-500" />
+										Teleconsulta
+									</>
+								) : (
+									"Presencial"
+								)}
 							</p>
 						</div>
 					</div>
