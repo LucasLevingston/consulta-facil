@@ -147,7 +147,7 @@ const adminCards: QuickCard[] = [
 
 interface DashboardProps {
 	firstName: string;
-	role: "PATIENT" | "PROFESSIONAL" | "ADMIN";
+	role: "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
 }
 
 function DoctorHeroSubtitle() {

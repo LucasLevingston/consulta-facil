@@ -40,5 +40,19 @@ export const createClinicSchema = z.object({
 	imageUrl: z.string().optional(),
 });
 
+export const receptionistResponseSchema = z.object({
+	id: z.string(),
+	userId: z.string(),
+	name: z.string(),
+	email: z.string(),
+	createdAt: z.string().nullable().optional(),
+});
+
+export const inviteReceptionistSchema = z.object({
+	email: z.string().email("E-mail inválido"),
+});
+
 export type ClinicResponse = z.infer<typeof clinicResponseSchema>;
 export type CreateClinicInput = z.infer<typeof createClinicSchema>;
+export type ReceptionistResponse = z.infer<typeof receptionistResponseSchema>;
+export type InviteReceptionistInput = z.infer<typeof inviteReceptionistSchema>;

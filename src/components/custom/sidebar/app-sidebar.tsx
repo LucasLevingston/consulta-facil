@@ -11,6 +11,7 @@ import {
 	CreditCard,
 	Home,
 	LogOut,
+	MonitorCheck,
 	Settings,
 	User,
 	UserRound,
@@ -134,6 +135,24 @@ const doctorNav = [
 	},
 ];
 
+const receptionistNav = [
+	{
+		label: "Recepção",
+		items: [
+			{
+				title: "Painel de Recepção",
+				url: "/dashboard/reception",
+				icon: MonitorCheck,
+			},
+			{
+				title: "Consultas",
+				url: "/dashboard/appointments",
+				icon: CalendarDays,
+			},
+		],
+	},
+];
+
 const adminNav = [
 	{
 		label: "Administração",
@@ -187,8 +206,9 @@ export default function AppSidebar() {
 
 	const isDoctor = user?.role === "PROFESSIONAL";
 	const isAdmin = user?.role === "ADMIN";
+	const isReceptionist = user?.role === "RECEPTIONIST";
 
-	const roleNav = isAdmin ? adminNav : isDoctor ? doctorNav : patientNav;
+	const roleNav = isAdmin ? adminNav : isDoctor ? doctorNav : isReceptionist ? receptionistNav : patientNav;
 	const navigation = [...defaultNav, ...roleNav];
 
 	const initials = user?.name
@@ -274,7 +294,7 @@ export default function AppSidebar() {
 												{displayName}
 											</span>
 											<span className="truncate text-xs text-muted-foreground">
-												{isDoctor ? "Profissional" : "Paciente"}
+												{isAdmin ? "Administrador" : isDoctor ? "Profissional" : isReceptionist ? "Recepcionista" : "Paciente"}
 											</span>
 										</div>
 										<ChevronsUpDown className="ml-auto size-4" />

@@ -2,6 +2,8 @@ import { api } from "@/config/api";
 import type {
 	ClinicResponse,
 	CreateClinicInput,
+	InviteReceptionistInput,
+	ReceptionistResponse,
 } from "@/lib/schemas/clinic.schema";
 
 export const clinicsApi = {
@@ -56,5 +58,22 @@ export const clinicsApi = {
 		professionalProfileId: string,
 	): Promise<void> => {
 		await api.delete(`/clinics/${clinicId}/members/${professionalProfileId}`);
+	},
+
+	getReceptionists: async (clinicId: string): Promise<ReceptionistResponse[]> => {
+		const response = await api.get<ReceptionistResponse[]>(`/clinics/${clinicId}/receptionists`);
+		return response.data;
+	},
+
+	inviteReceptionist: async (
+		clinicId: string,
+		data: InviteReceptionistInput,
+	): Promise<ReceptionistResponse> => {
+		const response = await api.post<ReceptionistResponse>(`/clinics/${clinicId}/receptionists`, data);
+		return response.data;
+	},
+
+	removeReceptionist: async (clinicId: string, receptionistId: string): Promise<void> => {
+		await api.delete(`/clinics/${clinicId}/receptionists/${receptionistId}`);
 	},
 };
