@@ -1,9 +1,12 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+import { Eye } from "lucide-react";
+import Link from "next/link";
 
 import { StatusBadge } from "@/components/StatusBadge";
 import { AppointmentActions } from "@/components/table/AppointmentActions";
+import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { formatDateTime } from "@/lib/utils";
 
@@ -55,7 +58,15 @@ export function makeColumns(
 			id: "actions",
 			header: () => <div className="pl-4">Ações</div>,
 			cell: ({ row }) => (
-				<AppointmentActions appointment={row.original} userRole={userRole} />
+				<div className="flex items-center gap-1">
+					<Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" asChild>
+						<Link href={`/dashboard/appointments/${row.original.id}`}>
+							<Eye className="h-3.5 w-3.5" />
+							Ver
+						</Link>
+					</Button>
+					<AppointmentActions appointment={row.original} userRole={userRole} />
+				</div>
 			),
 		},
 	];

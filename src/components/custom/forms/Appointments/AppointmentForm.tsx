@@ -134,7 +134,7 @@ export const AppointmentForm = ({
 	const onSubmit = async (values: AppointmentFormValues) => {
 		try {
 			if (type === "create" || type === "schedule") {
-				await scheduleAppointment.mutateAsync({
+				const created = await scheduleAppointment.mutateAsync({
 					professionalId: selectedDoctor?.id ?? values.professionalId,
 					scheduledAt: (values.scheduledAt as Date).toISOString(),
 					reason: values.reason ?? undefined,
@@ -142,7 +142,7 @@ export const AppointmentForm = ({
 				});
 				if (type === "create") {
 					form.reset();
-					router.push("/dashboard/appointments/create/success");
+					router.push(`/dashboard/appointments/${created.id}`);
 				} else {
 					setOpen?.(false);
 					form.reset();
