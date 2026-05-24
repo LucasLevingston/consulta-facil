@@ -1,130 +1,124 @@
 "use client";
 
-import { CalendarPlus, Menu, Search } from "lucide-react";
+import {
+	BadgeCheck,
+	Building2,
+	CalendarDays,
+	CalendarPlus,
+	Clock,
+	Home,
+	MonitorCheck,
+	UserRound,
+	Users,
+} from "lucide-react";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
-import { CustomButton } from "./custom/custom-button";
-import { CustomInput } from "./custom/custom-input";
 import { HeaderDropdown } from "./custom/header-dropdown";
 import { NotificationBell } from "./custom/notifications/NotificationBell";
 import { ThemeSwitcher } from "./custom/Theme-Switcher";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "./ui/sheet";
-import { SidebarTrigger } from "./ui/sidebar";
+
+type NavItem = {
+	title: string;
+	url: string;
+	icon: React.ComponentType<{ className?: string }>;
+};
+
+const navByRole: Record<string, NavItem[]> = {
+	PATIENT: [
+		{ title: "Dashboard", url: "/dashboard", icon: Home },
+		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+		{
+			title: "Agendar",
+			url: "/dashboard/appointments/create",
+			icon: CalendarPlus,
+		},
+		{ title: "Profissionais", url: "/professionals", icon: Users },
+		{ title: "Clínicas", url: "/clinics", icon: Building2 },
+	],
+	PROFESSIONAL: [
+		{ title: "Dashboard", url: "/dashboard", icon: Home },
+		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
+		{ title: "Clínica", url: "/dashboard/my-clinic", icon: Building2 },
+		{ title: "Profissionais", url: "/professionals", icon: Users },
+	],
+	RECEPTIONIST: [
+		{ title: "Dashboard", url: "/dashboard", icon: Home },
+		{ title: "Recepção", url: "/dashboard/reception", icon: MonitorCheck },
+		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+	],
+	ADMIN: [
+		{ title: "Dashboard", url: "/dashboard", icon: Home },
+		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+		{ title: "Admin", url: "/admin", icon: BadgeCheck },
+		{ title: "Profissionais", url: "/professionals", icon: Users },
+	],
+};
 
 export function Header() {
 	const { user } = useUserStore();
+	const pathname = usePathname();
+
+	const items = user ? (navByRole[user.role] ?? navByRole.PATIENT) : [];
+
+	const isActive = (url: string) =>
+		url === "/dashboard" ? pathname === url : pathname.startsWith(url);
 
 	return (
-		<header className="sticky top-0 z-50 flex items-center justify-between border-b border-border bg-background/80 px-3 py-3 backdrop-blur-xl sm:px-6">
-			{/* Left */}
-			<div className="flex items-center gap-2">
-				{user && <SidebarTrigger />}
-				{user && (
-					<Separator orientation="vertical" className="hidden h-6 sm:block" />
-				)}
+		<header className="sticky top-0 z-50 flex items-center justify-between gap-4 border-b border-border bg-background/80 px-3 py-3 backdrop-blur-xl sm:px-6">
+			<div className="flex min-w-0 items-center gap-4">
 				<Logo />
+
+				{user && (
+					<nav className="hidden items-center gap-0.5 md:flex">
+						{items.map((item) => {
+							const active = isActive(item.url);
+							return (
+								<Link
+									key={item.url}
+									href={item.url}
+									className={cn(
+										"flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+										active
+											? "bg-primary/10 text-primary"
+											: "text-muted-foreground hover:bg-muted hover:text-foreground",
+									)}
+								>
+									<item.icon className="h-4 w-4 shrink-0" />
+									{item.title}
+								</Link>
+							);
+						})}
+					</nav>
+				)}
 			</div>
 
-			{/* Desktop right */}
-			<div className="hidden items-center gap-3 lg:flex">
+			<div className="flex shrink-0 items-center gap-2">
 				<ThemeSwitcher />
 
 				{user ? (
 					<>
-						<Link href="/agendar-consulta">
-							<CustomButton>
-								<CalendarPlus className="mr-2 h-4 w-4" />
-								Agendar
-							</CustomButton>
-						</Link>
-
 						<NotificationBell />
-
 						<HeaderDropdown user={user} />
 					</>
 				) : (
 					<div className="flex items-center gap-2">
 						<Link href="/auth/register">
-							<CustomButton>Criar conta</CustomButton>
+							<Button variant="outline" className="rounded-xl">
+								Criar conta
+							</Button>
 						</Link>
 						<Link href="/auth/login">
-							<CustomButton>Entrar</CustomButton>
+							<Button className="rounded-xl">Entrar</Button>
 						</Link>
 					</div>
 				)}
-			</div>
-
-			{/* Mobile right */}
-			<div className="flex items-center gap-2 lg:hidden">
-				<ThemeSwitcher />
-
-				<Sheet>
-					<SheetTrigger asChild>
-						<Button
-							size="icon"
-							className="h-10 w-10 rounded-2xl border border-border bg-background/60 text-foreground backdrop-blur hover:bg-primary/10 hover:text-primary"
-						>
-							<Menu className="h-5 w-5" />
-						</Button>
-					</SheetTrigger>
-
-					<SheetContent
-						side="right"
-						className="w-[300px] border-l border-border bg-background/95 backdrop-blur-xl"
-					>
-						<SheetHeader>
-							<SheetTitle>
-								<Logo />
-							</SheetTitle>
-						</SheetHeader>
-
-						<div className="mt-8 space-y-4">
-							<CustomInput
-								type="text"
-								placeholder="Buscar profissionais..."
-								icon={Search}
-							/>
-
-							{user ? (
-								<div className="space-y-3">
-									<Link href="/agendar-consulta" className="block">
-										<Button className="h-11 w-full justify-start rounded-2xl bg-primary text-background">
-											<CalendarPlus className="mr-2 h-4 w-4" />
-											Agendar Consulta
-										</Button>
-									</Link>
-									<NotificationBell />
-									<div className="pt-2">
-										<HeaderDropdown user={user} />
-									</div>
-								</div>
-							) : (
-								<div className="flex flex-col gap-3">
-									<Link href="/auth/register">
-										<Button className="h-11 w-full rounded-2xl bg-primary text-background">
-											Criar conta
-										</Button>
-									</Link>
-									<Link href="/auth/login">
-										<Button className="h-11 w-full rounded-2xl bg-primary text-background">
-											Entrar
-										</Button>
-									</Link>
-								</div>
-							)}
-						</div>
-					</SheetContent>
-				</Sheet>
 			</div>
 		</header>
 	);
