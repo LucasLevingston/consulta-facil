@@ -2,12 +2,12 @@
 
 import {
 	BadgeCheck,
-	Building2,
 	CalendarDays,
 	CalendarPlus,
 	Clock,
 	Home,
 	MonitorCheck,
+	TrendingUp,
 	UserRound,
 	Users,
 } from "lucide-react";
@@ -38,7 +38,7 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
 		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
-		{ title: "Clínica", url: "/dashboard/my-clinic", icon: Building2 },
+		{ title: "Financeiro", url: "/dashboard/financial", icon: TrendingUp },
 	],
 	RECEPTIONIST: [
 		{ title: "Início", url: "/dashboard", icon: Home },

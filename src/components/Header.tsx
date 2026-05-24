@@ -8,6 +8,7 @@ import {
 	Clock,
 	Home,
 	MonitorCheck,
+	TrendingUp,
 	UserRound,
 	Users,
 } from "lucide-react";
@@ -15,11 +16,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
+import { CustomButton } from "./custom/custom-button";
 import { HeaderDropdown } from "./custom/header-dropdown";
 import { NotificationBell } from "./custom/notifications/NotificationBell";
 import { ThemeSwitcher } from "./custom/Theme-Switcher";
 import { Logo } from "./logo";
-import { Button } from "./ui/button";
 
 type NavItem = {
 	title: string;
@@ -45,6 +46,7 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
 		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
 		{ title: "Clínica", url: "/dashboard/my-clinic", icon: Building2 },
+		{ title: "Financeiro", url: "/dashboard/financial", icon: TrendingUp },
 		{ title: "Profissionais", url: "/professionals", icon: Users },
 	],
 	RECEPTIONIST: [
@@ -110,12 +112,10 @@ export function Header() {
 				) : (
 					<div className="flex items-center gap-2">
 						<Link href="/auth/register">
-							<Button variant="outline" className="rounded-xl">
-								Criar conta
-							</Button>
+							<CustomButton variant="outline">Criar conta</CustomButton>
 						</Link>
 						<Link href="/auth/login">
-							<Button className="rounded-xl">Entrar</Button>
+							<CustomButton>Entrar</CustomButton>
 						</Link>
 					</div>
 				)}
