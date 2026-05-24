@@ -112,6 +112,30 @@ describe("appointmentsApi", () => {
 		expect(result.status).toBe("COMPLETED");
 	});
 
+	it("reschedule — chama PUT /appointments/:id/reschedule com nova data e razão", async () => {
+		const rescheduled = {
+			...appointment,
+			scheduledAt: "2026-06-01T10:00:00Z",
+			previousScheduledAt: "2026-05-20T10:00:00Z",
+		};
+		mockPut.mockResolvedValueOnce({ data: rescheduled });
+
+		const newDate = new Date("2026-06-01T10:00:00Z");
+		const result = await appointmentsApi.reschedule("a-1", {
+			scheduledAt: newDate,
+			reason: "Mudança de agenda",
+		});
+
+		expect(mockPut).toHaveBeenCalledWith(
+			"/appointments/a-1/reschedule",
+			expect.objectContaining({
+				scheduledAt: newDate.toISOString(),
+				reason: "Mudança de agenda",
+			}),
+		);
+		expect(result.previousScheduledAt).toBe("2026-05-20T10:00:00Z");
+	});
+
 	it("delete — chama DELETE /appointments/:id", async () => {
 		mockDelete.mockResolvedValueOnce({ data: undefined });
 
