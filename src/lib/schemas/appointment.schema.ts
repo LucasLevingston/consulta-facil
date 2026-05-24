@@ -2,6 +2,13 @@ import { z } from "zod";
 
 export const appointmentModalitySchema = z.enum(["IN_PERSON", "ONLINE"]);
 
+export const appointmentPaymentStatusSchema = z.enum([
+	"UNPAID",
+	"PENDING_PAYMENT",
+	"PAID",
+	"REFUNDED",
+]);
+
 export const appointmentStatusSchema = z.enum([
 	"PENDING",
 	"CONFIRMED",
@@ -27,6 +34,8 @@ export const appointmentResponseSchema = z.object({
 	modality: appointmentModalitySchema.nullable().optional(),
 	meetLink: z.string().nullable().optional(),
 	status: appointmentStatusSchema,
+	paymentStatus: appointmentPaymentStatusSchema.nullable().optional(),
+	paymentAmount: z.number().nullable().optional(),
 	cancellationReason: z.string().nullable().optional(),
 	rating: z.number().int().min(1).max(5).nullable().optional(),
 	ratingComment: z.string().nullable().optional(),
@@ -79,6 +88,14 @@ export const qrCheckInTokenSchema = z.object({
 	token: z.string(),
 });
 
+export const paymentResponseSchema = z.object({
+	checkoutUrl: z.string(),
+	preferenceId: z.string(),
+	appointmentId: z.string(),
+});
+
+export type PaymentResponse = z.infer<typeof paymentResponseSchema>;
+export type AppointmentPaymentStatus = z.infer<typeof appointmentPaymentStatusSchema>;
 export type QrCheckInToken = z.infer<typeof qrCheckInTokenSchema>;
 export type AppointmentModality = z.infer<typeof appointmentModalitySchema>;
 export type SetModalityInput = z.infer<typeof setModalitySchema>;

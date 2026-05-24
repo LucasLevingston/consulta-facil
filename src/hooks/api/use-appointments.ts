@@ -179,3 +179,18 @@ export function useGenerateMeetLink() {
 			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }
+
+export function useCreatePayment() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: ({
+			appointmentId,
+			amount,
+		}: {
+			appointmentId: string;
+			amount?: number;
+		}) => appointmentsApi.createPayment(appointmentId, amount),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+	});
+}

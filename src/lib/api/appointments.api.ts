@@ -3,6 +3,7 @@ import type {
 	AppointmentResponse,
 	CancelAppointmentInput,
 	CreateAppointmentInput,
+	PaymentResponse,
 	QrCheckInToken,
 	RateAppointmentInput,
 	RescheduleAppointmentInput,
@@ -135,6 +136,19 @@ export const appointmentsApi = {
 	generateMeetLink: async (id: string): Promise<AppointmentResponse> => {
 		const response = await api.post<AppointmentResponse>(
 			`/appointments/${id}/meet-link`,
+		);
+		return response.data;
+	},
+
+	createPayment: async (
+		appointmentId: string,
+		amount?: number,
+	): Promise<PaymentResponse> => {
+		const params = amount !== undefined ? { amount } : {};
+		const response = await api.post<PaymentResponse>(
+			`/appointments/${appointmentId}/payment`,
+			null,
+			{ params },
 		);
 		return response.data;
 	},
