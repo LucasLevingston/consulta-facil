@@ -2,7 +2,7 @@
 
 import { BadgeCheck, Check, Loader2, Stethoscope, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { toast } from "sonner";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
@@ -160,7 +160,9 @@ export default function AdminPage() {
 				isLoading={doctorQuery.isLoading}
 				error={doctorQuery.error}
 			>
-				<AppointmentsDashboard appointments={appointments} userRole="ADMIN" />
+				<Suspense>
+					<AppointmentsDashboard appointments={appointments} userRole="ADMIN" />
+				</Suspense>
 			</QueryBoundary>
 		</div>
 	);

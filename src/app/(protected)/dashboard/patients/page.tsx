@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDeferredValue } from "react";
+import { Suspense, useDeferredValue } from "react";
 import { CustomButton } from "@/components/custom/custom-button";
+
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,7 +35,7 @@ type SortOption = "name" | "recent";
 
 const PAGE_SIZE = 20;
 
-export default function PatientsPage() {
+function PatientsContent() {
 	const { user } = useUserStore();
 	const professionalId = user?.id ?? "";
 
@@ -187,5 +188,13 @@ export default function PatientsPage() {
 				)}
 			</QueryBoundary>
 		</div>
+	);
+}
+
+export default function PatientsPage() {
+	return (
+		<Suspense>
+			<PatientsContent />
+		</Suspense>
 	);
 }

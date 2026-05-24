@@ -1,6 +1,7 @@
 "use client";
 
 import { CalendarDays } from "lucide-react";
+import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
@@ -49,7 +50,9 @@ export default function AppointmentsPage() {
 			/>
 
 			<QueryBoundary isLoading={isLoading} error={query.error}>
-				<AppointmentsDashboard appointments={appointments} userRole={role} />
+				<Suspense>
+					<AppointmentsDashboard appointments={appointments} userRole={role} />
+				</Suspense>
 			</QueryBoundary>
 		</div>
 	);

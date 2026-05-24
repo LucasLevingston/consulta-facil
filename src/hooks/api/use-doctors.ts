@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { professionalsApi } from "@/lib/api/doctors.api";
 import type { CreateProfessionalInput } from "@/lib/schemas/doctor.schema";
 
@@ -175,7 +174,6 @@ export function useProfessionalsNearby(
 	});
 }
 
-// Backwards-compatible aliases
 export const useDoctors = useProfessionals;
 export const useDoctor = useProfessional;
 export const useSearchDoctors = useSearchProfessionals;
