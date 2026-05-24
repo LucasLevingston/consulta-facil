@@ -24,11 +24,11 @@ export default function AppointmentsPage() {
 	const doctorProfileQuery = useMyDoctorProfile(isDoctor);
 	const professionalProfileId = doctorProfileQuery.data?.id ?? "";
 
-	const patientQuery = usePatientAppointments(isDoctor ? "" : userId, 0, 200);
+	const patientQuery = usePatientAppointments(isDoctor ? "" : userId, 0, 100);
 	const doctorQuery = useProfessionalAppointments(
 		isDoctor ? professionalProfileId : "",
 		0,
-		200,
+		100,
 	);
 
 	const query = isDoctor ? doctorQuery : patientQuery;

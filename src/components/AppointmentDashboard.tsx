@@ -1,7 +1,8 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 import { StatCard } from "@/components/StatCard";
 import { makeColumns } from "@/components/table/columns";
@@ -23,11 +24,27 @@ const AppointmentsDashboard = ({
 	appointments,
 	userRole,
 }: AppointmentsDashboardProps) => {
-	const [activeStatus, setActiveStatus] = useState<AppointmentStatus | null>(
-		null,
-	);
-	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(0);
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const search = searchParams.get("q") ?? "";
+	const activeStatus =
+		(searchParams.get("status") as AppointmentStatus) || null;
+	const page = Number(searchParams.get("page") ?? "0");
+
+	function updateParams(
+		updates: Record<string, string | null>,
+		resetPage = true,
+	) {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [key, value] of Object.entries(updates)) {
+			if (value === null) params.delete(key);
+			else params.set(key, value);
+		}
+		if (resetPage) params.delete("page");
+		router.push(`${pathname}?${params.toString()}`, { scroll: false });
+	}
 
 	const counts = {
 		total: appointments.length,
@@ -60,12 +77,6 @@ const AppointmentsDashboard = ({
 		(currentPage + 1) * ITEMS_PER_PAGE,
 	);
 
-	const handleStatusClick = (status: AppointmentStatus | null) => {
-		setActiveStatus(status);
-		setSearch("");
-		setPage(0);
-	};
-
 	const columns = useMemo(() => makeColumns(userRole), [userRole]);
 
 	return (
@@ -75,7 +86,7 @@ const AppointmentsDashboard = ({
 					count={counts.total}
 					label="Todas"
 					icon=""
-					onClick={() => handleStatusClick(null)}
+					onClick={() => updateParams({ status: null })}
 					onActive={activeStatus === null}
 				/>
 				<StatCard
@@ -83,7 +94,7 @@ const AppointmentsDashboard = ({
 					count={counts.confirmed}
 					label="Confirmadas"
 					icon=""
-					onClick={() => handleStatusClick("CONFIRMED")}
+					onClick={() => updateParams({ status: "CONFIRMED" })}
 					onActive={activeStatus === "CONFIRMED"}
 				/>
 				<StatCard
@@ -91,7 +102,7 @@ const AppointmentsDashboard = ({
 					count={counts.pending}
 					label="Pendentes"
 					icon=""
-					onClick={() => handleStatusClick("PENDING")}
+					onClick={() => updateParams({ status: "PENDING" })}
 					onActive={activeStatus === "PENDING"}
 				/>
 				<StatCard
@@ -99,7 +110,7 @@ const AppointmentsDashboard = ({
 					count={counts.canceled}
 					label="Canceladas"
 					icon=""
-					onClick={() => handleStatusClick("CANCELED")}
+					onClick={() => updateParams({ status: "CANCELED" })}
 					onActive={activeStatus === "CANCELED"}
 				/>
 				<StatCard
@@ -107,7 +118,7 @@ const AppointmentsDashboard = ({
 					count={counts.completed}
 					label="Concluídas"
 					icon=""
-					onClick={() => handleStatusClick("COMPLETED")}
+					onClick={() => updateParams({ status: "COMPLETED" })}
 					onActive={activeStatus === "COMPLETED"}
 				/>
 			</div>
@@ -117,10 +128,7 @@ const AppointmentsDashboard = ({
 				<Input
 					placeholder="Buscar por paciente, profissional, especialidade ou motivo..."
 					value={search}
-					onChange={(e) => {
-						setSearch(e.target.value);
-						setPage(0);
-					}}
+					onChange={(e) => updateParams({ q: e.target.value || null })}
 					className="pl-9 rounded-xl"
 				/>
 			</div>
@@ -133,7 +141,7 @@ const AppointmentsDashboard = ({
 				<AppointmentPagination
 					currentPage={currentPage}
 					totalPages={totalPages}
-					onPageChange={setPage}
+					onPageChange={(p) => updateParams({ page: String(p) }, false)}
 				/>
 			)}
 		</div>

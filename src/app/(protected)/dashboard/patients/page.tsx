@@ -11,7 +11,8 @@ import {
 	UserRound,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDeferredValue } from "react";
 import { CustomButton } from "@/components/custom/custom-button";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -37,18 +38,28 @@ export default function PatientsPage() {
 	const { user } = useUserStore();
 	const professionalId = user?.id ?? "";
 
-	const [search, setSearch] = useState("");
-	const [debouncedSearch, setDebouncedSearch] = useState("");
-	const [sort, setSort] = useState<SortOption>("recent");
-	const [page, setPage] = useState(0);
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setDebouncedSearch(search);
-			setPage(0);
-		}, 400);
-		return () => clearTimeout(timer);
-	}, [search]);
+	const search = searchParams.get("q") ?? "";
+	const sort = (searchParams.get("sort") as SortOption) ?? "recent";
+	const page = Number(searchParams.get("page") ?? "0");
+
+	const debouncedSearch = useDeferredValue(search);
+
+	function updateParams(
+		updates: Record<string, string | null>,
+		resetPage = true,
+	) {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [key, value] of Object.entries(updates)) {
+			if (value === null) params.delete(key);
+			else params.set(key, value);
+		}
+		if (resetPage) params.delete("page");
+		router.push(`${pathname}?${params.toString()}`, { scroll: false });
+	}
 
 	const { data, isLoading, error } = useProfessionalPatients(professionalId, {
 		page,
@@ -60,11 +71,6 @@ export default function PatientsPage() {
 	const patients = data?.content ?? [];
 	const totalPages = data?.totalPages ?? 0;
 	const totalElements = data?.totalElements ?? 0;
-
-	function handleSortChange(value: SortOption) {
-		setSort(value);
-		setPage(0);
-	}
 
 	return (
 		<div className="space-y-6">
@@ -83,15 +89,12 @@ export default function PatientsPage() {
 						<Input
 							placeholder="Buscar por nome..."
 							value={search}
-							onChange={(e) => setSearch(e.target.value)}
+							onChange={(e) => updateParams({ q: e.target.value || null })}
 							className="pl-9 rounded-xl"
 						/>
 					</div>
 
-					<Select
-						value={sort}
-						onValueChange={(v) => handleSortChange(v as SortOption)}
-					>
+					<Select value={sort} onValueChange={(v) => updateParams({ sort: v })}>
 						<SelectTrigger className="w-full rounded-xl sm:w-[180px]">
 							<SelectValue placeholder="Ordenar por" />
 						</SelectTrigger>
@@ -164,7 +167,7 @@ export default function PatientsPage() {
 							size="icon"
 							className="h-8 w-8 rounded-xl"
 							disabled={page === 0}
-							onClick={() => setPage((p) => p - 1)}
+							onClick={() => updateParams({ page: String(page - 1) }, false)}
 						>
 							<ChevronLeft className="h-4 w-4" />
 						</Button>
@@ -176,7 +179,7 @@ export default function PatientsPage() {
 							size="icon"
 							className="h-8 w-8 rounded-xl"
 							disabled={page >= totalPages - 1}
-							onClick={() => setPage((p) => p + 1)}
+							onClick={() => updateParams({ page: String(page + 1) }, false)}
 						>
 							<ChevronRight className="h-4 w-4" />
 						</Button>
