@@ -5,15 +5,27 @@ import {
 	BadgeCheck,
 	CalendarDays,
 	CalendarPlus,
+	CheckCircle2,
+	Clock,
 	CreditCard,
 	LayoutDashboard,
 	Stethoscope,
 	User,
-	UserRound,
+	XCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
+import {
+	useCompleteAppointment,
+	useConfirmAppointment,
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/hooks/api/use-appointments";
+import { useUserStore } from "@/store/useUserStore";
+import { AppointmentsList } from "./appointments-list";
+import { StatCard } from "./stat-card";
 
 interface QuickCard {
 	title: string;
@@ -54,13 +66,6 @@ function QuickAccessCard({
 
 const patientCards: QuickCard[] = [
 	{
-		title: "Minhas Consultas",
-		description: "Veja o histórico e status das suas consultas.",
-		href: "/dashboard/appointments",
-		icon: CalendarDays,
-		accent: "bg-primary/10 text-primary",
-	},
-	{
 		title: "Agendar Consulta",
 		description: "Escolha um profissional e agende um horário.",
 		href: "/dashboard/appointments/create",
@@ -85,25 +90,18 @@ const patientCards: QuickCard[] = [
 
 const doctorCards: QuickCard[] = [
 	{
-		title: "Minhas Consultas",
-		description: "Gerencie e confirme suas consultas agendadas.",
-		href: "/dashboard/appointments",
-		icon: CalendarDays,
-		accent: "bg-primary/10 text-primary",
-	},
-	{
-		title: "Meus Pacientes",
-		description: "Veja o histórico e perfil dos seus pacientes.",
-		href: "/dashboard/patients",
-		icon: UserRound,
+		title: "Agendar Consulta",
+		description: "Marque uma nova consulta para um paciente.",
+		href: "/dashboard/appointments/create",
+		icon: CalendarPlus,
 		accent: "bg-green-500/10 text-green-500",
 	},
 	{
-		title: "Meu Perfil",
-		description: "Atualize seus dados e foto de perfil.",
-		href: "/dashboard/profile",
-		icon: User,
-		accent: "bg-purple-500/10 text-purple-500",
+		title: "Horários",
+		description: "Gerencie sua disponibilidade semanal.",
+		href: "/dashboard/schedule",
+		icon: Clock,
+		accent: "bg-blue-500/10 text-blue-500",
 	},
 	{
 		title: "Assinatura",
@@ -116,18 +114,11 @@ const doctorCards: QuickCard[] = [
 
 const adminCards: QuickCard[] = [
 	{
-		title: "Consultas",
-		description: "Visão geral de todas as consultas.",
-		href: "/dashboard/appointments",
-		icon: CalendarDays,
-		accent: "bg-primary/10 text-primary",
-	},
-	{
-		title: "Pacientes",
-		description: "Gerencie os pacientes cadastrados.",
-		href: "/dashboard/patients",
-		icon: UserRound,
-		accent: "bg-green-500/10 text-green-500",
+		title: "Painel Admin",
+		description: "Acesso às configurações administrativas.",
+		href: "/admin",
+		icon: LayoutDashboard,
+		accent: "bg-red-500/10 text-red-500",
 	},
 	{
 		title: "Profissionais",
@@ -135,13 +126,6 @@ const adminCards: QuickCard[] = [
 		href: "/professionals",
 		icon: Stethoscope,
 		accent: "bg-blue-500/10 text-blue-500",
-	},
-	{
-		title: "Painel Admin",
-		description: "Acesso às configurações administrativas.",
-		href: "/admin",
-		icon: LayoutDashboard,
-		accent: "bg-red-500/10 text-red-500",
 	},
 ];
 
@@ -162,9 +146,53 @@ function DoctorHeroSubtitle() {
 }
 
 export function Dashboard({ firstName, role }: DashboardProps) {
+	const { user } = useUserStore();
 	const isDoctor = role === "PROFESSIONAL";
 	const isAdmin = role === "ADMIN";
 	const isPatient = role === "PATIENT";
+
+	const { data: doctorProfile } = useMyProfessionalProfile(isDoctor);
+	const professionalId = doctorProfile?.id ?? "";
+
+	const patientQuery = usePatientAppointments(
+		isPatient ? (user?.id ?? "") : "",
+	);
+	const doctorQuery = useProfessionalAppointments(
+		isDoctor ? professionalId : "",
+	);
+
+	const { mutateAsync: confirm } = useConfirmAppointment();
+	const { mutateAsync: complete } = useCompleteAppointment();
+
+	const appointments = isDoctor
+		? (doctorQuery.data?.content ?? [])
+		: (patientQuery.data?.content ?? []);
+
+	const stats = useMemo(
+		() => ({
+			total: appointments.length,
+			confirmed: appointments.filter((a) => a.status === "CONFIRMED").length,
+			pending: appointments.filter((a) => a.status === "PENDING").length,
+			completed: appointments.filter((a) => a.status === "COMPLETED").length,
+			canceled: appointments.filter((a) => a.status === "CANCELED").length,
+		}),
+		[appointments],
+	);
+
+	const upcoming = useMemo(() => {
+		const now = new Date();
+		return appointments
+			.filter(
+				(a) =>
+					(a.status === "CONFIRMED" || a.status === "PENDING") &&
+					new Date(a.scheduledAt) >= now,
+			)
+			.sort(
+				(a, b) =>
+					new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime(),
+			)
+			.slice(0, isDoctor ? 5 : 3);
+	}, [appointments, isDoctor]);
 
 	const cards = isAdmin ? adminCards : isDoctor ? doctorCards : patientCards;
 
@@ -173,8 +201,6 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 		: isDoctor
 			? "Painel do profissional"
 			: "Bem-vindo de volta";
-
-	const heroName = firstName;
 
 	return (
 		<div className="space-y-6">
@@ -185,7 +211,7 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 				<div className="relative z-10">
 					<p className="text-sm font-medium text-primary">{heroLabel}</p>
 					<h1 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">
-						Olá, {heroName}!
+						Olá, {firstName}!
 					</h1>
 					{isDoctor && <DoctorHeroSubtitle />}
 					{isPatient && (
@@ -201,14 +227,54 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 				</div>
 			</div>
 
-			{/* Quick access cards */}
-			<div className="grid gap-3 sm:grid-cols-2">
+			{/* Stats */}
+			{(isDoctor || isPatient) && (
+				<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+					<StatCard
+						icon={<CalendarDays className="h-5 w-5" />}
+						count={stats.total}
+						label="Total"
+						colorClass="bg-primary/10 text-primary"
+					/>
+					<StatCard
+						icon={<CheckCircle2 className="h-5 w-5" />}
+						count={stats.confirmed}
+						label="Confirmadas"
+						colorClass="bg-green-500/10 text-green-500"
+					/>
+					<StatCard
+						icon={<Clock className="h-5 w-5" />}
+						count={stats.pending}
+						label="Pendentes"
+						colorClass="bg-yellow-500/10 text-yellow-600"
+					/>
+					<StatCard
+						icon={<XCircle className="h-5 w-5" />}
+						count={stats.canceled}
+						label="Canceladas"
+						colorClass="bg-red-500/10 text-red-500"
+					/>
+				</div>
+			)}
+
+			{/* Upcoming appointments */}
+			{(isDoctor || isPatient) && (
+				<AppointmentsList
+					appointments={upcoming}
+					isDoctor={isDoctor}
+					onConfirm={(id) => confirm(id)}
+					onComplete={(id) => complete(id)}
+				/>
+			)}
+
+			{/* Quick access */}
+			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 				{cards.map((card) => (
 					<QuickAccessCard key={card.href} {...card} />
 				))}
 			</div>
 
-			{/* Patient CTA to become doctor */}
+			{/* Patient CTA to become professional */}
 			{isPatient && (
 				<Link href="/dashboard/become-professional" className="group block">
 					<Card className="border-dashed border-border transition-all hover:border-primary/40 hover:shadow-sm">
