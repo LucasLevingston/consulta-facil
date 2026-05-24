@@ -18,6 +18,7 @@ import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
 
+import { ExamsSection } from "@/components/custom/forms/Appointments/ExamsSection";
 import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
 import { RescheduleAppointmentForm } from "@/components/custom/forms/Appointments/RescheduleAppointmentForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -603,6 +604,13 @@ function AppointmentDetail({
 					/>
 				</DialogContent>
 			</Dialog>
+
+			{/* Exams */}
+			<ExamsSection
+				appointmentId={appointment.id}
+				isPatient={isPatient}
+				isProfessional={isProfessional}
+			/>
 
 			{/* Anamnesis — editable by patient (and professional) */}
 			<AnamnesisSection
