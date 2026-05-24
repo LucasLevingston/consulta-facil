@@ -4,6 +4,7 @@ import type {
 	CancelAppointmentInput,
 	CreateAppointmentInput,
 	RateAppointmentInput,
+	RescheduleAppointmentInput,
 } from "@/lib/schemas/appointment.schema";
 import type { ApiPage } from "@/lib/schemas/doctor.schema";
 
@@ -77,6 +78,17 @@ export const appointmentsApi = {
 		const response = await api.post<AppointmentResponse>(
 			`/appointments/${id}/rate`,
 			data,
+		);
+		return response.data;
+	},
+
+	reschedule: async (
+		id: string,
+		data: RescheduleAppointmentInput,
+	): Promise<AppointmentResponse> => {
+		const response = await api.put<AppointmentResponse>(
+			`/appointments/${id}/reschedule`,
+			{ scheduledAt: data.scheduledAt.toISOString(), reason: data.reason },
 		);
 		return response.data;
 	},

@@ -7,6 +7,7 @@ import type {
 	CancelAppointmentInput,
 	CreateAppointmentInput,
 	RateAppointmentInput,
+	RescheduleAppointmentInput,
 } from "@/lib/schemas/appointment.schema";
 
 export const appointmentKeys = {
@@ -94,6 +95,21 @@ export function useRateAppointment() {
 			queryClient.invalidateQueries({ queryKey: appointmentKeys.all });
 			queryClient.invalidateQueries({ queryKey: ["professionals"] });
 		},
+	});
+}
+
+export function useRescheduleAppointment() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: ({
+			id,
+			data,
+		}: {
+			id: string;
+			data: RescheduleAppointmentInput;
+		}) => appointmentsApi.reschedule(id, data),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }
 

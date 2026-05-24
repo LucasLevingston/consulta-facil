@@ -15,6 +15,7 @@ export const appointmentResponseSchema = z.object({
 	professionalId: z.string(),
 	specialty: z.string().nullable().optional(),
 	scheduledAt: z.string(),
+	previousScheduledAt: z.string().nullable().optional(),
 	reason: z.string().nullable().optional(),
 	notes: z.string().nullable().optional(),
 	status: appointmentStatusSchema,
@@ -34,6 +35,11 @@ export const createAppointmentSchema = z.object({
 
 export const cancelAppointmentSchema = z.object({
 	cancellationReason: z.string().min(1, "Motivo é obrigatório"),
+});
+
+export const rescheduleAppointmentSchema = z.object({
+	scheduledAt: z.date(),
+	reason: z.string().max(500).optional(),
 });
 
 export const rateAppointmentSchema = z.object({
@@ -60,4 +66,7 @@ export type AppointmentResponse = z.infer<typeof appointmentResponseSchema>;
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;
 export type CancelAppointmentInput = z.infer<typeof cancelAppointmentSchema>;
 export type RateAppointmentInput = z.infer<typeof rateAppointmentSchema>;
+export type RescheduleAppointmentInput = z.infer<
+	typeof rescheduleAppointmentSchema
+>;
 export type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;

@@ -8,6 +8,7 @@ import {
 	ClipboardList,
 	FileText,
 	MessageSquare,
+	RefreshCw,
 	Star,
 	Stethoscope,
 	User,
@@ -18,6 +19,7 @@ import { use, useState } from "react";
 import { toast } from "sonner";
 
 import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
+import { RescheduleAppointmentForm } from "@/components/custom/forms/Appointments/RescheduleAppointmentForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -435,6 +437,7 @@ function AppointmentDetail({
 }) {
 	const { user } = useUserStore();
 	const [rateOpen, setRateOpen] = useState(false);
+	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 
 	const role = (user?.role ?? "PATIENT") as
 		| "PATIENT"
@@ -446,6 +449,8 @@ function AppointmentDetail({
 		isPatient &&
 		appointment.status === "COMPLETED" &&
 		appointment.rating == null;
+	const canReschedule =
+		appointment.status === "PENDING" || appointment.status === "CONFIRMED";
 
 	const statusConfig = STATUS_CONFIG[appointment.status];
 	const scheduledDate = new Date(appointment.scheduledAt);
@@ -507,10 +512,23 @@ function AppointmentDetail({
 			{/* Schedule info */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-						<CalendarDays className="h-4 w-4" />
-						Agendamento
-					</CardTitle>
+					<div className="flex items-center justify-between">
+						<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+							<CalendarDays className="h-4 w-4" />
+							Agendamento
+						</CardTitle>
+						{canReschedule && (
+							<Button
+								variant="outline"
+								size="sm"
+								className="gap-2"
+								onClick={() => setRescheduleOpen(true)}
+							>
+								<RefreshCw className="h-3.5 w-3.5" />
+								Remarcar
+							</Button>
+						)}
+					</div>
 				</CardHeader>
 				<CardContent className="space-y-3 -mt-2">
 					<div className="grid grid-cols-2 gap-4 text-sm">
@@ -527,6 +545,24 @@ function AppointmentDetail({
 							</p>
 						</div>
 					</div>
+
+					{appointment.previousScheduledAt && (
+						<>
+							<Separator />
+							<div>
+								<p className="text-xs text-muted-foreground mb-0.5">
+									Data original
+								</p>
+								<p className="text-sm text-muted-foreground line-through">
+									{format(
+										new Date(appointment.previousScheduledAt),
+										"dd/MM/yyyy 'às' HH:mm",
+										{ locale: ptBR },
+									)}
+								</p>
+							</div>
+						</>
+					)}
 
 					{appointment.reason && (
 						<>
@@ -552,6 +588,21 @@ function AppointmentDetail({
 					)}
 				</CardContent>
 			</Card>
+
+			<Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
+				<DialogContent className="sm:max-w-md">
+					<DialogHeader className="mb-2 space-y-1">
+						<DialogTitle>Remarcar consulta</DialogTitle>
+						<DialogDescription>
+							Selecione a nova data e horário para a consulta.
+						</DialogDescription>
+					</DialogHeader>
+					<RescheduleAppointmentForm
+						appointment={appointment}
+						setOpen={setRescheduleOpen}
+					/>
+				</DialogContent>
+			</Dialog>
 
 			{/* Anamnesis — editable by patient (and professional) */}
 			<AnamnesisSection
