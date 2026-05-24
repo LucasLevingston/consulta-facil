@@ -121,3 +121,41 @@ export function useDeleteAppointment() {
 			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }
+
+export const queueKeys = {
+	queue: ["appointments", "queue"] as const,
+};
+
+export function useCheckInToken(appointmentId: string) {
+	return useQuery({
+		queryKey: [...appointmentKeys.detail(appointmentId), "checkin-token"],
+		queryFn: () => appointmentsApi.getCheckInToken(appointmentId),
+		enabled: !!appointmentId,
+	});
+}
+
+export function useCheckInByQr() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (token: string) => appointmentsApi.checkInByQr(token),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
+	});
+}
+
+export function useQueue() {
+	return useQuery({
+		queryKey: queueKeys.queue,
+		queryFn: () => appointmentsApi.getQueue(),
+		refetchInterval: 30_000,
+	});
+}
+
+export function useCallPatient() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (appointmentId: string) => appointmentsApi.callPatient(appointmentId),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
+	});
+}

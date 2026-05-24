@@ -3,6 +3,7 @@ import type {
 	AppointmentResponse,
 	CancelAppointmentInput,
 	CreateAppointmentInput,
+	QrCheckInToken,
 	RateAppointmentInput,
 	RescheduleAppointmentInput,
 } from "@/lib/schemas/appointment.schema";
@@ -95,5 +96,27 @@ export const appointmentsApi = {
 
 	delete: async (id: string): Promise<void> => {
 		await api.delete(`/appointments/${id}`);
+	},
+
+	getCheckInToken: async (appointmentId: string): Promise<QrCheckInToken> => {
+		const response = await api.get<QrCheckInToken>(`/appointments/${appointmentId}/checkin-token`);
+		return response.data;
+	},
+
+	checkInByQr: async (token: string): Promise<AppointmentResponse> => {
+		const response = await api.post<AppointmentResponse>("/appointments/checkin", null, {
+			params: { token },
+		});
+		return response.data;
+	},
+
+	getQueue: async (): Promise<AppointmentResponse[]> => {
+		const response = await api.get<AppointmentResponse[]>("/appointments/queue");
+		return response.data;
+	},
+
+	callPatient: async (appointmentId: string): Promise<AppointmentResponse> => {
+		const response = await api.put<AppointmentResponse>(`/appointments/${appointmentId}/call`);
+		return response.data;
 	},
 };

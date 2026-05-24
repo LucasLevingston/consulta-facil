@@ -9,6 +9,8 @@ const statusConfig: Record<
     label: "Confirmada",
     classes: "bg-green-500/15 text-green-400 border-green-500/30",
   },
+  CHECKED_IN: { label: "Check-in feito", classes: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" },
+  IN_PROGRESS: { label: "Em atendimento", classes: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400" },
   PENDING: {
     label: "Pendente",
     classes: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",

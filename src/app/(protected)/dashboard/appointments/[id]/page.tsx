@@ -8,6 +8,7 @@ import {
 	ClipboardList,
 	FileText,
 	MessageSquare,
+	QrCode,
 	RefreshCw,
 	Star,
 	Stethoscope,
@@ -41,7 +42,7 @@ import {
 	useSaveAnamnesis,
 	useSaveProntuario,
 } from "@/hooks/api/use-anamnesis";
-import { useAppointment } from "@/hooks/api/use-appointments";
+import { useAppointment, useCheckInToken } from "@/hooks/api/use-appointments";
 import type {
 	AnamnesisInput,
 	AnamnesisResponse,
@@ -64,6 +65,8 @@ const STATUS_CONFIG: Record<
 > = {
 	PENDING: { label: "Pendente", variant: "secondary" },
 	CONFIRMED: { label: "Confirmada", variant: "default" },
+	CHECKED_IN: { label: "Check-in feito", variant: "default" },
+	IN_PROGRESS: { label: "Em atendimento", variant: "default" },
 	COMPLETED: { label: "Concluída", variant: "outline" },
 	CANCELED: { label: "Cancelada", variant: "destructive" },
 };
@@ -429,6 +432,23 @@ function ProntuarioReadView({
 
 // ──────────────────────────────────────────────────────────────
 // Main detail view
+function QrCodeDialog({ appointmentId }: { appointmentId: string }) {
+	const { data, isLoading } = useCheckInToken(appointmentId);
+
+	if (isLoading) return <p className="text-sm text-muted-foreground text-center py-4">Gerando código...</p>;
+	if (!data) return <p className="text-sm text-destructive text-center py-4">Erro ao gerar código.</p>;
+
+	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
+	return (
+		<div className="flex flex-col items-center gap-4 py-2">
+			<QRCodeSVG value={data.token} size={220} level="M" />
+			<p className="text-xs text-muted-foreground text-center">
+				Válido por 1 hora. Apresente à recepção ao chegar.
+			</p>
+		</div>
+	);
+}
+
 // ──────────────────────────────────────────────────────────────
 
 function AppointmentDetail({
@@ -439,11 +459,9 @@ function AppointmentDetail({
 	const { user } = useUserStore();
 	const [rateOpen, setRateOpen] = useState(false);
 	const [rescheduleOpen, setRescheduleOpen] = useState(false);
+	const [qrOpen, setQrOpen] = useState(false);
 
-	const role = (user?.role ?? "PATIENT") as
-		| "PATIENT"
-		| "PROFESSIONAL"
-		| "ADMIN";
+	const role = user?.role ?? "PATIENT";
 	const isPatient = role === "PATIENT";
 	const isProfessional = role === "PROFESSIONAL" || role === "ADMIN";
 	const canRate =
@@ -518,17 +536,30 @@ function AppointmentDetail({
 							<CalendarDays className="h-4 w-4" />
 							Agendamento
 						</CardTitle>
-						{canReschedule && (
-							<Button
-								variant="outline"
-								size="sm"
-								className="gap-2"
-								onClick={() => setRescheduleOpen(true)}
-							>
-								<RefreshCw className="h-3.5 w-3.5" />
-								Remarcar
-							</Button>
-						)}
+						<div className="flex gap-2">
+							{isPatient && appointment.status === "CONFIRMED" && (
+								<Button
+									variant="outline"
+									size="sm"
+									className="gap-2"
+									onClick={() => setQrOpen(true)}
+								>
+									<QrCode className="h-3.5 w-3.5" />
+									QR Check-in
+								</Button>
+							)}
+							{canReschedule && (
+								<Button
+									variant="outline"
+									size="sm"
+									className="gap-2"
+									onClick={() => setRescheduleOpen(true)}
+								>
+									<RefreshCw className="h-3.5 w-3.5" />
+									Remarcar
+								</Button>
+							)}
+						</div>
 					</div>
 				</CardHeader>
 				<CardContent className="space-y-3 -mt-2">
@@ -602,6 +633,18 @@ function AppointmentDetail({
 						appointment={appointment}
 						setOpen={setRescheduleOpen}
 					/>
+				</DialogContent>
+			</Dialog>
+
+			<Dialog open={qrOpen} onOpenChange={setQrOpen}>
+				<DialogContent className="sm:max-w-sm">
+					<DialogHeader className="mb-2 space-y-1">
+						<DialogTitle>QR Code para check-in</DialogTitle>
+						<DialogDescription>
+							Apresente este código ao chegar na clínica.
+						</DialogDescription>
+					</DialogHeader>
+					<QrCodeDialog appointmentId={appointment.id} />
 				</DialogContent>
 			</Dialog>
 
