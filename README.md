@@ -146,6 +146,34 @@ make api-generate
 
 Os arquivos gerados ficam em `src/lib/api/generated/` e são re-gerados automaticamente no pre-commit hook (`.husky/pre-commit`).
 
+## Roadmap — Possíveis próximas funcionalidades
+
+Abaixo estão funcionalidades planejadas ou em discussão. Validar quais avançar.
+
+### Navegação e UX
+- **Substituição da sidebar** por bottom-nav no mobile e mega-menu/topbar no desktop — melhora ergonomia em dispositivos menores
+- **Melhoria da página inicial e dashboard** — redesign com métricas em destaque, cards de próximas consultas e CTAs contextuais por role
+- **Busca com querystring + paginação** em todos os componentes de listagem — permite compartilhar links filtrados e melhora performance com lazy loading
+
+### Agendamento
+- **Agendamento por fila ou por horário** — ao selecionar o profissional, verificar se ele atende via fila de espera (check-in no dia) ou por horário marcado; exibir interface diferente para cada modelo
+- **Preenchimento automático de horários vagos** — sugestão de horários disponíveis com base na agenda do profissional; reduz fricção no agendamento
+- **Agendamento por voz** — integração com reconhecimento de fala para agendar consultas por comando de voz no mobile
+
+### Fila de espera
+- **QR Code estático na clínica** — gerar um QR único por clínica que é renovado diariamente; o paciente escaneia ao chegar e entra automaticamente na fila (sem precisar abrir o app e navegar até a consulta)
+
+### Financeiro
+- **Dashboard financeiro para profissionais** — painel com receita mensal, consultas pagas/pendentes, ticket médio, evolução por período e ranking de convênios/formas de pagamento
+
+### Inteligência artificial e automação
+- **Score de paciente** — pontuação calculada com base em histórico (faltas, cancelamentos de última hora, pagamentos em dia); auxilia profissionais na triagem e priorização
+- **Confirmação por WhatsApp** — enviar lembretes automáticos de consulta via WhatsApp (ex: 24h antes) com link de confirmação ou cancelamento; integração via Twilio ou Meta Cloud API
+- **Agente de IA no WhatsApp** — bot conversacional para agendar consultas, tirar dúvidas e enviar resultados de exames diretamente no WhatsApp do paciente
+
+### Performance
+- **Otimizações de carregamento** — lazy loading de imagens, virtualização de listas longas, cache de queries TanStack com staleTime ajustado, prefetch de dados ao hover em links
+
 ## Deploy
 
 ### Vercel (recomendado para frontend)
