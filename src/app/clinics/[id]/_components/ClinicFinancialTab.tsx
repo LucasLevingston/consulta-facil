@@ -111,7 +111,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle className="text-sm font-medium text-muted-foreground">
-							Médicos extras
+							Profissionais extras
 						</CardTitle>
 						<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
 							<Users className="h-4 w-4 text-muted-foreground" />
@@ -136,9 +136,9 @@ export function ClinicFinancialTab({ clinic }: Props) {
 							<TrendingUp className="h-4 w-4 text-primary" />
 						</div>
 						<div>
-							<CardTitle className="text-base">Uso por médico</CardTitle>
+							<CardTitle className="text-base">Uso por profissional</CardTitle>
 							<CardDescription>
-								Cada médico tem {FREE_CONSULTS_PER_DOCTOR} consultas gratuitas
+								Cada profissional tem {FREE_CONSULTS_PER_DOCTOR} consultas gratuitas
 							</CardDescription>
 						</div>
 					</div>
@@ -156,7 +156,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 								<div className="flex-1 min-w-0">
 									<div className="flex items-center justify-between">
 										<p className="text-sm font-medium truncate">
-											{member.professionalName ?? "Médico"}
+											{member.professionalName ?? "Profissional"}
 										</p>
 										<div className="flex items-center gap-1.5 shrink-0 ml-2">
 											<span className="text-xs tabular-nums text-muted-foreground">
@@ -193,7 +193,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 							Resumo do modelo de pagamento
 						</p>
 						<p>
-							• {members.length} médico{members.length !== 1 ? "s" : ""} na
+							• {members.length} profissional{members.length !== 1 ? "is" : ""} na
 							clínica — limite gratuito: {FREE_DOCTORS}
 						</p>
 						<p>
@@ -206,7 +206,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 						</p>
 						{extraDoctors > 0 && (
 							<p>
-								• {extraDoctors} médico{extraDoctors !== 1 ? "s" : ""} extra —
+								• {extraDoctors} profissional{extraDoctors !== 1 ? "is" : ""} extra —
 								plano com +{extraDoctors * 20}% no valor base
 							</p>
 						)}

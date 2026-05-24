@@ -54,7 +54,7 @@ export default function DoctorProfilePage() {
 				.join("")
 				.slice(0, 2)
 				.toUpperCase()
-		: "Dr";
+		: "?";
 
 	return (
 		<div className="max-w-3xl mx-auto space-y-6">
@@ -87,7 +87,7 @@ export default function DoctorProfilePage() {
 
 					<div className="mt-4 space-y-2">
 						<div className="flex flex-wrap items-center gap-2">
-							<h1 className="text-2xl font-bold">Dr. {doctor.name}</h1>
+							<h1 className="text-2xl font-bold">{doctor.name}</h1>
 							<Badge className="gap-1">
 								<Star className="h-3 w-3 fill-current" />
 								Verificado

@@ -82,7 +82,7 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 					<div className="flex items-center gap-2 text-sm text-muted-foreground">
 						<Users className="size-3.5 shrink-0" />
 						<span>
-							{memberCount} médico{memberCount !== 1 ? "s" : ""}
+							{memberCount} profissional{memberCount !== 1 ? "is" : ""}
 						</span>
 					</div>
 				)}

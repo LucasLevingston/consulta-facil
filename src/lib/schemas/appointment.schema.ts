@@ -44,7 +44,7 @@ export const appointmentResponseSchema = z.object({
 });
 
 export const createAppointmentSchema = z.object({
-	professionalId: z.string().min(1, "Médico é obrigatório"),
+	professionalId: z.string().min(1, "Profissional é obrigatório"),
 	scheduledAt: z.string().min(1, "Data e hora são obrigatórias"),
 	reason: z.string().optional(),
 	notes: z.string().optional(),
@@ -66,7 +66,7 @@ export const rateAppointmentSchema = z.object({
 
 // Form schema — scheduledAt is a Date object (converted to ISO string on submit)
 export const appointmentFormSchema = z.object({
-	professionalId: z.string().min(1, "Selecione o médico"),
+	professionalId: z.string().min(1, "Selecione o profissional"),
 	userId: z.string().optional(),
 	scheduledAt: z.date(),
 	reason: z

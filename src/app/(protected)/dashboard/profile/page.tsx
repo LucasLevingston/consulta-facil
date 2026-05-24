@@ -178,7 +178,7 @@ export default function ProfilePage() {
 							<p className="text-sm font-semibold text-foreground">
 								{isDoctor
 									? `Paciente: ${nextAppointment.patientName ?? "—"}`
-									: `Dr. ${nextAppointment.professionalName ?? "—"}`}
+									: `${nextAppointment.professionalName ?? "—"}`}
 							</p>
 							<p className="text-xs text-muted-foreground">
 								{format(

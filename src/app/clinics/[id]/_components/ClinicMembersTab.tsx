@@ -56,7 +56,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 			{ clinicId: clinic.id, professionalProfileId },
 			{
 				onSuccess: () => {
-					toast.success("Convite enviado ao médico.");
+					toast.success("Convite enviado ao profissional.");
 					setAddOpen(false);
 					setDoctorSearch("");
 				},
@@ -74,7 +74,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 			{
 				onSuccess: () =>
 					toast.success(`${professionalName} removido da clínica.`),
-				onError: () => toast.error("Erro ao remover médico."),
+				onError: () => toast.error("Erro ao remover profissional."),
 			},
 		);
 	}
@@ -87,14 +87,14 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 						<DialogTrigger asChild>
 							<Button size="sm" className="gap-2">
 								<UserPlus className="h-4 w-4" />
-								Convidar médico
+								Convidar profissional
 							</Button>
 						</DialogTrigger>
 						<DialogContent className="sm:max-w-md">
 							<DialogHeader>
-								<DialogTitle>Convidar médico</DialogTitle>
+								<DialogTitle>Convidar profissional</DialogTitle>
 								<DialogDescription>
-									O médico receberá uma notificação para aceitar o convite.
+									O profissional receberá uma notificação para aceitar o convite.
 								</DialogDescription>
 							</DialogHeader>
 
@@ -111,7 +111,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 							<div className="mt-2 max-h-72 space-y-1 overflow-y-auto">
 								{filteredAvailable.length === 0 && (
 									<p className="py-6 text-center text-sm text-muted-foreground">
-										Nenhum médico disponível encontrado.
+										Nenhum profissional disponível encontrado.
 									</p>
 								)}
 								{filteredAvailable.map((doctor) => (
@@ -153,7 +153,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 			<div className="grid gap-3 sm:grid-cols-2">
 				{(clinic.members ?? []).length === 0 && (
 					<p className="col-span-full text-sm text-muted-foreground">
-						Nenhum médico cadastrado nesta clínica.
+						Nenhum profissional cadastrado nesta clínica.
 					</p>
 				)}
 				{(clinic.members ?? []).map((member) => {
@@ -182,7 +182,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 								<div className="min-w-0 flex-1">
 									<div className="flex items-center gap-1.5">
 										<p className="truncate text-sm font-semibold">
-											{member.professionalName ?? "Médico"}
+											{member.professionalName ?? "Profissional"}
 										</p>
 										{isOwnerMember && (
 											<Badge variant="secondary" className="shrink-0 text-xs">
@@ -203,7 +203,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 										onClick={() =>
 											handleRemove(
 												member.professionalProfileId,
-												member.professionalName ?? "Médico",
+												member.professionalName ?? "Profissional",
 											)
 										}
 										disabled={removeMember.isPending}

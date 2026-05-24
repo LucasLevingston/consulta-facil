@@ -69,7 +69,7 @@ const patientCards: QuickCard[] = [
 	},
 	{
 		title: "Profissionais",
-		description: "Explore médicos cadastrados na plataforma.",
+		description: "Explore profissionais cadastrados na plataforma.",
 		href: "/professionals",
 		icon: Stethoscope,
 		accent: "bg-blue-500/10 text-blue-500",
@@ -131,7 +131,7 @@ const adminCards: QuickCard[] = [
 	},
 	{
 		title: "Profissionais",
-		description: "Veja todos os médicos da plataforma.",
+		description: "Veja todos os profissionais da plataforma.",
 		href: "/professionals",
 		icon: Stethoscope,
 		accent: "bg-blue-500/10 text-blue-500",
@@ -174,7 +174,7 @@ export function Dashboard({ firstName, role }: DashboardProps) {
 			? "Painel do profissional"
 			: "Bem-vindo de volta";
 
-	const heroName = isDoctor ? `Dr. ${firstName}` : firstName;
+	const heroName = firstName;
 
 	return (
 		<div className="space-y-6">

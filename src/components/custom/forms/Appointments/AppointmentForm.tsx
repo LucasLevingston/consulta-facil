@@ -247,12 +247,12 @@ export const AppointmentForm = ({
 																	.map((n) => n[0])
 																	.join("")
 																	.slice(0, 2)
-																	.toUpperCase() ?? "Dr"}
+																	.toUpperCase() ?? "?"}
 															</AvatarFallback>
 														</Avatar>
 														<div className="text-left">
 															<p className="text-sm font-medium">
-																Dr. {selectedDoctor.name}
+																{selectedDoctor.name}
 															</p>
 															<p className="text-xs text-muted-foreground">
 																{selectedDoctor.specialty}
@@ -300,12 +300,12 @@ export const AppointmentForm = ({
 																					.map((n) => n[0])
 																					.join("")
 																					.slice(0, 2)
-																					.toUpperCase() ?? "Dr"}
+																					.toUpperCase() ?? "?"}
 																			</AvatarFallback>
 																		</Avatar>
 																		<div>
 																			<p className="text-sm font-medium">
-																				Dr. {doctor.name}
+																				{doctor.name}
 																			</p>
 																			<p className="text-xs text-muted-foreground">
 																				{doctor.specialty}
@@ -337,7 +337,7 @@ export const AppointmentForm = ({
 						<div className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
 							<Stethoscope className="h-4 w-4 text-primary shrink-0" />
 							<div className="flex-1 min-w-0">
-								<p className="text-sm font-medium">Dr. {selectedDoctor.name}</p>
+								<p className="text-sm font-medium">{selectedDoctor.name}</p>
 								<p className="text-xs text-muted-foreground">
 									{selectedDoctor.specialty}
 								</p>

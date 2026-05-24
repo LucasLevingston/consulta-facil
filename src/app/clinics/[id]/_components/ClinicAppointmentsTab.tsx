@@ -109,10 +109,10 @@ export function ClinicAppointmentsTab({
 						onValueChange={setFilterProfessionalId}
 					>
 						<SelectTrigger className="w-[200px]">
-							<SelectValue placeholder="Todos os médicos" />
+							<SelectValue placeholder="Todos os profissionais" />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value={ALL}>Todos os médicos</SelectItem>
+							<SelectItem value={ALL}>Todos os profissionais</SelectItem>
 							{(clinic.members ?? []).map((m) => (
 								<SelectItem
 									key={m.professionalProfileId}
@@ -175,7 +175,7 @@ export function ClinicAppointmentsTab({
 										</Badge>
 									</div>
 									<p className="mt-0.5 text-xs text-muted-foreground">
-										Dr. {appt.professionalName ?? "—"} · {appt.specialty ?? "—"}
+										{appt.professionalName ?? "—"} · {appt.specialty ?? "—"}
 									</p>
 								</div>
 								<div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">

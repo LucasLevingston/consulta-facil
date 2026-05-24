@@ -60,8 +60,8 @@ export default function ClinicsMapInner({
 							<p className="font-semibold">{clinic.name}</p>
 							{clinic.members && clinic.members.length > 0 && (
 								<p className="text-muted-foreground">
-									{clinic.members.length} médico
-									{clinic.members.length !== 1 ? "s" : ""}
+									{clinic.members.length} profissional
+									{clinic.members.length !== 1 ? "is" : ""}
 								</p>
 							)}
 							{clinic.address && <p>{clinic.address}</p>}

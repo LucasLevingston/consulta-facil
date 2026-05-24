@@ -34,7 +34,7 @@ export default function DoctorCard({
 				.join("")
 				.slice(0, 2)
 				.toUpperCase()
-		: "Dr";
+		: "?";
 
 	const rating = doctor.rating ?? null;
 	const consultationCount = doctor.consultationCount ?? 0;
@@ -54,7 +54,7 @@ export default function DoctorCard({
 				<div className="min-w-0 flex-1">
 					<Link href={`/professionals/${doctor.id}`}>
 						<CardTitle className="text-base leading-tight hover:text-primary transition-colors truncate">
-							Dr. {doctor.name ?? "Nome não informado"}
+							{doctor.name ?? "Nome não informado"}
 						</CardTitle>
 					</Link>
 					<Badge variant="secondary" className="mt-1.5 text-xs">

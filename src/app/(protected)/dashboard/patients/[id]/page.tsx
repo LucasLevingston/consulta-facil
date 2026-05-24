@@ -315,7 +315,7 @@ export default function PatientDetailPage() {
 										<p className="text-xs text-muted-foreground">
 											{formatDateTime(new Date(appt.scheduledAt)).dateTime}
 											{appt.professionalName &&
-												` · Dr. ${appt.professionalName}`}
+												` · ${appt.professionalName}`}
 										</p>
 										{appt.specialty && (
 											<Badge variant="outline" className="mt-1 text-xs">

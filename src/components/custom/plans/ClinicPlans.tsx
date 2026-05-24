@@ -37,10 +37,10 @@ const CLINIC_PLANS: Plan[] = [
     monthlyEquiv: fmtBRL(BASE_PRICE),
     totalPrice: fmtBRL(BASE_PRICE),
     period: "/mês",
-    description: `Para clínicas com até ${FREE_DOCTORS} médicos. Cada médico extra soma +15%.`,
+    description: `Para clínicas com até ${FREE_DOCTORS} profissionais. Cada profissional extra soma +15%.`,
     icon: <Building2 className="h-5 w-5" />,
     features: [
-      `${FREE_DOCTORS} médicos incluídos no preço base`,
+      `${FREE_DOCTORS} profissionais incluídos no preço base`,
       "Consultas ilimitadas após o período grátis",
       "Perfil de clínica no mapa",
       "Badge de clínica verificada",
@@ -92,18 +92,18 @@ export default function ClinicPlans() {
           [
             {
               icon: Users,
-              label: `${FREE_DOCTORS} médicos grátis`,
+              label: `${FREE_DOCTORS} profissionais grátis`,
               desc: `Clínicas com até ${FREE_DOCTORS} profissionais não pagam plano.`,
             },
             {
               icon: Star,
-              label: `${FREE_CONSULTS_PER_DOCTOR} consultas por médico`,
+              label: `${FREE_CONSULTS_PER_DOCTOR} consultas por profissional`,
               desc: `Cada profissional tem ${FREE_CONSULTS_PER_DOCTOR} agendamentos gratuitos pelo sistema.`,
             },
             {
               icon: Zap,
-              label: "+15% por médico extra",
-              desc: `A partir do ${FREE_DOCTORS + 1}º médico, cada um soma 15% ao valor base.`,
+              label: "+15% por profissional extra",
+              desc: `A partir do ${FREE_DOCTORS + 1}º profissional, cada um soma 15% ao valor base.`,
             },
           ] as const
         ).map(({ icon: Icon, label, desc }) => (
@@ -136,7 +136,7 @@ export default function ClinicPlans() {
           <CardContent className="grid gap-6 sm:grid-cols-2">
             <div>
               <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-muted-foreground">Médicos na clínica</span>
+                <span className="text-muted-foreground">Profissionais na clínica</span>
                 <span className="font-semibold tabular-nums">
                   {currentDoctors} / {FREE_DOCTORS}
                 </span>
@@ -164,10 +164,10 @@ export default function ClinicPlans() {
               </div>
               <div className="flex flex-wrap gap-1 mt-1">
                 <Badge variant="secondary" className="text-xs">
-                  {FREE_CONSULTS_PER_DOCTOR} por médico
+                  {FREE_CONSULTS_PER_DOCTOR} por profissional
                 </Badge>
                 <Badge variant="secondary" className="text-xs">
-                  × {currentDoctors} médico{currentDoctors !== 1 ? "s" : ""}
+                  × {currentDoctors} profissional{currentDoctors !== 1 ? "is" : ""}
                 </Badge>
               </div>
               <p className="mt-1.5 text-xs text-muted-foreground">
@@ -183,12 +183,12 @@ export default function ClinicPlans() {
         <CardHeader className="pb-3">
           <CardTitle className="text-base">Calculadora de preço</CardTitle>
           <CardDescription>
-            Simule o custo mensal conforme o número de médicos na clínica
+            Simule o custo mensal conforme o número de profissionais na clínica
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="flex items-center justify-between gap-4">
-            <span className="text-sm text-muted-foreground">Quantidade de médicos</span>
+            <span className="text-sm text-muted-foreground">Quantidade de profissionais</span>
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"
@@ -230,8 +230,8 @@ export default function ClinicPlans() {
                     <span className="text-base font-normal text-muted-foreground">/mês</span>
                   </p>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    Base R$ {fmtBRL(BASE_PRICE)} + {extraDoctors} médico
-                    {extraDoctors !== 1 ? "s" : ""} extra (
+                    Base R$ {fmtBRL(BASE_PRICE)} + {extraDoctors} profissional
+                    {extraDoctors !== 1 ? "is" : ""} extra (
                     {extraDoctors * 15}% adicional)
                   </p>
                 </>
@@ -255,13 +255,13 @@ export default function ClinicPlans() {
             <div className="rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
               <p className="font-medium text-foreground">Composição do preço:</p>
               <p>
-                Base ({FREE_DOCTORS} médicos): R$ {fmtBRL(BASE_PRICE)}
+                Base ({FREE_DOCTORS} profissionais): R$ {fmtBRL(BASE_PRICE)}
               </p>
               {Array.from({ length: extraDoctors }, (_, i) => {
                 const doctorNumber = FREE_DOCTORS + i + 1;
                 return (
                   <p key={doctorNumber}>
-                    {doctorNumber}º médico (+15%): R$ {fmtBRL(BASE_PRICE * 0.15)}
+                    {doctorNumber}º profissional (+15%): R$ {fmtBRL(BASE_PRICE * 0.15)}
                   </p>
                 );
               })}
@@ -285,7 +285,7 @@ export default function ClinicPlans() {
       <div>
         <h2 className="text-lg font-semibold text-foreground">Planos pagos</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Necessário após esgotar as consultas gratuitas ou ao adicionar mais de {FREE_DOCTORS} médicos.
+          Necessário após esgotar as consultas gratuitas ou ao adicionar mais de {FREE_DOCTORS} profissionais.
           O preço final varia conforme o número de profissionais.
         </p>
       </div>

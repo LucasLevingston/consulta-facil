@@ -20,7 +20,7 @@ const stats = [
 	},
 	{
 		value: "500+",
-		label: "Médicos cadastrados",
+		label: "Profissionais cadastrados",
 	},
 	{
 		value: "98%",
@@ -32,7 +32,7 @@ const benefits = [
 	{
 		icon: Stethoscope,
 		title: "Especialistas verificados",
-		desc: "Todos os médicos passam por validação de CRM.",
+		desc: "Todos os profissionais passam por validação de registro.",
 	},
 	{
 		icon: Calendar,
@@ -106,7 +106,7 @@ export default function Home() {
 
 						<div className="flex items-center gap-2">
 							<CheckCircle2 className="h-4 w-4 text-primary" />
-							Médicos verificados
+							Profissionais verificados
 						</div>
 					</div>
 

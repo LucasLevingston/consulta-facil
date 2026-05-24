@@ -54,7 +54,7 @@ export default function DoctorsMapInner({
 				>
 					<Popup>
 						<div className="text-sm space-y-1">
-							<p className="font-semibold">Dr. {doctor.name}</p>
+							<p className="font-semibold">{doctor.name}</p>
 							<p className="text-muted-foreground">{doctor.specialty}</p>
 							{doctor.clinicName && <p>{doctor.clinicName}</p>}
 							{doctor.city && (

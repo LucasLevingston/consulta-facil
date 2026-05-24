@@ -30,7 +30,7 @@ export default function Plans() {
       <div>
         <h2 className="text-lg font-semibold text-foreground">Escolha um plano</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Planos para médicos usarem a plataforma Consulta Fácil.
+          Planos para profissionais usarem a plataforma Consulta Fácil.
         </p>
       </div>
 

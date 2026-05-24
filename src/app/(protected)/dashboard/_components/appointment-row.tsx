@@ -22,8 +22,8 @@ export function AppointmentRow({
 	const label = isDoctor
 		? (appointment.patientName ?? "Paciente não definido")
 		: appointment.professionalName
-			? `Dr. ${appointment.professionalName}`
-			: "Médico não definido";
+			? appointment.professionalName
+			: "Profissional não definido";
 
 	const icon = isDoctor ? (
 		<User className="h-4 w-4" />

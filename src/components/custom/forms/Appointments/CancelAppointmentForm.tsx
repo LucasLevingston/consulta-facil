@@ -56,8 +56,8 @@ export function CancelAppointmentForm({
 					Tem certeza que deseja cancelar a consulta com{" "}
 					<span className="font-semibold text-foreground">
 						{appointment.professionalName
-							? `Dr. ${appointment.professionalName}`
-							: "o médico"}
+							? appointment.professionalName
+							: "o profissional"}
 					</span>
 					?
 				</p>

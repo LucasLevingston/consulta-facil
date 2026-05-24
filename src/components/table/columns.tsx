@@ -48,9 +48,7 @@ export function makeColumns(
 			header: "Profissional",
 			cell: ({ row }) => (
 				<p className="text-14-medium">
-					{row.original.professionalName
-						? `Dr. ${row.original.professionalName}`
-						: "—"}
+					{row.original.professionalName ?? "—"}
 				</p>
 			),
 		},

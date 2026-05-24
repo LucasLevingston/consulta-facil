@@ -115,7 +115,7 @@ const AppointmentsDashboard = ({
 			<div className="relative">
 				<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 				<Input
-					placeholder="Buscar por paciente, médico, especialidade ou motivo..."
+					placeholder="Buscar por paciente, profissional, especialidade ou motivo..."
 					value={search}
 					onChange={(e) => {
 						setSearch(e.target.value);

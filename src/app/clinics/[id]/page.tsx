@@ -88,7 +88,7 @@ export default function ClinicDetailPage() {
 						<TabsList className="flex-wrap h-auto gap-1">
 							<TabsTrigger value="overview">Visão Geral</TabsTrigger>
 							<TabsTrigger value="members">
-								Médicos ({clinic.members?.length ?? 0})
+								Profissionais ({clinic.members?.length ?? 0})
 							</TabsTrigger>
 							{isMember && (
 								<TabsTrigger value="appointments">Consultas</TabsTrigger>

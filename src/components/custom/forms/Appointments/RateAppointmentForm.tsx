@@ -58,8 +58,8 @@ export function RateAppointmentForm({
 				Como foi sua consulta com{" "}
 				<span className="font-semibold text-foreground">
 					{appointment.professionalName
-						? `Dr. ${appointment.professionalName}`
-						: "o médico"}
+						? appointment.professionalName
+						: "o profissional"}
 				</span>
 				?
 			</p>
