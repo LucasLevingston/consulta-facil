@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 export default function RequestSuccess() {
 	return (
-		<div className="flex h-screen max-h-screen px-[5%]">
-			<div className="success-img">
+		<div className="flex px-[5%] w-full flex items-center justify-center">
+			<div className="success-img flex items-center justify-center flex-col">
 				<Logo />
 
 				<section className="flex flex-col items-center">

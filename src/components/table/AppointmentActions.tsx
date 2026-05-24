@@ -42,7 +42,9 @@ export function AppointmentActions({
 	const canCancel =
 		(isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
 	const canConfirm = (isDoctor || isAdmin) && status === "PENDING";
-	const canComplete = (isDoctor || isAdmin) && status === "CONFIRMED";
+	const canComplete =
+		(isDoctor || isAdmin) &&
+		(status === "CONFIRMED" || status === "IN_PROGRESS");
 	const canRate =
 		isPatient && status === "COMPLETED" && appointment.rating == null;
 
