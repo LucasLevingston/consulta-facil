@@ -13,6 +13,7 @@ import {
 	LogOut,
 	MonitorCheck,
 	Settings,
+	TrendingUp,
 	User,
 	UserRound,
 	Users,
@@ -133,6 +134,16 @@ const doctorNav = [
 			},
 		],
 	},
+	{
+		label: "Financeiro",
+		items: [
+			{
+				title: "Financeiro",
+				url: "/dashboard/financial",
+				icon: TrendingUp,
+			},
+		],
+	},
 ];
 
 const receptionistNav = [
@@ -208,7 +219,13 @@ export default function AppSidebar() {
 	const isAdmin = user?.role === "ADMIN";
 	const isReceptionist = user?.role === "RECEPTIONIST";
 
-	const roleNav = isAdmin ? adminNav : isDoctor ? doctorNav : isReceptionist ? receptionistNav : patientNav;
+	const roleNav = isAdmin
+		? adminNav
+		: isDoctor
+			? doctorNav
+			: isReceptionist
+				? receptionistNav
+				: patientNav;
 	const navigation = [...defaultNav, ...roleNav];
 
 	const initials = user?.name
@@ -294,7 +311,13 @@ export default function AppSidebar() {
 												{displayName}
 											</span>
 											<span className="truncate text-xs text-muted-foreground">
-												{isAdmin ? "Administrador" : isDoctor ? "Profissional" : isReceptionist ? "Recepcionista" : "Paciente"}
+												{isAdmin
+													? "Administrador"
+													: isDoctor
+														? "Profissional"
+														: isReceptionist
+															? "Recepcionista"
+															: "Paciente"}
 											</span>
 										</div>
 										<ChevronsUpDown className="ml-auto size-4" />
