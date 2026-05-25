@@ -185,6 +185,11 @@ const receptionistNav = [
 				url: "/dashboard/appointments",
 				icon: CalendarDays,
 			},
+			{
+				title: "Pacientes",
+				url: "/dashboard/patients",
+				icon: UserRound,
+			},
 		],
 	},
 ];

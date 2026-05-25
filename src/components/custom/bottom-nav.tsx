@@ -50,6 +50,7 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Início", url: "/dashboard", icon: Home },
 		{ title: "Recepção", url: "/dashboard/reception", icon: MonitorCheck },
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
 	],
 	ADMIN: [
 		{ title: "Início", url: "/dashboard", icon: Home },
