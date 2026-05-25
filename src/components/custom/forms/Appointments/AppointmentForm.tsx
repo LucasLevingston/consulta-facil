@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -50,25 +50,54 @@ import {
 	useScheduleAppointment,
 } from "@/hooks/api/use-appointments";
 import { useProfessionals } from "@/hooks/api/use-doctors";
+import { useProfessionalSchedule } from "@/hooks/api/use-schedule";
 import {
 	type AppointmentFormValues,
 	type AppointmentResponse,
 	appointmentFormSchema,
 } from "@/lib/schemas/appointment.schema";
+import type {
+	DayOfWeek,
+	ProfessionalScheduleResponse,
+} from "@/lib/schemas/schedule.schema";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
 
-const TIME_SLOTS = [
-	{ label: "08:00", hours: 8, minutes: 0 },
-	{ label: "09:00", hours: 9, minutes: 0 },
-	{ label: "10:00", hours: 10, minutes: 0 },
-	{ label: "11:00", hours: 11, minutes: 0 },
-	{ label: "13:00", hours: 13, minutes: 0 },
-	{ label: "14:00", hours: 14, minutes: 0 },
-	{ label: "15:00", hours: 15, minutes: 0 },
-	{ label: "16:00", hours: 16, minutes: 0 },
-	{ label: "17:00", hours: 17, minutes: 0 },
-];
+const JS_DAY_TO_DOW: Record<number, DayOfWeek> = {
+	0: "SUNDAY",
+	1: "MONDAY",
+	2: "TUESDAY",
+	3: "WEDNESDAY",
+	4: "THURSDAY",
+	5: "FRIDAY",
+	6: "SATURDAY",
+};
+
+type TimeSlot = { label: string; hours: number; minutes: number };
+
+function computeSlots(schedule: ProfessionalScheduleResponse): TimeSlot[] {
+	const [startH, startM] = schedule.startTime.split(":").map(Number);
+	const [endH, endM] = schedule.endTime.split(":").map(Number);
+	const startMin = startH * 60 + startM;
+	const endMin = endH * 60 + endM;
+	const step =
+		schedule.consultationDurationMinutes +
+		schedule.breakBetweenConsultationsMinutes;
+
+	const slots: TimeSlot[] = [];
+	let current = startMin;
+	while (current + schedule.consultationDurationMinutes <= endMin) {
+		const h = Math.floor(current / 60);
+		const m = current % 60;
+		slots.push({
+			label: `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`,
+			hours: h,
+			minutes: m,
+		});
+		current += step;
+	}
+	return slots;
+}
 
 export const AppointmentForm = ({
 	type = "create",
@@ -116,19 +145,41 @@ export const AppointmentForm = ({
 			d.id === selectedProfessionalId || d.userId === selectedProfessionalId,
 	);
 
-	const handleTimeSelect = (slot: (typeof TIME_SLOTS)[number]) => {
+	const { data: scheduleList = [], isLoading: scheduleLoading } =
+		useProfessionalSchedule(selectedDoctor?.id ?? "");
+
+	const activeDaySet = useMemo<Set<DayOfWeek>>(
+		() =>
+			new Set(
+				scheduleList
+					.filter((s) => s.isActive)
+					.map((s) => s.dayOfWeek as DayOfWeek),
+			),
+		[scheduleList],
+	);
+
+	const availableSlots = useMemo<TimeSlot[]>(() => {
+		if (!selectedDate || scheduleList.length === 0) return [];
+		const dow = JS_DAY_TO_DOW[selectedDate.getDay()];
+		const daySchedule = scheduleList.find(
+			(s) => s.dayOfWeek === dow && s.isActive,
+		);
+		if (!daySchedule) return [];
+		return computeSlots(daySchedule);
+	}, [selectedDate, scheduleList]);
+
+	const isDayDisabled = (date: Date): boolean => {
+		if (date < new Date(new Date().setHours(0, 0, 0, 0))) return true;
+		if (scheduleList.length === 0) return false;
+		const dow = JS_DAY_TO_DOW[date.getDay()];
+		return !activeDaySet.has(dow);
+	};
+
+	const handleTimeSelect = (slot: TimeSlot) => {
 		setSelectedTime(slot.label);
-		if (selectedDate) {
-			const newDate = setMinutes(
-				setHours(selectedDate, slot.hours),
-				slot.minutes,
-			);
-			form.setValue("scheduledAt", newDate);
-		} else {
-			const base = new Date();
-			const newDate = setMinutes(setHours(base, slot.hours), slot.minutes);
-			form.setValue("scheduledAt", newDate);
-		}
+		const base = selectedDate ?? new Date();
+		const newDate = setMinutes(setHours(base, slot.hours), slot.minutes);
+		form.setValue("scheduledAt", newDate);
 	};
 
 	const onSubmit = async (values: AppointmentFormValues) => {
@@ -290,6 +341,7 @@ export const AppointmentForm = ({
 																	onSelect={() => {
 																		field.onChange(doctor.id);
 																		setProfessionalOpen(false);
+																		setSelectedTime("");
 																	}}
 																>
 																	<div className="flex items-center gap-3 flex-1">
@@ -345,7 +397,10 @@ export const AppointmentForm = ({
 							{!professionalIdParam && (
 								<button
 									type="button"
-									onClick={() => form.setValue("professionalId", "")}
+									onClick={() => {
+										form.setValue("professionalId", "");
+										setSelectedTime("");
+									}}
 									className="text-muted-foreground hover:text-foreground transition-colors"
 								>
 									<X className="h-4 w-4" />
@@ -397,25 +452,10 @@ export const AppointmentForm = ({
 												selected={field.value}
 												onSelect={(date) => {
 													if (!date) return;
-													if (selectedTime) {
-														const slot = TIME_SLOTS.find(
-															(s) => s.label === selectedTime,
-														);
-														if (slot) {
-															field.onChange(
-																setMinutes(
-																	setHours(date, slot.hours),
-																	slot.minutes,
-																),
-															);
-															return;
-														}
-													}
+													setSelectedTime("");
 													field.onChange(date);
 												}}
-												disabled={(date) =>
-													date < new Date(new Date().setHours(0, 0, 0, 0))
-												}
+												disabled={isDayDisabled}
 												locale={ptBR}
 											/>
 										</PopoverContent>
@@ -431,23 +471,42 @@ export const AppointmentForm = ({
 							<Clock className="h-3.5 w-3.5" />
 							Horário disponível
 						</p>
-						<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-							{TIME_SLOTS.map((slot) => (
-								<button
-									key={slot.label}
-									type="button"
-									onClick={() => handleTimeSelect(slot)}
-									className={cn(
-										"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
-										selectedTime === slot.label
-											? "border-primary bg-primary text-primary-foreground shadow-sm"
-											: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
-									)}
-								>
-									{slot.label}
-								</button>
-							))}
-						</div>
+
+						{!selectedDoctor ? (
+							<p className="text-xs text-muted-foreground py-2">
+								Selecione um profissional para ver os horários disponíveis.
+							</p>
+						) : scheduleLoading ? (
+							<p className="text-xs text-muted-foreground py-2">
+								Carregando horários...
+							</p>
+						) : !selectedDate ? (
+							<p className="text-xs text-muted-foreground py-2">
+								Selecione uma data para ver os horários.
+							</p>
+						) : availableSlots.length === 0 ? (
+							<p className="text-xs text-muted-foreground py-2">
+								Profissional não atende neste dia.
+							</p>
+						) : (
+							<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+								{availableSlots.map((slot) => (
+									<button
+										key={slot.label}
+										type="button"
+										onClick={() => handleTimeSelect(slot)}
+										className={cn(
+											"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
+											selectedTime === slot.label
+												? "border-primary bg-primary text-primary-foreground shadow-sm"
+												: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
+										)}
+									>
+										{slot.label}
+									</button>
+								))}
+							</div>
+						)}
 					</div>
 
 					{selectedDate && selectedTime && (
