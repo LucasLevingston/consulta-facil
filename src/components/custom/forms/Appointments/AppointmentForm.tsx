@@ -48,6 +48,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import {
 	useCancelAppointment,
+	useProfessionalAppointments,
 	useScheduleAppointment,
 } from "@/hooks/api/use-appointments";
 import { useProfessionals } from "@/hooks/api/use-doctors";
@@ -149,6 +150,29 @@ export const AppointmentForm = ({
 
 	const { data: scheduleList = [], isLoading: scheduleLoading } =
 		useProfessionalSchedule(selectedDoctor?.id ?? "");
+
+	const { data: professionalAppointmentsPage } = useProfessionalAppointments(
+		selectedDoctor?.id ?? "",
+		0,
+		200,
+	);
+
+	const bookedTimesForDate = useMemo<Set<string>>(() => {
+		if (!selectedDate || !professionalAppointmentsPage) return new Set();
+		const dateStr = selectedDate.toDateString();
+		return new Set(
+			(professionalAppointmentsPage.content ?? [])
+				.filter(
+					(a) =>
+						a.status !== "CANCELED" &&
+						new Date(a.scheduledAt).toDateString() === dateStr,
+				)
+				.map((a) => {
+					const d = new Date(a.scheduledAt);
+					return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+				}),
+		);
+	}, [selectedDate, professionalAppointmentsPage]);
 
 	const activeDaySet = useMemo<Set<DayOfWeek>>(
 		() =>
@@ -523,21 +547,28 @@ export const AppointmentForm = ({
 									</p>
 								) : (
 									<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-										{availableSlots.map((slot) => (
-											<button
-												key={slot.label}
-												type="button"
-												onClick={() => handleTimeSelect(slot)}
-												className={cn(
-													"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
-													selectedTime === slot.label
-														? "border-primary bg-primary text-primary-foreground shadow-sm"
-														: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
-												)}
-											>
-												{slot.label}
-											</button>
-										))}
+										{availableSlots.map((slot) => {
+											const booked = bookedTimesForDate.has(slot.label);
+											return (
+												<button
+													key={slot.label}
+													type="button"
+													disabled={booked}
+													onClick={() => !booked && handleTimeSelect(slot)}
+													title={booked ? "Horário já reservado" : undefined}
+													className={cn(
+														"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
+														booked
+															? "cursor-not-allowed border-border/40 bg-muted/40 text-muted-foreground/40 line-through"
+															: selectedTime === slot.label
+																? "border-primary bg-primary text-primary-foreground shadow-sm"
+																: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
+													)}
+												>
+													{slot.label}
+												</button>
+											);
+										})}
 									</div>
 								)}
 							</div>
