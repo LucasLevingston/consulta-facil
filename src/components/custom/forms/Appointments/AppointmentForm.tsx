@@ -16,9 +16,10 @@ import {
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -105,10 +106,12 @@ export const AppointmentForm = ({
 	type = "create",
 	appointment,
 	setOpen,
+	voicePreset,
 }: {
 	type: "create" | "schedule" | "cancel";
 	appointment?: AppointmentResponse;
 	setOpen?: Dispatch<SetStateAction<boolean>>;
+	voicePreset?: VoiceBookingResult | null;
 }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -127,6 +130,9 @@ export const AppointmentForm = ({
 
 	const [professionalOpen, setProfessionalOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState<string>("");
+	const [specialtyFilter, setSpecialtyFilter] = useState<string>(
+		voicePreset?.specialty ?? "",
+	);
 
 	const form = useForm<AppointmentFormValues>({
 		resolver: zodResolver(appointmentFormSchema),
@@ -140,6 +146,23 @@ export const AppointmentForm = ({
 			modality: appointment?.modality ?? "IN_PERSON",
 		},
 	});
+
+	useEffect(() => {
+		if (!voicePreset) return;
+		if (voicePreset.specialty) setSpecialtyFilter(voicePreset.specialty);
+		if (voicePreset.reason) form.setValue("reason", voicePreset.reason);
+		if (voicePreset.modality) form.setValue("modality", voicePreset.modality);
+		if (voicePreset.date) {
+			const d = new Date(`${voicePreset.date}T12:00:00`);
+			if (!Number.isNaN(d.getTime())) form.setValue("scheduledAt", d);
+		}
+	}, [voicePreset, form]);
+
+	const filteredDoctors = specialtyFilter
+		? doctors.filter((d) =>
+				d.specialty?.toLowerCase().includes(specialtyFilter.toLowerCase()),
+			)
+		: doctors;
 
 	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
@@ -362,7 +385,7 @@ export const AppointmentForm = ({
 															: "Nenhum profissional encontrado."}
 													</CommandEmpty>
 													<CommandGroup>
-														{doctors
+														{filteredDoctors
 															.filter((d) => d.name)
 															.map((doctor) => (
 																<CommandItem
