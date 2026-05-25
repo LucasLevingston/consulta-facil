@@ -1,4 +1,5 @@
 import { api } from "@/config/api";
+import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import type {
 	ClinicResponse,
 	CreateClinicInput,
@@ -60,8 +61,12 @@ export const clinicsApi = {
 		await api.delete(`/clinics/${clinicId}/members/${professionalProfileId}`);
 	},
 
-	getReceptionists: async (clinicId: string): Promise<ReceptionistResponse[]> => {
-		const response = await api.get<ReceptionistResponse[]>(`/clinics/${clinicId}/receptionists`);
+	getReceptionists: async (
+		clinicId: string,
+	): Promise<ReceptionistResponse[]> => {
+		const response = await api.get<ReceptionistResponse[]>(
+			`/clinics/${clinicId}/receptionists`,
+		);
 		return response.data;
 	},
 
@@ -69,11 +74,24 @@ export const clinicsApi = {
 		clinicId: string,
 		data: InviteReceptionistInput,
 	): Promise<ReceptionistResponse> => {
-		const response = await api.post<ReceptionistResponse>(`/clinics/${clinicId}/receptionists`, data);
+		const response = await api.post<ReceptionistResponse>(
+			`/clinics/${clinicId}/receptionists`,
+			data,
+		);
 		return response.data;
 	},
 
-	removeReceptionist: async (clinicId: string, receptionistId: string): Promise<void> => {
+	removeReceptionist: async (
+		clinicId: string,
+		receptionistId: string,
+	): Promise<void> => {
 		await api.delete(`/clinics/${clinicId}/receptionists/${receptionistId}`);
+	},
+
+	getQueue: async (clinicId: string): Promise<AppointmentResponse[]> => {
+		const response = await api.get<AppointmentResponse[]>(
+			`/clinics/${clinicId}/queue`,
+		);
+		return response.data;
 	},
 };

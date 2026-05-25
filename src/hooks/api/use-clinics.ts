@@ -3,7 +3,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { clinicsApi } from "@/lib/api/clinics.api";
-import type { CreateClinicInput, InviteReceptionistInput } from "@/lib/schemas/clinic.schema";
+import type {
+	CreateClinicInput,
+	InviteReceptionistInput,
+} from "@/lib/schemas/clinic.schema";
 
 export const clinicKeys = {
 	all: ["clinics"] as const,
@@ -12,7 +15,9 @@ export const clinicKeys = {
 	detail: (id: string) => [...clinicKeys.all, id] as const,
 	nearby: (lat: number, lng: number, radiusKm: number) =>
 		[...clinicKeys.all, "nearby", { lat, lng, radiusKm }] as const,
-	receptionists: (clinicId: string) => [...clinicKeys.all, clinicId, "receptionists"] as const,
+	receptionists: (clinicId: string) =>
+		[...clinicKeys.all, clinicId, "receptionists"] as const,
+	queue: (clinicId: string) => [...clinicKeys.all, clinicId, "queue"] as const,
 };
 
 export function useClinics() {
@@ -116,7 +121,9 @@ export function useInviteReceptionist(clinicId: string) {
 		mutationFn: (data: InviteReceptionistInput) =>
 			clinicsApi.inviteReceptionist(clinicId, data),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: clinicKeys.receptionists(clinicId) });
+			queryClient.invalidateQueries({
+				queryKey: clinicKeys.receptionists(clinicId),
+			});
 		},
 	});
 }
@@ -127,7 +134,19 @@ export function useRemoveReceptionist(clinicId: string) {
 		mutationFn: (receptionistId: string) =>
 			clinicsApi.removeReceptionist(clinicId, receptionistId),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: clinicKeys.receptionists(clinicId) });
+			queryClient.invalidateQueries({
+				queryKey: clinicKeys.receptionists(clinicId),
+			});
 		},
+	});
+}
+
+export function useClinicQueue(clinicId: string) {
+	return useQuery({
+		queryKey: clinicKeys.queue(clinicId),
+		queryFn: () => clinicsApi.getQueue(clinicId),
+		enabled: !!clinicId,
+		refetchInterval: 30_000,
+		staleTime: 0,
 	});
 }
