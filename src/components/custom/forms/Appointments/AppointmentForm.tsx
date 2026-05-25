@@ -11,6 +11,7 @@ import {
 	FileText,
 	Search,
 	Stethoscope,
+	Users,
 	X,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,7 +19,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -167,6 +168,9 @@ export const AppointmentForm = ({
 		if (!daySchedule) return [];
 		return computeSlots(daySchedule);
 	}, [selectedDate, scheduleList]);
+
+	const isQueueMode =
+		!!selectedDoctor && !scheduleLoading && scheduleList.length === 0;
 
 	const isDayDisabled = (date: Date): boolean => {
 		if (date < new Date(new Date().setHours(0, 0, 0, 0))) return true;
@@ -453,7 +457,11 @@ export const AppointmentForm = ({
 												onSelect={(date) => {
 													if (!date) return;
 													setSelectedTime("");
-													field.onChange(date);
+													if (isQueueMode) {
+														field.onChange(setMinutes(setHours(date, 9), 0));
+													} else {
+														field.onChange(date);
+													}
 												}}
 												disabled={isDayDisabled}
 												locale={ptBR}
@@ -466,57 +474,84 @@ export const AppointmentForm = ({
 						)}
 					/>
 
-					<div className="space-y-2">
-						<p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
-							<Clock className="h-3.5 w-3.5" />
-							Horário disponível
-						</p>
+					{isQueueMode ? (
+						<>
+							<Alert className="rounded-xl border-blue-500/20 bg-blue-500/5">
+								<Users className="h-4 w-4 text-blue-500" />
+								<AlertDescription className="text-xs text-blue-700 dark:text-blue-400">
+									Este profissional usa sistema de fila. Selecione uma data e
+									você será atendido por ordem de chegada.
+								</AlertDescription>
+							</Alert>
+							{selectedDate && (
+								<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
+									<Check className="h-4 w-4 text-green-500 shrink-0" />
+									<span className="text-green-700 dark:text-green-400">
+										{format(selectedDate, "EEEE, d 'de' MMMM", {
+											locale: ptBR,
+										})}{" "}
+										— entrada na fila
+									</span>
+								</div>
+							)}
+						</>
+					) : (
+						<>
+							<div className="space-y-2">
+								<p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+									<Clock className="h-3.5 w-3.5" />
+									Horário disponível
+								</p>
 
-						{!selectedDoctor ? (
-							<p className="text-xs text-muted-foreground py-2">
-								Selecione um profissional para ver os horários disponíveis.
-							</p>
-						) : scheduleLoading ? (
-							<p className="text-xs text-muted-foreground py-2">
-								Carregando horários...
-							</p>
-						) : !selectedDate ? (
-							<p className="text-xs text-muted-foreground py-2">
-								Selecione uma data para ver os horários.
-							</p>
-						) : availableSlots.length === 0 ? (
-							<p className="text-xs text-muted-foreground py-2">
-								Profissional não atende neste dia.
-							</p>
-						) : (
-							<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-								{availableSlots.map((slot) => (
-									<button
-										key={slot.label}
-										type="button"
-										onClick={() => handleTimeSelect(slot)}
-										className={cn(
-											"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
-											selectedTime === slot.label
-												? "border-primary bg-primary text-primary-foreground shadow-sm"
-												: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
-										)}
-									>
-										{slot.label}
-									</button>
-								))}
+								{!selectedDoctor ? (
+									<p className="text-xs text-muted-foreground py-2">
+										Selecione um profissional para ver os horários disponíveis.
+									</p>
+								) : scheduleLoading ? (
+									<p className="text-xs text-muted-foreground py-2">
+										Carregando horários...
+									</p>
+								) : !selectedDate ? (
+									<p className="text-xs text-muted-foreground py-2">
+										Selecione uma data para ver os horários.
+									</p>
+								) : availableSlots.length === 0 ? (
+									<p className="text-xs text-muted-foreground py-2">
+										Profissional não atende neste dia.
+									</p>
+								) : (
+									<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+										{availableSlots.map((slot) => (
+											<button
+												key={slot.label}
+												type="button"
+												onClick={() => handleTimeSelect(slot)}
+												className={cn(
+													"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
+													selectedTime === slot.label
+														? "border-primary bg-primary text-primary-foreground shadow-sm"
+														: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
+												)}
+											>
+												{slot.label}
+											</button>
+										))}
+									</div>
+								)}
 							</div>
-						)}
-					</div>
 
-					{selectedDate && selectedTime && (
-						<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
-							<Check className="h-4 w-4 text-green-500 shrink-0" />
-							<span className="text-green-700 dark:text-green-400">
-								{format(selectedDate, "EEEE, d 'de' MMMM", { locale: ptBR })} às{" "}
-								{selectedTime}
-							</span>
-						</div>
+							{selectedDate && selectedTime && (
+								<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
+									<Check className="h-4 w-4 text-green-500 shrink-0" />
+									<span className="text-green-700 dark:text-green-400">
+										{format(selectedDate, "EEEE, d 'de' MMMM", {
+											locale: ptBR,
+										})}{" "}
+										às {selectedTime}
+									</span>
+								</div>
+							)}
+						</>
 					)}
 				</div>
 
@@ -586,7 +621,9 @@ export const AppointmentForm = ({
 				<Button
 					type="submit"
 					className="w-full h-12 rounded-xl text-base font-semibold gap-2"
-					disabled={isPending}
+					disabled={
+						isPending || (!isQueueMode && !!selectedDate && !selectedTime)
+					}
 				>
 					<Stethoscope className="h-5 w-5" />
 					{isPending
