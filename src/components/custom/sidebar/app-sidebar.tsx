@@ -3,7 +3,9 @@
 import Cookies from "js-cookie";
 import {
 	BadgeCheck,
+	Briefcase,
 	Building2,
+	CalendarClock,
 	CalendarDays,
 	CalendarPlus,
 	ChevronsUpDown,
@@ -89,6 +91,12 @@ const patientNav = [
 				url: "/dashboard/appointments/create",
 				icon: CalendarPlus,
 			},
+			{
+				title: "Solicitações",
+				url: "/dashboard/procedure-requests",
+				icon: CalendarClock,
+				tooltip: "Procedimentos solicitados pelo seu profissional",
+			},
 		],
 	},
 ];
@@ -116,6 +124,23 @@ const doctorNav = [
 				title: "Pacientes",
 				url: "/dashboard/patients",
 				icon: UserRound,
+			},
+		],
+	},
+	{
+		label: "Procedimentos",
+		items: [
+			{
+				title: "Meus Serviços",
+				url: "/dashboard/services",
+				icon: Briefcase,
+				tooltip: "Serviços e procedimentos que você oferece",
+			},
+			{
+				title: "Solicitações",
+				url: "/dashboard/procedure-requests",
+				icon: CalendarClock,
+				tooltip: "Solicitações de procedimento para pacientes",
 			},
 		],
 	},
@@ -182,6 +207,21 @@ const adminNav = [
 				title: "Admin Dashboard",
 				url: "/admin",
 				icon: Settings,
+			},
+		],
+	},
+	{
+		label: "Procedimentos",
+		items: [
+			{
+				title: "Meus Serviços",
+				url: "/dashboard/services",
+				icon: Briefcase,
+			},
+			{
+				title: "Solicitações",
+				url: "/dashboard/procedure-requests",
+				icon: CalendarClock,
 			},
 		],
 	},

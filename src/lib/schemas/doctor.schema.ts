@@ -29,6 +29,7 @@ export const professionalResponseSchema = z.object({
 	longitude: z.number().nullable().optional(),
 	clinicId: z.string().nullable().optional(),
 	clinicName: z.string().nullable().optional(),
+	consultationPrice: z.number().nullable().optional(),
 });
 
 export const createProfessionalSchema = z.object({

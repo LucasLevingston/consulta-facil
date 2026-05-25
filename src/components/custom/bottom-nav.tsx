@@ -2,12 +2,13 @@
 
 import {
 	BadgeCheck,
+	Briefcase,
+	CalendarClock,
 	CalendarDays,
 	CalendarPlus,
 	Clock,
 	Home,
 	MonitorCheck,
-	TrendingUp,
 	UserRound,
 	Users,
 } from "lucide-react";
@@ -31,14 +32,19 @@ const navByRole: Record<string, NavItem[]> = {
 			url: "/dashboard/appointments/create",
 			icon: CalendarPlus,
 		},
+		{
+			title: "Solicitações",
+			url: "/dashboard/procedure-requests",
+			icon: CalendarClock,
+		},
 		{ title: "Profissionais", url: "/professionals", icon: Users },
 	],
 	PROFESSIONAL: [
 		{ title: "Início", url: "/dashboard", icon: Home },
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+		{ title: "Serviços", url: "/dashboard/services", icon: Briefcase },
 		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
-		{ title: "Financeiro", url: "/dashboard/financial", icon: TrendingUp },
 	],
 	RECEPTIONIST: [
 		{ title: "Início", url: "/dashboard", icon: Home },

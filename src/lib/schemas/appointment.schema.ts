@@ -39,6 +39,8 @@ export const appointmentResponseSchema = z.object({
 	cancellationReason: z.string().nullable().optional(),
 	rating: z.number().int().min(1).max(5).nullable().optional(),
 	ratingComment: z.string().nullable().optional(),
+	serviceId: z.string().nullable().optional(),
+	serviceName: z.string().nullable().optional(),
 	createdAt: z.string().nullable().optional(),
 	updatedAt: z.string().nullable().optional(),
 });
@@ -49,6 +51,7 @@ export const createAppointmentSchema = z.object({
 	reason: z.string().optional(),
 	notes: z.string().optional(),
 	modality: appointmentModalitySchema.optional(),
+	serviceId: z.string().optional(),
 });
 
 export const cancelAppointmentSchema = z.object({
@@ -78,6 +81,7 @@ export const appointmentFormSchema = z.object({
 	notes: z.string().optional(),
 	cancellationReason: z.string().optional(),
 	modality: appointmentModalitySchema.optional(),
+	serviceId: z.string().optional(),
 });
 
 export const setModalitySchema = z.object({
