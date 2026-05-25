@@ -1,9 +1,11 @@
 "use client";
 
-import { Building2, MapPin, Phone } from "lucide-react";
+import { Building2, MapPin, Monitor, Phone } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useClinicById } from "@/hooks/api/use-clinics";
 import { useApplicationStatus } from "@/hooks/api/use-doctors";
@@ -65,7 +67,13 @@ export default function ClinicDetailPage() {
 								</div>
 							</div>
 
-							<div className="flex items-center gap-2 shrink-0">
+							<div className="flex items-center gap-2 shrink-0 flex-wrap">
+								<Button asChild variant="outline" size="sm" className="gap-1.5">
+									<Link href={`/clinics/${clinicId}/queue`} target="_blank">
+										<Monitor className="h-3.5 w-3.5" />
+										Fila de Espera
+									</Link>
+								</Button>
 								<Badge
 									variant="outline"
 									className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400"
