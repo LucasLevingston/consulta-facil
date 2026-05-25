@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Clock, Loader2, Stethoscope, Users } from "lucide-react";
+import { Clock, Loader2, QrCode, Stethoscope, Users } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -101,6 +101,30 @@ function QueueCard({
 	);
 }
 
+function CheckInQrSection({ clinicId }: { clinicId: string }) {
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
+	const url =
+		typeof window !== "undefined"
+			? `${window.location.origin}/clinics/${clinicId}/checkin`
+			: `/clinics/${clinicId}/checkin`;
+
+	return (
+		<div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5">
+			<div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+				<QrCode className="h-4 w-4" />
+				QR Code para check-in dos pacientes
+			</div>
+			<div className="rounded-xl bg-white p-3 shadow-sm">
+				<QRCodeSVG value={url} size={140} level="M" />
+			</div>
+			<p className="text-xs text-muted-foreground text-center max-w-xs">
+				Pacientes escaneiam este código com o celular para entrar na fila.
+			</p>
+		</div>
+	);
+}
+
 export default function ClinicQueuePage() {
 	const { id } = useParams<{ id: string }>();
 
@@ -128,17 +152,20 @@ export default function ClinicQueuePage() {
 		<div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
 			<div className="mx-auto max-w-5xl px-4 py-8 space-y-6">
 				{/* Header */}
-				<div className="text-center space-y-1">
-					<h1 className="text-3xl font-bold text-foreground">
-						{clinic?.name ?? "Fila de Espera"}
-					</h1>
-					<p className="text-sm text-muted-foreground">
-						{format(now, "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR })}
-					</p>
-					<div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mt-1">
-						<div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-						Atualizado automaticamente a cada 30 segundos
+				<div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-between">
+					<div className="text-center sm:text-left space-y-1">
+						<h1 className="text-3xl font-bold text-foreground">
+							{clinic?.name ?? "Fila de Espera"}
+						</h1>
+						<p className="text-sm text-muted-foreground">
+							{format(now, "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR })}
+						</p>
+						<div className="flex items-center justify-center sm:justify-start gap-1.5 text-xs text-muted-foreground mt-1">
+							<div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+							Atualizado automaticamente a cada 30 segundos
+						</div>
 					</div>
+					<CheckInQrSection clinicId={id} />
 				</div>
 
 				{isLoading ? (
