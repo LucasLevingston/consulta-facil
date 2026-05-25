@@ -2,7 +2,13 @@ import { z } from "zod";
 
 export const notificationSchema = z.object({
 	id: z.string(),
-	type: z.enum(["CLINIC_INVITE", "GENERAL"]),
+	type: z.enum([
+		"CLINIC_INVITE",
+		"GENERAL",
+		"APPOINTMENT_SCHEDULED",
+		"APPOINTMENT_CONFIRMED",
+		"APPOINTMENT_CANCELED",
+	]),
 	title: z.string(),
 	message: z.string(),
 	status: z.enum(["PENDING", "ACCEPTED", "DECLINED", "READ"]),
