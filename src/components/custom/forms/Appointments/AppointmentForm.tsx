@@ -136,6 +136,7 @@ export const AppointmentForm = ({
 			notes: appointment?.notes ?? "",
 			cancellationReason: "",
 			userId: authUser?.id ?? "",
+			modality: appointment?.modality ?? "IN_PERSON",
 		},
 	});
 
@@ -194,6 +195,7 @@ export const AppointmentForm = ({
 					scheduledAt: (values.scheduledAt as Date).toISOString(),
 					reason: values.reason ?? undefined,
 					notes: values.notes ?? undefined,
+					modality: values.modality,
 				});
 				if (type === "create") {
 					form.reset();
@@ -555,11 +557,62 @@ export const AppointmentForm = ({
 					)}
 				</div>
 
-				{/* Step 3 — Details */}
+				{/* Step 3 — Modality */}
 				<div className="space-y-3">
 					<div className="flex items-center gap-2">
 						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
 							3
+						</div>
+						<h3 className="font-semibold text-foreground">Modalidade</h3>
+					</div>
+					<FormField
+						control={form.control}
+						name="modality"
+						render={({ field }) => (
+							<FormItem>
+								<div className="grid grid-cols-2 gap-3">
+									{(
+										[
+											{
+												value: "IN_PERSON",
+												label: "Presencial",
+												desc: "Na clínica ou consultório",
+											},
+											{
+												value: "ONLINE",
+												label: "Online",
+												desc: "Videochamada via Google Meet",
+											},
+										] as const
+									).map((opt) => (
+										<button
+											key={opt.value}
+											type="button"
+											onClick={() => field.onChange(opt.value)}
+											className={`flex flex-col items-start gap-1 rounded-xl border p-3 text-left transition-colors ${
+												field.value === opt.value
+													? "border-primary bg-primary/5 text-primary"
+													: "border-border hover:border-primary/40"
+											}`}
+										>
+											<span className="text-sm font-semibold">{opt.label}</span>
+											<span className="text-xs text-muted-foreground">
+												{opt.desc}
+											</span>
+										</button>
+									))}
+								</div>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+
+				{/* Step 4 — Details */}
+				<div className="space-y-3">
+					<div className="flex items-center gap-2">
+						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+							4
 						</div>
 						<h3 className="font-semibold text-foreground">Detalhes</h3>
 						<Badge variant="secondary" className="text-xs">

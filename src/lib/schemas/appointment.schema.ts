@@ -48,6 +48,7 @@ export const createAppointmentSchema = z.object({
 	scheduledAt: z.string().min(1, "Data e hora são obrigatórias"),
 	reason: z.string().optional(),
 	notes: z.string().optional(),
+	modality: appointmentModalitySchema.optional(),
 });
 
 export const cancelAppointmentSchema = z.object({
@@ -76,6 +77,7 @@ export const appointmentFormSchema = z.object({
 		.optional(),
 	notes: z.string().optional(),
 	cancellationReason: z.string().optional(),
+	modality: appointmentModalitySchema.optional(),
 });
 
 export const setModalitySchema = z.object({
@@ -95,7 +97,9 @@ export const paymentResponseSchema = z.object({
 });
 
 export type PaymentResponse = z.infer<typeof paymentResponseSchema>;
-export type AppointmentPaymentStatus = z.infer<typeof appointmentPaymentStatusSchema>;
+export type AppointmentPaymentStatus = z.infer<
+	typeof appointmentPaymentStatusSchema
+>;
 export type QrCheckInToken = z.infer<typeof qrCheckInTokenSchema>;
 export type AppointmentModality = z.infer<typeof appointmentModalitySchema>;
 export type SetModalityInput = z.infer<typeof setModalitySchema>;
