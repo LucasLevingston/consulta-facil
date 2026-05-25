@@ -3,6 +3,7 @@
 import {
 	ArrowRight,
 	BadgeCheck,
+	Building2,
 	CalendarDays,
 	CalendarPlus,
 	CheckCircle2,
@@ -10,6 +11,7 @@ import {
 	CreditCard,
 	LayoutDashboard,
 	Stethoscope,
+	TrendingUp,
 	User,
 	XCircle,
 } from "lucide-react";
@@ -80,6 +82,13 @@ const patientCards: QuickCard[] = [
 		accent: "bg-blue-500/10 text-blue-500",
 	},
 	{
+		title: "Clínicas",
+		description: "Encontre clínicas próximas de você.",
+		href: "/clinics",
+		icon: Building2,
+		accent: "bg-teal-500/10 text-teal-500",
+	},
+	{
 		title: "Meu Perfil",
 		description: "Atualize seus dados pessoais e preferências.",
 		href: "/dashboard/profile",
@@ -102,6 +111,20 @@ const doctorCards: QuickCard[] = [
 		href: "/dashboard/schedule",
 		icon: Clock,
 		accent: "bg-blue-500/10 text-blue-500",
+	},
+	{
+		title: "Financeiro",
+		description: "Acompanhe sua receita e pagamentos.",
+		href: "/dashboard/financial",
+		icon: TrendingUp,
+		accent: "bg-emerald-500/10 text-emerald-500",
+	},
+	{
+		title: "Minha Clínica",
+		description: "Gerencie sua clínica e membros.",
+		href: "/dashboard/my-clinic",
+		icon: Building2,
+		accent: "bg-teal-500/10 text-teal-500",
 	},
 	{
 		title: "Assinatura",
