@@ -49,6 +49,7 @@ export function useProfessionals(
 		queryKey: professionalKeys.list(page, size, profession, specialty, name),
 		queryFn: () =>
 			professionalsApi.getAll(page, size, profession, specialty, name),
+		staleTime: 1000 * 60 * 5,
 	});
 }
 
@@ -171,6 +172,7 @@ export function useProfessionalsNearby(
 				profession,
 			),
 		enabled: lat !== null && lng !== null,
+		staleTime: 1000 * 60 * 5,
 	});
 }
 

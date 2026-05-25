@@ -149,13 +149,15 @@ export function useQueue() {
 		queryKey: queueKeys.queue,
 		queryFn: () => appointmentsApi.getQueue(),
 		refetchInterval: 30_000,
+		staleTime: 0,
 	});
 }
 
 export function useCallPatient() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (appointmentId: string) => appointmentsApi.callPatient(appointmentId),
+		mutationFn: (appointmentId: string) =>
+			appointmentsApi.callPatient(appointmentId),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
 	});

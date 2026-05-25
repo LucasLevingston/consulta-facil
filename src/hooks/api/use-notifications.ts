@@ -15,6 +15,7 @@ export function useNotifications() {
 		queryKey: notificationKeys.list(),
 		queryFn: () => notificationsApi.getAll(),
 		refetchInterval: 30_000,
+		staleTime: 0,
 	});
 }
 
@@ -23,6 +24,7 @@ export function useUnreadCount() {
 		queryKey: notificationKeys.unreadCount(),
 		queryFn: () => notificationsApi.getUnreadCount(),
 		refetchInterval: 30_000,
+		staleTime: 0,
 	});
 }
 

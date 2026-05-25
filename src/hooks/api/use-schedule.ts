@@ -21,6 +21,7 @@ export function useMySchedule(enabled = true) {
 		queryFn: scheduleApi.getMySchedule,
 		enabled,
 		retry: false,
+		staleTime: 1000 * 60 * 10,
 	});
 }
 
@@ -29,6 +30,7 @@ export function useProfessionalSchedule(professionalId: string) {
 		queryKey: scheduleKeys.byProfessional(professionalId),
 		queryFn: () => scheduleApi.getScheduleByProfessional(professionalId),
 		enabled: !!professionalId,
+		staleTime: 1000 * 60 * 10,
 	});
 }
 
