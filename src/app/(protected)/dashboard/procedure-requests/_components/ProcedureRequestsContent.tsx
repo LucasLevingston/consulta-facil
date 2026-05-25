@@ -1,0 +1,36 @@
+"use client";
+
+import { useApplicationStatus } from "@/hooks/api/use-doctors";
+import { useGetMyProcedureRequests } from "@/hooks/api/use-procedure-requests";
+import { QueryBoundary } from "@/providers/query-boundary";
+import { PatientView } from "./PatientView";
+import { ProfessionalView } from "./ProfessionalView";
+
+export function ProcedureRequestsContent({
+	isProfessional,
+}: {
+	isProfessional: boolean;
+}) {
+	const { data: requests = [], isLoading, error } = useGetMyProcedureRequests();
+	const profileQuery = useApplicationStatus();
+
+	if (isProfessional) {
+		return (
+			<QueryBoundary
+				isLoading={isLoading || profileQuery.isLoading}
+				error={error ?? profileQuery.error}
+			>
+				<ProfessionalView
+					requests={requests}
+					professionalId={profileQuery.data?.id ?? ""}
+				/>
+			</QueryBoundary>
+		);
+	}
+
+	return (
+		<QueryBoundary isLoading={isLoading} error={error}>
+			<PatientView requests={requests} />
+		</QueryBoundary>
+	);
+}
