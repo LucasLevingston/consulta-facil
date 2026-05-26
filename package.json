@@ -17,6 +17,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.98.0",
     "@base-ui/react": "^1.4.1",
+    "@grafana/faro-web-sdk": "^2.7.0",
+    "@grafana/faro-web-tracing": "^2.7.0",
     "@hookform/resolvers": "^5.2.2",
     "@phosphor-icons/react": "^2.1.10",
     "@remixicon/react": "^4.9.0",

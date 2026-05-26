@@ -33,8 +33,8 @@ import {
 import {
 	type ClinicResponse,
 	type CreateClinicInput,
-	type InviteReceptionistInput,
 	createClinicSchema,
+	type InviteReceptionistInput,
 	inviteReceptionistSchema,
 } from "@/lib/schemas/clinic.schema";
 import {
@@ -375,7 +375,8 @@ function ClinicHoursEditor({
 }
 
 function ReceptionistsSection({ clinicId }: { clinicId: string }) {
-	const { data: receptionists = [], isLoading } = useClinicReceptionists(clinicId);
+	const { data: receptionists = [], isLoading } =
+		useClinicReceptionists(clinicId);
 	const { mutateAsync: invite } = useInviteReceptionist(clinicId);
 	const { mutateAsync: remove } = useRemoveReceptionist(clinicId);
 	const [open, setOpen] = useState(false);
@@ -419,7 +420,12 @@ function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 					</p>
 				</div>
 				{!open && (
-					<Button size="sm" variant="outline" className="gap-2" onClick={() => setOpen(true)}>
+					<Button
+						size="sm"
+						variant="outline"
+						className="gap-2"
+						onClick={() => setOpen(true)}
+					>
 						<UserPlus className="h-3.5 w-3.5" />
 						Adicionar
 					</Button>
@@ -428,7 +434,10 @@ function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 
 			{open && (
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 items-end">
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="flex gap-2 items-end"
+					>
 						<div className="flex-1">
 							<CustomFormField
 								form={form}
@@ -441,7 +450,12 @@ function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 						<CustomSubmitButton form={form} submittingText="Adicionando...">
 							Adicionar
 						</CustomSubmitButton>
-						<Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)}>
+						<Button
+							type="button"
+							variant="ghost"
+							size="sm"
+							onClick={() => setOpen(false)}
+						>
 							Cancelar
 						</Button>
 					</form>
@@ -449,7 +463,9 @@ function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 			)}
 
 			{receptionists.length === 0 ? (
-				<p className="text-sm text-muted-foreground">Nenhum recepcionista cadastrado.</p>
+				<p className="text-sm text-muted-foreground">
+					Nenhum recepcionista cadastrado.
+				</p>
 			) : (
 				<div className="space-y-2">
 					{receptionists.map((r) => (
