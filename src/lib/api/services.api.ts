@@ -1,5 +1,9 @@
 import { api } from "@/config/api";
 import type {
+	ProfessionalResponse,
+	UpdatePaymentSettingsInput,
+} from "@/lib/schemas/doctor.schema";
+import type {
 	CreateServiceInput,
 	ProfessionalService,
 	UpdateServiceInput,
@@ -42,6 +46,16 @@ export const servicesApi = {
 		const response = await api.put("/professionals/me/consultation-price", {
 			price,
 		});
+		return response.data;
+	},
+
+	updatePaymentSettings: async (
+		data: UpdatePaymentSettingsInput,
+	): Promise<ProfessionalResponse> => {
+		const response = await api.put<ProfessionalResponse>(
+			"/professionals/me/payment-settings",
+			data,
+		);
 		return response.data;
 	},
 };
