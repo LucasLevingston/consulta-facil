@@ -18,8 +18,13 @@ export const registerSchema = z.object({
 		.max(256),
 	cpf: z
 		.string()
-		.regex(/^\d{11}$/, "CPF deve conter 11 dígitos")
-		.or(z.literal("")),
+		.transform((val) => val.replace(/\D/g, ""))
+		.pipe(
+			z
+				.string()
+				.regex(/^\d{11}$/, "CPF deve conter 11 dígitos")
+				.or(z.literal("")),
+		),
 	phone: z.string().optional().nullable(),
 	birthDate: z.string().optional().nullable(),
 	gender: z.enum(["MALE", "FEMALE", "OTHER"]).optional().nullable(),
