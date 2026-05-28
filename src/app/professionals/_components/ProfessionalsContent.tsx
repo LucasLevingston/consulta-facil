@@ -1,8 +1,6 @@
 "use client";
 
 import {
-	ChevronLeft,
-	ChevronRight,
 	LayoutList,
 	Loader2,
 	MapIcon,
@@ -13,6 +11,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+import { CustomPagination } from "@/components/custom/custom-pagination";
 import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
 import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
 import { DoctorsMap } from "@/components/custom/map/DoctorsMap";
@@ -191,54 +190,13 @@ export default function ProfessionalsContent() {
 					<>
 						<DoctorsList doctors={professionals} />
 
-						{!isNearbyMode && totalPages > 1 && (
-							<div className="flex items-center justify-center gap-2 pt-2">
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => goToPage(page - 1)}
-									disabled={page === 0}
-									className="gap-1"
-								>
-									<ChevronLeft className="h-4 w-4" />
-									Anterior
-								</Button>
-
-								<div className="flex items-center gap-1">
-									{Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
-										const pageIndex =
-											totalPages <= 7
-												? i
-												: page < 4
-													? i
-													: page > totalPages - 4
-														? totalPages - 7 + i
-														: page - 3 + i;
-										return (
-											<Button
-												key={pageIndex}
-												variant={pageIndex === page ? "default" : "outline"}
-												size="sm"
-												onClick={() => goToPage(pageIndex)}
-												className="h-8 w-8 p-0"
-											>
-												{pageIndex + 1}
-											</Button>
-										);
-									})}
-								</div>
-
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => goToPage(page + 1)}
-									disabled={page >= totalPages - 1}
-									className="gap-1"
-								>
-									Próximo
-									<ChevronRight className="h-4 w-4" />
-								</Button>
-							</div>
+						{!isNearbyMode && (
+							<CustomPagination
+								currentPage={page}
+								totalPages={totalPages}
+								onPageChange={goToPage}
+								className="pt-2"
+							/>
 						)}
 					</>
 				)}
