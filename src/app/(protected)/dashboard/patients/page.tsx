@@ -2,22 +2,15 @@
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import {
-	CalendarDays,
-	ChevronLeft,
-	ChevronRight,
-	Search,
-	User,
-	UserRound,
-} from "lucide-react";
+import { CalendarDays, Search, User, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useDeferredValue } from "react";
 import { CustomButton } from "@/components/custom/custom-button";
 
+import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -161,31 +154,12 @@ function PatientsContent() {
 					</div>
 				)}
 
-				{totalPages > 1 && (
-					<div className="flex items-center justify-center gap-2 pt-2">
-						<Button
-							variant="outline"
-							size="icon"
-							className="h-8 w-8 rounded-xl"
-							disabled={page === 0}
-							onClick={() => updateParams({ page: String(page - 1) }, false)}
-						>
-							<ChevronLeft className="h-4 w-4" />
-						</Button>
-						<span className="text-sm text-muted-foreground">
-							Página {page + 1} de {totalPages}
-						</span>
-						<Button
-							variant="outline"
-							size="icon"
-							className="h-8 w-8 rounded-xl"
-							disabled={page >= totalPages - 1}
-							onClick={() => updateParams({ page: String(page + 1) }, false)}
-						>
-							<ChevronRight className="h-4 w-4" />
-						</Button>
-					</div>
-				)}
+				<CustomPagination
+					currentPage={page}
+					totalPages={totalPages}
+					onPageChange={(p) => updateParams({ page: String(p) }, false)}
+					className="pt-2"
+				/>
 			</QueryBoundary>
 		</div>
 	);
