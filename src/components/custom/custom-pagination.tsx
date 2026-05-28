@@ -14,16 +14,30 @@ interface CustomPaginationProps {
 	showInfo?: boolean;
 }
 
-function getPageNumbers(current: number, total: number): (number | "...")[] {
+export function getPageNumbers(
+	current: number,
+	total: number,
+): (number | "...")[] {
 	if (total <= 7) return Array.from({ length: total }, (_, i) => i);
 
 	const pages: (number | "...")[] = [0];
 	const start = Math.max(1, current - 2);
 	const end = Math.min(total - 2, current + 2);
 
-	if (start > 1) pages.push("...");
+	// Left gap: pages between 0 and start
+	const leftGap = start - 1;
+	if (leftGap === 1)
+		pages.push(1); // single page: show it
+	else if (leftGap > 1) pages.push("..."); // multiple pages: ellipsis
+
 	for (let i = start; i <= end; i++) pages.push(i);
-	if (end < total - 2) pages.push("...");
+
+	// Right gap: pages between end and total-1
+	const rightGap = total - 1 - end - 1;
+	if (rightGap === 1)
+		pages.push(end + 1); // single page: show it
+	else if (rightGap > 1) pages.push("..."); // multiple pages: ellipsis
+
 	pages.push(total - 1);
 
 	return pages;
