@@ -9,7 +9,10 @@ export const DoctorFormValidation = z.object({
 	imageProfile: z.union([z.custom<File[]>(), z.string()]).optional(),
 	gender: z.enum(["MALE", "FEMALE", "OTHER"]),
 	birthDate: z.date(),
-	cpf: z.string().min(1, "CPF é obrigatório."),
+	cpf: z
+		.string()
+		.transform((val) => val.replace(/\D/g, ""))
+		.pipe(z.string().regex(/^\d{11}$/, "CPF deve conter 11 dígitos")),
 	address: z
 		.string()
 		.min(5, "Deve ter pelo menos 5 caracteres")
