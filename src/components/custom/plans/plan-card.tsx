@@ -23,8 +23,8 @@ interface PlanCardProps {
 }
 
 const YEARLY_SAVINGS: Record<string, string> = {
-	yearly: "Economize R$ 98,90",
-	"clinic-yearly": "Economize 17%",
+	yearly: "Economize R$ 179,88",
+	"clinic-yearly": "Economize 10%",
 };
 
 export function PlanCard({
