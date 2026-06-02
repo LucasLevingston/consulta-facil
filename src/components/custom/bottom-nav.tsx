@@ -2,7 +2,6 @@
 
 import {
 	BadgeCheck,
-	Briefcase,
 	CalendarClock,
 	CalendarDays,
 	CalendarPlus,
@@ -43,7 +42,11 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Início", url: "/dashboard", icon: Home },
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
-		{ title: "Serviços", url: "/dashboard/services", icon: Briefcase },
+		{
+			title: "Procedimentos",
+			url: "/dashboard/procedure-requests",
+			icon: CalendarClock,
+		},
 		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
 	],
 	RECEPTIONIST: [

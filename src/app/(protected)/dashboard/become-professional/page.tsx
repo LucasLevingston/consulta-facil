@@ -1,13 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-	ArrowLeft,
-	BadgeCheck,
-	Clock,
-	Stethoscope,
-	XCircle,
-} from "lucide-react";
+import { BadgeCheck, Clock, Stethoscope, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -18,6 +12,7 @@ import CustomFormField, {
 	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
+import { PageLayout } from "@/components/custom/page-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
@@ -212,14 +207,7 @@ function BecomeProfessionalForm() {
 
 export default function BecomeProfessionalPage() {
 	return (
-		<div className="mx-auto max-w-xl space-y-6">
-			<Button variant="ghost" size="sm" className="gap-2 -ml-2" asChild>
-				<Link href="/dashboard">
-					<ArrowLeft className="h-4 w-4" />
-					Voltar ao início
-				</Link>
-			</Button>
-
+		<PageLayout>
 			<div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-6">
 				<div className="pointer-events-none absolute right-0 top-0 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
 				<div className="relative flex items-start gap-4">
@@ -241,6 +229,6 @@ export default function BecomeProfessionalPage() {
 			<QueryBoundary isLoading={false} error={null}>
 				<ApplicationStatus />
 			</QueryBoundary>
-		</div>
+		</PageLayout>
 	);
 }

@@ -3,6 +3,7 @@
 import {
 	BadgeCheck,
 	Building2,
+	CalendarClock,
 	CalendarDays,
 	CalendarPlus,
 	Clock,
@@ -37,6 +38,11 @@ const navByRole: Record<string, NavItem[]> = {
 			url: "/dashboard/appointments/create",
 			icon: CalendarPlus,
 		},
+		{
+			title: "Procedimentos",
+			url: "/dashboard/procedure-requests",
+			icon: CalendarClock,
+		},
 		{ title: "Profissionais", url: "/professionals", icon: Users },
 		{ title: "Clínicas", url: "/clinics", icon: Building2 },
 	],
@@ -44,6 +50,11 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Dashboard", url: "/dashboard", icon: Home },
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+		{
+			title: "Procedimentos",
+			url: "/dashboard/procedure-requests",
+			icon: CalendarClock,
+		},
 		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
 		{ title: "Clínica", url: "/dashboard/my-clinic", icon: Building2 },
 		{ title: "Financeiro", url: "/dashboard/financial", icon: TrendingUp },
