@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
+import { Logo } from "@/components/logo";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
-		<div className="min-h-screen flex">
+		<div className="flex">
 			{/* Left panel — decorative, hidden on mobile */}
 			<div className="hidden lg:flex lg:w-1/2 xl:w-5/12 bg-primary flex-col justify-between p-12 relative overflow-hidden">
 				{/* Background pattern */}
@@ -35,27 +36,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 				<div className="absolute -bottom-32 -left-16 w-80 h-80 rounded-full bg-white/5" />
 
 				{/* Logo */}
-				<div className="relative z-10 flex items-center gap-3">
-					<div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
-						<svg
-							className="w-5 h-5 text-white"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							viewBox="0 0 24 24"
-							aria-hidden="true"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M4.5 12.75l6 6 9-13.5"
-							/>
-						</svg>
-					</div>
-					<span className="text-white font-bold text-xl tracking-tight">
-						Consulta Fácil
-					</span>
-				</div>
+				<Logo />
 
 				{/* Center illustration */}
 				<div className="relative z-10 space-y-8">
