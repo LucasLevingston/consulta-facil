@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import CustomFormField, {
+	FormFieldType,
+} from "@/components/custom/forms-components/custom-form-field";
+import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
+import { Form } from "@/components/ui/form";
+import { type EmailInput, emailSchema } from "@/lib/schemas/auth.schema";
 
 interface ForgotPasswordFormProps {
 	onSubmit: (email: string) => Promise<void>;
@@ -15,63 +19,37 @@ export default function ForgotPasswordForm({
 	onSubmit,
 	isPending,
 }: ForgotPasswordFormProps) {
-	const [email, setEmail] = useState("");
+	const form = useForm<EmailInput>({
+		resolver: zodResolver(emailSchema),
+		defaultValues: { email: "" },
+	});
 
-	async function handleSubmit(e: React.FormEvent) {
-		e.preventDefault();
-		if (!email.trim()) return;
-		await onSubmit(email.trim().toLowerCase());
+	async function handleSubmit(values: EmailInput) {
+		await onSubmit(values.email);
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4" noValidate>
-			<div className="space-y-1.5">
-				<Label htmlFor="fp-email">E-mail</Label>
-				<Input
-					id="fp-email"
-					type="email"
-					autoComplete="email"
-					placeholder="seu@email.com"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					required
-				/>
-			</div>
-
-			<Button
-				type="submit"
-				className="w-full"
-				disabled={isPending || !email.trim()}
-				aria-busy={isPending}
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(handleSubmit)}
+				className="space-y-4"
+				noValidate
 			>
-				{isPending ? (
-					<span className="flex items-center gap-2">
-						<svg
-							className="w-4 h-4 animate-spin"
-							fill="none"
-							viewBox="0 0 24 24"
-							aria-hidden="true"
-						>
-							<circle
-								className="opacity-25"
-								cx="12"
-								cy="12"
-								r="10"
-								stroke="currentColor"
-								strokeWidth="4"
-							/>
-							<path
-								className="opacity-75"
-								fill="currentColor"
-								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-							/>
-						</svg>
-						Enviando...
-					</span>
-				) : (
-					"Enviar instruções"
-				)}
-			</Button>
-		</form>
+				<CustomFormField
+					form={form}
+					fieldType={FormFieldType.EMAIL}
+					name="email"
+					label="E-mail"
+				/>
+
+				<CustomSubmitButton
+					form={form}
+					submittingText="Enviando..."
+					disabled={isPending}
+				>
+					Enviar instruções
+				</CustomSubmitButton>
+			</form>
+		</Form>
 	);
 }
