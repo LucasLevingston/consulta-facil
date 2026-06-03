@@ -8,7 +8,7 @@ import { useLogin } from "@/hooks/api/auth/use-login";
 import { useRegister } from "@/hooks/api/auth/use-register";
 import type { LoginInput, RegisterInput } from "@/lib/schemas/auth.schema";
 
-import { LoginForm } from "./auth/LoginForm";
+import LoginForm from "./auth/LoginForm";
 import { RegisterForm } from "./auth/registerForm";
 
 export const UserForm = () => {
@@ -36,7 +36,10 @@ export const UserForm = () => {
 	}
 
 	return (
-		<Tabs defaultValue="register" className="flex w-full max-w-md flex-col gap-4">
+		<Tabs
+			defaultValue="register"
+			className="flex w-full max-w-md flex-col gap-4"
+		>
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="register" className="font-bold">
 					Registrar
@@ -47,7 +50,10 @@ export const UserForm = () => {
 			</TabsList>
 
 			<TabsContent value="register">
-				<RegisterForm onSubmit={handleRegister} isPending={register.isPending} />
+				<RegisterForm
+					onSubmit={handleRegister}
+					isPending={register.isPending}
+				/>
 			</TabsContent>
 
 			<TabsContent value="login">

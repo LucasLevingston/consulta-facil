@@ -12,11 +12,12 @@ export const professionalKeys = {
 		profession?: string,
 		specialty?: string,
 		name?: string,
+		serviceTitle?: string,
 	) =>
 		[
 			...professionalKeys.all,
 			"list",
-			{ page, size, profession, specialty, name },
+			{ page, size, profession, specialty, name, serviceTitle },
 		] as const,
 	search: (specialty: string) =>
 		[...professionalKeys.all, "search", specialty] as const,
@@ -44,11 +45,26 @@ export function useProfessionals(
 	profession?: string,
 	specialty?: string,
 	name?: string,
+	serviceTitle?: string,
 ) {
 	return useQuery({
-		queryKey: professionalKeys.list(page, size, profession, specialty, name),
+		queryKey: professionalKeys.list(
+			page,
+			size,
+			profession,
+			specialty,
+			name,
+			serviceTitle,
+		),
 		queryFn: () =>
-			professionalsApi.getAll(page, size, profession, specialty, name),
+			professionalsApi.getAll(
+				page,
+				size,
+				profession,
+				specialty,
+				name,
+				serviceTitle,
+			),
 		staleTime: 1000 * 60 * 5,
 	});
 }

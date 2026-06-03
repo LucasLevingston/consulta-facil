@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-
+import { CustomPagination } from "@/components/custom/custom-pagination";
 import { StatCard } from "@/components/StatCard";
 import { makeColumns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
@@ -137,69 +137,13 @@ const AppointmentsDashboard = ({
 				<DataTable columns={columns} data={paginated} />
 			</div>
 
-			{totalPages > 1 && (
-				<AppointmentPagination
-					currentPage={currentPage}
-					totalPages={totalPages}
-					onPageChange={(p) => updateParams({ page: String(p) }, false)}
-				/>
-			)}
+			<CustomPagination
+				currentPage={currentPage}
+				totalPages={totalPages}
+				onPageChange={(p) => updateParams({ page: String(p) }, false)}
+			/>
 		</div>
 	);
 };
-
-function AppointmentPagination({
-	currentPage,
-	totalPages,
-	onPageChange,
-}: {
-	currentPage: number;
-	totalPages: number;
-	onPageChange: (page: number) => void;
-}) {
-	return (
-		<div className="flex items-center justify-between text-sm text-muted-foreground">
-			<span>
-				Página {currentPage + 1} de {totalPages}
-			</span>
-			<div className="flex gap-2">
-				<button
-					type="button"
-					onClick={() => onPageChange(currentPage - 1)}
-					disabled={currentPage === 0}
-					className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40"
-				>
-					Anterior
-				</button>
-				{Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-					const p = Math.max(0, currentPage - 2) + i;
-					if (p >= totalPages) return null;
-					return (
-						<button
-							key={p}
-							type="button"
-							onClick={() => onPageChange(p)}
-							className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-								p === currentPage
-									? "border-primary bg-primary text-primary-foreground"
-									: "border-border hover:bg-muted"
-							}`}
-						>
-							{p + 1}
-						</button>
-					);
-				})}
-				<button
-					type="button"
-					onClick={() => onPageChange(currentPage + 1)}
-					disabled={currentPage >= totalPages - 1}
-					className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40"
-				>
-					Próxima
-				</button>
-			</div>
-		</div>
-	);
-}
 
 export default AppointmentsDashboard;

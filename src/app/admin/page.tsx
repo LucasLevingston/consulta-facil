@@ -17,6 +17,7 @@ import {
 	usePendingApplications,
 	useRejectApplication,
 } from "@/hooks/api/use-doctors";
+import { usePermission } from "@/hooks/use-permission";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useAuthStore } from "@/store/auth.store";
@@ -135,14 +136,15 @@ function PendingApplications() {
 export default function AdminPage() {
 	const { isAuthenticated } = useAuthStore();
 	const { user } = useUserStore();
+	const { can } = usePermission();
 	const router = useRouter();
 
 	const doctorQuery = useProfessionalAppointments(user?.id ?? "");
 	const appointments = doctorQuery.data?.content ?? [];
 
 	useEffect(() => {
-		if (!isAuthenticated || user?.role !== "ADMIN") router.push("/auth");
-	}, [isAuthenticated, user?.role, router]);
+		if (!isAuthenticated || !can("admin:access")) router.push("/auth");
+	}, [isAuthenticated, can, router]);
 
 	return (
 		<div className="space-y-6">

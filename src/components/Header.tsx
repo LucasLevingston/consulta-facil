@@ -5,7 +5,6 @@ import {
 	Building2,
 	CalendarDays,
 	CalendarPlus,
-	Clock,
 	Home,
 	MonitorCheck,
 	TrendingUp,
@@ -29,37 +28,32 @@ type NavItem = {
 };
 
 const navByRole: Record<string, NavItem[]> = {
-	PATIENT: [
+	DEFAULT: [
 		{ title: "Dashboard", url: "/dashboard", icon: Home },
+		{ title: "Profissionais", url: "/professionals", icon: Users },
+		{ title: "Clínicas", url: "/clinics", icon: Building2 },
+	],
+	PROTECTED: [
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
+	],
+	PATIENT: [
 		{
 			title: "Agendar",
 			url: "/dashboard/appointments/create",
 			icon: CalendarPlus,
 		},
-		{ title: "Profissionais", url: "/professionals", icon: Users },
-		{ title: "Clínicas", url: "/clinics", icon: Building2 },
 	],
 	PROFESSIONAL: [
-		{ title: "Dashboard", url: "/dashboard", icon: Home },
-		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
-		{ title: "Horários", url: "/dashboard/schedule", icon: Clock },
-		{ title: "Clínica", url: "/dashboard/my-clinic", icon: Building2 },
 		{ title: "Financeiro", url: "/dashboard/financial", icon: TrendingUp },
-		{ title: "Profissionais", url: "/professionals", icon: Users },
 	],
 	RECEPTIONIST: [
-		{ title: "Dashboard", url: "/dashboard", icon: Home },
 		{ title: "Recepção", url: "/dashboard/reception", icon: MonitorCheck },
-		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
 	],
 	ADMIN: [
-		{ title: "Dashboard", url: "/dashboard", icon: Home },
-		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
-		{ title: "Pacientes", url: "/dashboard/patients", icon: UserRound },
+		{ title: "Usuários", url: "/dashboard/users", icon: UserRound },
+		{ title: "Pagamentos", url: "/dashboard/payments", icon: UserRound },
 		{ title: "Admin", url: "/admin", icon: BadgeCheck },
-		{ title: "Profissionais", url: "/professionals", icon: Users },
 	],
 };
 
@@ -67,10 +61,12 @@ export function Header() {
 	const { user } = useUserStore();
 	const pathname = usePathname();
 
-	const items = user ? (navByRole[user.role] ?? navByRole.PATIENT) : [];
+	const items = user
+		? [...navByRole.DEFAULT, ...(navByRole[user.role] ?? navByRole.PATIENT)]
+		: [];
 
 	const isActive = (url: string) =>
-		url === "/dashboard" ? pathname === url : pathname.startsWith(url);
+		url === "/dashboard" ? pathname === url : pathname === url;
 
 	return (
 		<header className="sticky top-0 z-50 flex items-center justify-between gap-4 border-b border-border bg-background/80 px-3 py-3 backdrop-blur-xl sm:px-6">

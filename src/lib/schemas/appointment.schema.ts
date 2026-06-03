@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { paymentMethodSchema, paymentTimingSchema } from "./doctor.schema";
 
 export const appointmentModalitySchema = z.enum(["IN_PERSON", "ONLINE"]);
 
@@ -36,6 +37,9 @@ export const appointmentResponseSchema = z.object({
 	status: appointmentStatusSchema,
 	paymentStatus: appointmentPaymentStatusSchema.nullable().optional(),
 	paymentAmount: z.number().nullable().optional(),
+	chosenPaymentMethod: paymentMethodSchema.nullable().optional(),
+	paymentTiming: paymentTimingSchema.nullable().optional(),
+	checkoutUrl: z.string().nullable().optional(),
 	cancellationReason: z.string().nullable().optional(),
 	rating: z.number().int().min(1).max(5).nullable().optional(),
 	ratingComment: z.string().nullable().optional(),
@@ -52,6 +56,7 @@ export const createAppointmentSchema = z.object({
 	notes: z.string().optional(),
 	modality: appointmentModalitySchema.optional(),
 	serviceId: z.string().optional(),
+	chosenPaymentMethod: paymentMethodSchema.optional(),
 });
 
 export const cancelAppointmentSchema = z.object({
@@ -82,6 +87,7 @@ export const appointmentFormSchema = z.object({
 	cancellationReason: z.string().optional(),
 	modality: appointmentModalitySchema.optional(),
 	serviceId: z.string().optional(),
+	chosenPaymentMethod: paymentMethodSchema.optional(),
 });
 
 export const setModalitySchema = z.object({

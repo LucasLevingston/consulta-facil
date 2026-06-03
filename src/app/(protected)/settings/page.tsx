@@ -13,12 +13,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { usePermission } from "@/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 
 export default function SettingsPage() {
 	const { user } = useUserStore();
+	const { can } = usePermission();
 
-	const isDoctor = user?.role === "PROFESSIONAL" || user?.role === "ADMIN";
+	const isDoctor = can("professional:manage");
 
 	return (
 		<div className="space-y-6">

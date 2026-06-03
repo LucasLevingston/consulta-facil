@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import CustomFormField, {
@@ -15,20 +16,18 @@ interface LoginFormProps {
 	isPending: boolean;
 }
 
-export function LoginForm({ onSubmit, isPending }: LoginFormProps) {
+export default function LoginForm({ onSubmit, isPending }: LoginFormProps) {
 	const form = useForm<LoginInput>({
 		resolver: zodResolver(loginSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-		},
+		defaultValues: { email: "", password: "" },
 	});
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex-1 space-y-6"
+				className="space-y-4"
+				noValidate
 			>
 				<CustomFormField
 					form={form}
@@ -37,14 +36,28 @@ export function LoginForm({ onSubmit, isPending }: LoginFormProps) {
 					label="E-mail"
 				/>
 
-				<CustomFormField
-					form={form}
-					fieldType={FormFieldType.PASSWORD}
-					name="password"
-					label="Senha"
-				/>
+				<div className="space-y-1">
+					<CustomFormField
+						form={form}
+						fieldType={FormFieldType.PASSWORD}
+						name="password"
+						label="Senha"
+					/>
+					<div className="flex justify-end">
+						<Link
+							href="/auth/forgot-password"
+							className="text-xs text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+						>
+							Esqueci minha senha
+						</Link>
+					</div>
+				</div>
 
-				<CustomSubmitButton form={form} submittingText="Entrando..." disabled={isPending}>
+				<CustomSubmitButton
+					form={form}
+					submittingText="Entrando..."
+					disabled={isPending}
+				>
 					Entrar
 				</CustomSubmitButton>
 			</form>

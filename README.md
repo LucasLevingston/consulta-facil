@@ -1,20 +1,20 @@
 # Consulta Fácil — Web
 
-Frontend para a plataforma de agendamento de consultas médicas. Interface adaptada por role: paciente, profissional, recepcionista e admin.
+Frontend da plataforma de saúde para agendamento de consultas médicas. Interface adaptada por role: paciente, profissional, recepcionista e admin.
 
 ## Stack
 
-| Tecnologia | Versão |
-|---|---|
-| Next.js | 16 |
-| TypeScript | strict |
-| shadcn/ui + Tailwind | v4 |
-| TanStack Query | v5 |
-| Zustand | v5 |
-| React Hook Form + Zod | — |
-| Vitest | v4 |
-| Biome (lint/format) | 2.x |
-| Orval (API client) | 8.x |
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| Next.js | 14 | App Router, SSR/RSC |
+| TypeScript | strict | Tipagem estática |
+| shadcn/ui + Tailwind | v4 | Componentes e estilos |
+| TanStack Query | v5 | Cache e sincronização de dados |
+| Zustand | v5 | Estado global (auth, UI) |
+| React Hook Form + Zod | — | Formulários e validação |
+| Vitest | v4 | Testes unitários |
+| Biome | 2.x | Lint e formatação |
+| Orval | 8.x | Geração de cliente API (OpenAPI) |
 
 ## Setup rápido
 
@@ -47,53 +47,47 @@ make down             # para todos os containers
 ## Variáveis de Ambiente
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_API_URL=http://localhost:8080/v1
+NEXT_PUBLIC_GRAFANA_FARO_URL=           # opcional — RUM com Grafana Faro
 ```
 
 ## Funcionalidades por Role
 
-### Paciente (PATIENT)
-- Agendar consulta com filtro por profissional, especialidade e data
-- Acompanhar lista de consultas com status em tempo real
-- Ver detalhe da consulta: informações, anamnese, prontuário, exames
+### Paciente
+- Buscar profissionais por nome, especialidade e localização
+- Agendar consultas com escolha de serviço e método de pagamento
+- Acompanhar consultas com status em tempo real
 - Preencher anamnese pré-consulta
 - Gerar QR Code para check-in na recepção
 - Fazer upload de exames solicitados pelo profissional
 - Avaliar consultas concluídas (1–5 estrelas + comentário)
-- Remarcar consultas pendentes ou confirmadas
-- Cancelar consultas
-- Pagar consulta online via MercadoPago (checkout externo)
-- Entrar em teleconsulta via link Google Meet
-- Tornar-se profissional (fluxo de solicitação)
+- Remarcar e cancelar consultas
+- Pagar via MercadoPago (checkout externo)
+- Entrar em teleconsulta via Google Meet
+- Ver prontuário clínico das próprias consultas
 
-### Profissional (PROFESSIONAL)
-- Dashboard com resumo do dia (próximas consultas, fila)
-- Confirmar, concluir ou cancelar consultas
-- Remarcar consultas
-- Ver fila de pacientes do dia com status CHECKED_IN / IN_PROGRESS
-- Chamar próximo paciente (muda status para IN_PROGRESS)
-- Definir modalidade da consulta: presencial ou online
-- Gerar link Google Meet para teleconsultas
-- Criar e revisar anamnese e prontuário
-- Solicitar exames para o paciente
-- Revisar exames enviados pelo paciente
-- Ver lista de pacientes atendidos
-- Ver detalhe de cada paciente
-- Gerenciar horários de atendimento semanal
-- Criar e gerenciar clínica
-- Convidar recepcionistas para a clínica
-- Configurar horário de funcionamento da clínica
+### Profissional
+- Dashboard com agenda do dia e resumo de métricas
+- Confirmar, concluir e cancelar consultas
+- Gerenciar fila de pacientes (CHECKED_IN → IN_PROGRESS)
+- Preencher anamnese e prontuário clínico
+- Solicitar e revisar exames
+- Definir modalidade (presencial / online) e gerar link Meet
+- Criar e gerenciar catálogo de serviços com preços e durações
+- Abrir solicitações de procedimento para pacientes
+- Configurar horários de atendimento semanal
+- Gerenciar clínica e equipe (recepcionistas, membros)
+- Configurar preço de consulta e métodos de pagamento aceitos
 
-### Recepcionista (RECEPTIONIST)
-- Dashboard de recepção com fila do dia (todos os profissionais)
-- Fazer check-in de pacientes via leitura de QR Code
-- Ver status de cada consulta em tempo real
+### Recepcionista
+- Painel de recepção com fila do dia
+- Check-in de pacientes via leitura de QR Code
+- Monitorar status de todas as consultas em tempo real
 
-### Admin (ADMIN)
-- Acesso a todas as funcionalidades acima
-- Aprovar ou rejeitar solicitações de profissionais
-- Gerenciar usuários
-- Excluir consultas
+### Admin
+- Acesso completo a todas as funcionalidades
+- Aprovar e rejeitar solicitações de profissionais
+- Gerenciar usuários e permissões
 
 ## Páginas
 
@@ -103,34 +97,22 @@ NEXT_PUBLIC_API_URL=http://localhost:8080
 | `/dashboard/appointments` | Lista de consultas | Todos |
 | `/dashboard/appointments/create` | Agendar nova consulta | PATIENT |
 | `/dashboard/appointments/[id]` | Detalhe da consulta | Todos |
+| `/dashboard/services` | Catálogo de serviços | PROFESSIONAL |
+| `/dashboard/procedure-requests` | Solicitações de procedimento | PATIENT / PROFESSIONAL |
 | `/dashboard/patients` | Lista de pacientes | PROFESSIONAL / ADMIN |
 | `/dashboard/patients/[id]` | Detalhe do paciente | PROFESSIONAL / ADMIN |
 | `/dashboard/schedule` | Horários de atendimento | PROFESSIONAL / ADMIN |
 | `/dashboard/my-clinic` | Gerenciar clínica | PROFESSIONAL / ADMIN |
 | `/dashboard/reception` | Fila + check-in QR | RECEPTIONIST / ADMIN |
+| `/dashboard/settings/billing` | Assinatura e pagamentos | PROFESSIONAL |
 | `/dashboard/become-professional` | Solicitar perfil profissional | PATIENT |
 | `/dashboard/profile` | Editar perfil | Todos |
 
-## Estrutura
+## Segurança
 
-```
-src/
-├── app/
-│   ├── (auth)/            # Login, cadastro
-│   └── (protected)/
-│       └── dashboard/     # Todas as páginas autenticadas
-├── components/
-│   ├── ui/                # shadcn/ui (não editar)
-│   ├── custom/            # Componentes reutilizáveis do projeto
-│   └── table/             # Colunas e ações da tabela de consultas
-├── hooks/
-│   └── api/               # Hooks TanStack Query (use-appointments, etc.)
-├── lib/
-│   ├── api/               # Chamadas axios + generated (orval)
-│   ├── schemas/           # Schemas Zod globais
-│   └── utils.ts
-└── store/                 # Zustand stores (auth, etc.)
-```
+- Recursos acessíveis apenas ao paciente/profissional da consulta (ownership)
+- Tokens JWT armazenados de forma segura
+- Formulários validados com Zod em todas as fronteiras
 
 ## Geração automática do cliente API
 
@@ -144,46 +126,42 @@ make api-sync
 make api-generate
 ```
 
-Os arquivos gerados ficam em `src/lib/api/generated/` e são re-gerados automaticamente no pre-commit hook (`.husky/pre-commit`).
+Arquivos gerados ficam em `src/lib/api/generated/` — não editar manualmente.
 
-## Roadmap — Possíveis próximas funcionalidades
+## Estrutura
 
-Abaixo estão funcionalidades planejadas ou em discussão. Validar quais avançar.
-
-### Navegação e UX
-- **Substituição da sidebar** por bottom-nav no mobile e mega-menu/topbar no desktop — melhora ergonomia em dispositivos menores
-- **Melhoria da página inicial e dashboard** — redesign com métricas em destaque, cards de próximas consultas e CTAs contextuais por role
-- **Busca com querystring + paginação** em todos os componentes de listagem — permite compartilhar links filtrados e melhora performance com lazy loading
-
-### Agendamento
-- **Agendamento por fila ou por horário** — ao selecionar o profissional, verificar se ele atende via fila de espera (check-in no dia) ou por horário marcado; exibir interface diferente para cada modelo
-- **Preenchimento automático de horários vagos** — sugestão de horários disponíveis com base na agenda do profissional; reduz fricção no agendamento
-- **Agendamento por voz** — integração com reconhecimento de fala para agendar consultas por comando de voz no mobile
-
-### Fila de espera
-- **QR Code estático na clínica** — gerar um QR único por clínica que é renovado diariamente; o paciente escaneia ao chegar e entra automaticamente na fila (sem precisar abrir o app e navegar até a consulta)
-
-### Financeiro
-- **Dashboard financeiro para profissionais** — painel com receita mensal, consultas pagas/pendentes, ticket médio, evolução por período e ranking de convênios/formas de pagamento
-
-### Inteligência artificial e automação
-- **Score de paciente** — pontuação calculada com base em histórico (faltas, cancelamentos de última hora, pagamentos em dia); auxilia profissionais na triagem e priorização
-- **Confirmação por WhatsApp** — enviar lembretes automáticos de consulta via WhatsApp (ex: 24h antes) com link de confirmação ou cancelamento; integração via Twilio ou Meta Cloud API
-- **Agente de IA no WhatsApp** — bot conversacional para agendar consultas, tirar dúvidas e enviar resultados de exames diretamente no WhatsApp do paciente
-
-### Performance
-- **Otimizações de carregamento** — lazy loading de imagens, virtualização de listas longas, cache de queries TanStack com staleTime ajustado, prefetch de dados ao hover em links
+```
+src/
+├── app/
+│   ├── (auth)/                 # Login, cadastro, recuperação de senha
+│   └── (protected)/
+│       └── dashboard/          # Todas as páginas autenticadas
+├── components/
+│   ├── ui/                     # shadcn/ui (não editar)
+│   ├── custom/                 # Componentes reutilizáveis do projeto
+│   └── table/                  # Colunas e ações das tabelas
+├── hooks/
+│   └── api/                    # Hooks TanStack Query por domínio
+├── lib/
+│   ├── api/                    # Axios instance + generated (Orval)
+│   ├── schemas/                # Schemas Zod globais
+│   └── utils.ts
+└── store/                      # Zustand stores (auth, etc.)
+```
 
 ## Deploy
 
-### Vercel (recomendado para frontend)
-Conectar o repositório no painel da Vercel. Definir `NEXT_PUBLIC_API_URL` apontando para a API em produção.
+### Produção (AWS ECS Fargate)
 
-### Docker / Render
+Deploy automático via GitHub Actions ao push em `main`. Infraestrutura gerenciada por Terraform (`../api/infra/`).
+
+### Docker
+
 ```bash
-# Build da imagem standalone
 docker build -t consulta-facil-web .
-
-# Stack completa (db + api + web)
-docker compose up -d
+cd ../web && docker compose up -d
 ```
+
+### Vercel
+
+Conectar o repositório no painel da Vercel. Definir `NEXT_PUBLIC_API_URL` apontando para a API em produção.

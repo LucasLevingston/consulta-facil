@@ -18,8 +18,13 @@ export const registerSchema = z.object({
 		.max(256),
 	cpf: z
 		.string()
-		.regex(/^\d{11}$/, "CPF deve conter 11 dígitos")
-		.or(z.literal("")),
+		.transform((val) => val.replace(/\D/g, ""))
+		.pipe(
+			z
+				.string()
+				.regex(/^\d{11}$/, "CPF deve conter 11 dígitos")
+				.or(z.literal("")),
+		),
 	phone: z.string().optional().nullable(),
 	birthDate: z.string().optional().nullable(),
 	gender: z.enum(["MALE", "FEMALE", "OTHER"]).optional().nullable(),
@@ -48,7 +53,12 @@ export const userResponseSchema = z.object({
 	updatedAt: z.string().nullable().optional(),
 });
 
+export const emailSchema = z.object({
+	email: z.string().email("E-mail inválido"),
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+export type EmailInput = z.infer<typeof emailSchema>;
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
 export type UserResponse = z.infer<typeof userResponseSchema>;

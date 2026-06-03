@@ -5,77 +5,88 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import CustomFormField, {
-  FormFieldType,
+	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { type RegisterInput, registerSchema } from "@/lib/schemas/auth.schema";
-import { cn } from "@/lib/utils";
 
 interface RegisterFormProps {
-  onSubmit: (data: RegisterInput) => Promise<void>;
-  isPending: boolean;
-  className?: string;
+	onSubmit: (data: RegisterInput) => Promise<void>;
+	isPending: boolean;
 }
 
-export function RegisterForm({ onSubmit, isPending, className }: RegisterFormProps) {
-  const form = useForm<RegisterInput>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      cpf: "",
-    },
-  });
+export function RegisterForm({ onSubmit, isPending }: RegisterFormProps) {
+	const form = useForm<RegisterInput>({
+		resolver: zodResolver(registerSchema),
+		defaultValues: {
+			name: "",
+			email: "",
+			password: "",
+			confirmPassword: "",
+			cpf: "",
+		},
+	});
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("space-y-4", className)}
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <CustomFormField
-            form={form}
-            fieldType={FormFieldType.INPUT}
-            name="name"
-          />
-          <CustomFormField
-            form={form}
-            fieldType={FormFieldType.INPUT}
-            name="cpf"
-          />
-        </div>
+	return (
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="space-y-4"
+				noValidate
+			>
+				<div className="grid grid-cols-2 gap-3">
+					<CustomFormField
+						form={form}
+						fieldType={FormFieldType.INPUT}
+						name="name"
+						label="Nome"
+					/>
+					<CustomFormField
+						form={form}
+						fieldType={FormFieldType.INPUT}
+						name="cpf"
+						label="CPF"
+					/>
+				</div>
 
-        <CustomFormField
-          form={form}
-          fieldType={FormFieldType.EMAIL}
-          name="email"
-        />
-        <CustomFormField
-          form={form}
-          fieldType={FormFieldType.PASSWORD}
-          name="password"
-        />
-        <CustomFormField
-          form={form}
-          fieldType={FormFieldType.PASSWORD}
-          name="confirmPassword"
-        />
+				<CustomFormField
+					form={form}
+					fieldType={FormFieldType.EMAIL}
+					name="email"
+					label="E-mail"
+				/>
+				<CustomFormField
+					form={form}
+					fieldType={FormFieldType.PASSWORD}
+					name="password"
+					label="Senha"
+				/>
+				<CustomFormField
+					form={form}
+					fieldType={FormFieldType.PASSWORD}
+					name="confirmPassword"
+					label="Confirmar senha"
+				/>
 
-        <CustomSubmitButton form={form} submittingText="Registrando..." disabled={isPending}>
-          Registrar
-        </CustomSubmitButton>
+				<CustomSubmitButton
+					form={form}
+					submittingText="Criando conta..."
+					disabled={isPending}
+				>
+					Criar conta
+				</CustomSubmitButton>
 
-        <p className="text-center text-sm text-zinc-400">
-          Já possui uma conta?{" "}
-          <Link href="/auth/login" className="text-primary hover:underline">
-            Faça seu login
-          </Link>
-        </p>
-      </form>
-    </Form>
-  );
+				<p className="text-center text-sm text-muted-foreground">
+					Já tem uma conta?{" "}
+					<Link
+						href="/auth/login"
+						className="text-primary font-medium hover:underline"
+					>
+						Entrar
+					</Link>
+				</p>
+			</form>
+		</Form>
+	);
 }

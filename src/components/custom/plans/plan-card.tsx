@@ -2,83 +2,128 @@
 
 import { CheckCircle2, Loader2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+} from "@/components/ui/card";
 import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
 import { cn } from "@/lib/utils";
 
 import type { Plan } from "./types";
 
 interface PlanCardProps {
-  plan: Plan;
-  subscription: SubscriptionResponse | null | undefined;
-  onSelect: (planId: string) => void;
-  isPending: boolean;
+	plan: Plan;
+	subscription: SubscriptionResponse | null | undefined;
+	onSelect: (planId: string) => void;
+	isPending: boolean;
 }
 
-export function PlanCard({ plan, subscription, onSelect, isPending }: PlanCardProps) {
-  const isActive =
-    subscription?.status === "ACTIVE" && subscription.planId === plan.id;
+const YEARLY_SAVINGS: Record<string, string> = {
+	yearly: "Economize R$ 179,88",
+	"clinic-yearly": "Economize 10%",
+};
 
-  return (
-    <Card
-      className={cn(
-        "relative flex flex-col justify-between transition-all duration-200",
-        plan.highlight ? "border-primary shadow-lg shadow-primary/10" : "border-border",
-      )}
-    >
-      {plan.highlight && (
-        <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground">
-          Mais popular
-        </Badge>
-      )}
+export function PlanCard({
+	plan,
+	subscription,
+	onSelect,
+	isPending,
+}: PlanCardProps) {
+	const isActive =
+		subscription?.status === "ACTIVE" && subscription.planId === plan.id;
+	const savings = YEARLY_SAVINGS[plan.id];
 
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-2 text-primary">
-          {plan.icon}
-          <span className="font-semibold">{plan.title}</span>
-        </div>
-        <div className="mt-3 flex items-end gap-1">
-          <span className="text-3xl font-bold text-foreground">
-            R$ {plan.monthlyEquiv}
-          </span>
-          <span className="mb-1 text-sm text-muted-foreground">/mês</span>
-        </div>
-        {plan.id === "yearly" && (
-          <p className="text-xs text-muted-foreground">
-            Cobrado anualmente — R$ {plan.totalPrice}
-          </p>
-        )}
-        <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
-      </CardHeader>
+	return (
+		<Card
+			className={cn(
+				"relative flex flex-col justify-between transition-all duration-200",
+				plan.highlight
+					? "border-primary shadow-lg shadow-primary/10 ring-1 ring-primary/20"
+					: "border-border",
+				isActive && "ring-2 ring-green-500/40",
+			)}
+		>
+			{(plan.highlight || isActive) && (
+				<div className="absolute -top-3 left-4 flex gap-2">
+					{plan.highlight && !isActive && (
+						<Badge className="bg-primary text-primary-foreground shadow-sm">
+							Mais popular
+						</Badge>
+					)}
+					{isActive && (
+						<Badge className="bg-green-500 text-white shadow-sm">
+							✓ Plano atual
+						</Badge>
+					)}
+				</div>
+			)}
 
-      <CardContent className="space-y-2">
-        {plan.features.map((feature) => (
-          <div key={feature} className="flex items-center gap-2 text-sm">
-            <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
-            <span className="text-foreground">{feature}</span>
-          </div>
-        ))}
-      </CardContent>
+			<CardHeader
+				className={cn("pb-4", (plan.highlight || isActive) && "pt-6")}
+			>
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-2 text-primary">
+						{plan.icon}
+						<span className="font-semibold">{plan.title}</span>
+					</div>
+					{savings && (
+						<Badge
+							variant="secondary"
+							className="text-xs bg-green-500/10 text-green-600 border-green-500/20"
+						>
+							{savings}
+						</Badge>
+					)}
+				</div>
 
-      <CardFooter className="pt-4">
-        {isActive ? (
-          <Button className="w-full" variant="outline" disabled>
-            Plano atual
-          </Button>
-        ) : (
-          <Button
-            className="w-full"
-            variant={plan.highlight ? "default" : "outline"}
-            onClick={() => onSelect(plan.id)}
-            disabled={isPending}
-          >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Assinar agora
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
-  );
+				<div className="mt-3 space-y-0.5">
+					<div className="flex items-end gap-1">
+						<span className="text-3xl font-bold text-foreground">
+							R$ {plan.monthlyEquiv}
+						</span>
+						<span className="mb-1 text-sm text-muted-foreground">/mês</span>
+					</div>
+					{plan.period === "/ano" && (
+						<p className="text-xs text-muted-foreground">
+							Cobrado anualmente — R$ {plan.totalPrice}
+						</p>
+					)}
+				</div>
+
+				<p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
+			</CardHeader>
+
+			<CardContent className="space-y-2">
+				{plan.features.map((feature) => (
+					<div key={feature} className="flex items-center gap-2 text-sm">
+						<CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
+						<span className="text-foreground">{feature}</span>
+					</div>
+				))}
+			</CardContent>
+
+			<CardFooter className="pt-4">
+				{isActive ? (
+					<Button className="w-full" variant="outline" disabled>
+						<CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+						Plano atual
+					</Button>
+				) : (
+					<Button
+						className="w-full"
+						variant={plan.highlight ? "default" : "outline"}
+						onClick={() => onSelect(plan.id)}
+						disabled={isPending}
+					>
+						{isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+						Assinar agora
+					</Button>
+				)}
+			</CardFooter>
+		</Card>
+	);
 }

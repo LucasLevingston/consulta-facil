@@ -9,6 +9,36 @@ export type ProfessionalProfileStatus = z.infer<
 	typeof professionalProfileStatusSchema
 >;
 
+export const paymentMethodSchema = z.enum([
+	"MERCADOPAGO",
+	"PIX",
+	"CREDIT_CARD",
+	"DEBIT_CARD",
+	"CASH",
+]);
+export type PaymentMethod = z.infer<typeof paymentMethodSchema>;
+
+export const paymentTimingSchema = z.enum(["AT_SCHEDULING", "AT_CONSULTATION"]);
+export type PaymentTiming = z.infer<typeof paymentTimingSchema>;
+
+export const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
+	MERCADOPAGO: "MercadoPago",
+	PIX: "Pix",
+	CREDIT_CARD: "Cartão de Crédito",
+	DEBIT_CARD: "Cartão de Débito",
+	CASH: "Dinheiro",
+};
+
+export const updatePaymentSettingsSchema = z.object({
+	paymentTiming: paymentTimingSchema,
+	acceptedPaymentMethods: z
+		.array(paymentMethodSchema)
+		.min(1, "Selecione ao menos um método de pagamento"),
+});
+export type UpdatePaymentSettingsInput = z.infer<
+	typeof updatePaymentSettingsSchema
+>;
+
 export const professionalResponseSchema = z.object({
 	id: z.string(),
 	userId: z.string(),
@@ -30,6 +60,8 @@ export const professionalResponseSchema = z.object({
 	clinicId: z.string().nullable().optional(),
 	clinicName: z.string().nullable().optional(),
 	consultationPrice: z.number().nullable().optional(),
+	acceptedPaymentMethods: z.array(paymentMethodSchema).optional().default([]),
+	paymentTiming: paymentTimingSchema.nullable().optional(),
 });
 
 export const createProfessionalSchema = z.object({

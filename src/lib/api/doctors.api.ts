@@ -12,6 +12,7 @@ export const professionalsApi = {
 		profession?: string,
 		specialty?: string,
 		name?: string,
+		serviceTitle?: string,
 	): Promise<ApiPage<ProfessionalResponse>> => {
 		const response = await api.get<ApiPage<ProfessionalResponse>>(
 			"/professionals",
@@ -22,6 +23,7 @@ export const professionalsApi = {
 					profession: profession || undefined,
 					specialty: specialty || undefined,
 					name: name || undefined,
+					serviceTitle: serviceTitle || undefined,
 				},
 			},
 		);

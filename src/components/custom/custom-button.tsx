@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 type CustomButtonProps = React.ComponentProps<typeof Button> & {
-	variant?: "default" | "outline" | "destructive" | "secondary";
+	variant?: "default" | "outline" | "destructive" | "secondary" | "ghost";
 };
 
 const baseStyles =
@@ -18,7 +18,7 @@ const variants = {
 		"hover:scale-[1.02]",
 		"hover:brightness-110",
 		"hover:shadow-xl hover:shadow-primary/40",
-		"dark:hover:shadow-primary/30"
+		"dark:hover:shadow-primary/30",
 	),
 
 	outline: cn(
@@ -28,7 +28,7 @@ const variants = {
 		"hover:bg-primary/10",
 		"hover:text-primary",
 		"hover:shadow-lg hover:shadow-primary/20",
-		"dark:bg-muted/20"
+		"dark:bg-muted/20",
 	),
 
 	destructive: cn(
@@ -37,7 +37,7 @@ const variants = {
 		"shadow-lg shadow-red-500/20",
 		"hover:brightness-110",
 		"hover:shadow-xl hover:shadow-red-500/40",
-		"hover:scale-[1.02]"
+		"hover:scale-[1.02]",
 	),
 
 	secondary: cn(
@@ -46,7 +46,15 @@ const variants = {
 		"shadow-lg shadow-secondary/20",
 		"hover:brightness-110",
 		"hover:shadow-xl hover:shadow-secondary/40",
-		"hover:scale-[1.02]"
+		"hover:scale-[1.02]",
+	),
+	ghost: cn(
+		"bg-transparent",
+		"text-primary",
+		"shadow-none",
+		"hover:bg-primary/10",
+		"hover:text-primary",
+		"hover:scale-[1.02]",
 	),
 };
 
@@ -57,10 +65,7 @@ export const CustomButton = ({
 	...props
 }: CustomButtonProps) => {
 	return (
-		<Button
-			{...props}
-			className={cn(baseStyles, variants[variant], className)}
-		>
+		<Button {...props} className={cn(baseStyles, variants[variant], className)}>
 			{children}
 		</Button>
 	);

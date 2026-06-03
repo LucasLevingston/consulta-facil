@@ -4,11 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format, setHours, setMinutes } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
+	Banknote,
 	CalendarIcon,
 	Check,
 	ChevronsUpDown,
 	Clock,
+	CreditCard,
 	FileText,
+	Info,
 	Search,
 	Stethoscope,
 	Users,
@@ -59,6 +62,10 @@ import {
 	type AppointmentResponse,
 	appointmentFormSchema,
 } from "@/lib/schemas/appointment.schema";
+import {
+	PAYMENT_METHOD_LABELS,
+	type PaymentMethod,
+} from "@/lib/schemas/doctor.schema";
 import type {
 	DayOfWeek,
 	ProfessionalScheduleResponse,
@@ -243,7 +250,12 @@ export const AppointmentForm = ({
 					reason: values.reason ?? undefined,
 					notes: values.notes ?? undefined,
 					modality: values.modality,
+					chosenPaymentMethod: values.chosenPaymentMethod,
 				});
+				if (created.checkoutUrl) {
+					window.location.href = created.checkoutUrl;
+					return;
+				}
 				if (type === "create") {
 					form.reset();
 					router.push(`/dashboard/appointments/${created.id}`);
@@ -294,6 +306,88 @@ export const AppointmentForm = ({
 							</FormItem>
 						)}
 					/>
+
+					{/* Step 5 — Payment Method */}
+					{selectedDoctor &&
+						(selectedDoctor.acceptedPaymentMethods?.length ?? 0) > 0 && (
+							<div className="space-y-3">
+								<div className="flex items-center gap-2">
+									<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+										5
+									</div>
+									<h3 className="font-semibold text-foreground">
+										Forma de pagamento
+									</h3>
+								</div>
+
+								{selectedDoctor.paymentTiming === "AT_CONSULTATION" && (
+									<Alert className="rounded-xl border-blue-500/20 bg-blue-500/5">
+										<Info className="h-4 w-4 text-blue-500" />
+										<AlertDescription className="text-xs text-blue-700 dark:text-blue-400">
+											O pagamento é realizado presencialmente no dia da
+											consulta.
+										</AlertDescription>
+									</Alert>
+								)}
+
+								{selectedDoctor.paymentTiming === "AT_SCHEDULING" && (
+									<Alert className="rounded-xl border-amber-500/20 bg-amber-500/5">
+										<CreditCard className="h-4 w-4 text-amber-500" />
+										<AlertDescription className="text-xs text-amber-700 dark:text-amber-400">
+											Este profissional exige pagamento no momento do
+											agendamento.
+										</AlertDescription>
+									</Alert>
+								)}
+
+								<FormField
+									control={form.control}
+									name="chosenPaymentMethod"
+									render={({ field }) => (
+										<FormItem>
+											<div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+												{(selectedDoctor.acceptedPaymentMethods ?? []).map(
+													(method) => {
+														const isMercadoPago = method === "MERCADOPAGO";
+														return (
+															<button
+																key={method}
+																type="button"
+																onClick={() =>
+																	field.onChange(
+																		field.value === method ? undefined : method,
+																	)
+																}
+																className={`flex items-center gap-2 rounded-xl border p-3 text-left text-sm transition-colors ${
+																	field.value === method
+																		? "border-primary bg-primary/5 text-primary"
+																		: "border-border hover:border-primary/40"
+																}`}
+															>
+																{isMercadoPago ? (
+																	<CreditCard className="h-4 w-4 shrink-0" />
+																) : (
+																	<Banknote className="h-4 w-4 shrink-0" />
+																)}
+																<span className="font-medium">
+																	{
+																		PAYMENT_METHOD_LABELS[
+																			method as PaymentMethod
+																		]
+																	}
+																</span>
+															</button>
+														);
+													},
+												)}
+											</div>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+						)}
+
 					<Button
 						type="submit"
 						variant="destructive"

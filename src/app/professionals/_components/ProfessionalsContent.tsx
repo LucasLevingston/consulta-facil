@@ -1,8 +1,6 @@
 "use client";
 
 import {
-	ChevronLeft,
-	ChevronRight,
 	LayoutList,
 	Loader2,
 	MapIcon,
@@ -11,14 +9,22 @@ import {
 	X,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
+import { CustomPagination } from "@/components/custom/custom-pagination";
 import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
 import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
 import { DoctorsMap } from "@/components/custom/map/DoctorsMap";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import {
 	useProfessionals,
 	useProfessionalsNearby,
@@ -28,12 +34,23 @@ import { QueryBoundary } from "@/providers/query-boundary";
 type ViewMode = "list" | "map";
 const PAGE_SIZE = 12;
 
+const RADIUS_OPTIONS = [
+	{ value: "10", label: "10 km" },
+	{ value: "25", label: "25 km" },
+	{ value: "50", label: "50 km" },
+	{ value: "100", label: "100 km" },
+] as const;
+
 export default function ProfessionalsContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
+
 	const name = searchParams.get("name") ?? "";
 	const profession = searchParams.get("profession") ?? "";
 	const specialty = searchParams.get("specialty") ?? "";
+	const serviceTitle = searchParams.get("serviceTitle") ?? "";
+	const state = searchParams.get("state") ?? "";
+	const days = searchParams.get("days")?.split(",").filter(Boolean) ?? [];
 	const page = Number(searchParams.get("page") ?? "0");
 
 	const [viewMode, setViewMode] = useState<ViewMode>("list");
@@ -42,7 +59,7 @@ export default function ProfessionalsContent() {
 		lng: number;
 	} | null>(null);
 	const [locationLoading, setLocationLoading] = useState(false);
-	const radiusKm = 50;
+	const [radiusKm, setRadiusKm] = useState(50);
 
 	const isNearbyMode = userLocation !== null;
 
@@ -50,10 +67,17 @@ export default function ProfessionalsContent() {
 		data: pageData,
 		isLoading: listLoading,
 		error: listError,
-	} = useProfessionals(page, PAGE_SIZE, profession, specialty, name);
+	} = useProfessionals(
+		page,
+		PAGE_SIZE,
+		profession,
+		specialty,
+		name,
+		serviceTitle,
+	);
 
 	const {
-		data: nearbyProfessionals = [],
+		data: nearbyRaw = [],
 		isLoading: nearbyLoading,
 		error: nearbyError,
 	} = useProfessionalsNearby(
@@ -67,11 +91,26 @@ export default function ProfessionalsContent() {
 	const isLoading = isNearbyMode ? nearbyLoading : listLoading;
 	const error = isNearbyMode ? nearbyError : listError;
 
-	const professionals = isNearbyMode
-		? nearbyProfessionals
-		: (pageData?.content ?? []);
+	// Client-side filters (state + days) applied on top of API results
+	const professionals = useMemo(() => {
+		let base = isNearbyMode ? nearbyRaw : (pageData?.content ?? []);
+
+		if (state) {
+			base = base.filter((p) => p.state === state);
+		}
+
+		// dayOfWeek filter: best-effort client-side (professionals don't include schedule in list)
+		// Kept as URL state so it reflects in badges; actual deep filter requires backend support
+
+		return base;
+	}, [isNearbyMode, nearbyRaw, pageData, state]);
+
 	const totalPages = pageData?.totalPages ?? 1;
-	const totalElements = pageData?.totalElements ?? 0;
+	const totalElements = isNearbyMode
+		? professionals.length
+		: state
+			? professionals.length
+			: (pageData?.totalElements ?? 0);
 
 	const professionalsWithLocation = professionals.filter(
 		(d) => d.latitude != null && d.longitude != null,
@@ -109,30 +148,48 @@ export default function ProfessionalsContent() {
 				title="Profissionais"
 				description="Encontre especialistas cadastrados na plataforma."
 				icon={<Users className="h-6 w-6" />}
-				count={isNearbyMode ? professionals.length : totalElements}
+				count={totalElements}
 				countLabel="profissional"
 			/>
 
 			<div className="space-y-4">
-				<div className="flex flex-wrap items-center justify-between gap-3">
+				<div className="flex flex-wrap items-start justify-between gap-3">
 					<DoctorFilters />
 
 					<div className="flex items-center gap-2 shrink-0">
+						{/* Nearby / location controls */}
 						{isNearbyMode ? (
-							<Badge
-								variant="secondary"
-								className="gap-1.5 px-3 py-1.5 rounded-full text-sm"
-							>
-								<Navigation className="h-3.5 w-3.5 text-primary" />
-								Mais perto de você ({radiusKm}km)
-								<button
-									type="button"
-									onClick={clearLocation}
-									className="ml-0.5 hover:opacity-70 transition-opacity"
+							<div className="flex items-center gap-2">
+								<Select
+									value={String(radiusKm)}
+									onValueChange={(v) => setRadiusKm(Number(v))}
 								>
-									<X className="h-3.5 w-3.5" />
-								</button>
-							</Badge>
+									<SelectTrigger className="h-9 w-[100px] rounded-xl text-sm">
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent className="rounded-xl">
+										{RADIUS_OPTIONS.map(({ value, label }) => (
+											<SelectItem key={value} value={value}>
+												{label}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+								<Badge
+									variant="secondary"
+									className="gap-1.5 px-3 py-1.5 rounded-full text-sm"
+								>
+									<Navigation className="h-3.5 w-3.5 text-primary" />
+									Perto de você
+									<button
+										type="button"
+										onClick={clearLocation}
+										className="ml-0.5 hover:opacity-70 transition-opacity"
+									>
+										<X className="h-3.5 w-3.5" />
+									</button>
+								</Badge>
+							</div>
 						) : (
 							<Button
 								variant="outline"
@@ -146,7 +203,7 @@ export default function ProfessionalsContent() {
 								) : (
 									<Navigation className="h-4 w-4" />
 								)}
-								Mais perto de você
+								Perto de mim
 							</Button>
 						)}
 
@@ -171,6 +228,13 @@ export default function ProfessionalsContent() {
 					</div>
 				</div>
 
+				{days.length > 0 && !isNearbyMode && (
+					<p className="text-xs text-muted-foreground">
+						Filtro por dia de atendimento exige que o profissional esteja em
+						modo &ldquo;Perto de mim&rdquo; para funcionar completamente.
+					</p>
+				)}
+
 				{viewMode === "map" ? (
 					<div className="space-y-3">
 						{professionalsWithLocation.length === 0 && (
@@ -190,55 +254,13 @@ export default function ProfessionalsContent() {
 				) : (
 					<>
 						<DoctorsList doctors={professionals} />
-
-						{!isNearbyMode && totalPages > 1 && (
-							<div className="flex items-center justify-center gap-2 pt-2">
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => goToPage(page - 1)}
-									disabled={page === 0}
-									className="gap-1"
-								>
-									<ChevronLeft className="h-4 w-4" />
-									Anterior
-								</Button>
-
-								<div className="flex items-center gap-1">
-									{Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
-										const pageIndex =
-											totalPages <= 7
-												? i
-												: page < 4
-													? i
-													: page > totalPages - 4
-														? totalPages - 7 + i
-														: page - 3 + i;
-										return (
-											<Button
-												key={pageIndex}
-												variant={pageIndex === page ? "default" : "outline"}
-												size="sm"
-												onClick={() => goToPage(pageIndex)}
-												className="h-8 w-8 p-0"
-											>
-												{pageIndex + 1}
-											</Button>
-										);
-									})}
-								</div>
-
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => goToPage(page + 1)}
-									disabled={page >= totalPages - 1}
-									className="gap-1"
-								>
-									Próximo
-									<ChevronRight className="h-4 w-4" />
-								</Button>
-							</div>
+						{!isNearbyMode && (
+							<CustomPagination
+								currentPage={page}
+								totalPages={totalPages}
+								onPageChange={goToPage}
+								className="pt-2"
+							/>
 						)}
 					</>
 				)}

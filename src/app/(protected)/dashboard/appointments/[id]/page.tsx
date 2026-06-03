@@ -21,13 +21,12 @@ import {
 import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
-
+import { CustomButton } from "@/components/custom/custom-button";
 import { ExamsSection } from "@/components/custom/forms/Appointments/ExamsSection";
 import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
 import { RescheduleAppointmentForm } from "@/components/custom/forms/Appointments/RescheduleAppointmentForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Dialog,
@@ -149,9 +148,9 @@ function AnamnesisSection({
 						Anamnese
 					</CardTitle>
 					{canEdit && !editing && (
-						<Button variant="outline" size="sm" onClick={startEdit}>
+						<CustomButton variant="outline" onClick={startEdit}>
 							{anamnesis ? "Editar" : "Preencher"}
-						</Button>
+						</CustomButton>
 					)}
 				</div>
 			</CardHeader>
@@ -191,16 +190,16 @@ function AnamnesisSection({
 							onChange={(v) => setForm((f) => ({ ...f, observations: v }))}
 						/>
 						<div className="flex gap-2 pt-1">
-							<Button size="sm" onClick={handleSave} disabled={isPending}>
+							<CustomButton size="sm" onClick={handleSave} disabled={isPending}>
 								{isPending ? "Salvando..." : "Salvar"}
-							</Button>
-							<Button
-								variant="ghost"
+							</CustomButton>
+							<CustomButton
+								variant="secondary"
 								size="sm"
 								onClick={() => setEditing(false)}
 							>
 								Cancelar
-							</Button>
+							</CustomButton>
 						</div>
 					</div>
 				) : anamnesis ? (
@@ -329,9 +328,9 @@ function ProntuarioSection({
 						Prontuário
 					</CardTitle>
 					{canEdit && !editing && (
-						<Button variant="outline" size="sm" onClick={startEdit}>
+						<CustomButton variant="outline" size="sm" onClick={startEdit}>
 							{prontuario ? "Editar" : "Preencher"}
-						</Button>
+						</CustomButton>
 					)}
 				</div>
 			</CardHeader>
@@ -376,16 +375,16 @@ function ProntuarioSection({
 							}
 						/>
 						<div className="flex gap-2 pt-1">
-							<Button size="sm" onClick={handleSave} disabled={isPending}>
+							<CustomButton size="sm" onClick={handleSave} disabled={isPending}>
 								{isPending ? "Salvando..." : "Salvar"}
-							</Button>
-							<Button
+							</CustomButton>
+							<CustomButton
 								variant="ghost"
 								size="sm"
 								onClick={() => setEditing(false)}
 							>
 								Cancelar
-							</Button>
+							</CustomButton>
 						</div>
 					</div>
 				) : prontuario ? (
@@ -443,8 +442,18 @@ function ProntuarioReadView({
 function QrCodeDialog({ appointmentId }: { appointmentId: string }) {
 	const { data, isLoading } = useCheckInToken(appointmentId);
 
-	if (isLoading) return <p className="text-sm text-muted-foreground text-center py-4">Gerando código...</p>;
-	if (!data) return <p className="text-sm text-destructive text-center py-4">Erro ao gerar código.</p>;
+	if (isLoading)
+		return (
+			<p className="text-sm text-muted-foreground text-center py-4">
+				Gerando código...
+			</p>
+		);
+	if (!data)
+		return (
+			<p className="text-sm text-destructive text-center py-4">
+				Erro ao gerar código.
+			</p>
+		);
 
 	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
 	return (
@@ -491,12 +500,12 @@ function AppointmentDetail({
 	return (
 		<div className="mx-auto max-w-2xl space-y-6">
 			<div className="flex items-center gap-3">
-				<Button variant="ghost" size="sm" className="gap-2 -ml-2" asChild>
+				<CustomButton variant="ghost" size="sm" className="gap-2 -ml-2" asChild>
 					<Link href="/dashboard/appointments">
 						<ArrowLeft className="h-4 w-4" />
 						Voltar
 					</Link>
-				</Button>
+				</CustomButton>
 			</div>
 
 			{/* Header */}
@@ -552,11 +561,7 @@ function AppointmentDetail({
 						</CardTitle>
 						<div className="flex flex-wrap gap-2">
 							{isOnline && appointment.meetLink && (
-								<Button
-									size="sm"
-									className="gap-2"
-									asChild
-								>
+								<CustomButton size="sm" className="gap-2" asChild>
 									<a
 										href={appointment.meetLink}
 										target="_blank"
@@ -566,10 +571,10 @@ function AppointmentDetail({
 										Entrar na consulta
 										<ExternalLink className="h-3 w-3" />
 									</a>
-								</Button>
+								</CustomButton>
 							)}
 							{isOnline && !appointment.meetLink && isProfessional && (
-								<Button
+								<CustomButton
 									variant="outline"
 									size="sm"
 									className="gap-2"
@@ -578,10 +583,10 @@ function AppointmentDetail({
 								>
 									<Video className="h-3.5 w-3.5" />
 									{generatingLink ? "Gerando..." : "Gerar link Meet"}
-								</Button>
+								</CustomButton>
 							)}
 							{isPatient && appointment.status === "CONFIRMED" && !isOnline && (
-								<Button
+								<CustomButton
 									variant="outline"
 									size="sm"
 									className="gap-2"
@@ -589,10 +594,10 @@ function AppointmentDetail({
 								>
 									<QrCode className="h-3.5 w-3.5" />
 									QR Check-in
-								</Button>
+								</CustomButton>
 							)}
 							{canReschedule && (
-								<Button
+								<CustomButton
 									variant="outline"
 									size="sm"
 									className="gap-2"
@@ -600,7 +605,7 @@ function AppointmentDetail({
 								>
 									<RefreshCw className="h-3.5 w-3.5" />
 									Remarcar
-								</Button>
+								</CustomButton>
 							)}
 						</div>
 					</div>
@@ -755,7 +760,7 @@ function AppointmentDetail({
 									? "Pagamento pendente. Conclua no link abaixo."
 									: "Pague antecipadamente e garanta seu atendimento."}
 							</p>
-							<Button
+							<CustomButton
 								size="sm"
 								className="gap-2 w-fit"
 								disabled={creatingPayment}
@@ -768,7 +773,7 @@ function AppointmentDetail({
 							>
 								<CreditCard className="h-4 w-4" />
 								{creatingPayment ? "Processando..." : "Pagar consulta"}
-							</Button>
+							</CustomButton>
 						</CardContent>
 					</Card>
 				)}
@@ -812,14 +817,14 @@ function AppointmentDetail({
 								<p className="text-sm text-muted-foreground">
 									Você ainda não avaliou esta consulta.
 								</p>
-								<Button
+								<CustomButton
 									size="sm"
 									className="gap-2"
 									onClick={() => setRateOpen(true)}
 								>
 									<Star className="h-4 w-4" />
 									Avaliar consulta
-								</Button>
+								</CustomButton>
 								<Dialog open={rateOpen} onOpenChange={setRateOpen}>
 									<DialogContent className="sm:max-w-md">
 										<DialogHeader className="mb-2 space-y-1">
