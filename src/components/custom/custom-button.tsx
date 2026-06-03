@@ -48,13 +48,12 @@ const variants = {
 		"hover:shadow-xl hover:shadow-secondary/40",
 		"hover:scale-[1.02]",
 	),
+
 	ghost: cn(
 		"bg-transparent",
-		"text-primary",
+		"text-foreground",
+		"hover:bg-accent hover:text-accent-foreground",
 		"shadow-none",
-		"hover:bg-primary/10",
-		"hover:text-primary",
-		"hover:scale-[1.02]",
 	),
 };
 
