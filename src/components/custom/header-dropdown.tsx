@@ -118,7 +118,7 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
 							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
 								<Link
-									href="/dashboard/schedule"
+									href="/settings/schedule"
 									className="flex items-center gap-2"
 								>
 									<Clock className="h-4 w-4" />
