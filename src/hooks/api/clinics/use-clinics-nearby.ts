@@ -1,0 +1,18 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
+import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicKeys } from "./clinic-keys";
+
+export function useClinicsNearby(
+	lat: number | null,
+	lng: number | null,
+	radiusKm = 50,
+) {
+	return useQuery({
+		queryKey: clinicKeys.nearby(lat ?? 0, lng ?? 0, radiusKm),
+		queryFn: () => clinicsApi.getNearby(lat ?? 0, lng ?? 0, radiusKm),
+		enabled: lat !== null && lng !== null,
+	});
+}
