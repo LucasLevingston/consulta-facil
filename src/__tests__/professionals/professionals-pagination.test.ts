@@ -138,6 +138,86 @@ describe("professionalsApi — getAll pagination", () => {
 		expect(result.totalPages).toBe(0);
 		expect(result.content).toHaveLength(0);
 	});
+
+	it("filtra por serviceTitle e passa para a API", async () => {
+		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
+
+		await professionalsApi.getAll(
+			0,
+			12,
+			undefined,
+			undefined,
+			undefined,
+			"Acupuntura",
+		);
+
+		expect(mockGet).toHaveBeenCalledWith(
+			"/professionals",
+			expect.objectContaining({
+				params: expect.objectContaining({ serviceTitle: "Acupuntura" }),
+			}),
+		);
+	});
+
+	it("serviceTitle vazio é enviado como undefined", async () => {
+		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
+
+		await professionalsApi.getAll(0, 12, "", "", "", "");
+
+		const callParams = mockGet.mock.calls[0][1] as {
+			params: Record<string, unknown>;
+		};
+		expect(callParams.params.serviceTitle).toBeUndefined();
+	});
+
+	it("combinação de specialty + serviceTitle envia ambos os filtros", async () => {
+		mockGet.mockResolvedValueOnce({ data: makePage([professional], 1, 1, 0) });
+
+		await professionalsApi.getAll(
+			0,
+			12,
+			undefined,
+			"Dermatologia",
+			undefined,
+			"Peeling",
+		);
+
+		const callParams = mockGet.mock.calls[0][1] as {
+			params: Record<string, unknown>;
+		};
+		expect(callParams.params.specialty).toBe("Dermatologia");
+		expect(callParams.params.serviceTitle).toBe("Peeling");
+	});
+
+	it("paginação com serviceTitle mantém filtro em todas as páginas", async () => {
+		mockGet
+			.mockResolvedValueOnce({ data: makePage([professional], 25, 3, 0) })
+			.mockResolvedValueOnce({
+				data: makePage([{ ...professional, id: "p-2" }], 25, 3, 1),
+			});
+
+		await professionalsApi.getAll(
+			0,
+			12,
+			undefined,
+			undefined,
+			undefined,
+			"Botox",
+		);
+		await professionalsApi.getAll(
+			1,
+			12,
+			undefined,
+			undefined,
+			undefined,
+			"Botox",
+		);
+
+		for (const call of mockGet.mock.calls) {
+			const params = (call[1] as { params: Record<string, unknown> }).params;
+			expect(params.serviceTitle).toBe("Botox");
+		}
+	});
 });
 
 async function propessionalPage0() {
