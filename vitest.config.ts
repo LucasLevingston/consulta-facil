@@ -21,6 +21,12 @@ export default defineConfig({
 				"src/app/**/page.tsx",
 				"src/app/**/error.tsx",
 				"src/app/**/loading.tsx",
+				"src/lib/api/generated/**",
+				"src/providers/**",
+				"src/components/custom/map/**",
+				"src/components/custom/sidebar/**",
+				"src/lib/monitoring/**",
+				"src/config/**",
 			],
 			thresholds: {
 				statements: 0,
