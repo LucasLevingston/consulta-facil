@@ -13,12 +13,8 @@ export default function NotFound() {
 				Página não encontrada
 			</h2>
 			<p>Desculpe, essa página não existe</p>
-			<div >
-				<CustomButton
-					onClick={() => router.back()}
-				>
-					Voltar
-				</CustomButton>
+			<div>
+				<CustomButton onClick={() => router.back()}>Voltar</CustomButton>
 				<CustomButton
 					onClick={() => router.push("/dashboard")}
 					variant="outline"
