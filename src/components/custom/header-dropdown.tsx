@@ -127,7 +127,7 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
 							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
 								<Link
-									href="/dashboard/my-clinic"
+									href="/settings/my-clinic"
 									className="flex items-center gap-2"
 								>
 									<Building2 className="h-4 w-4" />

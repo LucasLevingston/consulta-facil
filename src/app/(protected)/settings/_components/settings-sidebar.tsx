@@ -40,7 +40,7 @@ const ALL_LINKS: NavLink[] = [
 		roles: ["PROFESSIONAL"],
 	},
 	{
-		href: "/dashboard/my-clinic",
+		href: "/settings/my-clinic",
 		label: "Minha Clínica",
 		icon: Building2,
 		roles: ["PROFESSIONAL"],
