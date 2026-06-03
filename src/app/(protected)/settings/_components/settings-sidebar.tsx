@@ -46,7 +46,7 @@ const ALL_LINKS: NavLink[] = [
 		roles: ["PROFESSIONAL"],
 	},
 	{
-		href: "/dashboard/services",
+		href: "/settings/services",
 		label: "Serviços",
 		icon: Stethoscope,
 		roles: ["PROFESSIONAL"],
