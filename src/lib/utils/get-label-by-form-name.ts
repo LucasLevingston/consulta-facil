@@ -1,0 +1,30 @@
+export function getLabelByFormName(name: string): string {
+	const labels: Record<string, string> = {
+		email: "E-mail",
+		password: "Senha",
+		confirmPassword: "Confirmar Senha",
+		name: "Nome",
+		age: "Idade",
+		phone: "Telefone",
+		cpf: "CPF",
+		address: "Endereço",
+		specialty: "Especialidade",
+		licenseNumber: "Número de Registro",
+		birthDate: "Data de Nascimento",
+		scheduledAt: "Data da Consulta",
+		professionalId: "Profissional",
+		reason: "Motivo",
+		notes: "Observações",
+		cancellationReason: "Motivo do Cancelamento",
+		occupation: "Ocupação",
+		emergencyContactName: "Contato de Emergência",
+		emergencyContactNumber: "Telefone de Emergência",
+		allergies: "Alergias",
+		currentMedication: "Medicamentos Atuais",
+		familyMedicalHistory: "Histórico Familiar",
+		pastMedicalHistory: "Histórico Médico",
+		identificationDocumentType: "Tipo de Documento",
+		identificationDocument: "Documento",
+	};
+	return labels[name] || name;
+}
