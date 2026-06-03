@@ -5,6 +5,3 @@ export async function getMyProfessionalProfileApi(): Promise<ProfessionalRespons
 	const response = await api.get<ProfessionalResponse>("/professionals/me");
 	return response.data;
 }
-
-// Backwards-compatible alias
-export const getMyDoctorProfileApi = getMyProfessionalProfileApi;

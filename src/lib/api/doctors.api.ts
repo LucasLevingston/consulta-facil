@@ -132,6 +132,3 @@ export const professionalsApi = {
 		return response.data;
 	},
 };
-
-// Backwards-compatible alias
-export const doctorsApi = professionalsApi;
