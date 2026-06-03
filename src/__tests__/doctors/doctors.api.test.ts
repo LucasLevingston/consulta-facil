@@ -131,6 +131,37 @@ describe("doctorsApi", () => {
 	});
 });
 
+describe("doctorsApi — getApplicationStatus", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	it("chama GET /professionals/application-status e retorna perfil", async () => {
+		mockGet.mockResolvedValueOnce({ data: doctor });
+
+		const result = await doctorsApi.getApplicationStatus();
+
+		expect(mockGet).toHaveBeenCalledWith("/professionals/application-status");
+		expect(result.id).toBe("d-1");
+	});
+
+	it("retorna status da candidatura do profissional autenticado", async () => {
+		const pending = { ...doctor, status: "PENDING_REVIEW" };
+		mockGet.mockResolvedValueOnce({ data: pending });
+
+		const result = await doctorsApi.getApplicationStatus();
+
+		expect(result.status).toBe("PENDING_REVIEW");
+	});
+
+	it("não requer parâmetros na chamada", async () => {
+		mockGet.mockResolvedValueOnce({ data: doctor });
+
+		await doctorsApi.getApplicationStatus();
+
+		expect(mockGet).toHaveBeenCalledWith("/professionals/application-status");
+		expect(mockGet).toHaveBeenCalledTimes(1);
+	});
+});
+
 describe("doctorKeys", () => {
 	it("all retorna a chave raiz", () => {
 		expect(doctorKeys.all).toEqual(["professionals"]);
