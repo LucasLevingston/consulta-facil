@@ -1,7 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, FileText, FlaskConical, Paperclip, Upload } from "lucide-react";
+import {
+	CheckCircle,
+	FileText,
+	FlaskConical,
+	Paperclip,
+	Upload,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -16,18 +22,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	useCreateExamRequest,
-	useExamRequestsByAppointment,
-	useReviewExam,
-	useUploadExamResult,
-} from "@/hooks/api/use-exam-requests";
+import { useCreateExamRequest } from "@/hooks/api/exam-requests/use-create-exam-request";
+import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
+import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
+import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
 import {
 	type CreateExamRequestInput,
-	type ExamRequestResponse,
-	type ReviewExamRequestInput,
 	createExamRequestSchema,
-	reviewExamRequestSchema,
+	type ExamRequestResponse,
 } from "@/lib/schemas/examRequest.schema";
 
 const STATUS_CONFIG: Record<
@@ -75,7 +77,10 @@ function ExamCard({
 		if (!reviewNotes.trim()) return;
 		setReviewing(true);
 		try {
-			await review({ examId: exam.id, data: { professionalNotes: reviewNotes } });
+			await review({
+				examId: exam.id,
+				data: { professionalNotes: reviewNotes },
+			});
 			toast.success("Observações salvas!");
 			setShowReviewForm(false);
 		} catch {
@@ -267,7 +272,8 @@ export function ExamsSection({
 	isPatient,
 	isProfessional,
 }: ExamsSectionProps) {
-	const { data: exams = [], isLoading } = useExamRequestsByAppointment(appointmentId);
+	const { data: exams = [], isLoading } =
+		useExamRequestsByAppointment(appointmentId);
 
 	if (isLoading) return null;
 
@@ -279,16 +285,14 @@ export function ExamsSection({
 						<FlaskConical className="h-4 w-4" />
 						Exames
 					</CardTitle>
-					{isProfessional && (
-						<RequestExamForm appointmentId={appointmentId} />
-					)}
+					{isProfessional && <RequestExamForm appointmentId={appointmentId} />}
 				</div>
 			</CardHeader>
 			<CardContent className="-mt-2">
 				{exams.length === 0 ? (
 					<p className="text-sm text-muted-foreground">
 						{isProfessional
-							? "Nenhum exame solicitado. Clique em \"Solicitar exame\" para adicionar."
+							? 'Nenhum exame solicitado. Clique em "Solicitar exame" para adicionar.'
 							: "Nenhum exame solicitado."}
 					</p>
 				) : (

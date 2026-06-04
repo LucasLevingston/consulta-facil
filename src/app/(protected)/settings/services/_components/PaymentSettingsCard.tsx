@@ -21,7 +21,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { useUpdatePaymentSettings } from "@/hooks/api/use-services";
+import { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
 import type { PaymentMethod, PaymentTiming } from "@/lib/schemas/doctor.schema";
 import {
 	PAYMENT_METHOD_LABELS,

@@ -28,7 +28,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { cn, getLabelByFormName, getPlaceholderByFormName } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
+import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
+import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
 export enum FormFieldType {
 	INPUT = "input",
 	EMAIL = "email",
@@ -61,7 +63,6 @@ export default function CustomFormField({
 	fieldType,
 	type,
 	disabled,
-	children,
 	className,
 	selectOptions,
 }: CustomFormFieldProps) {

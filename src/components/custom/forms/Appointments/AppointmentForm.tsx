@@ -50,13 +50,11 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	useCancelAppointment,
-	useProfessionalAppointments,
-	useScheduleAppointment,
-} from "@/hooks/api/use-appointments";
-import { useProfessionals } from "@/hooks/api/use-doctors";
-import { useProfessionalSchedule } from "@/hooks/api/use-schedule";
+import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
+import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
+import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 import {
 	type AppointmentFormValues,
 	type AppointmentResponse,
@@ -70,7 +68,7 @@ import type {
 	DayOfWeek,
 	ProfessionalScheduleResponse,
 } from "@/lib/schemas/schedule.schema";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { useUserStore } from "@/store/useUserStore";
 
 const JS_DAY_TO_DOW: Record<number, DayOfWeek> = {

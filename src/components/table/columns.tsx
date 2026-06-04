@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { AppointmentActions } from "@/components/table/AppointmentActions";
 import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils/format-date-time";
 
 export function makeColumns(
 	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN",
@@ -47,9 +47,7 @@ export function makeColumns(
 			accessorKey: "professionalName",
 			header: "Profissional",
 			cell: ({ row }) => (
-				<p className="text-14-medium">
-					{row.original.professionalName ?? "—"}
-				</p>
+				<p className="text-14-medium">{row.original.professionalName ?? "—"}</p>
 			),
 		},
 		{
@@ -57,7 +55,12 @@ export function makeColumns(
 			header: () => <div className="pl-4">Ações</div>,
 			cell: ({ row }) => (
 				<div className="flex items-center gap-1">
-					<Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" asChild>
+					<Button
+						variant="ghost"
+						size="sm"
+						className="gap-1.5 text-muted-foreground"
+						asChild
+					>
 						<Link href={`/dashboard/appointments/${row.original.id}`}>
 							<Eye className="h-3.5 w-3.5" />
 							Ver

@@ -10,7 +10,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useRescheduleAppointment } from "@/hooks/api/use-appointments";
+import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
 import {
 	type AppointmentResponse,
 	type RescheduleAppointmentInput,

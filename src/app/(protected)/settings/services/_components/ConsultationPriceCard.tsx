@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSetConsultationPrice } from "@/hooks/api/use-services";
+import { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
 
 export function ConsultationPriceCard({
 	consultationPrice,

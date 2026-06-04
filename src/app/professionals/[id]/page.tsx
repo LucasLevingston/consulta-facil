@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useProfessional } from "@/hooks/api/use-doctors";
+import { useProfessional } from "@/hooks/api/doctors/use-professional";
 
 export default function DoctorProfilePage() {
 	const { id } = useParams<{ id: string }>();

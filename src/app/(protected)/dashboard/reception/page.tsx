@@ -12,7 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useCallPatient, useCheckInByQr, useQueue } from "@/hooks/api/use-appointments";
+import { useCallPatient } from "@/hooks/api/appointments/use-call-patient";
+import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
+import { useQueue } from "@/hooks/api/appointments/use-queue";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 export default function ReceptionPage() {
@@ -100,7 +102,9 @@ function QueuePanel() {
 						onClick={() => refetch()}
 						disabled={isFetching}
 					>
-						<RefreshCw className={`h-3.5 w-3.5 ${isFetching ? "animate-spin" : ""}`} />
+						<RefreshCw
+							className={`h-3.5 w-3.5 ${isFetching ? "animate-spin" : ""}`}
+						/>
 					</Button>
 				</div>
 			</CardHeader>
@@ -108,7 +112,9 @@ function QueuePanel() {
 				{isLoading ? (
 					<p className="text-sm text-muted-foreground">Carregando...</p>
 				) : queue.length === 0 ? (
-					<p className="text-sm text-muted-foreground">Nenhum paciente na fila.</p>
+					<p className="text-sm text-muted-foreground">
+						Nenhum paciente na fila.
+					</p>
 				) : (
 					<>
 						{inProgress.length > 0 && (
@@ -116,7 +122,9 @@ function QueuePanel() {
 								<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
 									Em atendimento
 								</p>
-								{inProgress.map((a) => <QueueCard key={a.id} appointment={a} />)}
+								{inProgress.map((a) => (
+									<QueueCard key={a.id} appointment={a} />
+								))}
 							</div>
 						)}
 						{inProgress.length > 0 && checkedIn.length > 0 && <Separator />}
@@ -125,7 +133,9 @@ function QueuePanel() {
 								<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
 									Aguardando
 								</p>
-								{checkedIn.map((a) => <QueueCard key={a.id} appointment={a} />)}
+								{checkedIn.map((a) => (
+									<QueueCard key={a.id} appointment={a} />
+								))}
 							</div>
 						)}
 					</>
@@ -147,18 +157,26 @@ function QueueCard({ appointment }: { appointment: AppointmentResponse }) {
 		}
 	}
 
-	const checkedInAt = appointment.checkedInAt ? new Date(appointment.checkedInAt) : null;
+	const checkedInAt = appointment.checkedInAt
+		? new Date(appointment.checkedInAt)
+		: null;
 
 	return (
 		<div className="flex items-center justify-between gap-3 rounded-lg border p-3">
 			<div className="min-w-0">
-				<p className="text-sm font-medium truncate">{appointment.patientName}</p>
+				<p className="text-sm font-medium truncate">
+					{appointment.patientName}
+				</p>
 				<div className="flex items-center gap-2 mt-0.5">
 					<Badge
-						variant={appointment.status === "IN_PROGRESS" ? "default" : "secondary"}
+						variant={
+							appointment.status === "IN_PROGRESS" ? "default" : "secondary"
+						}
 						className="text-xs"
 					>
-						{appointment.status === "IN_PROGRESS" ? "Em atendimento" : "Aguardando"}
+						{appointment.status === "IN_PROGRESS"
+							? "Em atendimento"
+							: "Aguardando"}
 					</Badge>
 					{checkedInAt && (
 						<span className="text-xs text-muted-foreground">
@@ -168,7 +186,13 @@ function QueueCard({ appointment }: { appointment: AppointmentResponse }) {
 				</div>
 			</div>
 			{appointment.status === "CHECKED_IN" && (
-				<Button size="sm" variant="outline" className="gap-1.5 shrink-0" onClick={handleCall} disabled={isPending}>
+				<Button
+					size="sm"
+					variant="outline"
+					className="gap-1.5 shrink-0"
+					onClick={handleCall}
+					disabled={isPending}
+				>
 					<PhoneCall className="h-3.5 w-3.5" />
 					Chamar
 				</Button>

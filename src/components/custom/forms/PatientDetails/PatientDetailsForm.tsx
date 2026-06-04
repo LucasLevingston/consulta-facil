@@ -5,12 +5,19 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-
-import { FileUploader } from "@/components/FileUploader";
-import CustomFormField, { FormFieldType } from "@/components/custom/forms-components/custom-form-field";
+import CustomFormField, {
+	FormFieldType,
+} from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { useUpdateMyProfile } from "@/hooks/api/use-patients";
+import { FileUploader } from "@/components/FileUploader";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+} from "@/components/ui/form";
+import { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
 import { GenderOptions, IdentificationTypes } from "@/utils/constants";
 import { PatientFormValidation } from "./FormValidation";
 
@@ -50,7 +57,8 @@ const PatientDetailsForm = ({
 			currentMedication: defaultData?.currentMedication ?? "",
 			familyMedicalHistory: defaultData?.familyMedicalHistory ?? "",
 			pastMedicalHistory: defaultData?.pastMedicalHistory ?? "",
-			identificationDocumentType: defaultData?.identificationDocumentType ?? "Birth Certificate",
+			identificationDocumentType:
+				defaultData?.identificationDocumentType ?? "Birth Certificate",
 			cpf: defaultData?.cpf ?? "",
 			identificationDocument: undefined,
 			imageProfile: undefined,
@@ -86,7 +94,9 @@ const PatientDetailsForm = ({
 				router.push("/");
 			}
 		} catch (error: unknown) {
-			toast.error(error instanceof Error ? error.message : "Erro ao salvar os dados");
+			toast.error(
+				error instanceof Error ? error.message : "Erro ao salvar os dados",
+			);
 		}
 	};
 

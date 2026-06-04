@@ -5,8 +5,8 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { doctorKeys } from "@/hooks/api/use-doctors";
-import { doctorsApi } from "@/lib/api/doctors.api";
+import { professionalKeys as doctorKeys } from "@/hooks/api/doctors/professional-keys";
+import { professionalsApi as doctorsApi } from "@/lib/api/doctors.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPost = vi.mocked(api.post);

@@ -11,12 +11,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useProfessionalAppointments } from "@/hooks/api/use-appointments";
-import {
-	useApproveApplication,
-	usePendingApplications,
-	useRejectApplication,
-} from "@/hooks/api/use-doctors";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useApproveApplication } from "@/hooks/api/doctors/use-approve-application";
+import { usePendingApplications } from "@/hooks/api/doctors/use-pending-applications";
+import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application";
 import { usePermission } from "@/hooks/use-permission";
 import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
 import { QueryBoundary } from "@/providers/query-boundary";

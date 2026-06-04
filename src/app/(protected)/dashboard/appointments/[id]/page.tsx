@@ -38,18 +38,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	useAnamnesis,
-	useProntuario,
-	useSaveAnamnesis,
-	useSaveProntuario,
-} from "@/hooks/api/use-anamnesis";
-import {
-	useAppointment,
-	useCheckInToken,
-	useCreatePayment,
-	useGenerateMeetLink,
-} from "@/hooks/api/use-appointments";
+import { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
+import { useProntuario } from "@/hooks/api/anamnesis/use-prontuario";
+import { useSaveAnamnesis } from "@/hooks/api/anamnesis/use-save-anamnesis";
+import { useSaveProntuario } from "@/hooks/api/anamnesis/use-save-prontuario";
+import { useAppointment } from "@/hooks/api/appointments/use-appointment";
+import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
+import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
+import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
 import type {
 	AnamnesisInput,
 	AnamnesisResponse,

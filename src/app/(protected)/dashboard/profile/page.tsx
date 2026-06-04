@@ -21,12 +21,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
-import {
-	usePatientAppointments,
-	useProfessionalAppointments,
-} from "@/hooks/api/use-appointments";
-import { useMyProfile } from "@/hooks/api/use-patients";
+import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
+import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

@@ -5,11 +5,9 @@ import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
+import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
-import {
-	usePatientAppointments,
-	useProfessionalAppointments,
-} from "@/hooks/api/use-appointments";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

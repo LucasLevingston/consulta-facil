@@ -4,7 +4,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils/format-date-time";
 
 interface AppointmentRowProps {
 	appointment: AppointmentResponse;

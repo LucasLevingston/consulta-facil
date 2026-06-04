@@ -18,13 +18,11 @@ import {
 import Link from "next/link";
 import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
-import {
-	useCompleteAppointment,
-	useConfirmAppointment,
-	usePatientAppointments,
-	useProfessionalAppointments,
-} from "@/hooks/api/use-appointments";
+import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
+import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
+import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { useUserStore } from "@/store/useUserStore";
 import { AppointmentsList } from "./appointments-list";
 import { StatCard } from "./stat-card";

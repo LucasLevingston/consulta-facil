@@ -23,9 +23,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
-import { useMyClinic } from "@/hooks/api/use-clinics";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 import { PlanCard } from "./plan-card";

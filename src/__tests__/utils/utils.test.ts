@@ -1,12 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-	cn,
-	convertFileToUrl,
-	formatDateTime,
-	getLabelByFormName,
-	getPlaceholderByFormName,
-} from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
+import { convertFileToUrl } from "@/lib/utils/convert-file-to-url";
+import { formatDateTime } from "@/lib/utils/format-date-time";
+import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
+import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
 
 // ── cn ────────────────────────────────────────────────────────────────────────
 

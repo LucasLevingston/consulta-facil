@@ -13,7 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useScheduleProcedureRequest } from "@/hooks/api/use-procedure-requests";
+import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
 import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,

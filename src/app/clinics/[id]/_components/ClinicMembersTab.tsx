@@ -17,9 +17,9 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useRemoveClinicMember } from "@/hooks/api/use-clinics";
-import { useDoctors } from "@/hooks/api/use-doctors";
-import { useSendClinicInvite } from "@/hooks/api/use-notifications";
+import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
+import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
+import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
 import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
 
 interface Props {
@@ -32,7 +32,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 	const [addOpen, setAddOpen] = useState(false);
 	const [doctorSearch, setDoctorSearch] = useState("");
 
-	const { data: allDoctors } = useDoctors(0, 200);
+	const { data: allDoctors } = useProfessionals(0, 200);
 	const sendInvite = useSendClinicInvite();
 	const removeMember = useRemoveClinicMember();
 
@@ -94,7 +94,8 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 							<DialogHeader>
 								<DialogTitle>Convidar profissional</DialogTitle>
 								<DialogDescription>
-									O profissional receberá uma notificação para aceitar o convite.
+									O profissional receberá uma notificação para aceitar o
+									convite.
 								</DialogDescription>
 							</DialogHeader>
 

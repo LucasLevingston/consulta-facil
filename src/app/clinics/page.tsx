@@ -28,8 +28,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useClinics, useClinicsNearby } from "@/hooks/api/use-clinics";
-import { cn } from "@/lib/utils";
+import { useClinics } from "@/hooks/api/clinics/use-clinics";
+import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
+import { cn } from "@/lib/utils/cn";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 type ViewMode = "list" | "map";

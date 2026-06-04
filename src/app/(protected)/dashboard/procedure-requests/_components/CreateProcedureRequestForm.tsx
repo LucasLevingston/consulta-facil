@@ -14,9 +14,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useProfessionalPatients } from "@/hooks/api/use-patients";
-import { useCreateProcedureRequest } from "@/hooks/api/use-procedure-requests";
-import { useGetProfessionalServices } from "@/hooks/api/use-services";
+import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
+import { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
+import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,

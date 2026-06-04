@@ -25,12 +25,10 @@ vi.mock("@/lib/api/doctors.api", () => ({
 	},
 }));
 
-import {
-	useApplicationStatus,
-	useProfessional,
-	useProfessionals,
-	useProfessionalsNearby,
-} from "@/hooks/api/use-doctors";
+import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { useProfessional } from "@/hooks/api/doctors/use-professional";
+import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
+import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
 import { professionalsApi } from "@/lib/api/doctors.api";
 
 const mockGetAll = vi.mocked(professionalsApi.getAll);

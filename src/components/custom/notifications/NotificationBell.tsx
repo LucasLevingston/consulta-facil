@@ -22,15 +22,13 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import {
-	useAcceptInvite,
-	useDeclineInvite,
-	useMarkAllAsRead,
-	useNotifications,
-	useUnreadCount,
-} from "@/hooks/api/use-notifications";
+import { useAcceptInvite } from "@/hooks/api/notifications/use-accept-invite";
+import { useDeclineInvite } from "@/hooks/api/notifications/use-decline-invite";
+import { useMarkAllAsRead } from "@/hooks/api/notifications/use-mark-all-as-read";
+import { useNotifications } from "@/hooks/api/notifications/use-notifications";
+import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
 import type { NotificationResponse } from "@/lib/schemas/notification.schema";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 function timeAgo(dateStr: string) {
 	const diff = Date.now() - new Date(dateStr).getTime();

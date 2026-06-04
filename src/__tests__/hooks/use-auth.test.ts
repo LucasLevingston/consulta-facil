@@ -13,19 +13,24 @@ vi.mock("@/config/api", () => ({
 		interceptors: { request: { use: vi.fn() }, response: { use: vi.fn() } },
 	},
 }));
-vi.mock("@/lib/api/auth.api", () => ({
-	authApi: { login: vi.fn(), register: vi.fn() },
+vi.mock("@/lib/api/auth/login.api", () => ({
+	loginApi: vi.fn(),
+}));
+vi.mock("@/lib/api/auth/register.api", () => ({
+	registerApi: vi.fn(),
 }));
 vi.mock("js-cookie", () => ({
 	default: { set: vi.fn(), remove: vi.fn(), get: vi.fn() },
 }));
 
-import { useLogin, useRegister } from "@/hooks/api/use-auth";
-import { authApi } from "@/lib/api/auth.api";
+import { useLogin } from "@/hooks/api/auth/use-login";
+import { useRegister } from "@/hooks/api/auth/use-register";
+import { loginApi } from "@/lib/api/auth/login.api";
+import { registerApi } from "@/lib/api/auth/register.api";
 import { useAuthStore } from "@/store/auth.store";
 
-const mockLogin = vi.mocked(authApi.login);
-const mockRegister = vi.mocked(authApi.register);
+const mockLogin = vi.mocked(loginApi);
+const mockRegister = vi.mocked(registerApi);
 
 const loginResponse = {
 	token: "jwt-token",

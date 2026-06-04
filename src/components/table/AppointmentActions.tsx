@@ -14,10 +14,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import {
-	useCompleteAppointment,
-	useConfirmAppointment,
-} from "@/hooks/api/use-appointments";
+import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
+import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 interface AppointmentActionsProps {

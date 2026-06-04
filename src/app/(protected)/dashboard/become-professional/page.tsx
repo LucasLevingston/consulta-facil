@@ -16,10 +16,8 @@ import { PageLayout } from "@/components/custom/page-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import {
-	useApplicationStatus,
-	useCreateProfessional,
-} from "@/hooks/api/use-doctors";
+import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants";
 

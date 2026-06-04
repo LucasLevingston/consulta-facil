@@ -10,7 +10,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useMySchedule, useSaveMySchedule } from "@/hooks/api/use-schedule";
+import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
+import { useSaveMySchedule } from "@/hooks/api/schedule/use-save-my-schedule";
 import { usePermission } from "@/hooks/use-permission";
 import {
 	DAY_LABELS,

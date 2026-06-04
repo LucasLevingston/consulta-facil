@@ -28,10 +28,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePatientAppointments } from "@/hooks/api/use-appointments";
-import { useMedicalRecords, usePatientProfile } from "@/hooks/api/use-patients";
+import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
+import { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
+import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils/format-date-time";
 
 function PatientScoreCard({
 	appointments,

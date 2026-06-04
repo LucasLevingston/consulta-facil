@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useRateAppointment } from "@/hooks/api/use-appointments";
+import { useRateAppointment } from "@/hooks/api/appointments/use-rate-appointment";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 interface RateAppointmentFormProps {

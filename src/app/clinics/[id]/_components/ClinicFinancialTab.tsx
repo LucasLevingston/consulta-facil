@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { appointmentKeys } from "@/hooks/api/use-appointments";
+import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
 import { appointmentsApi } from "@/lib/api/appointments.api";
 import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
 
@@ -138,7 +138,8 @@ export function ClinicFinancialTab({ clinic }: Props) {
 						<div>
 							<CardTitle className="text-base">Uso por profissional</CardTitle>
 							<CardDescription>
-								Cada profissional tem {FREE_CONSULTS_PER_DOCTOR} consultas gratuitas
+								Cada profissional tem {FREE_CONSULTS_PER_DOCTOR} consultas
+								gratuitas
 							</CardDescription>
 						</div>
 					</div>
@@ -193,8 +194,8 @@ export function ClinicFinancialTab({ clinic }: Props) {
 							Resumo do modelo de pagamento
 						</p>
 						<p>
-							• {members.length} profissional{members.length !== 1 ? "is" : ""} na
-							clínica — limite gratuito: {FREE_DOCTORS}
+							• {members.length} profissional{members.length !== 1 ? "is" : ""}{" "}
+							na clínica — limite gratuito: {FREE_DOCTORS}
 						</p>
 						<p>
 							• {totalFreeQuota} consultas gratuitas totais (
@@ -206,8 +207,8 @@ export function ClinicFinancialTab({ clinic }: Props) {
 						</p>
 						{extraDoctors > 0 && (
 							<p>
-								• {extraDoctors} profissional{extraDoctors !== 1 ? "is" : ""} extra —
-								plano com +{extraDoctors * 20}% no valor base
+								• {extraDoctors} profissional{extraDoctors !== 1 ? "is" : ""}{" "}
+								extra — plano com +{extraDoctors * 20}% no valor base
 							</p>
 						)}
 					</div>

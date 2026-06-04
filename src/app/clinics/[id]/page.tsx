@@ -7,8 +7,8 @@ import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useClinicById } from "@/hooks/api/use-clinics";
-import { useApplicationStatus } from "@/hooks/api/use-doctors";
+import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
+import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

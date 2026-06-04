@@ -13,10 +13,10 @@ import { useMemo } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
-import { useProfessionalAppointments } from "@/hooks/api/use-appointments";
+import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

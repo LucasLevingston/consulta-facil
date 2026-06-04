@@ -4,7 +4,7 @@ import { Clock, DollarSign, Edit2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useDeactivateService } from "@/hooks/api/use-services";
+import { useDeactivateService } from "@/hooks/api/services/use-deactivate-service";
 import type { ProfessionalService } from "@/lib/schemas/service.schema";
 
 export function ServiceRow({

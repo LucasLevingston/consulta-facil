@@ -20,7 +20,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useProfessionalPatients } from "@/hooks/api/use-patients";
+import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

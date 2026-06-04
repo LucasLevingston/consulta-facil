@@ -17,11 +17,9 @@ vi.mock("@/lib/api/services.api", () => ({
 	servicesApi: { getByProfessional: vi.fn(), create: vi.fn() },
 }));
 
-import {
-	useNotifications,
-	useUnreadCount,
-} from "@/hooks/api/use-notifications";
-import { useGetProfessionalServices } from "@/hooks/api/use-services";
+import { useNotifications } from "@/hooks/api/notifications/use-notifications";
+import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
+import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 import { notificationsApi } from "@/lib/api/notifications.api";
 import { servicesApi } from "@/lib/api/services.api";
 

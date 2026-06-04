@@ -7,7 +7,8 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useClinicById, useClinicQueue } from "@/hooks/api/use-clinics";
+import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
+import { useClinicQueue } from "@/hooks/api/clinics/use-clinic-queue";
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 
 function QueueCard({

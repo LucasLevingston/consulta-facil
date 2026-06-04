@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateService, useUpdateService } from "@/hooks/api/use-services";
+import { useCreateService } from "@/hooks/api/services/use-create-service";
+import { useUpdateService } from "@/hooks/api/services/use-update-service";
 import {
 	type CreateServiceInput,
 	createServiceSchema,

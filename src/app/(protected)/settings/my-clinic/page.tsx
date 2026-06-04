@@ -18,18 +18,14 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-	useClinicReceptionists,
-	useCreateClinic,
-	useInviteReceptionist,
-	useMyClinic,
-	useRemoveReceptionist,
-	useUpdateClinic,
-} from "@/hooks/api/use-clinics";
-import {
-	useClinicWorkingHours,
-	useSaveClinicWorkingHours,
-} from "@/hooks/api/use-schedule";
+import { useClinicReceptionists } from "@/hooks/api/clinics/use-clinic-receptionists";
+import { useCreateClinic } from "@/hooks/api/clinics/use-create-clinic";
+import { useInviteReceptionist } from "@/hooks/api/clinics/use-invite-receptionist";
+import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
+import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
+import { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
+import { useClinicWorkingHours } from "@/hooks/api/schedule/use-clinic-working-hours";
+import { useSaveClinicWorkingHours } from "@/hooks/api/schedule/use-save-clinic-working-hours";
 import {
 	type ClinicResponse,
 	type CreateClinicInput,

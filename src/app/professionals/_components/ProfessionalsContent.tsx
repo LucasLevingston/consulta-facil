@@ -25,10 +25,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import {
-	useProfessionals,
-	useProfessionalsNearby,
-} from "@/hooks/api/use-doctors";
+import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
+import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 type ViewMode = "list" | "map";
