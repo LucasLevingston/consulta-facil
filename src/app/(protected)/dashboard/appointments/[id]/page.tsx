@@ -52,27 +52,10 @@ import type {
 	ProntuarioInput,
 	ProntuarioResponse,
 } from "@/lib/schemas/anamnesis.schema";
-import type {
-	AppointmentResponse,
-	AppointmentStatus,
-} from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
-
-const STATUS_CONFIG: Record<
-	AppointmentStatus,
-	{
-		label: string;
-		variant: "default" | "secondary" | "destructive" | "outline";
-	}
-> = {
-	PENDING: { label: "Pendente", variant: "secondary" },
-	CONFIRMED: { label: "Confirmada", variant: "default" },
-	CHECKED_IN: { label: "Check-in feito", variant: "default" },
-	IN_PROGRESS: { label: "Em atendimento", variant: "default" },
-	COMPLETED: { label: "Concluída", variant: "outline" },
-	CANCELED: { label: "Cancelada", variant: "destructive" },
-};
+import { STATUS_CONFIG } from "./_constants/appointment-status-config";
 
 function StarDisplay({ rating }: { rating: number }) {
 	return (

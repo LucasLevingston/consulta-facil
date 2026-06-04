@@ -3,167 +3,30 @@
 import {
 	ArrowRight,
 	BadgeCheck,
-	Building2,
 	CalendarDays,
-	CalendarPlus,
 	CheckCircle2,
 	Clock,
-	CreditCard,
-	LayoutDashboard,
-	Stethoscope,
-	TrendingUp,
-	User,
 	XCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
+
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { useUserStore } from "@/store/useUserStore";
 import { AppointmentsList } from "./appointments-list";
+import { DoctorHeroSubtitle } from "./DoctorHeroSubtitle";
+import { adminCards, doctorCards, patientCards } from "./dashboard-quick-cards";
+import { QuickAccessCard } from "./QuickAccessCard";
 import { StatCard } from "./stat-card";
-
-interface QuickCard {
-	title: string;
-	description: string;
-	href: string;
-	icon: React.ElementType;
-	accent: string;
-}
-
-function QuickAccessCard({
-	title,
-	description,
-	href,
-	icon: Icon,
-	accent,
-}: QuickCard) {
-	return (
-		<Link href={href} className="group block">
-			<Card className="h-full border-border transition-all hover:border-primary/40 hover:shadow-md">
-				<CardContent className="flex items-start gap-4 p-5">
-					<div
-						className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent}`}
-					>
-						<Icon className="h-5 w-5" />
-					</div>
-					<div className="min-w-0 flex-1">
-						<p className="font-semibold text-foreground">{title}</p>
-						<p className="mt-0.5 text-xs text-muted-foreground">
-							{description}
-						</p>
-					</div>
-					<ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
-				</CardContent>
-			</Card>
-		</Link>
-	);
-}
-
-const patientCards: QuickCard[] = [
-	{
-		title: "Agendar Consulta",
-		description: "Escolha um profissional e agende um horário.",
-		href: "/dashboard/appointments/create",
-		icon: CalendarPlus,
-		accent: "bg-green-500/10 text-green-500",
-	},
-	{
-		title: "Profissionais",
-		description: "Explore profissionais cadastrados na plataforma.",
-		href: "/professionals",
-		icon: Stethoscope,
-		accent: "bg-blue-500/10 text-blue-500",
-	},
-	{
-		title: "Clínicas",
-		description: "Encontre clínicas próximas de você.",
-		href: "/clinics",
-		icon: Building2,
-		accent: "bg-teal-500/10 text-teal-500",
-	},
-	{
-		title: "Meu Perfil",
-		description: "Atualize seus dados pessoais e preferências.",
-		href: "/dashboard/profile",
-		icon: User,
-		accent: "bg-purple-500/10 text-purple-500",
-	},
-];
-
-const doctorCards: QuickCard[] = [
-	{
-		title: "Agendar Consulta",
-		description: "Marque uma nova consulta para um paciente.",
-		href: "/dashboard/appointments/create",
-		icon: CalendarPlus,
-		accent: "bg-green-500/10 text-green-500",
-	},
-	{
-		title: "Horários",
-		description: "Gerencie sua disponibilidade semanal.",
-		href: "/dashboard/schedule",
-		icon: Clock,
-		accent: "bg-blue-500/10 text-blue-500",
-	},
-	{
-		title: "Financeiro",
-		description: "Acompanhe sua receita e pagamentos.",
-		href: "/dashboard/financial",
-		icon: TrendingUp,
-		accent: "bg-emerald-500/10 text-emerald-500",
-	},
-	{
-		title: "Minha Clínica",
-		description: "Gerencie sua clínica e membros.",
-		href: "/dashboard/my-clinic",
-		icon: Building2,
-		accent: "bg-teal-500/10 text-teal-500",
-	},
-	{
-		title: "Assinatura",
-		description: "Gerencie seu plano e faturamento.",
-		href: "/settings/billing",
-		icon: CreditCard,
-		accent: "bg-orange-500/10 text-orange-500",
-	},
-];
-
-const adminCards: QuickCard[] = [
-	{
-		title: "Painel Admin",
-		description: "Acesso às configurações administrativas.",
-		href: "/admin",
-		icon: LayoutDashboard,
-		accent: "bg-red-500/10 text-red-500",
-	},
-	{
-		title: "Profissionais",
-		description: "Veja todos os profissionais da plataforma.",
-		href: "/professionals",
-		icon: Stethoscope,
-		accent: "bg-blue-500/10 text-blue-500",
-	},
-];
 
 interface DashboardProps {
 	firstName: string;
 	role: "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
-}
-
-function DoctorHeroSubtitle() {
-	const { data } = useMyProfessionalProfile(true);
-	if (!data) return null;
-	return (
-		<p className="mt-1 text-sm text-muted-foreground">
-			{data.specialty}
-			{data.licenseNumber ? ` · CRM ${data.licenseNumber}` : ""}
-		</p>
-	);
 }
 
 export function Dashboard({ firstName, role }: DashboardProps) {

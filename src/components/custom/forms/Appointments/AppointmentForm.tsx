@@ -70,16 +70,7 @@ import type {
 } from "@/lib/schemas/schedule.schema";
 import { cn } from "@/lib/utils/cn";
 import { useUserStore } from "@/store/useUserStore";
-
-const JS_DAY_TO_DOW: Record<number, DayOfWeek> = {
-	0: "SUNDAY",
-	1: "MONDAY",
-	2: "TUESDAY",
-	3: "WEDNESDAY",
-	4: "THURSDAY",
-	5: "FRIDAY",
-	6: "SATURDAY",
-};
+import { JS_DAY_TO_DOW } from "./_constants/day-to-dow";
 
 type TimeSlot = { label: string; hours: number; minutes: number };
 
