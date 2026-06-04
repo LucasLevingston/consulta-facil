@@ -1,9 +1,10 @@
 "use client";
 
 import { CalendarClock } from "lucide-react";
+
 import PageHeader from "@/components/custom/page-header";
+import { ProcedureRequestsContent } from "@/components/procedure-requests/ProcedureRequestsContent";
 import { useUserStore } from "@/store/useUserStore";
-import { ProcedureRequestsContent } from "./_components/ProcedureRequestsContent";
 
 export default function ProcedureRequestsPage() {
 	const { user } = useUserStore();

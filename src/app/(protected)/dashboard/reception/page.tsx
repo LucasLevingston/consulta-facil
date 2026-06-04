@@ -2,8 +2,8 @@
 
 import { MonitorCheck } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
-import { CheckInPanel } from "./_components/CheckInPanel";
-import { QueuePanel } from "./_components/QueuePanel";
+import { CheckInPanel } from "@/components/reception/CheckInPanel";
+import { QueuePanel } from "@/components/reception/QueuePanel";
 
 export default function ReceptionPage() {
 	return (

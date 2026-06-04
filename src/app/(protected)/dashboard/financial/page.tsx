@@ -2,11 +2,11 @@
 
 import { TrendingUp } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
+import { FinancialContent } from "@/components/financial/FinancialContent";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
-import { FinancialContent } from "./_components/FinancialContent";
 
 export default function FinancialPage() {
 	const { user } = useUserStore();

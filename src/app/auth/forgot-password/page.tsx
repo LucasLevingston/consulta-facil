@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import ForgotPasswordForm from "@/components/custom/forms/auth/ForgotPasswordForm";
+import ForgotPasswordForm from "@/components/forms/auth/ForgotPasswordForm";
 import { useForgotPassword } from "@/hooks/api/auth/use-forgot-password";
 
 export default function ForgotPasswordPage() {

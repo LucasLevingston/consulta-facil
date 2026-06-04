@@ -32,28 +32,11 @@ import { useClinics } from "@/hooks/api/clinics/use-clinics";
 import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
 import { cn } from "@/lib/utils/cn";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { DAYS, type DayKey } from "@/utils/constants/days-of-week";
+import { ALL } from "@/utils/constants/filter-sentinels";
+import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 
 type ViewMode = "list" | "map";
-const ALL = "__all__";
-
-const DAYS = [
-	{ key: "MONDAY", label: "Seg" },
-	{ key: "TUESDAY", label: "Ter" },
-	{ key: "WEDNESDAY", label: "Qua" },
-	{ key: "THURSDAY", label: "Qui" },
-	{ key: "FRIDAY", label: "Sex" },
-	{ key: "SATURDAY", label: "Sáb" },
-	{ key: "SUNDAY", label: "Dom" },
-] as const;
-
-type DayKey = (typeof DAYS)[number]["key"];
-
-const RADIUS_OPTIONS = [
-	{ value: "10", label: "10 km" },
-	{ value: "25", label: "25 km" },
-	{ value: "50", label: "50 km" },
-	{ value: "100", label: "100 km" },
-] as const;
 
 export default function ClinicsPage() {
 	const [viewMode, setViewMode] = useState<ViewMode>("list");

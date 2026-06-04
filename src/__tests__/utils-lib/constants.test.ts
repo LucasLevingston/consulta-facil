@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
-import {
-	GenderOptions,
-	IdentificationTypes,
-	StatusIcon,
-} from "@/utils/constants";
+import { StatusIcon } from "@/utils/constants/appointment-status-icon";
+import { GenderOptions } from "@/utils/constants/gender-options";
+import { IdentificationTypes } from "@/utils/constants/identification-types";
 
 describe("GenderOptions", () => {
 	it("has 3 options", () => expect(GenderOptions).toHaveLength(3));

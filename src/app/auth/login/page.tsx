@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-import LoginForm from "@/components/custom/forms/auth/LoginForm";
-import SocialAuthButtons from "@/components/custom/forms/auth/SocialAuthButtons";
+import LoginForm from "@/components/forms/auth/LoginForm";
+import SocialAuthButtons from "@/components/forms/auth/SocialAuthButtons";
 import { useGoogleLogin } from "@/hooks/api/auth/use-google-login";
 import { useLogin } from "@/hooks/api/auth/use-login";
 import { useGoogleGIS } from "@/hooks/use-google-gis";

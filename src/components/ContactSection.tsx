@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomFormField, {
-  FormFieldType,
+	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "./ui/form";
@@ -40,20 +40,17 @@ export function ContactSection() {
 							<CustomFormField
 								name="name"
 								fieldType={FormFieldType.INPUT}
-                								form={form}
-
+								form={form}
 							/>
 							<CustomFormField
 								name="email"
 								fieldType={FormFieldType.INPUT}
-																form={form}
-
+								form={form}
 							/>
 							<CustomFormField
 								name="message"
 								fieldType={FormFieldType.TEXTAREA}
-                								form={form}
-
+								form={form}
 							/>
 
 							<Button type="submit" className="w-full">

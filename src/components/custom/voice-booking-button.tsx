@@ -5,7 +5,7 @@ import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useVoiceBooking } from "@/hooks/use-voice-booking";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 interface VoiceBookingButtonProps {
 	onResult: (result: VoiceBookingResult) => void;

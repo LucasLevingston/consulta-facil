@@ -4,6 +4,10 @@ import { Building2, MapPin, Monitor, Phone } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+import { ClinicAppointmentsTab } from "@/components/clinic/ClinicAppointmentsTab";
+import { ClinicFinancialTab } from "@/components/clinic/ClinicFinancialTab";
+import { ClinicMembersTab } from "@/components/clinic/ClinicMembersTab";
+import { ClinicOverviewTab } from "@/components/clinic/ClinicOverviewTab";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,11 +15,6 @@ import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
 import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
-
-import { ClinicAppointmentsTab } from "./_components/ClinicAppointmentsTab";
-import { ClinicFinancialTab } from "./_components/ClinicFinancialTab";
-import { ClinicMembersTab } from "./_components/ClinicMembersTab";
-import { ClinicOverviewTab } from "./_components/ClinicOverviewTab";
 
 export default function ClinicDetailPage() {
 	const params = useParams();

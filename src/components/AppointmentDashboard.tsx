@@ -13,7 +13,7 @@ import type {
 	AppointmentStatus,
 } from "@/lib/schemas/appointment.schema";
 
-const ITEMS_PER_PAGE = 10;
+import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 
 interface AppointmentsDashboardProps {
 	appointments: AppointmentResponse[];

@@ -11,7 +11,7 @@ import {
 	CardHeader,
 } from "@/components/ui/card";
 import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 import type { Plan } from "./types";
 

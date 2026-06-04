@@ -22,56 +22,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
+import { DAYS, type DayKey } from "@/utils/constants/days-of-week";
+import { ALL } from "@/utils/constants/filter-sentinels";
 import {
 	PROFESSION_SPECIALTIES,
 	professions,
 	specialties,
-} from "@/utils/constants";
-
-const ALL = "__all__";
-
-const DAYS = [
-	{ key: "MONDAY", label: "Seg" },
-	{ key: "TUESDAY", label: "Ter" },
-	{ key: "WEDNESDAY", label: "Qua" },
-	{ key: "THURSDAY", label: "Qui" },
-	{ key: "FRIDAY", label: "Sex" },
-	{ key: "SATURDAY", label: "Sáb" },
-	{ key: "SUNDAY", label: "Dom" },
-] as const;
-
-type DayKey = (typeof DAYS)[number]["key"];
-
-const BRAZILIAN_STATES = [
-	"AC",
-	"AL",
-	"AP",
-	"AM",
-	"BA",
-	"CE",
-	"DF",
-	"ES",
-	"GO",
-	"MA",
-	"MT",
-	"MS",
-	"MG",
-	"PA",
-	"PB",
-	"PR",
-	"PE",
-	"PI",
-	"RJ",
-	"RN",
-	"RS",
-	"RO",
-	"RR",
-	"SC",
-	"SP",
-	"SE",
-	"TO",
-];
+} from "@/utils/constants/profession-specialties";
+import { BRAZILIAN_STATES } from "../../../lib/utils/brazilian-states";
 
 export default function DoctorFilters() {
 	const router = useRouter();

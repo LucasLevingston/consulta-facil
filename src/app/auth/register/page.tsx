@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { RegisterForm } from "@/components/custom/forms/auth/registerForm";
+import { RegisterForm } from "@/components/forms/auth/registerForm";
 import { useLogin } from "@/hooks/api/auth/use-login";
 import { useRegister } from "@/hooks/api/auth/use-register";
 import type { RegisterInput } from "@/lib/schemas/auth.schema";

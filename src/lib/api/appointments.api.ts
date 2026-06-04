@@ -101,24 +101,34 @@ export const appointmentsApi = {
 	},
 
 	getCheckInToken: async (appointmentId: string): Promise<QrCheckInToken> => {
-		const response = await api.get<QrCheckInToken>(`/appointments/${appointmentId}/checkin-token`);
+		const response = await api.get<QrCheckInToken>(
+			`/appointments/${appointmentId}/checkin-token`,
+		);
 		return response.data;
 	},
 
 	checkInByQr: async (token: string): Promise<AppointmentResponse> => {
-		const response = await api.post<AppointmentResponse>("/appointments/checkin", null, {
-			params: { token },
-		});
+		const response = await api.post<AppointmentResponse>(
+			"/appointments/checkin",
+			null,
+			{
+				params: { token },
+			},
+		);
 		return response.data;
 	},
 
 	getQueue: async (): Promise<AppointmentResponse[]> => {
-		const response = await api.get<AppointmentResponse[]>("/appointments/queue");
+		const response = await api.get<AppointmentResponse[]>(
+			"/appointments/queue",
+		);
 		return response.data;
 	},
 
 	callPatient: async (appointmentId: string): Promise<AppointmentResponse> => {
-		const response = await api.put<AppointmentResponse>(`/appointments/${appointmentId}/call`);
+		const response = await api.put<AppointmentResponse>(
+			`/appointments/${appointmentId}/call`,
+		);
 		return response.data;
 	},
 

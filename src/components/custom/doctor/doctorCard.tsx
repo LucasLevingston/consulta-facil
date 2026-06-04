@@ -99,14 +99,10 @@ export default function DoctorCard({
 				<CardFooter className="pt-0">
 					<CustomButton
 						className="w-full"
-						onClick={() =>
-							router.push(
-								`/dashboard/appointments/create?professionalid=${doctor.id}`,
-							)
-						}
+						onClick={() => router.push(`/professionals/${doctor.id}`)}
 					>
 						<Stethoscope className="size-4" />
-						Agendar Consulta
+						Ver profissonal{" "}
 					</CustomButton>
 				</CardFooter>
 			)}

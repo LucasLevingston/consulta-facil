@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-export const examRequestStatusSchema = z.enum(["PENDING", "UPLOADED", "REVIEWED"]);
+export const examRequestStatusSchema = z.enum([
+	"PENDING",
+	"UPLOADED",
+	"REVIEWED",
+]);
 
 export const examRequestResponseSchema = z.object({
 	id: z.string(),
@@ -25,7 +29,10 @@ export const createExamRequestSchema = z.object({
 });
 
 export const reviewExamRequestSchema = z.object({
-	professionalNotes: z.string().min(1, "Observações são obrigatórias").max(2000),
+	professionalNotes: z
+		.string()
+		.min(1, "Observações são obrigatórias")
+		.max(2000),
 });
 
 export type ExamRequestStatus = z.infer<typeof examRequestStatusSchema>;

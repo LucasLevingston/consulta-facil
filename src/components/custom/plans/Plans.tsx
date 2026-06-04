@@ -6,13 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
 import { QueryBoundary } from "@/providers/query-boundary";
-
+import { PLANS } from "../../../lib/utils/plans";
+import { PRO_PLAN_IDS } from "../../../lib/utils/pro-plan-ids";
 import ClinicPlans from "./ClinicPlans";
-import { PLANS } from "./constants";
 import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
-
-const PRO_PLAN_IDS = new Set(["monthly", "yearly"]);
 
 export default function Plans() {
 	const { data: subscription, isLoading, error } = useMySubscription();

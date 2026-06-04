@@ -1,7 +1,13 @@
 import PageHeader from "@/components/custom/page-header";
 import { PageLayout } from "@/components/custom/page-layout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ThemeForm } from "./_componens/form";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { ThemeForm } from "../../../../components/forms/theme-form";
 
 export default function ThemePage() {
 	return (

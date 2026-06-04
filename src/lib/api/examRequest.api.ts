@@ -6,7 +6,9 @@ import type {
 } from "@/lib/schemas/examRequest.schema";
 
 export const examRequestApi = {
-	getByAppointment: async (appointmentId: string): Promise<ExamRequestResponse[]> => {
+	getByAppointment: async (
+		appointmentId: string,
+	): Promise<ExamRequestResponse[]> => {
 		const response = await api.get<ExamRequestResponse[]>(
 			`/appointments/${appointmentId}/exams`,
 		);

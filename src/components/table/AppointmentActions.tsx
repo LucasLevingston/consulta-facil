@@ -4,8 +4,8 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { CancelAppointmentForm } from "@/components/custom/forms/Appointments/CancelAppointmentForm";
-import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
+import { CancelAppointmentForm } from "@/components/forms/Appointments/CancelAppointmentForm";
+import { RateAppointmentForm } from "@/components/forms/Appointments/RateAppointmentForm";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,

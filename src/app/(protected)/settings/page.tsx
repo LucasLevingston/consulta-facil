@@ -3,9 +3,9 @@
 import { Settings } from "lucide-react";
 
 import { AvatarUpload } from "@/components/custom/avatar-upload";
-import DoctorDetailsForm from "@/components/custom/forms/DoctorDetails/DoctorDetailsForm";
-import PatientDetailsForm from "@/components/custom/forms/PatientDetails/PatientDetailsForm";
 import PageHeader from "@/components/custom/page-header";
+import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
+import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
 import {
 	Card,
 	CardContent,

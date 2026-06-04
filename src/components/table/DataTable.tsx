@@ -1,30 +1,29 @@
 "use client";
 
 import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
+	type ColumnDef,
+	flexRender,
+	getCoreRowModel,
+	getPaginationRowModel,
+	useReactTable,
 } from "@tanstack/react-table";
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from "@/components/ui/table";
 
 interface DataTableProps<TData> {
-	columns: ColumnDef<TData, any>[]; 
+	// biome-ignore lint/suspicious/noExplicitAny: tanstack table requires any for column value type
+	columns: ColumnDef<TData, any>[];
 	data: TData[];
 }
 
 export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
-	
-
 	const table = useReactTable({
 		data,
 		columns,

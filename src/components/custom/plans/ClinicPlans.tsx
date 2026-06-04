@@ -27,14 +27,15 @@ import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
 import { QueryBoundary } from "@/providers/query-boundary";
+import {
+	FREE_CONSULTS_PER_DOCTOR,
+	FREE_DOCTORS,
+} from "@/utils/constants/plan-limits";
 
+import { BASE_PRICE } from "../../../lib/utils/base-price";
 import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
 import type { Plan } from "./types";
-
-const BASE_PRICE = 700;
-const FREE_DOCTORS = 5;
-const FREE_CONSULTS_PER_DOCTOR = 5;
 
 function calcMonthlyPrice(totalDoctors: number): number {
 	const extra = Math.max(0, totalDoctors - FREE_DOCTORS);

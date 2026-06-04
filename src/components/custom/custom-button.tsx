@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { Button } from "../ui/button";
 
 type CustomButtonProps = React.ComponentProps<typeof Button> & {

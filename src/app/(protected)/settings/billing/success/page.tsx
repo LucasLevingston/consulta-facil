@@ -22,7 +22,9 @@ function BillingSuccessContent() {
 				<CheckCircle2 className="h-10 w-10 text-green-500" />
 			</div>
 			<div className="space-y-2">
-				<h1 className="text-2xl font-bold text-foreground">Pagamento confirmado!</h1>
+				<h1 className="text-2xl font-bold text-foreground">
+					Pagamento confirmado!
+				</h1>
 				<p className="text-muted-foreground">
 					Seu plano{" "}
 					<span className="font-semibold text-foreground">

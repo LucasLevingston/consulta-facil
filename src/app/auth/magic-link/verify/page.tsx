@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 
-import VerifyContent from "./_components/VerifyContent";
+import VerifyContent from "@/components/auth/VerifyContent";
 
 export default function MagicLinkVerifyPage() {
 	return (

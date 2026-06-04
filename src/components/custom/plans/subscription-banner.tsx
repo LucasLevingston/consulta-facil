@@ -5,23 +5,15 @@ import { AlertTriangle, CheckCircle2, Clock, XCircle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
-import {
-	SUBSCRIPTION_STATUS_COLOR,
-	SUBSCRIPTION_STATUS_LABEL,
-} from "./constants";
+import { PLAN_LABELS } from "@/utils/constants/plan-labels";
+import { SUBSCRIPTION_STATUS_COLOR } from "./subscription-status-color";
+import { SUBSCRIPTION_STATUS_LABEL } from "./subscription-status-label";
 
 interface SubscriptionBannerProps {
 	subscription: SubscriptionResponse;
 }
-
-const PLAN_LABELS: Record<string, string> = {
-	monthly: "Pro Mensal",
-	yearly: "Pro Anual",
-	"clinic-monthly": "Clínica Mensal",
-	"clinic-yearly": "Clínica Anual",
-};
 
 function getDaysRemaining(expiresAt: string | null): number | null {
 	if (!expiresAt) return null;

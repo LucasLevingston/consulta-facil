@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import MagicLinkRequestForm from "@/components/custom/forms/auth/MagicLinkRequestForm";
+import MagicLinkRequestForm from "@/components/forms/auth/MagicLinkRequestForm";
 import { useMagicLinkRequest } from "@/hooks/api/auth/use-magic-link-request";
 
 export default function MagicLinkPage() {

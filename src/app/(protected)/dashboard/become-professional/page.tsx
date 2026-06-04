@@ -19,7 +19,10 @@ import { Form } from "@/components/ui/form";
 import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
 import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants";
+import {
+	PROFESSION_SPECIALTIES,
+	professions,
+} from "@/utils/constants/profession-specialties";
 
 const becomeProfessionalSchema = z.object({
 	profession: z.string().min(1, "Selecione uma profissão"),

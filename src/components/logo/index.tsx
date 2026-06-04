@@ -8,8 +8,8 @@ type logoProps = React.ComponentProps<"p">;
 export const Logo = (props: logoProps) => {
 	return (
 		<Link href="/" className="flex items-center gap-2">
-			<LogoIcon {...props}/>
-			<LogoContent {...props}/>
+			<LogoIcon {...props} />
+			<LogoContent {...props} />
 		</Link>
 	);
 };

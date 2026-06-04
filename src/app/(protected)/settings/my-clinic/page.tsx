@@ -2,7 +2,7 @@
 
 import { Building2 } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
-import { MyClinicContent } from "./_components/MyClinicContent";
+import { MyClinicContent } from "../../../../components/custom/clinic/MyClinicContent";
 
 export default function MyClinicPage() {
 	return (
