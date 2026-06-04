@@ -27,7 +27,7 @@ import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professiona
 import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
-import { GENDER_LABELS } from "./_constants/gender-labels";
+import { GENDER_LABELS } from "@/utils/constants/gender-labels";
 
 function InfoRow({
 	icon: Icon,

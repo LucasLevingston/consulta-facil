@@ -1,15 +1,6 @@
 "use client";
 
-import {
-	Bell,
-	Building2,
-	CalendarCheck,
-	CalendarX,
-	Check,
-	CheckCheck,
-	Stethoscope,
-	X,
-} from "lucide-react";
+import { Bell, Check, CheckCheck, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -29,6 +20,7 @@ import { useNotifications } from "@/hooks/api/notifications/use-notifications";
 import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
 import type { NotificationResponse } from "@/lib/schemas/notification.schema";
 import { cn } from "@/lib/utils/cn";
+import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
 
 function timeAgo(dateStr: string) {
 	const diff = Date.now() - new Date(dateStr).getTime();
@@ -43,30 +35,6 @@ function timeAgo(dateStr: string) {
 interface NotificationItemProps {
 	notification: NotificationResponse;
 }
-
-const NOTIFICATION_ICON = {
-	CLINIC_INVITE: {
-		icon: Building2,
-		color: "text-primary",
-		bg: "bg-primary/10",
-	},
-	GENERAL: { icon: Bell, color: "text-muted-foreground", bg: "bg-muted" },
-	APPOINTMENT_SCHEDULED: {
-		icon: Stethoscope,
-		color: "text-blue-600",
-		bg: "bg-blue-500/10",
-	},
-	APPOINTMENT_CONFIRMED: {
-		icon: CalendarCheck,
-		color: "text-green-600",
-		bg: "bg-green-500/10",
-	},
-	APPOINTMENT_CANCELED: {
-		icon: CalendarX,
-		color: "text-red-500",
-		bg: "bg-red-500/10",
-	},
-} as const;
 
 function NotificationItem({ notification }: NotificationItemProps) {
 	const accept = useAcceptInvite();

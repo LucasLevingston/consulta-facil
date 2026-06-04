@@ -21,6 +21,10 @@ import {
 	type ProfessionalScheduleResponse,
 } from "@/lib/schemas/schedule.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
+import {
+	DEFAULT_BREAK,
+	DEFAULT_DURATION,
+} from "@/utils/constants/schedule-defaults";
 
 export default function SchedulePage() {
 	return (
@@ -58,9 +62,6 @@ function ScheduleContent() {
 		</QueryBoundary>
 	);
 }
-
-const DEFAULT_DURATION = 30;
-const DEFAULT_BREAK = 10;
 
 function buildDefaultRow(
 	day: DayOfWeek,

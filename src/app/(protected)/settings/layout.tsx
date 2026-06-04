@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-import { SettingsSidebar } from "./_components/settings-sidebar";
+import { SettingsSidebar } from "@/components/custom/sidebar/settings-sidebar";
 
 export default function Layout({ children }: PropsWithChildren) {
 	return (

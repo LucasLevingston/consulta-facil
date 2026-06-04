@@ -22,9 +22,9 @@ import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
 import { CustomButton } from "@/components/custom/custom-button";
-import { ExamsSection } from "@/components/custom/forms/Appointments/ExamsSection";
-import { RateAppointmentForm } from "@/components/custom/forms/Appointments/RateAppointmentForm";
-import { RescheduleAppointmentForm } from "@/components/custom/forms/Appointments/RescheduleAppointmentForm";
+import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
+import { RateAppointmentForm } from "@/components/forms/Appointments/RateAppointmentForm";
+import { RescheduleAppointmentForm } from "@/components/forms/Appointments/RescheduleAppointmentForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -55,7 +55,7 @@ import type {
 import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
-import { STATUS_CONFIG } from "./_constants/appointment-status-config";
+import { STATUS_CONFIG } from "@/utils/constants/appointment-status-config";
 
 function StarDisplay({ rating }: { rating: number }) {
 	return (

@@ -24,9 +24,9 @@ import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-p
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
-type SortOption = "name" | "recent";
+import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 
-const PAGE_SIZE = 20;
+type SortOption = "name" | "recent";
 
 function PatientsContent() {
 	const { user } = useUserStore();

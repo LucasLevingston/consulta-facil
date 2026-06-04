@@ -31,15 +31,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils/cn";
 import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
 import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
-export enum FormFieldType {
-	INPUT = "input",
-	EMAIL = "email",
-	PASSWORD = "password",
-	TEXTAREA = "textarea",
-	CHECKBOX = "checkbox",
-	SELECT = "select",
-	DATE_PICKER = "date-picker",
-}
+import { FormFieldType } from "./form-field-type";
+
+export { FormFieldType } from "./form-field-type";
 
 interface CustomFormFieldProps {
 	// biome-ignore lint/suspicious/noExplicitAny: shared field component works with any form schema
