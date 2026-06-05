@@ -98,6 +98,28 @@ export default function DoctorProfilePage() {
 								{doctor.specialty}
 							</Badge>
 						)}
+						{doctor.rating != null && (
+							<div className="flex items-center gap-2 text-sm pt-1">
+								<div className="flex gap-0.5">
+									{[1, 2, 3, 4, 5].map((n) => (
+										<Star
+											key={n}
+											className={`h-4 w-4 ${n <= Math.round(doctor.rating ?? 0) ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30"}`}
+										/>
+									))}
+								</div>
+								<span className="font-semibold text-foreground">
+									{doctor.rating.toFixed(1)}
+								</span>
+								{doctor.consultationCount != null &&
+									doctor.consultationCount > 0 && (
+										<span className="text-muted-foreground">
+											· {doctor.consultationCount} consulta
+											{doctor.consultationCount !== 1 ? "s" : ""}
+										</span>
+									)}
+							</div>
+						)}
 					</div>
 				</CardContent>
 			</Card>
