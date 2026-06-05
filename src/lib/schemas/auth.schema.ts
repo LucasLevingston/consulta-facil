@@ -57,8 +57,25 @@ export const emailSchema = z.object({
 	email: z.string().email("E-mail inválido"),
 });
 
+export const resetPasswordSchema = z
+	.object({
+		newPassword: z
+			.string()
+			.min(8, "Senha deve ter pelo menos 8 caracteres")
+			.max(256),
+		confirmPassword: z
+			.string()
+			.min(8, "Senha deve ter pelo menos 8 caracteres")
+			.max(256),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: "As senhas não conferem",
+		path: ["confirmPassword"],
+	});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type EmailInput = z.infer<typeof emailSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
 export type UserResponse = z.infer<typeof userResponseSchema>;

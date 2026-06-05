@@ -99,6 +99,15 @@ export default function LoginPage() {
 
 				<LoginForm onSubmit={handleLoginSubmit} isPending={login.isPending} />
 
+				<div className="text-right -mt-4">
+					<Link
+						href="/auth/forgot-password"
+						className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+					>
+						Esqueceu sua senha?
+					</Link>
+				</div>
+
 				<p className="text-center text-sm text-muted-foreground">
 					Não tem uma conta?{" "}
 					<Link
