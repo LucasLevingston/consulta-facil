@@ -71,6 +71,7 @@ import type {
 import { cn } from "@/lib/utils/cn";
 import { useUserStore } from "@/store/useUserStore";
 import { JS_DAY_TO_DOW } from "@/utils/constants/day-to-dow";
+import { ServiceSelector } from "./ServiceSelector";
 
 type TimeSlot = { label: string; hours: number; minutes: number };
 
@@ -113,6 +114,7 @@ export const AppointmentForm = ({
 	const searchParams = useSearchParams();
 	const professionalIdParam =
 		searchParams.get("professionalid") ?? searchParams.get("doctorid");
+	const serviceIdParam = searchParams.get("serviceid");
 	const { user: authUser } = useUserStore();
 
 	const { data: doctorsPage, isLoading: doctorsLoading } = useProfessionals(
@@ -126,6 +128,9 @@ export const AppointmentForm = ({
 
 	const [professionalOpen, setProfessionalOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState<string>("");
+	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+		serviceIdParam,
+	);
 	const [specialtyFilter, setSpecialtyFilter] = useState<string>(
 		voicePreset?.specialty ?? "",
 	);
@@ -240,6 +245,7 @@ export const AppointmentForm = ({
 					notes: values.notes ?? undefined,
 					modality: values.modality,
 					chosenPaymentMethod: values.chosenPaymentMethod,
+					serviceId: selectedServiceId ?? undefined,
 				});
 				if (created.checkoutUrl) {
 					window.location.href = created.checkoutUrl;
@@ -478,6 +484,7 @@ export const AppointmentForm = ({
 																		field.onChange(doctor.id);
 																		setProfessionalOpen(false);
 																		setSelectedTime("");
+																		setSelectedServiceId(null);
 																	}}
 																>
 																	<div className="flex items-center gap-3 flex-1">
@@ -546,11 +553,31 @@ export const AppointmentForm = ({
 					)}
 				</div>
 
-				{/* Step 2 — Date & Time */}
+				{/* Step 2 — Service / Appointment type */}
+				{selectedDoctor && (
+					<div className="space-y-3">
+						<div className="flex items-center gap-2">
+							<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+								2
+							</div>
+							<h3 className="font-semibold text-foreground">
+								O que você quer agendar?
+							</h3>
+						</div>
+						<ServiceSelector
+							professionalId={selectedDoctor.id}
+							consultationPrice={selectedDoctor.consultationPrice}
+							value={selectedServiceId}
+							onChange={setSelectedServiceId}
+						/>
+					</div>
+				)}
+
+				{/* Step 3 — Date & Time */}
 				<div className="space-y-3">
 					<div className="flex items-center gap-2">
 						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							2
+							3
 						</div>
 						<h3 className="font-semibold text-foreground">Data e horário</h3>
 					</div>
@@ -694,11 +721,11 @@ export const AppointmentForm = ({
 					)}
 				</div>
 
-				{/* Step 3 — Modality */}
+				{/* Step 4 — Modality */}
 				<div className="space-y-3">
 					<div className="flex items-center gap-2">
 						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							3
+							4
 						</div>
 						<h3 className="font-semibold text-foreground">Modalidade</h3>
 					</div>
@@ -745,11 +772,11 @@ export const AppointmentForm = ({
 					/>
 				</div>
 
-				{/* Step 4 — Details */}
+				{/* Step 5 — Details */}
 				<div className="space-y-3">
 					<div className="flex items-center gap-2">
 						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							4
+							5
 						</div>
 						<h3 className="font-semibold text-foreground">Detalhes</h3>
 						<Badge variant="secondary" className="text-xs">
