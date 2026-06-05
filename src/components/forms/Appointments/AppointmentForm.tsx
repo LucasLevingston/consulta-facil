@@ -1,22 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format, setHours, setMinutes } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import {
-	Banknote,
-	CalendarIcon,
-	Check,
-	ChevronsUpDown,
-	Clock,
-	CreditCard,
-	FileText,
-	Info,
-	Search,
-	Stethoscope,
-	Users,
-	X,
-} from "lucide-react";
+import { setHours, setMinutes } from "date-fns";
+import { Banknote, CreditCard, Info, Stethoscope } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect, useMemo, useState } from "react";
@@ -24,18 +10,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "@/components/ui/command";
 import {
 	Form,
 	FormControl,
@@ -44,11 +19,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
@@ -68,12 +38,13 @@ import type {
 	DayOfWeek,
 	ProfessionalScheduleResponse,
 } from "@/lib/schemas/schedule.schema";
-import { cn } from "@/lib/utils/cn";
 import { useUserStore } from "@/store/useUserStore";
 import { JS_DAY_TO_DOW } from "@/utils/constants/day-to-dow";
 import { ServiceSelector } from "./ServiceSelector";
-
-type TimeSlot = { label: string; hours: number; minutes: number };
+import { DateTimeStep, type TimeSlot } from "./steps/DateTimeStep";
+import { DetailsStep } from "./steps/DetailsStep";
+import { ModalityStep } from "./steps/ModalityStep";
+import { ProfessionalStep } from "./steps/ProfessionalStep";
 
 function computeSlots(schedule: ProfessionalScheduleResponse): TimeSlot[] {
 	const [startH, startM] = schedule.startTime.split(":").map(Number);
@@ -83,7 +54,6 @@ function computeSlots(schedule: ProfessionalScheduleResponse): TimeSlot[] {
 	const step =
 		schedule.consultationDurationMinutes +
 		schedule.breakBetweenConsultationsMinutes;
-
 	const slots: TimeSlot[] = [];
 	let current = startMin;
 	while (current + schedule.consultationDurationMinutes <= endMin) {
@@ -126,13 +96,9 @@ export const AppointmentForm = ({
 	const scheduleAppointment = useScheduleAppointment();
 	const cancelAppointment = useCancelAppointment();
 
-	const [professionalOpen, setProfessionalOpen] = useState(false);
 	const [selectedTime, setSelectedTime] = useState<string>("");
 	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
 		serviceIdParam,
-	);
-	const [specialtyFilter, setSpecialtyFilter] = useState<string>(
-		voicePreset?.specialty ?? "",
 	);
 
 	const form = useForm<AppointmentFormValues>({
@@ -150,7 +116,6 @@ export const AppointmentForm = ({
 
 	useEffect(() => {
 		if (!voicePreset) return;
-		if (voicePreset.specialty) setSpecialtyFilter(voicePreset.specialty);
 		if (voicePreset.reason) form.setValue("reason", voicePreset.reason);
 		if (voicePreset.modality) form.setValue("modality", voicePreset.modality);
 		if (voicePreset.date) {
@@ -158,12 +123,6 @@ export const AppointmentForm = ({
 			if (!Number.isNaN(d.getTime())) form.setValue("scheduledAt", d);
 		}
 	}, [voicePreset, form]);
-
-	const filteredDoctors = specialtyFilter
-		? doctors.filter((d) =>
-				d.specialty?.toLowerCase().includes(specialtyFilter.toLowerCase()),
-			)
-		: doctors;
 
 	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
@@ -231,8 +190,10 @@ export const AppointmentForm = ({
 	const handleTimeSelect = (slot: TimeSlot) => {
 		setSelectedTime(slot.label);
 		const base = selectedDate ?? new Date();
-		const newDate = setMinutes(setHours(base, slot.hours), slot.minutes);
-		form.setValue("scheduledAt", newDate);
+		form.setValue(
+			"scheduledAt",
+			setMinutes(setHours(base, slot.hours), slot.minutes),
+		);
 	};
 
 	const onSubmit = async (values: AppointmentFormValues) => {
@@ -302,19 +263,9 @@ export const AppointmentForm = ({
 						)}
 					/>
 
-					{/* Step 5 — Payment Method */}
 					{selectedDoctor &&
 						(selectedDoctor.acceptedPaymentMethods?.length ?? 0) > 0 && (
 							<div className="space-y-3">
-								<div className="flex items-center gap-2">
-									<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-										5
-									</div>
-									<h3 className="font-semibold text-foreground">
-										Forma de pagamento
-									</h3>
-								</div>
-
 								{selectedDoctor.paymentTiming === "AT_CONSULTATION" && (
 									<Alert className="rounded-xl border-blue-500/20 bg-blue-500/5">
 										<Info className="h-4 w-4 text-blue-500" />
@@ -324,7 +275,6 @@ export const AppointmentForm = ({
 										</AlertDescription>
 									</Alert>
 								)}
-
 								{selectedDoctor.paymentTiming === "AT_SCHEDULING" && (
 									<Alert className="rounded-xl border-amber-500/20 bg-amber-500/5">
 										<CreditCard className="h-4 w-4 text-amber-500" />
@@ -334,7 +284,6 @@ export const AppointmentForm = ({
 										</AlertDescription>
 									</Alert>
 								)}
-
 								<FormField
 									control={form.control}
 									name="chosenPaymentMethod"
@@ -342,38 +291,31 @@ export const AppointmentForm = ({
 										<FormItem>
 											<div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
 												{(selectedDoctor.acceptedPaymentMethods ?? []).map(
-													(method) => {
-														const isMercadoPago = method === "MERCADOPAGO";
-														return (
-															<button
-																key={method}
-																type="button"
-																onClick={() =>
-																	field.onChange(
-																		field.value === method ? undefined : method,
-																	)
-																}
-																className={`flex items-center gap-2 rounded-xl border p-3 text-left text-sm transition-colors ${
-																	field.value === method
-																		? "border-primary bg-primary/5 text-primary"
-																		: "border-border hover:border-primary/40"
-																}`}
-															>
-																{isMercadoPago ? (
-																	<CreditCard className="h-4 w-4 shrink-0" />
-																) : (
-																	<Banknote className="h-4 w-4 shrink-0" />
-																)}
-																<span className="font-medium">
-																	{
-																		PAYMENT_METHOD_LABELS[
-																			method as PaymentMethod
-																		]
-																	}
-																</span>
-															</button>
-														);
-													},
+													(method) => (
+														<button
+															key={method}
+															type="button"
+															onClick={() =>
+																field.onChange(
+																	field.value === method ? undefined : method,
+																)
+															}
+															className={`flex items-center gap-2 rounded-xl border p-3 text-left text-sm transition-colors ${
+																field.value === method
+																	? "border-primary bg-primary/5 text-primary"
+																	: "border-border hover:border-primary/40"
+															}`}
+														>
+															{method === "MERCADOPAGO" ? (
+																<CreditCard className="h-4 w-4 shrink-0" />
+															) : (
+																<Banknote className="h-4 w-4 shrink-0" />
+															)}
+															<span className="font-medium">
+																{PAYMENT_METHOD_LABELS[method as PaymentMethod]}
+															</span>
+														</button>
+													),
 												)}
 											</div>
 											<FormMessage />
@@ -399,161 +341,23 @@ export const AppointmentForm = ({
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				{/* Step 1 — Doctor */}
-				<div className="space-y-3">
-					<div className="flex items-center gap-2">
-						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							1
-						</div>
-						<h3 className="font-semibold text-foreground">
-							Escolha o profissional
-						</h3>
-					</div>
+				<ProfessionalStep
+					control={form.control}
+					doctors={doctors}
+					doctorsLoading={doctorsLoading}
+					professionalIdParam={professionalIdParam}
+					selectedDoctor={selectedDoctor}
+					initialSpecialtyFilter={voicePreset?.specialty ?? undefined}
+					onDoctorSelect={() => {
+						setSelectedTime("");
+						setSelectedServiceId(null);
+					}}
+					onDoctorClear={() => {
+						form.setValue("professionalId", "");
+						setSelectedTime("");
+					}}
+				/>
 
-					<FormField
-						control={form.control}
-						name="professionalId"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Popover
-										open={professionalOpen}
-										onOpenChange={setProfessionalOpen}
-									>
-										<PopoverTrigger asChild>
-											<Button
-												variant="outline"
-												role="combobox"
-												aria-expanded={professionalOpen}
-												disabled={doctorsLoading || !!professionalIdParam}
-												className={cn(
-													"w-full justify-between rounded-xl border-border h-auto py-3 px-4",
-													!field.value && "text-muted-foreground",
-												)}
-											>
-												{selectedDoctor ? (
-													<div className="flex items-center gap-3">
-														<Avatar className="h-8 w-8 rounded-lg">
-															<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
-																{selectedDoctor.name
-																	?.split(" ")
-																	.map((n) => n[0])
-																	.join("")
-																	.slice(0, 2)
-																	.toUpperCase() ?? "?"}
-															</AvatarFallback>
-														</Avatar>
-														<div className="text-left">
-															<p className="text-sm font-medium">
-																{selectedDoctor.name}
-															</p>
-															<p className="text-xs text-muted-foreground">
-																{selectedDoctor.specialty}
-															</p>
-														</div>
-													</div>
-												) : (
-													<div className="flex items-center gap-2">
-														<Search className="h-4 w-4" />
-														<span>Buscar profissional...</span>
-													</div>
-												)}
-												<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-											</Button>
-										</PopoverTrigger>
-										<PopoverContent
-											className="w-full p-0 rounded-xl"
-											align="start"
-										>
-											<Command>
-												<CommandInput placeholder="Pesquisar por nome ou especialidade..." />
-												<CommandList>
-													<CommandEmpty>
-														{doctorsLoading
-															? "Carregando..."
-															: "Nenhum profissional encontrado."}
-													</CommandEmpty>
-													<CommandGroup>
-														{filteredDoctors
-															.filter((d) => d.name)
-															.map((doctor) => (
-																<CommandItem
-																	key={doctor.id}
-																	value={`${doctor.name} ${doctor.specialty}`}
-																	onSelect={() => {
-																		field.onChange(doctor.id);
-																		setProfessionalOpen(false);
-																		setSelectedTime("");
-																		setSelectedServiceId(null);
-																	}}
-																>
-																	<div className="flex items-center gap-3 flex-1">
-																		<Avatar className="h-8 w-8 rounded-lg">
-																			<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
-																				{doctor.name
-																					?.split(" ")
-																					.map((n) => n[0])
-																					.join("")
-																					.slice(0, 2)
-																					.toUpperCase() ?? "?"}
-																			</AvatarFallback>
-																		</Avatar>
-																		<div>
-																			<p className="text-sm font-medium">
-																				{doctor.name}
-																			</p>
-																			<p className="text-xs text-muted-foreground">
-																				{doctor.specialty}
-																			</p>
-																		</div>
-																	</div>
-																	<Check
-																		className={cn(
-																			"ml-auto h-4 w-4",
-																			field.value === doctor.id
-																				? "opacity-100"
-																				: "opacity-0",
-																		)}
-																	/>
-																</CommandItem>
-															))}
-													</CommandGroup>
-												</CommandList>
-											</Command>
-										</PopoverContent>
-									</Popover>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					{selectedDoctor && (
-						<div className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
-							<Stethoscope className="h-4 w-4 text-primary shrink-0" />
-							<div className="flex-1 min-w-0">
-								<p className="text-sm font-medium">{selectedDoctor.name}</p>
-								<p className="text-xs text-muted-foreground">
-									{selectedDoctor.specialty}
-								</p>
-							</div>
-							{!professionalIdParam && (
-								<button
-									type="button"
-									onClick={() => {
-										form.setValue("professionalId", "");
-										setSelectedTime("");
-									}}
-									className="text-muted-foreground hover:text-foreground transition-colors"
-								>
-									<X className="h-4 w-4" />
-								</button>
-							)}
-						</div>
-					)}
-				</div>
-
-				{/* Step 2 — Service / Appointment type */}
 				{selectedDoctor && (
 					<div className="space-y-3">
 						<div className="flex items-center gap-2">
@@ -573,267 +377,23 @@ export const AppointmentForm = ({
 					</div>
 				)}
 
-				{/* Step 3 — Date & Time */}
-				<div className="space-y-3">
-					<div className="flex items-center gap-2">
-						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							3
-						</div>
-						<h3 className="font-semibold text-foreground">Data e horário</h3>
-					</div>
+				<DateTimeStep
+					control={form.control}
+					selectedDoctor={selectedDoctor}
+					scheduleLoading={scheduleLoading}
+					availableSlots={availableSlots}
+					bookedTimesForDate={bookedTimesForDate}
+					isQueueMode={isQueueMode}
+					isDayDisabled={isDayDisabled}
+					selectedDate={selectedDate}
+					selectedTime={selectedTime}
+					onTimeSelect={handleTimeSelect}
+					onDateChange={() => setSelectedTime("")}
+				/>
 
-					<FormField
-						control={form.control}
-						name="scheduledAt"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Popover>
-										<PopoverTrigger asChild>
-											<Button
-												type="button"
-												variant="outline"
-												className={cn(
-													"w-full justify-start rounded-xl border-border h-11 px-4",
-													!field.value && "text-muted-foreground",
-												)}
-											>
-												<CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
-												{field.value
-													? format(field.value, "EEEE, d 'de' MMMM 'de' yyyy", {
-															locale: ptBR,
-														})
-													: "Selecione uma data"}
-											</Button>
-										</PopoverTrigger>
-										<PopoverContent
-											className="w-auto p-0 rounded-2xl"
-											align="start"
-										>
-											<Calendar
-												mode="single"
-												selected={field.value}
-												onSelect={(date) => {
-													if (!date) return;
-													setSelectedTime("");
-													if (isQueueMode) {
-														field.onChange(setMinutes(setHours(date, 9), 0));
-													} else {
-														field.onChange(date);
-													}
-												}}
-												disabled={isDayDisabled}
-												locale={ptBR}
-											/>
-										</PopoverContent>
-									</Popover>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<ModalityStep control={form.control} />
 
-					{isQueueMode ? (
-						<>
-							<Alert className="rounded-xl border-blue-500/20 bg-blue-500/5">
-								<Users className="h-4 w-4 text-blue-500" />
-								<AlertDescription className="text-xs text-blue-700 dark:text-blue-400">
-									Este profissional usa sistema de fila. Selecione uma data e
-									você será atendido por ordem de chegada.
-								</AlertDescription>
-							</Alert>
-							{selectedDate && (
-								<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
-									<Check className="h-4 w-4 text-green-500 shrink-0" />
-									<span className="text-green-700 dark:text-green-400">
-										{format(selectedDate, "EEEE, d 'de' MMMM", {
-											locale: ptBR,
-										})}{" "}
-										— entrada na fila
-									</span>
-								</div>
-							)}
-						</>
-					) : (
-						<>
-							<div className="space-y-2">
-								<p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
-									<Clock className="h-3.5 w-3.5" />
-									Horário disponível
-								</p>
-
-								{!selectedDoctor ? (
-									<p className="text-xs text-muted-foreground py-2">
-										Selecione um profissional para ver os horários disponíveis.
-									</p>
-								) : scheduleLoading ? (
-									<p className="text-xs text-muted-foreground py-2">
-										Carregando horários...
-									</p>
-								) : !selectedDate ? (
-									<p className="text-xs text-muted-foreground py-2">
-										Selecione uma data para ver os horários.
-									</p>
-								) : availableSlots.length === 0 ? (
-									<p className="text-xs text-muted-foreground py-2">
-										Profissional não atende neste dia.
-									</p>
-								) : (
-									<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-										{availableSlots.map((slot) => {
-											const booked = bookedTimesForDate.has(slot.label);
-											return (
-												<button
-													key={slot.label}
-													type="button"
-													disabled={booked}
-													onClick={() => !booked && handleTimeSelect(slot)}
-													title={booked ? "Horário já reservado" : undefined}
-													className={cn(
-														"rounded-xl border py-2.5 text-sm font-medium transition-all duration-150",
-														booked
-															? "cursor-not-allowed border-border/40 bg-muted/40 text-muted-foreground/40 line-through"
-															: selectedTime === slot.label
-																? "border-primary bg-primary text-primary-foreground shadow-sm"
-																: "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
-													)}
-												>
-													{slot.label}
-												</button>
-											);
-										})}
-									</div>
-								)}
-							</div>
-
-							{selectedDate && selectedTime && (
-								<div className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/5 px-4 py-2.5 text-sm">
-									<Check className="h-4 w-4 text-green-500 shrink-0" />
-									<span className="text-green-700 dark:text-green-400">
-										{format(selectedDate, "EEEE, d 'de' MMMM", {
-											locale: ptBR,
-										})}{" "}
-										às {selectedTime}
-									</span>
-								</div>
-							)}
-						</>
-					)}
-				</div>
-
-				{/* Step 4 — Modality */}
-				<div className="space-y-3">
-					<div className="flex items-center gap-2">
-						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							4
-						</div>
-						<h3 className="font-semibold text-foreground">Modalidade</h3>
-					</div>
-					<FormField
-						control={form.control}
-						name="modality"
-						render={({ field }) => (
-							<FormItem>
-								<div className="grid grid-cols-2 gap-3">
-									{(
-										[
-											{
-												value: "IN_PERSON",
-												label: "Presencial",
-												desc: "Na clínica ou consultório",
-											},
-											{
-												value: "ONLINE",
-												label: "Online",
-												desc: "Videochamada via Google Meet",
-											},
-										] as const
-									).map((opt) => (
-										<button
-											key={opt.value}
-											type="button"
-											onClick={() => field.onChange(opt.value)}
-											className={`flex flex-col items-start gap-1 rounded-xl border p-3 text-left transition-colors ${
-												field.value === opt.value
-													? "border-primary bg-primary/5 text-primary"
-													: "border-border hover:border-primary/40"
-											}`}
-										>
-											<span className="text-sm font-semibold">{opt.label}</span>
-											<span className="text-xs text-muted-foreground">
-												{opt.desc}
-											</span>
-										</button>
-									))}
-								</div>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-				</div>
-
-				{/* Step 5 — Details */}
-				<div className="space-y-3">
-					<div className="flex items-center gap-2">
-						<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-							5
-						</div>
-						<h3 className="font-semibold text-foreground">Detalhes</h3>
-						<Badge variant="secondary" className="text-xs">
-							Opcional
-						</Badge>
-					</div>
-
-					<FormField
-						control={form.control}
-						name="reason"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
-									<FileText className="h-3.5 w-3.5" />
-									Motivo da consulta
-								</FormLabel>
-								<FormControl>
-									<Textarea
-										placeholder="Ex.: dor de cabeça frequente, check-up anual, retorno..."
-										className="min-h-[100px] resize-none rounded-xl border-border focus-visible:ring-primary/30"
-										maxLength={500}
-										{...field}
-										value={field.value ?? ""}
-									/>
-								</FormControl>
-								<div className="flex justify-between items-center">
-									<FormMessage />
-									<span className="text-xs text-muted-foreground ml-auto">
-										{(field.value ?? "").length}/500
-									</span>
-								</div>
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="notes"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
-									<FileText className="h-3.5 w-3.5" />
-									Observações adicionais
-								</FormLabel>
-								<FormControl>
-									<Textarea
-										placeholder="Informações relevantes, alergias, medicações em uso..."
-										className="min-h-[90px] resize-none rounded-xl border-border focus-visible:ring-primary/30"
-										{...field}
-										value={field.value ?? ""}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-				</div>
+				<DetailsStep control={form.control} />
 
 				<Button
 					type="submit"

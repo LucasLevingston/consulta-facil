@@ -9,5 +9,6 @@ export function useGetProfessionalServices(professionalId: string) {
 		queryKey: serviceKeys.byProfessional(professionalId),
 		queryFn: () => servicesApi.getByProfessional(professionalId),
 		enabled: !!professionalId,
+		staleTime: 2 * 60 * 1000,
 	});
 }
