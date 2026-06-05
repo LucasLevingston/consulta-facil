@@ -21,10 +21,8 @@ import {
 import type { ProfessionalScheduleItem } from "@/lib/schemas/schedule/professional-schedule-item.schema";
 import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
-import {
-	DEFAULT_BREAK,
-	DEFAULT_DURATION,
-} from "@/utils/constants/schedule-defaults";
+import { DEFAULT_BREAK } from "@/utils/constants/default-break";
+import { DEFAULT_DURATION } from "@/utils/constants/default-duration";
 
 export default function SchedulePage() {
 	return (

@@ -27,10 +27,8 @@ import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
 import { QueryBoundary } from "@/providers/query-boundary";
-import {
-	FREE_CONSULTS_PER_DOCTOR,
-	FREE_DOCTORS,
-} from "@/utils/constants/plan-limits";
+import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_DOCTORS } from "@/utils/constants/free-doctors";
 
 import { BASE_PRICE } from "../../../lib/utils/base-price";
 import { PlanCard } from "./plan-card";

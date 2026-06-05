@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPageNumbers } from "@/components/custom/custom-pagination";
+import { getPageNumbers } from "@/lib/utils/get-page-numbers";
 
 describe("getPageNumbers", () => {
 	it("returns all pages when total <= 7", () => {

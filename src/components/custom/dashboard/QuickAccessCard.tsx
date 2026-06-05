@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import type { QuickCard } from "./dashboard-quick-cards";
+import type { QuickCard } from "./quick-card";
 
 export function QuickAccessCard({
 	title,

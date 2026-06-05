@@ -18,10 +18,8 @@ import { Separator } from "@/components/ui/separator";
 import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
 import { appointmentsApi } from "@/lib/api/appointments.api";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
-import {
-	FREE_CONSULTS_PER_DOCTOR,
-	FREE_DOCTORS,
-} from "@/utils/constants/plan-limits";
+import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_DOCTORS } from "@/utils/constants/free-doctors";
 
 interface Props {
 	clinic: ClinicResponse;

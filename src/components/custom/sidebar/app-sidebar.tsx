@@ -39,13 +39,11 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
-import {
-	adminNav,
-	defaultNav,
-	doctorNav,
-	patientNav,
-	receptionistNav,
-} from "./nav-items";
+import { adminNav } from "./admin-nav";
+import { defaultNav } from "./default-nav";
+import { doctorNav } from "./doctor-nav";
+import { patientNav } from "./patient-nav";
+import { receptionistNav } from "./receptionist-nav";
 
 export default function AppSidebar() {
 	const [mounted, setMounted] = React.useState(false);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getVideoRoomTokenApi } from "@/lib/api/video/video.api";
+import { getVideoRoomTokenApi } from "@/lib/api/video/get-video-room-token.api";
 
 export function useRoomToken(appointmentId: string | null) {
 	return useQuery({

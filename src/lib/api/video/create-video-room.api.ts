@@ -9,12 +9,3 @@ export async function createVideoRoomApi(
 	);
 	return response.data;
 }
-
-export async function getVideoRoomTokenApi(
-	appointmentId: string,
-): Promise<VideoRoom> {
-	const response = await api.get<VideoRoom>(
-		`/appointments/${appointmentId}/video-room/token`,
-	);
-	return response.data;
-}

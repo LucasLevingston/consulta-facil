@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
-import { createVideoRoomApi } from "@/lib/api/video/video.api";
+import { createVideoRoomApi } from "@/lib/api/video/create-video-room.api";
 
 export function useCreateRoom() {
 	const queryClient = useQueryClient();

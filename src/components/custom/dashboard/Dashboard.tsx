@@ -18,9 +18,11 @@ import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-app
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { useUserStore } from "@/store/useUserStore";
+import { adminCards } from "./admin-cards";
 import { AppointmentsList } from "./appointments-list";
 import { DoctorHeroSubtitle } from "./DoctorHeroSubtitle";
-import { adminCards, doctorCards, patientCards } from "./dashboard-quick-cards";
+import { doctorCards } from "./doctor-cards";
+import { patientCards } from "./patient-cards";
 import { QuickAccessCard } from "./QuickAccessCard";
 import { StatCard } from "./stat-card";
 
