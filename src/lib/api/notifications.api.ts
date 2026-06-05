@@ -1,5 +1,5 @@
 import { api } from "@/config/api";
-import type { NotificationResponse } from "@/lib/schemas/notification.schema";
+import type { NotificationResponse } from "@/lib/schemas/notification/notification.schema";
 
 export const notificationsApi = {
 	getAll: async (): Promise<NotificationResponse[]> => {

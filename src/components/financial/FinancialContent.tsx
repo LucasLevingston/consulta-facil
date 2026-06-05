@@ -12,7 +12,7 @@ import {
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatBRL } from "@/utils/format-brl";
 import { MonthBar } from "./MonthBar";
 import { SummaryCard } from "./SummaryCard";

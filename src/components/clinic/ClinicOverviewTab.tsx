@@ -4,7 +4,7 @@ import { Building2, MapPin, Phone, Star, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 
 interface Props {
 	clinic: ClinicResponse;

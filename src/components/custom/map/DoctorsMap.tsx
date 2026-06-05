@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 
 const DoctorsMapInner = dynamic(() => import("./DoctorsMapInner"), {
 	ssr: false,

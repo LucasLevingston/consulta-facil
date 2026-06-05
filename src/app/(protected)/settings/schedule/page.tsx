@@ -17,9 +17,9 @@ import {
 	DAY_LABELS,
 	DAYS_OF_WEEK,
 	type DayOfWeek,
-	type ProfessionalScheduleItem,
-	type ProfessionalScheduleResponse,
-} from "@/lib/schemas/schedule.schema";
+} from "@/lib/schemas/schedule/days-of-week.schema";
+import type { ProfessionalScheduleItem } from "@/lib/schemas/schedule/professional-schedule-item.schema";
+import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import {
 	DEFAULT_BREAK,

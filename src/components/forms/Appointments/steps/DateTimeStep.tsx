@@ -18,8 +18,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { cn } from "@/lib/utils/cn";
 
 export type TimeSlot = { label: string; hours: number; minutes: number };

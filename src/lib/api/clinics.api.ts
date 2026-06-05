@@ -1,11 +1,9 @@
 import { api } from "@/config/api";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import type {
-	ClinicResponse,
-	CreateClinicInput,
-	InviteReceptionistInput,
-	ReceptionistResponse,
-} from "@/lib/schemas/clinic.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { CreateClinicInput } from "@/lib/schemas/clinic/create-clinic.schema";
+import type { InviteReceptionistInput } from "@/lib/schemas/clinic/invite-receptionist.schema";
+import type { ReceptionistResponse } from "@/lib/schemas/clinic/receptionist-response.schema";
 
 export const clinicsApi = {
 	getAll: async (): Promise<ClinicResponse[]> => {

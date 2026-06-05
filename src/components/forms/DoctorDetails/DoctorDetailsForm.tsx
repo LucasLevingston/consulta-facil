@@ -13,7 +13,7 @@ import { CustomSubmitButton } from "@/components/custom/forms-components/custom-
 import { Form } from "@/components/ui/form";
 import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
 import { useUpdateProfessional } from "@/hooks/api/doctors/use-update-professional";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { GenderOptions } from "@/utils/constants/gender-options";
 import {
 	PROFESSION_SPECIALTIES,

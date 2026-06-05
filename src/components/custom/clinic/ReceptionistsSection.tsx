@@ -18,7 +18,7 @@ import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptioni
 import {
 	type InviteReceptionistInput,
 	inviteReceptionistSchema,
-} from "@/lib/schemas/clinic.schema";
+} from "@/lib/schemas/clinic/invite-receptionist.schema";
 
 export function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 	const { data: receptionists = [], isLoading } =

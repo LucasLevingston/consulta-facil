@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { anamnesisApi } from "@/lib/api/anamnesis.api";
-import type { ProntuarioInput } from "@/lib/schemas/anamnesis.schema";
+import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
 import { anamnesisKeys } from "./anamnesis-keys";
 
 export function useSaveProntuario(appointmentId: string) {

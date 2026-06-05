@@ -1,9 +1,7 @@
 import { api } from "@/config/api";
-import type {
-	CreateProcedureRequestInput,
-	ProcedureRequest,
-	ScheduleProcedureRequestInput,
-} from "@/lib/schemas/procedure-request.schema";
+import type { CreateProcedureRequestInput } from "@/lib/schemas/procedure-request/create-procedure-request.schema";
+import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
+import type { ScheduleProcedureRequestInput } from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
 
 export const procedureRequestsApi = {
 	create: async (

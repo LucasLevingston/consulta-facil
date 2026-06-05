@@ -11,7 +11,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request.schema";
+import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { StatusBadge } from "./StatusBadge";
 
 export function ProfessionalRequestCard({

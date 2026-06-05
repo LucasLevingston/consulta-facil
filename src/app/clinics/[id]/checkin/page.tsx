@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
 import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { useUserStore } from "@/store/useUserStore";
 
 function AppointmentCheckInCard({

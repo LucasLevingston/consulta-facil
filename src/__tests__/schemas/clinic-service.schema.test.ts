@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { createClinicSchema } from "@/lib/schemas/clinic.schema";
-import { createServiceSchema } from "@/lib/schemas/service.schema";
+import { createClinicSchema } from "@/lib/schemas/clinic/create-clinic.schema";
+import { createServiceSchema } from "@/lib/schemas/service/create-service.schema";
 
 describe("createClinicSchema", () => {
 	it("valid data passes", () => {

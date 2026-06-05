@@ -31,7 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
 import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 
 function PatientScoreCard({

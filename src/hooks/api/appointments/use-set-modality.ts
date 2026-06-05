@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { appointmentsApi } from "@/lib/api/appointments.api";
-import type { SetModalityInput } from "@/lib/schemas/appointment.schema";
+import type { SetModalityInput } from "@/lib/schemas/appointment/set-modality.schema";
 import { appointmentKeys } from "./appointment-keys";
 
 export function useSetModality() {

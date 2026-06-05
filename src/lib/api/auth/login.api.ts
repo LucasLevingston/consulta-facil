@@ -1,5 +1,6 @@
 import { api } from "@/config/api";
-import type { LoginInput, LoginResponse } from "@/lib/schemas/auth.schema";
+import type { LoginInput } from "@/lib/schemas/auth/login.schema";
+import type { LoginResponse } from "@/lib/schemas/auth/login-response.schema";
 
 export async function loginApi(data: LoginInput): Promise<LoginResponse> {
 	try {

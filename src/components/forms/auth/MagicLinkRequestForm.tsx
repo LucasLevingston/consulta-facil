@@ -8,7 +8,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { type EmailInput, emailSchema } from "@/lib/schemas/auth.schema";
+import { type EmailInput, emailSchema } from "@/lib/schemas/auth/email.schema";
 
 interface MagicLinkRequestFormProps {
 	onSubmit: (email: string) => Promise<void>;

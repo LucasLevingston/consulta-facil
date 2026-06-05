@@ -1,10 +1,8 @@
 import { api } from "@/config/api";
-import type {
-	LoginInput,
-	LoginResponse,
-	RegisterInput,
-	UserResponse,
-} from "@/lib/schemas/auth.schema";
+import type { LoginInput } from "@/lib/schemas/auth/login.schema";
+import type { LoginResponse } from "@/lib/schemas/auth/login-response.schema";
+import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
+import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
 
 export const authApi = {
 	login: async (data: LoginInput): Promise<LoginResponse> => {

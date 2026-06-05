@@ -12,7 +12,7 @@ vi.mock("next/link", () => ({
 }));
 
 import { AppointmentsList } from "@/components/custom/dashboard/appointments-list";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 const appt: AppointmentResponse = {
 	id: "a-1",

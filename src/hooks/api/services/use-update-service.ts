@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { servicesApi } from "@/lib/api/services.api";
-import type { UpdateServiceInput } from "@/lib/schemas/service.schema";
+import type { UpdateServiceInput } from "@/lib/schemas/service/update-service.schema";
 import { serviceKeys } from "./service-keys";
 
 export function useUpdateService() {

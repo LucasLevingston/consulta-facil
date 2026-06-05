@@ -17,7 +17,7 @@ import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-
 import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request.schema";
+} from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
 
 export function ScheduleProcedureRequestForm({
 	requestId,

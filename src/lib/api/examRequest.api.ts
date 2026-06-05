@@ -1,9 +1,7 @@
 import { api } from "@/config/api";
-import type {
-	CreateExamRequestInput,
-	ExamRequestResponse,
-	ReviewExamRequestInput,
-} from "@/lib/schemas/examRequest.schema";
+import type { CreateExamRequestInput } from "@/lib/schemas/examRequest/create-exam-request.schema";
+import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+import type { ReviewExamRequestInput } from "@/lib/schemas/examRequest/review-exam-request.schema";
 
 export const examRequestApi = {
 	getByAppointment: async (

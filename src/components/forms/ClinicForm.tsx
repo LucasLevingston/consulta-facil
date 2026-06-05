@@ -12,11 +12,11 @@ import { LocationPicker } from "@/components/custom/map/LocationPicker";
 import { Form } from "@/components/ui/form";
 import { useCreateClinic } from "@/hooks/api/clinics/use-create-clinic";
 import { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import {
-	type ClinicResponse,
 	type CreateClinicInput,
 	createClinicSchema,
-} from "@/lib/schemas/clinic.schema";
+} from "@/lib/schemas/clinic/create-clinic.schema";
 
 export function ClinicForm({ clinic }: { clinic?: ClinicResponse }) {
 	const isEdit = !!clinic;

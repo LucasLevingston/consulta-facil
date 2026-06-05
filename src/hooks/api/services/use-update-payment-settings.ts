@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { servicesApi } from "@/lib/api/services.api";
-import type { UpdatePaymentSettingsInput } from "@/lib/schemas/doctor.schema";
+import type { UpdatePaymentSettingsInput } from "@/lib/schemas/doctor/update-payment-settings.schema";
 
 export function useUpdatePaymentSettings() {
 	const queryClient = useQueryClient();

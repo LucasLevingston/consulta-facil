@@ -13,7 +13,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { CustomButton } from "../custom-button";
 
 interface DoctorCardProps {

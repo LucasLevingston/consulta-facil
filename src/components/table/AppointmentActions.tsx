@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 interface AppointmentActionsProps {
 	appointment: AppointmentResponse;

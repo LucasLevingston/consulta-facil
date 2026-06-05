@@ -2,7 +2,7 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { AppointmentRow } from "./appointment-row";
 
 interface AppointmentsListProps {

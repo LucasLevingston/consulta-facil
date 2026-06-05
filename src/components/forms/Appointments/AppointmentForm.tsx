@@ -27,17 +27,15 @@ import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 import {
 	type AppointmentFormValues,
-	type AppointmentResponse,
 	appointmentFormSchema,
-} from "@/lib/schemas/appointment.schema";
+} from "@/lib/schemas/appointment/appointment-form.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import {
 	PAYMENT_METHOD_LABELS,
 	type PaymentMethod,
-} from "@/lib/schemas/doctor.schema";
-import type {
-	DayOfWeek,
-	ProfessionalScheduleResponse,
-} from "@/lib/schemas/schedule.schema";
+} from "@/lib/schemas/doctor/payment-method.schema";
+import type { DayOfWeek } from "@/lib/schemas/schedule/days-of-week.schema";
+import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
 import { useUserStore } from "@/store/useUserStore";
 import { JS_DAY_TO_DOW } from "@/utils/constants/day-to-dow";
 import { ServiceSelector } from "./ServiceSelector";

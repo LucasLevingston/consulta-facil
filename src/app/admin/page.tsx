@@ -16,7 +16,7 @@ import { useApproveApplication } from "@/hooks/api/doctors/use-approve-applicati
 import { usePendingApplications } from "@/hooks/api/doctors/use-pending-applications";
 import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application";
 import { usePermission } from "@/hooks/use-permission";
-import type { DoctorResponse } from "@/lib/schemas/doctor.schema";
+import type { DoctorResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";

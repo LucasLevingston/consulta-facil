@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 
 const ClinicsMapInner = dynamic(() => import("./ClinicsMapInner"), {
 	ssr: false,

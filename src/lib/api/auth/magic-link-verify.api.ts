@@ -1,5 +1,5 @@
 import { api } from "@/config/api";
-import type { LoginResponse } from "@/lib/schemas/auth.schema";
+import type { LoginResponse } from "@/lib/schemas/auth/login-response.schema";
 
 export async function magicLinkVerifyApi(
 	token: string,

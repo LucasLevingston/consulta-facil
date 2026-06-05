@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { clinicsApi } from "@/lib/api/clinics.api";
-import type { InviteReceptionistInput } from "@/lib/schemas/clinic.schema";
+import type { InviteReceptionistInput } from "@/lib/schemas/clinic/invite-receptionist.schema";
 import { clinicKeys } from "./clinic-keys";
 
 export function useInviteReceptionist(clinicId: string) {

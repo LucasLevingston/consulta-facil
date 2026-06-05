@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { PERMISSIONS, type PermissionKey } from "@/lib/permissions";
+import type { PermissionKey } from "@/lib/permission-key";
+import { PERMISSIONS } from "@/lib/permissions";
 
 type Role = "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
 const ALL_ROLES: Role[] = ["PATIENT", "PROFESSIONAL", "ADMIN", "RECEPTIONIST"];

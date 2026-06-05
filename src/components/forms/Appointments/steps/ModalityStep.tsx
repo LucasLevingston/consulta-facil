@@ -2,7 +2,7 @@
 
 import type { Control } from "react-hook-form";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment.schema";
+import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
 
 const MODALITY_OPTIONS = [
 	{

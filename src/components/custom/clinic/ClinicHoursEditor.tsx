@@ -9,13 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useSaveClinicWorkingHours } from "@/hooks/api/schedule/use-save-clinic-working-hours";
+import type { ClinicWorkingHoursItem } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
+import type { ClinicWorkingHoursResponse } from "@/lib/schemas/schedule/clinic-working-hours-response.schema";
 import {
-	type ClinicWorkingHoursItem,
-	type ClinicWorkingHoursResponse,
 	DAY_LABELS,
 	DAYS_OF_WEEK,
 	type DayOfWeek,
-} from "@/lib/schemas/schedule.schema";
+} from "@/lib/schemas/schedule/days-of-week.schema";
 
 function buildDefaultHoursRow(
 	day: DayOfWeek,

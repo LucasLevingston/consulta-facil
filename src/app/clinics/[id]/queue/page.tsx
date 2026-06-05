@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
 import { useClinicQueue } from "@/hooks/api/clinics/use-clinic-queue";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 function QueueCard({
 	professionalName,

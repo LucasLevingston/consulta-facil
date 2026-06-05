@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import {
-	appointmentFormSchema,
-	cancelAppointmentSchema,
-	createAppointmentSchema,
-} from "@/lib/schemas/appointment.schema";
+import { appointmentFormSchema } from "@/lib/schemas/appointment/appointment-form.schema";
+import { cancelAppointmentSchema } from "@/lib/schemas/appointment/cancel-appointment.schema";
+import { createAppointmentSchema } from "@/lib/schemas/appointment/create-appointment.schema";
 
 describe("createAppointmentSchema", () => {
 	const valid = {

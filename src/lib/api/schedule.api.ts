@@ -1,10 +1,8 @@
 import { api } from "@/config/api";
-import type {
-	ClinicWorkingHoursItem,
-	ClinicWorkingHoursResponse,
-	ProfessionalScheduleItem,
-	ProfessionalScheduleResponse,
-} from "@/lib/schemas/schedule.schema";
+import type { ClinicWorkingHoursItem } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
+import type { ClinicWorkingHoursResponse } from "@/lib/schemas/schedule/clinic-working-hours-response.schema";
+import type { ProfessionalScheduleItem } from "@/lib/schemas/schedule/professional-schedule-item.schema";
+import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
 
 export const scheduleApi = {
 	getMySchedule: async (): Promise<ProfessionalScheduleResponse[]> => {

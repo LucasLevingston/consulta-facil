@@ -10,7 +10,7 @@ import SocialAuthButtons from "@/components/forms/auth/SocialAuthButtons";
 import { useGoogleLogin } from "@/hooks/api/auth/use-google-login";
 import { useLogin } from "@/hooks/api/auth/use-login";
 import { useGoogleGIS } from "@/hooks/use-google-gis";
-import type { LoginInput } from "@/lib/schemas/auth.schema";
+import type { LoginInput } from "@/lib/schemas/auth/login.schema";
 
 export default function LoginPage() {
 	const router = useRouter();

@@ -18,7 +18,7 @@ import { useDeclineInvite } from "@/hooks/api/notifications/use-decline-invite";
 import { useMarkAllAsRead } from "@/hooks/api/notifications/use-mark-all-as-read";
 import { useNotifications } from "@/hooks/api/notifications/use-notifications";
 import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
-import type { NotificationResponse } from "@/lib/schemas/notification.schema";
+import type { NotificationResponse } from "@/lib/schemas/notification/notification.schema";
 import { cn } from "@/lib/utils/cn";
 import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
 

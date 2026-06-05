@@ -29,8 +29,8 @@ import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-r
 import {
 	type CreateExamRequestInput,
 	createExamRequestSchema,
-	type ExamRequestResponse,
-} from "@/lib/schemas/examRequest.schema";
+} from "@/lib/schemas/examRequest/create-exam-request.schema";
+import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 
 const STATUS_CONFIG: Record<
 	ExamRequestResponse["status"],

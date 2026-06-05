@@ -12,8 +12,8 @@ import { useUpdateService } from "@/hooks/api/services/use-update-service";
 import {
 	type CreateServiceInput,
 	createServiceSchema,
-	type ProfessionalService,
-} from "@/lib/schemas/service.schema";
+} from "@/lib/schemas/service/create-service.schema";
+import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 
 export function ServiceForm({
 	existing,

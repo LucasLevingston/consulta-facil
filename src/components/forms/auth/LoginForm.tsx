@@ -9,7 +9,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { type LoginInput, loginSchema } from "@/lib/schemas/auth.schema";
+import { type LoginInput, loginSchema } from "@/lib/schemas/auth/login.schema";
 
 interface LoginFormProps {
 	onSubmit: (values: LoginInput) => Promise<void>;

@@ -18,8 +18,4 @@ export const notificationSchema = z.object({
 	createdAt: z.string(),
 });
 
-export const unreadCountSchema = z.object({
-	count: z.number(),
-});
-
 export type NotificationResponse = z.infer<typeof notificationSchema>;

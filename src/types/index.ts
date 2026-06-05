@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 
-export type { LoginResponse, UserResponse } from "@/lib/schemas/auth.schema";
+export type { LoginResponse } from "@/lib/schemas/auth/login-response.schema";
+export type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
 
 export interface Area {
 	name: string;

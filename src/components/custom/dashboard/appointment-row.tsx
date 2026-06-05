@@ -3,7 +3,7 @@ import { Stethoscope, User } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 
 interface AppointmentRowProps {

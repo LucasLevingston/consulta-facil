@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { professionalsApi } from "@/lib/api/doctors.api";
-import type { CreateProfessionalInput } from "@/lib/schemas/doctor.schema";
+import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
 import { professionalKeys } from "./professional-keys";
 
 export function useUpdateProfessional() {

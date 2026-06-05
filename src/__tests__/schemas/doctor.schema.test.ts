@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createDoctorSchema } from "@/lib/schemas/doctor.schema";
+import { createDoctorSchema } from "@/lib/schemas/doctor/create-professional.schema";
 
 describe("createDoctorSchema", () => {
 	const valid = {

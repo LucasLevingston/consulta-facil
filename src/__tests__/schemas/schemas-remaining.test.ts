@@ -1,31 +1,19 @@
 import { describe, expect, it } from "vitest";
 
-import {
-	anamnesisSchema,
-	prontuarioSchema,
-} from "@/lib/schemas/anamnesis.schema";
-import {
-	createClinicSchema,
-	inviteReceptionistSchema,
-} from "@/lib/schemas/clinic.schema";
-import {
-	createExamRequestSchema,
-	reviewExamRequestSchema,
-} from "@/lib/schemas/examRequest.schema";
-import { notificationSchema } from "@/lib/schemas/notification.schema";
-import {
-	updateMedicalRecordSchema,
-	updatePatientSchema,
-} from "@/lib/schemas/patient.schema";
-import {
-	createProcedureRequestSchema,
-	scheduleProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request.schema";
-import {
-	clinicWorkingHoursItemSchema,
-	professionalScheduleItemSchema,
-} from "@/lib/schemas/schedule.schema";
-import { createServiceSchema } from "@/lib/schemas/service.schema";
+import { anamnesisSchema } from "@/lib/schemas/anamnesis/anamnesis.schema";
+import { prontuarioSchema } from "@/lib/schemas/anamnesis/prontuario.schema";
+import { createClinicSchema } from "@/lib/schemas/clinic/create-clinic.schema";
+import { inviteReceptionistSchema } from "@/lib/schemas/clinic/invite-receptionist.schema";
+import { createExamRequestSchema } from "@/lib/schemas/examRequest/create-exam-request.schema";
+import { reviewExamRequestSchema } from "@/lib/schemas/examRequest/review-exam-request.schema";
+import { notificationSchema } from "@/lib/schemas/notification/notification.schema";
+import { updateMedicalRecordSchema } from "@/lib/schemas/patient/update-medical-record.schema";
+import { updatePatientSchema } from "@/lib/schemas/patient/update-patient.schema";
+import { createProcedureRequestSchema } from "@/lib/schemas/procedure-request/create-procedure-request.schema";
+import { scheduleProcedureRequestSchema } from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
+import { clinicWorkingHoursItemSchema } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
+import { professionalScheduleItemSchema } from "@/lib/schemas/schedule/professional-schedule-item.schema";
+import { createServiceSchema } from "@/lib/schemas/service/create-service.schema";
 
 // ── anamnesis.schema ──────────────────────────────────────────────────────────
 

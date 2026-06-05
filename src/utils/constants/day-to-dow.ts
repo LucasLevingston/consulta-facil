@@ -1,4 +1,4 @@
-import type { DayOfWeek } from "@/lib/schemas/schedule.schema";
+import type { DayOfWeek } from "@/lib/schemas/schedule/days-of-week.schema";
 
 export const JS_DAY_TO_DOW: Record<number, DayOfWeek> = {
 	0: "SUNDAY",

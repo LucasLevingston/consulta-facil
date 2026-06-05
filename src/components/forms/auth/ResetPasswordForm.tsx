@@ -10,7 +10,7 @@ import { Form } from "@/components/ui/form";
 import {
 	type ResetPasswordInput,
 	resetPasswordSchema,
-} from "@/lib/schemas/auth.schema";
+} from "@/lib/schemas/auth/reset-password.schema";
 
 interface ResetPasswordFormProps {
 	onSubmit: (newPassword: string) => Promise<void>;

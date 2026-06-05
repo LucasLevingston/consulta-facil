@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { appointmentsApi } from "@/lib/api/appointments.api";
-import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment.schema";
+import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment/reschedule-appointment.schema";
 import { appointmentKeys } from "./appointment-keys";
 
 export function useRescheduleAppointment() {

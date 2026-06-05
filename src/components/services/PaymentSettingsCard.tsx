@@ -22,12 +22,15 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
-import type { PaymentMethod, PaymentTiming } from "@/lib/schemas/doctor.schema";
 import {
 	PAYMENT_METHOD_LABELS,
+	type PaymentMethod,
+} from "@/lib/schemas/doctor/payment-method.schema";
+import type { PaymentTiming } from "@/lib/schemas/doctor/payment-timing.schema";
+import {
 	type UpdatePaymentSettingsInput,
 	updatePaymentSettingsSchema,
-} from "@/lib/schemas/doctor.schema";
+} from "@/lib/schemas/doctor/update-payment-settings.schema";
 
 import { ALL_METHODS } from "@/utils/constants/payment-methods";
 

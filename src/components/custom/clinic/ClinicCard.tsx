@@ -12,7 +12,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { CustomButton } from "../custom-button";
 
 interface ClinicCardProps {

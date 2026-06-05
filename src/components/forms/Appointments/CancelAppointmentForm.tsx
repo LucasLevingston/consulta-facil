@@ -12,10 +12,8 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
-import {
-	type AppointmentResponse,
-	cancelAppointmentSchema,
-} from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { cancelAppointmentSchema } from "@/lib/schemas/appointment/cancel-appointment.schema";
 
 interface CancelAppointmentFormProps {
 	appointment: AppointmentResponse;

@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 import { loginApi } from "@/lib/api/auth/login.api";
-import type { LoginInput } from "@/lib/schemas/auth.schema";
+import type { LoginInput } from "@/lib/schemas/auth/login.schema";
 import { useAuthStore } from "@/store/auth.store";
 
 export function useLogin() {

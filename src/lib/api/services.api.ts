@@ -1,13 +1,9 @@
 import { api } from "@/config/api";
-import type {
-	ProfessionalResponse,
-	UpdatePaymentSettingsInput,
-} from "@/lib/schemas/doctor.schema";
-import type {
-	CreateServiceInput,
-	ProfessionalService,
-	UpdateServiceInput,
-} from "@/lib/schemas/service.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { UpdatePaymentSettingsInput } from "@/lib/schemas/doctor/update-payment-settings.schema";
+import type { CreateServiceInput } from "@/lib/schemas/service/create-service.schema";
+import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
+import type { UpdateServiceInput } from "@/lib/schemas/service/update-service.schema";
 
 export const servicesApi = {
 	create: async (data: CreateServiceInput): Promise<ProfessionalService> => {

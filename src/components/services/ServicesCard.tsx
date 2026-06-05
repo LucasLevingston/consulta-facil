@@ -18,7 +18,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
-import type { ProfessionalService } from "@/lib/schemas/service.schema";
+import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 import { ServiceForm } from "./ServiceForm";
 import { ServiceRow } from "./ServiceRow";
 

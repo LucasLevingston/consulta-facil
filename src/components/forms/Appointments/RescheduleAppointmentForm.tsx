@@ -11,11 +11,11 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import {
-	type AppointmentResponse,
 	type RescheduleAppointmentInput,
 	rescheduleAppointmentSchema,
-} from "@/lib/schemas/appointment.schema";
+} from "@/lib/schemas/appointment/reschedule-appointment.schema";
 
 interface RescheduleAppointmentFormProps {
 	appointment: AppointmentResponse;

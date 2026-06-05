@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",

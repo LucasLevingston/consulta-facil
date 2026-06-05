@@ -9,7 +9,10 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { type RegisterInput, registerSchema } from "@/lib/schemas/auth.schema";
+import {
+	type RegisterInput,
+	registerSchema,
+} from "@/lib/schemas/auth/register.schema";
 
 interface RegisterFormProps {
 	onSubmit: (data: RegisterInput) => Promise<void>;

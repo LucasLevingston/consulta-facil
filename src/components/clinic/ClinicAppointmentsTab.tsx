@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/select";
 import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
 import { appointmentsApi } from "@/lib/api/appointments.api";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
-import type { ClinicResponse } from "@/lib/schemas/clinic.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
 import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";
 import { ALL } from "@/utils/constants/filter-sentinels";

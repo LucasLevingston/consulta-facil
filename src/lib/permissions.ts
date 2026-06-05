@@ -66,5 +66,3 @@ export const PERMISSIONS = {
 	// ── Admin ────────────────────────────────────────────────────────────
 	"admin:access": allow("ADMIN"),
 } as const satisfies Record<string, Rule>;
-
-export type PermissionKey = keyof typeof PERMISSIONS;

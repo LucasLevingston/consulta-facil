@@ -19,7 +19,7 @@ vi.mock("@/components/custom/custom-pagination", () => ({
 }));
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 const makeAppt = (overrides = {}): AppointmentResponse =>
 	({

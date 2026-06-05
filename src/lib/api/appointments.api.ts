@@ -1,15 +1,13 @@
 import { api } from "@/config/api";
-import type {
-	AppointmentResponse,
-	CancelAppointmentInput,
-	CreateAppointmentInput,
-	PaymentResponse,
-	QrCheckInToken,
-	RateAppointmentInput,
-	RescheduleAppointmentInput,
-	SetModalityInput,
-} from "@/lib/schemas/appointment.schema";
-import type { ApiPage } from "@/lib/schemas/doctor.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { CancelAppointmentInput } from "@/lib/schemas/appointment/cancel-appointment.schema";
+import type { CreateAppointmentInput } from "@/lib/schemas/appointment/create-appointment.schema";
+import type { PaymentResponse } from "@/lib/schemas/appointment/payment-response.schema";
+import type { QrCheckInToken } from "@/lib/schemas/appointment/qr-checkin-token.schema";
+import type { RateAppointmentInput } from "@/lib/schemas/appointment/rate-appointment.schema";
+import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment/reschedule-appointment.schema";
+import type { SetModalityInput } from "@/lib/schemas/appointment/set-modality.schema";
+import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 
 export const appointmentsApi = {
 	schedule: async (

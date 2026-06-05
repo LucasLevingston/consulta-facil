@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProfessionalResponse } from "@/lib/schemas/doctor.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import DoctorCard from "./doctorCard";
 
 export default function DoctorsList({

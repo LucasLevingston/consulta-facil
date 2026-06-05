@@ -20,7 +20,7 @@ import { useGetProfessionalServices } from "@/hooks/api/services/use-get-profess
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request.schema";
+} from "@/lib/schemas/procedure-request/create-procedure-request.schema";
 
 export function CreateProcedureRequestForm({
 	professionalId,

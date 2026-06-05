@@ -19,7 +19,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request.schema";
+import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 import { StatusBadge } from "./StatusBadge";
 

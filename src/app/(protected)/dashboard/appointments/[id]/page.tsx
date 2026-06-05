@@ -46,13 +46,11 @@ import { useAppointment } from "@/hooks/api/appointments/use-appointment";
 import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
 import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
 import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
-import type {
-	AnamnesisInput,
-	AnamnesisResponse,
-	ProntuarioInput,
-	ProntuarioResponse,
-} from "@/lib/schemas/anamnesis.schema";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
+import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
+import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
+import type { ProntuarioResponse } from "@/lib/schemas/anamnesis/prontuario-response.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 import { STATUS_CONFIG } from "@/utils/constants/appointment-status-config";

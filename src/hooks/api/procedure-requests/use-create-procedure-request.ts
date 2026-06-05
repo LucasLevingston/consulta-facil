@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { procedureRequestsApi } from "@/lib/api/procedure-requests.api";
-import type { CreateProcedureRequestInput } from "@/lib/schemas/procedure-request.schema";
+import type { CreateProcedureRequestInput } from "@/lib/schemas/procedure-request/create-procedure-request.schema";
 import { procedureRequestKeys } from "./procedure-request-keys";
 
 export function useCreateProcedureRequest() {

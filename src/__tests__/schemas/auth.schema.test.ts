@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { loginSchema, registerSchema } from "@/lib/schemas/auth.schema";
+import { loginSchema } from "@/lib/schemas/auth/login.schema";
+import { registerSchema } from "@/lib/schemas/auth/register.schema";
 
 describe("loginSchema", () => {
 	it("aceita credenciais válidas", () => {

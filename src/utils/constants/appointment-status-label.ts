@@ -1,4 +1,4 @@
-import type { AppointmentStatus } from "@/lib/schemas/appointment.schema";
+import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
 
 export const STATUS_LABEL: Record<AppointmentStatus, string> = {
 	PENDING: "Pendente",

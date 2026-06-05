@@ -7,7 +7,7 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AppointmentActions } from "@/components/table/AppointmentActions";
 import { Button } from "@/components/ui/button";
-import type { AppointmentResponse } from "@/lib/schemas/appointment.schema";
+import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 
 export function makeColumns(

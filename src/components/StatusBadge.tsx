@@ -1,4 +1,4 @@
-import type { AppointmentStatus } from "@/lib/schemas/appointment.schema";
+import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
 import { cn } from "@/lib/utils/cn";
 
 const statusConfig: Record<

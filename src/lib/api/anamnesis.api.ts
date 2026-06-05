@@ -1,10 +1,8 @@
 import { api } from "@/config/api";
-import type {
-	AnamnesisInput,
-	AnamnesisResponse,
-	ProntuarioInput,
-	ProntuarioResponse,
-} from "@/lib/schemas/anamnesis.schema";
+import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
+import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
+import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
+import type { ProntuarioResponse } from "@/lib/schemas/anamnesis/prontuario-response.schema";
 
 export const anamnesisApi = {
 	getAnamnesis: async (

@@ -1,11 +1,9 @@
 import { api } from "@/config/api";
-import type { ApiPage } from "@/lib/schemas/doctor.schema";
-import type {
-	MedicalRecord,
-	PatientProfile,
-	UpdateMedicalRecordInput,
-	UpdatePatientInput,
-} from "@/lib/schemas/patient.schema";
+import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
+import type { MedicalRecord } from "@/lib/schemas/patient/medical-record.schema";
+import type { PatientProfile } from "@/lib/schemas/patient/patient-profile.schema";
+import type { UpdateMedicalRecordInput } from "@/lib/schemas/patient/update-medical-record.schema";
+import type { UpdatePatientInput } from "@/lib/schemas/patient/update-patient.schema";
 
 export interface PatientSummary {
 	id: string;
