@@ -22,6 +22,7 @@ import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
 import { CustomButton } from "@/components/custom/custom-button";
+import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { RateAppointmentForm } from "@/components/forms/Appointments/RateAppointmentForm";
 import { RescheduleAppointmentForm } from "@/components/forms/Appointments/RescheduleAppointmentForm";
@@ -46,6 +47,8 @@ import { useAppointment } from "@/hooks/api/appointments/use-appointment";
 import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
 import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
 import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
+import { useCreateRoom } from "@/hooks/api/video/use-create-room";
+import { useRoomToken } from "@/hooks/api/video/use-room-token";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
 import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
@@ -459,6 +462,12 @@ function AppointmentDetail({
 		useGenerateMeetLink();
 	const { mutateAsync: createPayment, isPending: creatingPayment } =
 		useCreatePayment();
+	const { mutateAsync: createRoom, isPending: creatingRoom } = useCreateRoom();
+	const [videoActive, setVideoActive] = useState(false);
+	const [videoAppointmentId, setVideoAppointmentId] = useState<string | null>(
+		null,
+	);
+	const { data: videoRoom } = useRoomToken(videoAppointmentId);
 
 	const role = user?.role ?? "PATIENT";
 	const isPatient = role === "PATIENT";
@@ -560,6 +569,41 @@ function AppointmentDetail({
 								>
 									<Video className="h-3.5 w-3.5" />
 									{generatingLink ? "Gerando..." : "Gerar link Meet"}
+								</CustomButton>
+							)}
+							{isOnline &&
+								isProfessional &&
+								(appointment.status === "CONFIRMED" ||
+									appointment.status === "PENDING") && (
+									<CustomButton
+										size="sm"
+										className="gap-2"
+										disabled={creatingRoom}
+										onClick={async () => {
+											try {
+												await createRoom(appointment.id);
+												setVideoAppointmentId(appointment.id);
+												setVideoActive(true);
+											} catch {
+												toast.error("Erro ao iniciar teleconsulta.");
+											}
+										}}
+									>
+										<Video className="h-3.5 w-3.5" />
+										{creatingRoom ? "Iniciando..." : "Iniciar teleconsulta"}
+									</CustomButton>
+								)}
+							{isOnline && isPatient && videoRoom && !videoActive && (
+								<CustomButton
+									size="sm"
+									className="gap-2"
+									onClick={() => {
+										setVideoAppointmentId(appointment.id);
+										setVideoActive(true);
+									}}
+								>
+									<Video className="h-3.5 w-3.5" />
+									Entrar na consulta
 								</CustomButton>
 							)}
 							{isPatient && appointment.status === "CONFIRMED" && !isOnline && (
@@ -685,6 +729,15 @@ function AppointmentDetail({
 					<QrCodeDialog appointmentId={appointment.id} />
 				</DialogContent>
 			</Dialog>
+
+			{/* Video room */}
+			{videoActive && videoRoom && (
+				<VideoRoom
+					room={videoRoom}
+					isProfessional={isProfessional}
+					onEnd={() => setVideoActive(false)}
+				/>
+			)}
 
 			{/* Exams */}
 			<ExamsSection
