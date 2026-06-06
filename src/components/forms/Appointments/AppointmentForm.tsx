@@ -25,6 +25,7 @@ import { useProfessionalAppointments } from "@/hooks/api/appointments/use-profes
 import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
 import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
+import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 import {
 	type AppointmentFormValues,
 	appointmentFormSchema,
@@ -42,17 +43,19 @@ import { DetailsStep } from "./steps/DetailsStep";
 import { ModalityStep } from "./steps/ModalityStep";
 import { ProfessionalStep } from "./steps/ProfessionalStep";
 
-function computeSlots(schedule: ProfessionalScheduleResponse): TimeSlot[] {
+function computeSlots(
+	schedule: ProfessionalScheduleResponse,
+	serviceDuration?: number,
+): TimeSlot[] {
 	const [startH, startM] = schedule.startTime.split(":").map(Number);
 	const [endH, endM] = schedule.endTime.split(":").map(Number);
 	const startMin = startH * 60 + startM;
 	const endMin = endH * 60 + endM;
-	const step =
-		schedule.consultationDurationMinutes +
-		schedule.breakBetweenConsultationsMinutes;
+	const duration = serviceDuration ?? schedule.consultationDurationMinutes;
+	const step = duration + schedule.breakBetweenConsultationsMinutes;
 	const slots: TimeSlot[] = [];
 	let current = startMin;
-	while (current + schedule.consultationDurationMinutes <= endMin) {
+	while (current + duration <= endMin) {
 		const h = Math.floor(current / 60);
 		const m = current % 60;
 		slots.push({
@@ -130,6 +133,13 @@ export const AppointmentForm = ({
 	const { data: scheduleList = [], isLoading: scheduleLoading } =
 		useProfessionalSchedule(selectedDoctor?.id ?? "");
 
+	const { data: professionalServices = [] } = useGetProfessionalServices(
+		selectedDoctor?.id ?? "",
+	);
+	const selectedService = professionalServices.find(
+		(s) => s.id === selectedServiceId,
+	);
+
 	const { data: professionalAppointmentsPage } = useProfessionalAppointments(
 		selectedDoctor?.id ?? "",
 		0,
@@ -170,8 +180,8 @@ export const AppointmentForm = ({
 			(s) => s.dayOfWeek === dow && s.isActive,
 		);
 		if (!daySchedule) return [];
-		return computeSlots(daySchedule);
-	}, [selectedDate, scheduleList]);
+		return computeSlots(daySchedule, selectedService?.durationMinutes);
+	}, [selectedDate, scheduleList, selectedService]);
 
 	const isQueueMode =
 		!!selectedDoctor && !scheduleLoading && scheduleList.length === 0;
