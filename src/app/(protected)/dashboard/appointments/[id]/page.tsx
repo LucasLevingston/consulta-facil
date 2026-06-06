@@ -12,6 +12,7 @@ import {
 	MessageSquare,
 	QrCode,
 	RefreshCw,
+	Sparkles,
 	Star,
 	Stethoscope,
 	User,
@@ -21,6 +22,7 @@ import {
 import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
+import { AnamnesisAIChat } from "@/components/anamnesis/AnamnesisAIChat";
 import { CustomButton } from "@/components/custom/custom-button";
 import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
@@ -78,14 +80,17 @@ function StarDisplay({ rating }: { rating: number }) {
 function AnamnesisSection({
 	appointmentId,
 	canEdit,
+	showAiHelper,
 }: {
 	appointmentId: string;
 	canEdit: boolean;
+	showAiHelper?: boolean;
 }) {
 	const { data: anamnesis, isLoading } = useAnamnesis(appointmentId);
 	const { mutateAsync: save, isPending } = useSaveAnamnesis(appointmentId);
 
 	const [editing, setEditing] = useState(false);
+	const [aiOpen, setAiOpen] = useState(false);
 	const [form, setForm] = useState<AnamnesisInput>({
 		chiefComplaint: "",
 		currentMedications: "",
@@ -128,9 +133,22 @@ function AnamnesisSection({
 						Anamnese
 					</CardTitle>
 					{canEdit && !editing && (
-						<CustomButton variant="outline" onClick={startEdit}>
-							{anamnesis ? "Editar" : "Preencher"}
-						</CustomButton>
+						<div className="flex gap-2">
+							{showAiHelper && (
+								<CustomButton
+									variant="outline"
+									size="sm"
+									className="gap-1.5"
+									onClick={() => setAiOpen(true)}
+								>
+									<Sparkles className="h-3.5 w-3.5 text-primary" />
+									Preencher com IA
+								</CustomButton>
+							)}
+							<CustomButton variant="outline" onClick={startEdit}>
+								{anamnesis ? "Editar" : "Preencher"}
+							</CustomButton>
+						</div>
 					)}
 				</div>
 			</CardHeader>
@@ -192,6 +210,28 @@ function AnamnesisSection({
 					</p>
 				)}
 			</CardContent>
+
+			<Dialog open={aiOpen} onOpenChange={setAiOpen}>
+				<DialogContent className="sm:max-w-lg">
+					<DialogHeader className="mb-2 space-y-1">
+						<DialogTitle className="flex items-center gap-2">
+							<Sparkles className="h-4 w-4 text-primary" />
+							Preencher anamnese com IA
+						</DialogTitle>
+						<DialogDescription>
+							Responda às perguntas do assistente. Ao terminar, clique em
+							&ldquo;Salvar na anamnese&rdquo;.
+						</DialogDescription>
+					</DialogHeader>
+					<AnamnesisAIChat
+						onSave={async (data) => {
+							await save(data);
+							toast.success("Anamnese salva com sucesso!");
+						}}
+						onClose={() => setAiOpen(false)}
+					/>
+				</DialogContent>
+			</Dialog>
 		</Card>
 	);
 }
@@ -750,6 +790,7 @@ function AppointmentDetail({
 			<AnamnesisSection
 				appointmentId={appointment.id}
 				canEdit={isPatient || isProfessional}
+				showAiHelper={isPatient}
 			/>
 
 			{/* Prontuario — editable by professional only, visible to patient read-only */}
