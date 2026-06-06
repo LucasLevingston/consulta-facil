@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { api } from "@/config/api";
-import type { UserResponse } from "@/types";
+import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
 
 function getErrorStatus(error: unknown) {
 	if (typeof error === "object" && error !== null && "response" in error) {

@@ -28,7 +28,7 @@ import {
 	Wind,
 	Worm,
 } from "lucide-react";
-import type { Area } from "@/types";
+import type { Area } from "@/types/area";
 
 export const areasData: Area[] = [
 	{ name: "Anestesiologia", icon: Syringe, image: "anestesiologia.png" },

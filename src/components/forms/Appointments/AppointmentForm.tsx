@@ -30,10 +30,8 @@ import {
 	appointmentFormSchema,
 } from "@/lib/schemas/appointment/appointment-form.schema";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-import {
-	PAYMENT_METHOD_LABELS,
-	type PaymentMethod,
-} from "@/lib/schemas/doctor/payment-method.schema";
+import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
+import { PAYMENT_METHOD_LABELS } from "@/lib/schemas/doctor/payment-method-labels";
 import type { DayOfWeek } from "@/lib/schemas/schedule/days-of-week.schema";
 import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
 import { useUserStore } from "@/store/useUserStore";
