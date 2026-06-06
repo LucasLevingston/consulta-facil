@@ -89,24 +89,74 @@ NEXT_PUBLIC_GRAFANA_FARO_URL=           # opcional — RUM com Grafana Faro
 - Aprovar e rejeitar solicitações de profissionais
 - Gerenciar usuários e permissões
 
-## Páginas
+## Mapa de Páginas
 
-| Rota | Descrição | Roles |
+> Use esta seção para solicitar alterações: informe a rota e o que quer mudar.
+
+### Público (sem login)
+
+| Rota | Arquivo | Descrição | Funcionalidades |
+|---|---|---|---|
+| `/` | `app/page.tsx` | Landing page | Hero, busca de profissionais por especialidade, mapa de clínicas |
+| `/professionals` | `app/professionals/page.tsx` | Lista de profissionais | Filtros por nome/especialidade/cidade, paginação, avaliação por estrelas |
+| `/professionals/[id]` | `app/professionals/[id]/page.tsx` | Perfil do profissional | Bio, especialidade, avaliação, botão agendar, localização no mapa |
+| `/clinics` | `app/clinics/page.tsx` | Lista de clínicas | Filtros, mapa, lista de membros da clínica |
+| `/clinics/[id]` | `app/clinics/[id]/page.tsx` | Perfil da clínica | Membros, horários, localização |
+| `/clinics/[id]/checkin` | `app/clinics/[id]/checkin/page.tsx` | Check-in QR | Paciente lê QR Code para check-in presencial |
+| `/clinics/[id]/queue` | `app/clinics/[id]/queue/page.tsx` | Fila da clínica | Fila de espera pública da clínica |
+
+### Autenticação
+
+| Rota | Arquivo | Descrição |
 |---|---|---|
-| `/dashboard` | Visão geral do dia | Todos |
-| `/dashboard/appointments` | Lista de consultas | Todos |
-| `/dashboard/appointments/create` | Agendar nova consulta | PATIENT |
-| `/dashboard/appointments/[id]` | Detalhe da consulta | Todos |
-| `/dashboard/services` | Catálogo de serviços | PROFESSIONAL |
-| `/dashboard/procedure-requests` | Solicitações de procedimento | PATIENT / PROFESSIONAL |
-| `/dashboard/patients` | Lista de pacientes | PROFESSIONAL / ADMIN |
-| `/dashboard/patients/[id]` | Detalhe do paciente | PROFESSIONAL / ADMIN |
-| `/dashboard/schedule` | Horários de atendimento | PROFESSIONAL / ADMIN |
-| `/dashboard/my-clinic` | Gerenciar clínica | PROFESSIONAL / ADMIN |
-| `/dashboard/reception` | Fila + check-in QR | RECEPTIONIST / ADMIN |
-| `/dashboard/settings/billing` | Assinatura e pagamentos | PROFESSIONAL |
-| `/dashboard/become-professional` | Solicitar perfil profissional | PATIENT |
-| `/dashboard/profile` | Editar perfil | Todos |
+| `/auth/login` | `app/auth/login/page.tsx` | Login com e-mail + senha |
+| `/auth/register` | `app/auth/register/page.tsx` | Cadastro de nova conta |
+| `/auth/forgot-password` | `app/auth/forgot-password/page.tsx` | Solicitar redefinição de senha |
+| `/auth/reset-password` | `app/auth/reset-password/page.tsx` | Definir nova senha (via token) |
+| `/auth/magic-link` | `app/auth/magic-link/page.tsx` | Login via link mágico (e-mail) |
+| `/auth/magic-link/verify` | `app/auth/magic-link/verify/page.tsx` | Verificar token do link mágico |
+| `/auth/completar-cadastro` | `app/auth/completar-cadastro/page.tsx` | Completar dados após cadastro OAuth |
+
+### Dashboard — protegido (login obrigatório)
+
+| Rota | Arquivo | Roles | Funcionalidades |
+|---|---|---|---|
+| `/dashboard` | `dashboard/page.tsx` | Todos | Resumo de consultas, atalhos rápidos, agenda do dia |
+| `/dashboard/appointments` | `dashboard/appointments/page.tsx` | Todos | Lista de consultas com filtros de status, paginação |
+| `/dashboard/appointments/create` | `dashboard/appointments/create/page.tsx` | Todos | Agendamento: escolha profissional → serviço → data/hora → pagamento |
+| `/dashboard/appointments/create/success` | `dashboard/appointments/create/success/page.tsx` | Todos | Confirmação pós-agendamento |
+| `/dashboard/appointments/[id]` | `dashboard/appointments/[id]/page.tsx` | Todos | Detalhe: status, anamnese, prontuário, exames, teleconsulta, QR Code |
+| `/dashboard/profile` | `dashboard/profile/page.tsx` | Todos | Editar dados pessoais, foto, dados médicos |
+| `/dashboard/become-professional` | `dashboard/become-professional/page.tsx` | PATIENT | Solicitar perfil profissional (envia para revisão) |
+| `/dashboard/procedure-requests` | `dashboard/procedure-requests/page.tsx` | PATIENT / PROFESSIONAL | Solicitações de procedimento em aberto |
+| `/dashboard/patients` | `dashboard/patients/page.tsx` | PROFESSIONAL / RECEPTIONIST / ADMIN | Lista de pacientes com busca |
+| `/dashboard/patients/[id]` | `dashboard/patients/[id]/page.tsx` | PROFESSIONAL / ADMIN | Perfil completo do paciente: histórico, prontuário, exames |
+| `/dashboard/services` | `dashboard/services/page.tsx` | PROFESSIONAL / ADMIN | CRUD de serviços: nome, preço, duração |
+| `/dashboard/my-clinic` | `dashboard/my-clinic/page.tsx` | PROFESSIONAL / ADMIN | Gerenciar clínica: membros, horários, financeiro |
+| `/dashboard/schedule` | `dashboard/schedule/page.tsx` | PROFESSIONAL / ADMIN | Redireciona para `/settings/schedule` |
+| `/dashboard/financial` | `dashboard/financial/page.tsx` | PROFESSIONAL / ADMIN | Receita, repasses, uso de cota gratuita |
+| `/dashboard/reception` | `dashboard/reception/page.tsx` | RECEPTIONIST / ADMIN | Fila do dia + leitor de QR Code para check-in |
+
+### Configurações — protegido
+
+| Rota | Arquivo | Roles | Funcionalidades |
+|---|---|---|---|
+| `/settings` | `settings/page.tsx` | Todos | Menu de configurações |
+| `/settings/schedule` | `settings/schedule/page.tsx` | PROFESSIONAL | Configurar dias e horários de atendimento semanal |
+| `/settings/services` | `settings/services/page.tsx` | PROFESSIONAL | Gerenciar catálogo de serviços (alias de `/dashboard/services`) |
+| `/settings/my-clinic` | `settings/my-clinic/page.tsx` | PROFESSIONAL / ADMIN | Dados da clínica, logo, endereço |
+| `/settings/theme` | `settings/theme/page.tsx` | Todos | Alternar tema claro/escuro |
+| `/settings/billing` | `settings/billing/page.tsx` | PROFESSIONAL / ADMIN | Planos individuais e de clínica, calculadora de preço |
+| `/settings/billing/clinic` | `settings/billing/clinic/page.tsx` | PROFESSIONAL / ADMIN | Plano de clínica: membros, cota gratuita |
+| `/settings/billing/success` | `settings/billing/success/page.tsx` | — | Confirmação de pagamento bem-sucedido |
+| `/settings/billing/pending` | `settings/billing/pending/page.tsx` | — | Pagamento em processamento |
+| `/settings/billing/failure` | `settings/billing/failure/page.tsx` | — | Falha no pagamento |
+
+### Admin
+
+| Rota | Arquivo | Roles | Funcionalidades |
+|---|---|---|---|
+| `/admin` | `app/admin/page.tsx` | ADMIN | Painel admin: aprovar/rejeitar profissionais, métricas da plataforma |
 
 ## Segurança
 
