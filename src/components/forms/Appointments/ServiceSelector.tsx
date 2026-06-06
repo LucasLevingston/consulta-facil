@@ -27,6 +27,10 @@ export function ServiceSelector({
 	const activeServices = (services as ProfessionalService[]).filter(
 		(s) => s.active,
 	);
+	const directServices = activeServices.filter((s) => !s.requiresConsultation);
+	const consultationOnlyServices = activeServices.filter(
+		(s) => s.requiresConsultation,
+	);
 
 	if (isLoading) {
 		return (
@@ -38,6 +42,7 @@ export function ServiceSelector({
 
 	return (
 		<div className="space-y-2">
+			{/* Standard consultation */}
 			<button
 				type="button"
 				onClick={() => onChange(null)}
@@ -64,7 +69,8 @@ export function ServiceSelector({
 				</div>
 			</button>
 
-			{activeServices.map((service) => (
+			{/* Direct procedures — no prior consultation needed */}
+			{directServices.map((service) => (
 				<button
 					key={service.id}
 					type="button"
@@ -76,22 +82,11 @@ export function ServiceSelector({
 					}`}
 				>
 					<div className="flex-1 min-w-0">
-						<div className="flex items-center gap-2 flex-wrap">
-							<p
-								className={`text-sm font-semibold ${value === service.id ? "text-primary" : "text-foreground"}`}
-							>
-								{service.name}
-							</p>
-							{service.requiresConsultation && (
-								<Badge
-									variant="outline"
-									className="text-xs border-amber-400 text-amber-600 gap-1"
-								>
-									<AlertTriangle className="h-3 w-3" />
-									requer consulta prévia
-								</Badge>
-							)}
-						</div>
+						<p
+							className={`text-sm font-semibold ${value === service.id ? "text-primary" : "text-foreground"}`}
+						>
+							{service.name}
+						</p>
 						{service.description && (
 							<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
 								{service.description}
@@ -103,6 +98,45 @@ export function ServiceSelector({
 					</div>
 				</button>
 			))}
+
+			{/* Consultation-only services — informational, not selectable */}
+			{consultationOnlyServices.length > 0 && (
+				<div className="pt-2">
+					<p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+						<AlertTriangle className="h-3 w-3 text-amber-500" />
+						Disponíveis apenas após consulta (solicitados pelo profissional):
+					</p>
+					{consultationOnlyServices.map((service) => (
+						<div
+							key={service.id}
+							className="w-full flex items-start gap-3 rounded-xl border border-dashed border-border p-4 opacity-50 cursor-not-allowed"
+						>
+							<div className="flex-1 min-w-0">
+								<div className="flex items-center gap-2 flex-wrap">
+									<p className="text-sm font-semibold text-foreground">
+										{service.name}
+									</p>
+									<Badge
+										variant="outline"
+										className="text-xs border-amber-400 text-amber-600 gap-1"
+									>
+										<AlertTriangle className="h-3 w-3" />
+										requer consulta prévia
+									</Badge>
+								</div>
+								{service.description && (
+									<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+										{service.description}
+									</p>
+								)}
+								<p className="text-xs text-muted-foreground mt-1">
+									{formatPrice(service.price)} · {service.durationMinutes} min
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

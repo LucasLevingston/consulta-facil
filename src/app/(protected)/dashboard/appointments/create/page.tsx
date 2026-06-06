@@ -15,8 +15,8 @@ export default function CreateAppointment() {
 	return (
 		<div className="space-y-6">
 			<PageHeader
-				title="Agendar Consulta"
-				description="Escolha o profissional, data e horário para sua consulta."
+				title="Agendar"
+				description="Agende uma consulta ou um procedimento que não exige consulta prévia."
 				icon={<CalendarPlus className="h-6 w-6" />}
 			/>
 
