@@ -8,6 +8,17 @@ const allow =
 	(role) =>
 		(roles as string[]).includes(role);
 
+// Ownership check: ADMIN bypasses ownership; others must own the resource.
+// Pass attrs: { userId: currentUser.id, ownerId: resource.ownerId }
+const allowOwn =
+	(...roles: Role[]): Rule =>
+	(role, attrs) => {
+		if (!(roles as string[]).includes(role)) return false;
+		if (role === "ADMIN") return true;
+		if (!attrs?.ownerId) return true; // no owner set — allow by role
+		return attrs.ownerId === attrs.userId;
+	};
+
 /**
  * All named permissions.
  * Usage: PERMISSIONS["appointment:schedule"](user.role)
@@ -20,6 +31,10 @@ export const PERMISSIONS = {
 	"appointment:schedule": allow("PATIENT"),
 	"appointment:view:patient": allow("PATIENT", "ADMIN"),
 	"appointment:view:professional": allow("PROFESSIONAL", "ADMIN"),
+	// ownership: ownerId = appointment.patientId | professionalId, userId = current user
+	"appointment:view:own": allowOwn("PATIENT", "PROFESSIONAL", "ADMIN"),
+	"appointment:cancel:own": allowOwn("PATIENT", "ADMIN"),
+	"appointment:reschedule:own": allowOwn("PATIENT", "PROFESSIONAL", "ADMIN"),
 	"appointment:confirm": allow("PROFESSIONAL", "ADMIN"),
 	"appointment:reschedule": allow("PATIENT", "PROFESSIONAL", "ADMIN"),
 	"appointment:complete": allow("PROFESSIONAL", "ADMIN"),
@@ -30,6 +45,9 @@ export const PERMISSIONS = {
 	"appointment:queue": allow("PROFESSIONAL", "ADMIN", "RECEPTIONIST"),
 	"appointment:anamnesis:save": allow("PATIENT", "PROFESSIONAL", "ADMIN"),
 	"appointment:clinical_note:save": allow("PROFESSIONAL", "ADMIN"),
+	// ownership: ownerId = note.authorId, userId = current user
+	"clinical-note:edit:own": allowOwn("PROFESSIONAL", "ADMIN"),
+	"clinical-note:view:own": allowOwn("PATIENT", "PROFESSIONAL", "ADMIN"),
 
 	// ── Clinic ───────────────────────────────────────────────────────────
 	"clinic:manage": allow("PROFESSIONAL", "ADMIN"),

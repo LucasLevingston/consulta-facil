@@ -22,6 +22,7 @@ import {
 import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
+import { AbacGuard } from "@/components/AbacGuard";
 import { AnamnesisAIChat } from "@/components/anamnesis/AnamnesisAIChat";
 import { CustomButton } from "@/components/custom/custom-button";
 import { VideoRoom } from "@/components/custom/VideoRoom";
@@ -51,6 +52,7 @@ import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
 import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
 import { useCreateRoom } from "@/hooks/api/video/use-create-room";
 import { useRoomToken } from "@/hooks/api/video/use-room-token";
+import { usePermission } from "@/hooks/use-permission";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
 import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
@@ -494,6 +496,7 @@ function AppointmentDetail({
 	appointment: AppointmentResponse;
 }) {
 	const { user } = useUserStore();
+	const { can } = usePermission();
 	const [rateOpen, setRateOpen] = useState(false);
 	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 	const [qrOpen, setQrOpen] = useState(false);
@@ -658,15 +661,25 @@ function AppointmentDetail({
 								</CustomButton>
 							)}
 							{canReschedule && (
-								<CustomButton
-									variant="outline"
-									size="sm"
-									className="gap-2"
-									onClick={() => setRescheduleOpen(true)}
+								<AbacGuard
+									permission="appointment:reschedule:own"
+									attrs={{
+										userId: user?.id,
+										ownerId: isPatient
+											? appointment.patientId
+											: appointment.professionalId,
+									}}
 								>
-									<RefreshCw className="h-3.5 w-3.5" />
-									Remarcar
-								</CustomButton>
+									<CustomButton
+										variant="outline"
+										size="sm"
+										className="gap-2"
+										onClick={() => setRescheduleOpen(true)}
+									>
+										<RefreshCw className="h-3.5 w-3.5" />
+										Remarcar
+									</CustomButton>
+								</AbacGuard>
 							)}
 						</div>
 					</div>
@@ -793,10 +806,13 @@ function AppointmentDetail({
 				showAiHelper={isPatient}
 			/>
 
-			{/* Prontuario — editable by professional only, visible to patient read-only */}
+			{/* Prontuario — editable only by the assigned professional */}
 			<ProntuarioSection
 				appointmentId={appointment.id}
-				canEdit={isProfessional}
+				canEdit={can("clinical-note:edit:own", {
+					userId: user?.id,
+					ownerId: appointment.professionalId,
+				})}
 			/>
 
 			{/* Cancellation reason */}
