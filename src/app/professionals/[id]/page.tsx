@@ -14,23 +14,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useProfessional } from "@/hooks/api/doctors/use-professional";
+import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function DoctorProfilePage() {
 	const { id } = useParams<{ id: string }>();
 	const router = useRouter();
-	const { data: doctor, isLoading } = useProfessional(id);
-
-	if (isLoading) {
-		return (
-			<div className="max-w-3xl mx-auto space-y-6">
-				<Skeleton className="h-48 w-full rounded-3xl" />
-				<Skeleton className="h-32 w-full rounded-2xl" />
-				<Skeleton className="h-48 w-full rounded-2xl" />
-			</div>
-		);
-	}
+	const { data: doctor, isLoading, error } = useProfessional(id);
 
 	if (!doctor) {
 		return (
@@ -57,7 +47,7 @@ export default function DoctorProfilePage() {
 		: "?";
 
 	return (
-		<div className="max-w-3xl mx-auto space-y-6">
+		<QueryBoundary isLoading={isLoading} error={error}>
 			{/* Hero card */}
 			<Card className="overflow-hidden">
 				<div className="h-24 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20" />
@@ -195,6 +185,6 @@ export default function DoctorProfilePage() {
 					</div>
 				</CardContent>
 			</Card>
-		</div>
+		</QueryBoundary>
 	);
 }

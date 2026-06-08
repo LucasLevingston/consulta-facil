@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 
-import ProfessionalsContent from "../../components/custom/ProfessionalsContent";
+import ProfessionalsContent from "@/components/custom/ProfessionalsContent";
 
 export default function ProfissionaisPage() {
 	return (
