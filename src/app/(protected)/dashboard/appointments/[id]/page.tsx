@@ -551,7 +551,7 @@ function AppointmentDetail({
 				</Badge>
 			</div>
 
-			{/* Doctor info */}
+			{/* Professional info */}
 			<Card>
 				<CardHeader>
 					<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
