@@ -30,26 +30,26 @@ interface Props {
 
 export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 	const [addOpen, setAddOpen] = useState(false);
-	const [doctorSearch, setDoctorSearch] = useState("");
+	const [professionalSearch, setProfessionalSearch] = useState("");
 
-	const { data: allDoctors } = useProfessionals(0, 200);
+	const { data: allProfessionals } = useProfessionals(0, 200);
 	const sendInvite = useSendClinicInvite();
 	const removeMember = useRemoveClinicMember();
 
 	const memberIds = new Set(
 		clinic.members?.map((m) => m.professionalProfileId) ?? [],
 	);
-	const availableDoctors = (allDoctors?.content ?? []).filter(
+	const availableProfessionals = (allProfessionals?.content ?? []).filter(
 		(d) => !memberIds.has(d.id) && d.status === "ACTIVE",
 	);
 
-	const filteredAvailable = doctorSearch.trim()
-		? availableDoctors.filter(
+	const filteredAvailable = professionalSearch.trim()
+		? availableProfessionals.filter(
 				(d) =>
-					d.name?.toLowerCase().includes(doctorSearch.toLowerCase()) ||
-					d.specialty.toLowerCase().includes(doctorSearch.toLowerCase()),
+					d.name?.toLowerCase().includes(professionalSearch.toLowerCase()) ||
+					d.specialty.toLowerCase().includes(professionalSearch.toLowerCase()),
 			)
-		: availableDoctors;
+		: availableProfessionals;
 
 	function handleAdd(professionalProfileId: string) {
 		sendInvite.mutate(
@@ -58,7 +58,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 				onSuccess: () => {
 					toast.success("Convite enviado ao profissional.");
 					setAddOpen(false);
-					setDoctorSearch("");
+					setProfessionalSearch("");
 				},
 				onError: () => toast.error("Erro ao enviar convite."),
 			},
@@ -103,8 +103,8 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 								<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 								<Input
 									placeholder="Buscar por nome ou especialidade..."
-									value={doctorSearch}
-									onChange={(e) => setDoctorSearch(e.target.value)}
+									value={professionalSearch}
+									onChange={(e) => setProfessionalSearch(e.target.value)}
 									className="pl-8"
 								/>
 							</div>

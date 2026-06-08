@@ -26,7 +26,7 @@ export type TimeSlot = { label: string; hours: number; minutes: number };
 
 interface DateTimeStepProps {
 	control: Control<AppointmentFormValues>;
-	selectedDoctor: ProfessionalResponse | undefined;
+	selectedProfessional: ProfessionalResponse | undefined;
 	scheduleLoading: boolean;
 	availableSlots: TimeSlot[];
 	bookedTimesForDate: Set<string>;
@@ -40,7 +40,7 @@ interface DateTimeStepProps {
 
 export function DateTimeStep({
 	control,
-	selectedDoctor,
+	selectedProfessional,
 	scheduleLoading,
 	availableSlots,
 	bookedTimesForDate,
@@ -138,7 +138,7 @@ export function DateTimeStep({
 							Horário disponível
 						</p>
 
-						{!selectedDoctor ? (
+						{!selectedProfessional ? (
 							<p className="text-xs text-muted-foreground py-2">
 								Selecione um profissional para ver os horários disponíveis.
 							</p>

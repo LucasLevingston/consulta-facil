@@ -34,14 +34,14 @@ export function AppointmentActions({
 
 	const { status } = appointment;
 	const isPatient = userRole === "PATIENT";
-	const isDoctor = userRole === "PROFESSIONAL";
+	const isProfessional = userRole === "PROFESSIONAL";
 	const isAdmin = userRole === "ADMIN";
 
 	const canCancel =
 		(isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
-	const canConfirm = (isDoctor || isAdmin) && status === "PENDING";
+	const canConfirm = (isProfessional || isAdmin) && status === "PENDING";
 	const canComplete =
-		(isDoctor || isAdmin) &&
+		(isProfessional || isAdmin) &&
 		(status === "CONFIRMED" || status === "IN_PROGRESS");
 	const canRate =
 		isPatient && status === "COMPLETED" && appointment.rating == null;

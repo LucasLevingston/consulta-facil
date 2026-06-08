@@ -29,9 +29,9 @@ vi.mock("@/hooks/api/doctors/use-my-professional-profile", () => ({
 	useMyProfessionalProfile: vi.fn(),
 }));
 vi.mock("@/components/custom/dashboard/appointments-list", () => ({
-	AppointmentsList: ({ isDoctor }: { isDoctor: boolean }) => (
+	AppointmentsList: ({ isProfessional }: { isProfessional: boolean }) => (
 		<div data-testid="appointments-list">
-			{isDoctor ? "doctor-list" : "patient-list"}
+			{isProfessional ? "professional-list" : "patient-list"}
 		</div>
 	),
 }));

@@ -18,44 +18,48 @@ const baseAppt: AppointmentResponse = {
 } as unknown as AppointmentResponse;
 
 describe("AppointmentRow", () => {
-	it("shows patientName when isDoctor=true", () => {
-		render(<AppointmentRow appointment={baseAppt} isDoctor={true} />);
+	it("shows patientName when isProfessional=true", () => {
+		render(<AppointmentRow appointment={baseAppt} isProfessional={true} />);
 		expect(screen.getByText("João Silva")).toBeInTheDocument();
 	});
 
-	it("shows professionalName when isDoctor=false", () => {
-		render(<AppointmentRow appointment={baseAppt} isDoctor={false} />);
+	it("shows professionalName when isProfessional=false", () => {
+		render(<AppointmentRow appointment={baseAppt} isProfessional={false} />);
 		expect(screen.getByText("Dra. Ana Costa")).toBeInTheDocument();
 	});
 
-	it("shows fallback when patientName is null and isDoctor=true", () => {
+	it("shows fallback when patientName is null and isProfessional=true", () => {
 		const appt = { ...baseAppt, patientName: null };
-		render(<AppointmentRow appointment={appt as never} isDoctor={true} />);
+		render(
+			<AppointmentRow appointment={appt as never} isProfessional={true} />,
+		);
 		expect(screen.getByText("Paciente não definido")).toBeInTheDocument();
 	});
 
-	it("shows fallback when professionalName is null and isDoctor=false", () => {
+	it("shows fallback when professionalName is null and isProfessional=false", () => {
 		const appt = { ...baseAppt, professionalName: null };
-		render(<AppointmentRow appointment={appt as never} isDoctor={false} />);
+		render(
+			<AppointmentRow appointment={appt as never} isProfessional={false} />,
+		);
 		expect(screen.getByText("Profissional não definido")).toBeInTheDocument();
 	});
 
-	it("shows specialty badge when isDoctor=false", () => {
-		render(<AppointmentRow appointment={baseAppt} isDoctor={false} />);
+	it("shows specialty badge when isProfessional=false", () => {
+		render(<AppointmentRow appointment={baseAppt} isProfessional={false} />);
 		expect(screen.getByText("Cardiologia")).toBeInTheDocument();
 	});
 
-	it("does not show specialty badge when isDoctor=true", () => {
-		render(<AppointmentRow appointment={baseAppt} isDoctor={true} />);
+	it("does not show specialty badge when isProfessional=true", () => {
+		render(<AppointmentRow appointment={baseAppt} isProfessional={true} />);
 		expect(screen.queryByText("Cardiologia")).not.toBeInTheDocument();
 	});
 
-	it("shows Confirmar button when isDoctor=true and status=PENDING", () => {
+	it("shows Confirmar button when isProfessional=true and status=PENDING", () => {
 		const onConfirm = vi.fn();
 		render(
 			<AppointmentRow
 				appointment={baseAppt}
-				isDoctor={true}
+				isProfessional={true}
 				onConfirm={onConfirm}
 			/>,
 		);
@@ -67,7 +71,7 @@ describe("AppointmentRow", () => {
 		render(
 			<AppointmentRow
 				appointment={baseAppt}
-				isDoctor={true}
+				isProfessional={true}
 				onConfirm={onConfirm}
 			/>,
 		);
@@ -75,13 +79,13 @@ describe("AppointmentRow", () => {
 		expect(onConfirm).toHaveBeenCalledWith("a-1");
 	});
 
-	it("shows Concluir button when isDoctor=true and status=CONFIRMED", () => {
+	it("shows Concluir button when isProfessional=true and status=CONFIRMED", () => {
 		const appt = { ...baseAppt, status: "CONFIRMED" };
 		const onComplete = vi.fn();
 		render(
 			<AppointmentRow
 				appointment={appt as never}
-				isDoctor={true}
+				isProfessional={true}
 				onComplete={onComplete}
 			/>,
 		);
@@ -94,7 +98,7 @@ describe("AppointmentRow", () => {
 		render(
 			<AppointmentRow
 				appointment={appt as never}
-				isDoctor={true}
+				isProfessional={true}
 				onComplete={onComplete}
 			/>,
 		);
@@ -103,16 +107,16 @@ describe("AppointmentRow", () => {
 	});
 
 	it("does not show Confirmar when no onConfirm provided", () => {
-		render(<AppointmentRow appointment={baseAppt} isDoctor={true} />);
+		render(<AppointmentRow appointment={baseAppt} isProfessional={true} />);
 		expect(screen.queryByText("Confirmar")).not.toBeInTheDocument();
 	});
 
-	it("does not show Confirmar when isDoctor=false", () => {
+	it("does not show Confirmar when isProfessional=false", () => {
 		const onConfirm = vi.fn();
 		render(
 			<AppointmentRow
 				appointment={baseAppt}
-				isDoctor={false}
+				isProfessional={false}
 				onConfirm={onConfirm}
 			/>,
 		);

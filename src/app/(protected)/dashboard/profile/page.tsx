@@ -55,17 +55,20 @@ function InfoRow({
 export default function ProfilePage() {
 	const { user } = useUserStore();
 
-	const isDoctor = user?.role === "PROFESSIONAL" || user?.role === "ADMIN";
+	const isProfessional =
+		user?.role === "PROFESSIONAL" || user?.role === "ADMIN";
 
-	const patientQuery = usePatientAppointments(isDoctor ? "" : (user?.id ?? ""));
-	const doctorQuery = useProfessionalAppointments(
-		isDoctor ? (user?.id ?? "") : "",
+	const patientQuery = usePatientAppointments(
+		isProfessional ? "" : (user?.id ?? ""),
 	);
-	const doctorProfile = useMyProfessionalProfile(isDoctor);
-	const patientProfile = useMyProfile(!isDoctor);
+	const professionalQuery = useProfessionalAppointments(
+		isProfessional ? (user?.id ?? "") : "",
+	);
+	const professionalProfile = useMyProfessionalProfile(isProfessional);
+	const patientProfile = useMyProfile(!isProfessional);
 
-	const appointments = isDoctor
-		? (doctorQuery.data?.content ?? [])
+	const appointments = isProfessional
+		? (professionalQuery.data?.content ?? [])
 		: (patientQuery.data?.content ?? []);
 
 	const upcoming = appointments
@@ -92,8 +95,8 @@ export default function ProfilePage() {
 
 	return (
 		<QueryBoundary
-			isLoading={patientQuery.isLoading || doctorQuery.isLoading}
-			error={patientQuery.error || doctorQuery.error}
+			isLoading={patientQuery.isLoading || professionalQuery.isLoading}
+			error={patientQuery.error || professionalQuery.error}
 		>
 			{/* Hero */}
 			<Card className="overflow-hidden">
@@ -138,18 +141,18 @@ export default function ProfilePage() {
 								className="gap-1 rounded-full px-2.5 py-0.5 text-xs"
 							>
 								<BadgeCheck className="h-3 w-3" />
-								{isDoctor ? "Profissional" : "Paciente"}
+								{isProfessional ? "Profissional" : "Paciente"}
 							</Badge>
 						</div>
 						<p className="text-sm text-muted-foreground">{user.email}</p>
-						{isDoctor && doctorProfile.data && (
+						{isProfessional && professionalProfile.data && (
 							<div className="flex flex-wrap gap-2 mt-2">
 								<Badge variant="outline" className="gap-1.5">
 									<Shield className="h-3 w-3" />
-									{doctorProfile.data.specialty}
+									{professionalProfile.data.specialty}
 								</Badge>
 								<Badge variant="outline" className="gap-1.5 font-mono text-xs">
-									CRM {doctorProfile.data.licenseNumber}
+									CRM {professionalProfile.data.licenseNumber}
 								</Badge>
 							</div>
 						)}
@@ -169,7 +172,7 @@ export default function ProfilePage() {
 								Próxima consulta
 							</p>
 							<p className="text-sm font-semibold text-foreground">
-								{isDoctor
+								{isProfessional
 									? `Paciente: ${nextAppointment.patientName ?? "—"}`
 									: `${nextAppointment.professionalName ?? "—"}`}
 							</p>
@@ -247,8 +250,8 @@ export default function ProfilePage() {
 					</CardContent>
 				</Card>
 
-				{/* Patient medical info or Doctor stats */}
-				{!isDoctor ? (
+				{/* Patient medical info or Professional stats */}
+				{!isProfessional ? (
 					<Card>
 						<CardHeader className="pb-3">
 							<CardTitle className="text-base flex items-center gap-2">

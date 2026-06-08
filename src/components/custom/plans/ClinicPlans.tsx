@@ -28,15 +28,15 @@ import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
-import { FREE_DOCTORS } from "@/utils/constants/free-doctors";
+import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 
 import { BASE_PRICE } from "../../../lib/utils/base-price";
 import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
 import type { Plan } from "./types";
 
-function calcMonthlyPrice(totalDoctors: number): number {
-	const extra = Math.max(0, totalDoctors - FREE_DOCTORS);
+function calcMonthlyPrice(totalProfessionals: number): number {
+	const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);
 	return BASE_PRICE * (1 + extra * 0.2);
 }
 
@@ -54,10 +54,10 @@ const CLINIC_PLANS: Plan[] = [
 		monthlyEquiv: fmtBRL(BASE_PRICE),
 		totalPrice: fmtBRL(BASE_PRICE),
 		period: "/mês",
-		description: `Para clínicas com até ${FREE_DOCTORS} profissionais. Cada profissional extra soma +20%.`,
+		description: `Para clínicas com até ${FREE_PROFESSIONALS} profissionais. Cada profissional extra soma +20%.`,
 		icon: <Building2 className="h-5 w-5" />,
 		features: [
-			`${FREE_DOCTORS} profissionais incluídos no preço base`,
+			`${FREE_PROFESSIONALS} profissionais incluídos no preço base`,
 			"Consultas ilimitadas após o período grátis",
 			"Perfil de clínica no mapa",
 			"Badge de clínica verificada",
@@ -87,13 +87,18 @@ export default function ClinicPlans() {
 	const checkout = useCreateCheckout();
 
 	const myClinic = myClinics[0] ?? null;
-	const currentDoctors = myClinic?.members?.length ?? 1;
+	const currentProfessionals = myClinic?.members?.length ?? 1;
 
-	const [calcDoctors, setCalcDoctors] = useState(Math.max(currentDoctors, 1));
+	const [calcProfessionals, setCalcProfessionals] = useState(
+		Math.max(currentProfessionals, 1),
+	);
 
-	const calcPrice = calcMonthlyPrice(calcDoctors);
-	const extraDoctors = Math.max(0, calcDoctors - FREE_DOCTORS);
-	const isFree = calcDoctors <= FREE_DOCTORS;
+	const calcPrice = calcMonthlyPrice(calcProfessionals);
+	const extraProfessionals = Math.max(
+		0,
+		calcProfessionals - FREE_PROFESSIONALS,
+	);
+	const isFree = calcProfessionals <= FREE_PROFESSIONALS;
 
 	function handleSelect(planId: string) {
 		checkout.mutate(planId, {
@@ -109,8 +114,8 @@ export default function ClinicPlans() {
 					[
 						{
 							icon: Users,
-							label: `${FREE_DOCTORS} profissionais grátis`,
-							desc: `Clínicas com até ${FREE_DOCTORS} profissionais não pagam plano.`,
+							label: `${FREE_PROFESSIONALS} profissionais grátis`,
+							desc: `Clínicas com até ${FREE_PROFESSIONALS} profissionais não pagam plano.`,
 						},
 						{
 							icon: Star,
@@ -120,7 +125,7 @@ export default function ClinicPlans() {
 						{
 							icon: Zap,
 							label: "+20% por profissional extra",
-							desc: `A partir do ${FREE_DOCTORS + 1}º profissional, cada um soma 20% ao valor base.`,
+							desc: `A partir do ${FREE_PROFESSIONALS + 1}º profissional, cada um soma 20% ao valor base.`,
 						},
 					] as const
 				).map(({ icon: Icon, label, desc }) => (
@@ -159,21 +164,21 @@ export default function ClinicPlans() {
 									Profissionais na clínica
 								</span>
 								<span className="font-semibold tabular-nums">
-									{currentDoctors} / {FREE_DOCTORS}
+									{currentProfessionals} / {FREE_PROFESSIONALS}
 								</span>
 							</div>
 							<div className="h-2 rounded-full bg-muted overflow-hidden">
 								<div
 									className="h-full rounded-full bg-primary transition-all"
 									style={{
-										width: `${Math.min(100, (currentDoctors / FREE_DOCTORS) * 100)}%`,
+										width: `${Math.min(100, (currentProfessionals / FREE_PROFESSIONALS) * 100)}%`,
 									}}
 								/>
 							</div>
 							<p className="mt-1.5 text-xs text-muted-foreground">
-								{currentDoctors >= FREE_DOCTORS
+								{currentProfessionals >= FREE_PROFESSIONALS
 									? "Limite gratuito atingido — plano necessário para adicionar mais"
-									: `${FREE_DOCTORS - currentDoctors} vaga${FREE_DOCTORS - currentDoctors !== 1 ? "s" : ""} gratuita${FREE_DOCTORS - currentDoctors !== 1 ? "s" : ""} restante${FREE_DOCTORS - currentDoctors !== 1 ? "s" : ""}`}
+									: `${FREE_PROFESSIONALS - currentProfessionals} vaga${FREE_PROFESSIONALS - currentProfessionals !== 1 ? "s" : ""} gratuita${FREE_PROFESSIONALS - currentProfessionals !== 1 ? "s" : ""} restante${FREE_PROFESSIONALS - currentProfessionals !== 1 ? "s" : ""}`}
 							</p>
 						</div>
 						<div>
@@ -182,7 +187,7 @@ export default function ClinicPlans() {
 									Consultas gratuitas
 								</span>
 								<span className="font-semibold tabular-nums">
-									{currentDoctors * FREE_CONSULTS_PER_DOCTOR}
+									{currentProfessionals * FREE_CONSULTS_PER_DOCTOR}
 								</span>
 							</div>
 							<div className="flex flex-wrap gap-1 mt-1">
@@ -190,8 +195,8 @@ export default function ClinicPlans() {
 									{FREE_CONSULTS_PER_DOCTOR} por profissional
 								</Badge>
 								<Badge variant="secondary" className="text-xs">
-									× {currentDoctors} profissional
-									{currentDoctors !== 1 ? "is" : ""}
+									× {currentProfessionals} profissional
+									{currentProfessionals !== 1 ? "is" : ""}
 								</Badge>
 							</div>
 							<p className="mt-1.5 text-xs text-muted-foreground">
@@ -220,18 +225,18 @@ export default function ClinicPlans() {
 								variant="outline"
 								size="icon"
 								className="h-8 w-8 rounded-lg"
-								onClick={() => setCalcDoctors((n) => Math.max(1, n - 1))}
+								onClick={() => setCalcProfessionals((n) => Math.max(1, n - 1))}
 							>
 								<Minus className="h-3 w-3" />
 							</Button>
 							<span className="w-8 text-center text-lg font-semibold tabular-nums">
-								{calcDoctors}
+								{calcProfessionals}
 							</span>
 							<Button
 								variant="outline"
 								size="icon"
 								className="h-8 w-8 rounded-lg"
-								onClick={() => setCalcDoctors((n) => Math.min(50, n + 1))}
+								onClick={() => setCalcProfessionals((n) => Math.min(50, n + 1))}
 							>
 								<Plus className="h-3 w-3" />
 							</Button>
@@ -246,8 +251,8 @@ export default function ClinicPlans() {
 								<>
 									<p className="text-3xl font-bold text-emerald-600">Grátis</p>
 									<p className="mt-0.5 text-xs text-muted-foreground">
-										{calcDoctors * FREE_CONSULTS_PER_DOCTOR} consultas gratuitas
-										incluídas
+										{calcProfessionals * FREE_CONSULTS_PER_DOCTOR} consultas
+										gratuitas incluídas
 									</p>
 								</>
 							) : (
@@ -259,9 +264,10 @@ export default function ClinicPlans() {
 										</span>
 									</p>
 									<p className="mt-0.5 text-xs text-muted-foreground">
-										Base R$ {fmtBRL(BASE_PRICE)} + {extraDoctors} profissional
-										{extraDoctors !== 1 ? "is" : ""} extra ({extraDoctors * 20}%
-										adicional)
+										Base R$ {fmtBRL(BASE_PRICE)} + {extraProfessionals}{" "}
+										profissional
+										{extraProfessionals !== 1 ? "is" : ""} extra (
+										{extraProfessionals * 20}% adicional)
 									</p>
 								</>
 							)}
@@ -273,21 +279,24 @@ export default function ClinicPlans() {
 									Plano grátis
 								</Badge>
 							) : (
-								<Badge variant="secondary">{extraDoctors} além do limite</Badge>
+								<Badge variant="secondary">
+									{extraProfessionals} além do limite
+								</Badge>
 							)}
 						</div>
 					</div>
 
-					{calcDoctors > FREE_DOCTORS && (
+					{calcProfessionals > FREE_PROFESSIONALS && (
 						<div className="rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
 							<p className="font-medium text-foreground">
 								Composição do preço:
 							</p>
 							<p>
-								Base ({FREE_DOCTORS} profissionais): R$ {fmtBRL(BASE_PRICE)}
+								Base ({FREE_PROFESSIONALS} profissionais): R${" "}
+								{fmtBRL(BASE_PRICE)}
 							</p>
-							{Array.from({ length: extraDoctors }, (_, i) => {
-								const doctorNumber = FREE_DOCTORS + i + 1;
+							{Array.from({ length: extraProfessionals }, (_, i) => {
+								const doctorNumber = FREE_PROFESSIONALS + i + 1;
 								return (
 									<p key={doctorNumber}>
 										{doctorNumber}º profissional (+20%): R${" "}
@@ -317,8 +326,8 @@ export default function ClinicPlans() {
 				<h2 className="text-lg font-semibold text-foreground">Planos pagos</h2>
 				<p className="mt-1 text-sm text-muted-foreground">
 					Necessário após esgotar as consultas gratuitas ou ao adicionar mais de{" "}
-					{FREE_DOCTORS} profissionais. O preço final varia conforme o número de
-					profissionais.
+					{FREE_PROFESSIONALS} profissionais. O preço final varia conforme o
+					número de profissionais.
 				</p>
 			</div>
 

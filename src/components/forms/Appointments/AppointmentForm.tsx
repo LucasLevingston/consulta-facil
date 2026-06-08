@@ -35,9 +35,9 @@ export const AppointmentForm = ({
 }) => {
 	const {
 		form,
-		doctors,
-		doctorsLoading,
-		selectedDoctor,
+		professionals,
+		professionalsLoading,
+		selectedProfessional,
 		selectedDate,
 		selectedServiceId,
 		setSelectedServiceId,
@@ -77,10 +77,10 @@ export const AppointmentForm = ({
 							</FormItem>
 						)}
 					/>
-					{selectedDoctor && (
+					{selectedProfessional && (
 						<PaymentStep
 							control={form.control}
-							selectedDoctor={selectedDoctor}
+							selectedProfessional={selectedProfessional}
 						/>
 					)}
 					<Button
@@ -101,10 +101,10 @@ export const AppointmentForm = ({
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 				<ProfessionalStep
 					control={form.control}
-					doctors={doctors}
-					doctorsLoading={doctorsLoading}
+					professionals={professionals}
+					professionalsLoading={professionalsLoading}
 					professionalIdParam={professionalIdParam}
-					selectedDoctor={selectedDoctor}
+					selectedProfessional={selectedProfessional}
 					initialSpecialtyFilter={voicePreset?.specialty ?? undefined}
 					onDoctorSelect={() => {
 						setSelectedTime("");
@@ -116,7 +116,7 @@ export const AppointmentForm = ({
 					}}
 				/>
 
-				{selectedDoctor && (
+				{selectedProfessional && (
 					<div className="space-y-3">
 						<div className="flex items-center gap-2">
 							<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
@@ -127,8 +127,8 @@ export const AppointmentForm = ({
 							</h3>
 						</div>
 						<ServiceSelector
-							professionalId={selectedDoctor.id}
-							consultationPrice={selectedDoctor.consultationPrice}
+							professionalId={selectedProfessional.id}
+							consultationPrice={selectedProfessional.consultationPrice}
 							value={selectedServiceId}
 							onChange={setSelectedServiceId}
 						/>
@@ -137,7 +137,7 @@ export const AppointmentForm = ({
 
 				<DateTimeStep
 					control={form.control}
-					selectedDoctor={selectedDoctor}
+					selectedProfessional={selectedProfessional}
 					scheduleLoading={scheduleLoading}
 					availableSlots={availableSlots}
 					bookedTimesForDate={bookedTimesForDate}

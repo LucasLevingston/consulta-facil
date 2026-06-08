@@ -20,7 +20,7 @@ export default function SettingsPage() {
 	const { user } = useUserStore();
 	const { can } = usePermission();
 
-	const isDoctor = can("professional:manage");
+	const isProfessional = can("professional:manage");
 
 	return (
 		<div className="space-y-6">
@@ -43,7 +43,7 @@ export default function SettingsPage() {
 			</Card>
 
 			<div className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8">
-				{isDoctor ? (
+				{isProfessional ? (
 					<DoctorDetailsForm
 						userId={user?.id ?? ""}
 						userEmail={user?.email ?? ""}

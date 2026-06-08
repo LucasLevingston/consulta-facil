@@ -8,24 +8,24 @@ import { formatDateTime } from "@/lib/utils/format-date-time";
 
 interface AppointmentRowProps {
 	appointment: AppointmentResponse;
-	isDoctor: boolean;
+	isProfessional: boolean;
 	onConfirm?: (id: string) => void;
 	onComplete?: (id: string) => void;
 }
 
 export function AppointmentRow({
 	appointment,
-	isDoctor,
+	isProfessional,
 	onConfirm,
 	onComplete,
 }: AppointmentRowProps) {
-	const label = isDoctor
+	const label = isProfessional
 		? (appointment.patientName ?? "Paciente não definido")
 		: appointment.professionalName
 			? appointment.professionalName
 			: "Profissional não definido";
 
-	const icon = isDoctor ? (
+	const icon = isProfessional ? (
 		<User className="h-4 w-4" />
 	) : (
 		<Stethoscope className="h-4 w-4" />
@@ -45,13 +45,13 @@ export function AppointmentRow({
 				</div>
 			</div>
 			<div className="flex items-center gap-2">
-				{!isDoctor && appointment.specialty && (
+				{!isProfessional && appointment.specialty && (
 					<Badge variant="outline" className="hidden text-xs sm:inline-flex">
 						{appointment.specialty}
 					</Badge>
 				)}
 				<StatusBadge status={appointment.status} />
-				{isDoctor && appointment.status === "PENDING" && onConfirm && (
+				{isProfessional && appointment.status === "PENDING" && onConfirm && (
 					<Button
 						size="sm"
 						variant="outline"
@@ -60,7 +60,7 @@ export function AppointmentRow({
 						Confirmar
 					</Button>
 				)}
-				{isDoctor && appointment.status === "CONFIRMED" && onComplete && (
+				{isProfessional && appointment.status === "CONFIRMED" && onComplete && (
 					<Button
 						size="sm"
 						variant="outline"

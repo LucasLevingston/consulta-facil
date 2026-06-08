@@ -29,44 +29,44 @@ const appt: AppointmentResponse = {
 
 describe("AppointmentsList", () => {
 	it("renders list title for doctor", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={true} />);
+		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.getByText("Próximas consultas")).toBeInTheDocument();
 	});
 
 	it("renders list title for patient", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={false} />);
+		render(<AppointmentsList appointments={[]} isProfessional={false} />);
 		expect(screen.getByText("Consultas recentes")).toBeInTheDocument();
 	});
 
 	it("shows empty state for doctor", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={true} />);
+		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.getByText("Nenhuma consulta agendada.")).toBeInTheDocument();
 	});
 
 	it("shows empty state for patient", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={false} />);
+		render(<AppointmentsList appointments={[]} isProfessional={false} />);
 		expect(
 			screen.getByText("Nenhuma consulta encontrada."),
 		).toBeInTheDocument();
 	});
 
 	it("shows 'Agendar agora' link for patient empty state", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={false} />);
+		render(<AppointmentsList appointments={[]} isProfessional={false} />);
 		expect(screen.getByText("Agendar agora")).toBeInTheDocument();
 	});
 
 	it("does not show 'Agendar agora' for doctor empty state", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={true} />);
+		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.queryByText("Agendar agora")).not.toBeInTheDocument();
 	});
 
 	it("renders appointment items when provided", () => {
-		render(<AppointmentsList appointments={[appt]} isDoctor={false} />);
+		render(<AppointmentsList appointments={[appt]} isProfessional={false} />);
 		expect(screen.getByText("Dra. Ana")).toBeInTheDocument();
 	});
 
 	it("renders Ver todas link", () => {
-		render(<AppointmentsList appointments={[]} isDoctor={true} />);
+		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		const link = screen.getByRole("link", { name: /Ver todas/ });
 		expect(link).toHaveAttribute("href", "/dashboard/appointments");
 	});

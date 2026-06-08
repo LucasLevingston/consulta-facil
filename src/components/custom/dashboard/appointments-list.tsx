@@ -7,14 +7,14 @@ import { AppointmentRow } from "./appointment-row";
 
 interface AppointmentsListProps {
 	appointments: AppointmentResponse[];
-	isDoctor: boolean;
+	isProfessional: boolean;
 	onConfirm?: (id: string) => void;
 	onComplete?: (id: string) => void;
 }
 
 export function AppointmentsList({
 	appointments,
-	isDoctor,
+	isProfessional,
 	onConfirm,
 	onComplete,
 }: AppointmentsListProps) {
@@ -22,7 +22,7 @@ export function AppointmentsList({
 		<Card className="border-border bg-card">
 			<CardHeader className="flex flex-row items-center justify-between pb-4">
 				<CardTitle className="text-base font-semibold">
-					{isDoctor ? "Próximas consultas" : "Consultas recentes"}
+					{isProfessional ? "Próximas consultas" : "Consultas recentes"}
 				</CardTitle>
 				<Link href="/dashboard/appointments">
 					<CustomButton variant="secondary">
@@ -36,11 +36,11 @@ export function AppointmentsList({
 					<div className="flex flex-col items-center justify-center py-10 text-center">
 						<CalendarDays className="mb-3 h-10 w-10 text-muted-foreground/40" />
 						<p className="text-sm text-muted-foreground">
-							{isDoctor
+							{isProfessional
 								? "Nenhuma consulta agendada."
 								: "Nenhuma consulta encontrada."}
 						</p>
-						{!isDoctor && (
+						{!isProfessional && (
 							<Link href="/dashboard/appointments/create" className="mt-3">
 								<CustomButton variant="outline" size="sm">
 									Agendar agora
@@ -53,7 +53,7 @@ export function AppointmentsList({
 						<AppointmentRow
 							key={appointment.id}
 							appointment={appointment}
-							isDoctor={isDoctor}
+							isProfessional={isProfessional}
 							onConfirm={onConfirm}
 							onComplete={onComplete}
 						/>

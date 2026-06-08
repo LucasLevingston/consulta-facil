@@ -20,9 +20,9 @@ import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professiona
 import { useUserStore } from "@/store/useUserStore";
 import { adminCards } from "./admin-cards";
 import { AppointmentsList } from "./appointments-list";
-import { DoctorHeroSubtitle } from "./DoctorHeroSubtitle";
-import { doctorCards } from "./doctor-cards";
+import { ProfessionalHeroSubtitle } from "./ProfessionalHeroSubtitle";
 import { patientCards } from "./patient-cards";
+import { professionalCards } from "./professional-cards";
 import { QuickAccessCard } from "./QuickAccessCard";
 import { StatCard } from "./stat-card";
 
@@ -33,25 +33,26 @@ interface DashboardProps {
 
 export function Dashboard({ firstName, userRole }: DashboardProps) {
 	const { user } = useUserStore();
-	const isDoctor = userRole === "PROFESSIONAL";
+	const isProfessional = userRole === "PROFESSIONAL";
 	const isAdmin = userRole === "ADMIN";
 	const isPatient = userRole === "PATIENT";
 
-	const { data: doctorProfile } = useMyProfessionalProfile(isDoctor);
-	const professionalId = doctorProfile?.id ?? "";
+	const { data: professionalProfile } =
+		useMyProfessionalProfile(isProfessional);
+	const professionalId = professionalProfile?.id ?? "";
 
 	const patientQuery = usePatientAppointments(
 		isPatient ? (user?.id ?? "") : "",
 	);
-	const doctorQuery = useProfessionalAppointments(
-		isDoctor ? professionalId : "",
+	const professionalQuery = useProfessionalAppointments(
+		isProfessional ? professionalId : "",
 	);
 
 	const { mutateAsync: confirm } = useConfirmAppointment();
 	const { mutateAsync: complete } = useCompleteAppointment();
 
-	const appointments = isDoctor
-		? (doctorQuery.data?.content ?? [])
+	const appointments = isProfessional
+		? (professionalQuery.data?.content ?? [])
 		: (patientQuery.data?.content ?? []);
 
 	const stats = useMemo(
@@ -77,14 +78,18 @@ export function Dashboard({ firstName, userRole }: DashboardProps) {
 				(a, b) =>
 					new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime(),
 			)
-			.slice(0, isDoctor ? 5 : 3);
-	}, [appointments, isDoctor]);
+			.slice(0, isProfessional ? 5 : 3);
+	}, [appointments, isProfessional]);
 
-	const cards = isAdmin ? adminCards : isDoctor ? doctorCards : patientCards;
+	const cards = isAdmin
+		? adminCards
+		: isProfessional
+			? professionalCards
+			: patientCards;
 
 	const heroLabel = isAdmin
 		? "Painel administrativo"
-		: isDoctor
+		: isProfessional
 			? "Painel do profissional"
 			: "Bem-vindo de volta";
 
@@ -99,7 +104,7 @@ export function Dashboard({ firstName, userRole }: DashboardProps) {
 					<h1 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">
 						Olá, {firstName}!
 					</h1>
-					{isDoctor && <DoctorHeroSubtitle />}
+					{isProfessional && <ProfessionalHeroSubtitle />}
 					{isPatient && (
 						<p className="mt-1 text-sm text-muted-foreground">
 							O que você quer fazer hoje?
@@ -114,7 +119,7 @@ export function Dashboard({ firstName, userRole }: DashboardProps) {
 			</div>
 
 			{/* Stats */}
-			{(isDoctor || isPatient) && (
+			{(isProfessional || isPatient) && (
 				<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
 					<StatCard
 						icon={<CalendarDays className="h-5 w-5" />}
@@ -144,10 +149,10 @@ export function Dashboard({ firstName, userRole }: DashboardProps) {
 			)}
 
 			{/* Upcoming appointments */}
-			{(isDoctor || isPatient) && (
+			{(isProfessional || isPatient) && (
 				<AppointmentsList
 					appointments={upcoming}
-					isDoctor={isDoctor}
+					isProfessional={isProfessional}
 					onConfirm={(id) => confirm(id)}
 					onComplete={(id) => complete(id)}
 				/>

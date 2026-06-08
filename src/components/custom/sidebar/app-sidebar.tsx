@@ -58,13 +58,13 @@ export default function AppSidebar() {
 
 	if (!mounted) return null;
 
-	const isDoctor = user?.role === "PROFESSIONAL";
+	const isProfessional = user?.role === "PROFESSIONAL";
 	const isAdmin = user?.role === "ADMIN";
 	const isReceptionist = user?.role === "RECEPTIONIST";
 
 	const roleNav = isAdmin
 		? adminNav
-		: isDoctor
+		: isProfessional
 			? doctorNav
 			: isReceptionist
 				? receptionistNav
@@ -156,7 +156,7 @@ export default function AppSidebar() {
 											<span className="truncate text-xs text-muted-foreground">
 												{isAdmin
 													? "Administrador"
-													: isDoctor
+													: isProfessional
 														? "Profissional"
 														: isReceptionist
 															? "Recepcionista"
@@ -211,7 +211,7 @@ export default function AppSidebar() {
 											</Link>
 										</DropdownMenuItem>
 										<Separator />
-										{isDoctor && (
+										{isProfessional && (
 											<>
 												<DropdownMenuItem asChild>
 													<Link href="/settings/billing">

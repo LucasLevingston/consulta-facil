@@ -2,7 +2,7 @@
 
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 
-export function DoctorHeroSubtitle() {
+export function ProfessionalHeroSubtitle() {
 	const { data } = useMyProfessionalProfile(true);
 	if (!data) return null;
 	return (

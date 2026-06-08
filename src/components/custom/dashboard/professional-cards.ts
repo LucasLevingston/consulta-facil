@@ -1,7 +1,13 @@
-import { Building2, CalendarPlus, Clock, CreditCard, TrendingUp } from "lucide-react";
+import {
+	Building2,
+	CalendarPlus,
+	Clock,
+	CreditCard,
+	TrendingUp,
+} from "lucide-react";
 import type { QuickCard } from "./quick-card";
 
-export const doctorCards: QuickCard[] = [
+export const professionalCards: QuickCard[] = [
 	{
 		title: "Agendar Consulta",
 		description: "Marque uma nova consulta para um paciente.",

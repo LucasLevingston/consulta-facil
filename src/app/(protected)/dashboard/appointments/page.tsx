@@ -7,7 +7,7 @@ import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyDoctorProfile } from "@/hooks/api/doctors/use-my-doctor-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -18,23 +18,27 @@ export default function AppointmentsPage() {
 		| "PATIENT"
 		| "PROFESSIONAL"
 		| "ADMIN";
-	const isDoctor = role === "PROFESSIONAL" || role === "ADMIN";
+	const isProfessional = role === "PROFESSIONAL" || role === "ADMIN";
 
-	const doctorProfileQuery = useMyDoctorProfile(isDoctor);
-	const professionalProfileId = doctorProfileQuery.data?.id ?? "";
+	const professionalProfileQuery = useMyProfessionalProfile(isProfessional);
+	const professionalProfileId = professionalProfileQuery.data?.id ?? "";
 
-	const patientQuery = usePatientAppointments(isDoctor ? "" : userId, 0, 100);
-	const doctorQuery = useProfessionalAppointments(
-		isDoctor ? professionalProfileId : "",
+	const patientQuery = usePatientAppointments(
+		isProfessional ? "" : userId,
+		0,
+		100,
+	);
+	const professionalQuery = useProfessionalAppointments(
+		isProfessional ? professionalProfileId : "",
 		0,
 		100,
 	);
 
-	const query = isDoctor ? doctorQuery : patientQuery;
+	const query = isProfessional ? professionalQuery : patientQuery;
 	const appointments = query.data?.content ?? [];
 
-	const isLoading = isDoctor
-		? doctorProfileQuery.isLoading || doctorQuery.isLoading
+	const isLoading = isProfessional
+		? professionalProfileQuery.isLoading || professionalQuery.isLoading
 		: patientQuery.isLoading;
 
 	return (

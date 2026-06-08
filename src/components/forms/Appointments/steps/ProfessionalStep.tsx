@@ -30,10 +30,10 @@ import { cn } from "@/lib/utils/cn";
 
 interface ProfessionalStepProps {
 	control: Control<AppointmentFormValues>;
-	doctors: ProfessionalResponse[];
-	doctorsLoading: boolean;
+	professionals: ProfessionalResponse[];
+	professionalsLoading: boolean;
 	professionalIdParam: string | null;
-	selectedDoctor: ProfessionalResponse | undefined;
+	selectedProfessional: ProfessionalResponse | undefined;
 	initialSpecialtyFilter?: string;
 	onDoctorSelect: () => void;
 	onDoctorClear: () => void;
@@ -52,10 +52,10 @@ function getInitials(name: string | null | undefined): string {
 
 export function ProfessionalStep({
 	control,
-	doctors,
-	doctorsLoading,
+	professionals,
+	professionalsLoading,
 	professionalIdParam,
-	selectedDoctor,
+	selectedProfessional,
 	initialSpecialtyFilter = "",
 	onDoctorSelect,
 	onDoctorClear,
@@ -64,10 +64,10 @@ export function ProfessionalStep({
 	const [specialtyFilter] = useState(initialSpecialtyFilter);
 
 	const filteredDoctors = specialtyFilter
-		? doctors.filter((d) =>
+		? professionals.filter((d) =>
 				d.specialty?.toLowerCase().includes(specialtyFilter.toLowerCase()),
 			)
-		: doctors;
+		: professionals;
 
 	return (
 		<div className="space-y-3">
@@ -92,25 +92,25 @@ export function ProfessionalStep({
 										variant="outline"
 										role="combobox"
 										aria-expanded={open}
-										disabled={doctorsLoading || !!professionalIdParam}
+										disabled={professionalsLoading || !!professionalIdParam}
 										className={cn(
 											"w-full justify-between rounded-xl border-border h-auto py-3 px-4",
 											!field.value && "text-muted-foreground",
 										)}
 									>
-										{selectedDoctor ? (
+										{selectedProfessional ? (
 											<div className="flex items-center gap-3">
 												<Avatar className="h-8 w-8 rounded-lg">
 													<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
-														{getInitials(selectedDoctor.name)}
+														{getInitials(selectedProfessional.name)}
 													</AvatarFallback>
 												</Avatar>
 												<div className="text-left">
 													<p className="text-sm font-medium">
-														{selectedDoctor.name}
+														{selectedProfessional.name}
 													</p>
 													<p className="text-xs text-muted-foreground">
-														{selectedDoctor.specialty}
+														{selectedProfessional.specialty}
 													</p>
 												</div>
 											</div>
@@ -128,7 +128,7 @@ export function ProfessionalStep({
 										<CommandInput placeholder="Pesquisar por nome ou especialidade..." />
 										<CommandList>
 											<CommandEmpty>
-												{doctorsLoading
+												{professionalsLoading
 													? "Carregando..."
 													: "Nenhum profissional encontrado."}
 											</CommandEmpty>
@@ -181,13 +181,13 @@ export function ProfessionalStep({
 				)}
 			/>
 
-			{selectedDoctor && (
+			{selectedProfessional && (
 				<div className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
 					<Stethoscope className="h-4 w-4 text-primary shrink-0" />
 					<div className="flex-1 min-w-0">
-						<p className="text-sm font-medium">{selectedDoctor.name}</p>
+						<p className="text-sm font-medium">{selectedProfessional.name}</p>
 						<p className="text-xs text-muted-foreground">
-							{selectedDoctor.specialty}
+							{selectedProfessional.specialty}
 						</p>
 					</div>
 					{!professionalIdParam && (

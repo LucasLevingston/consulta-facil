@@ -19,7 +19,7 @@ import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
 import { appointmentsApi } from "@/lib/api/appointments.api";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
-import { FREE_DOCTORS } from "@/utils/constants/free-doctors";
+import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 
 interface Props {
 	clinic: ClinicResponse;
@@ -54,7 +54,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 	const totalFreeUsed = memberStats.reduce((s, m) => s + m.freeUsed, 0);
 	const totalFreeQuota = members.length * FREE_CONSULTS_PER_DOCTOR;
 	const totalPaid = memberStats.reduce((s, m) => s + m.paidCount, 0);
-	const extraDoctors = Math.max(0, members.length - FREE_DOCTORS);
+	const extraProfessionals = Math.max(0, members.length - FREE_PROFESSIONALS);
 
 	if (isLoading) {
 		return (
@@ -117,11 +117,11 @@ export function ClinicFinancialTab({ clinic }: Props) {
 						</div>
 					</CardHeader>
 					<CardContent>
-						<p className="text-2xl font-bold">{extraDoctors}</p>
+						<p className="text-2xl font-bold">{extraProfessionals}</p>
 						<p className="mt-1 text-xs text-muted-foreground">
-							{extraDoctors === 0
+							{extraProfessionals === 0
 								? "dentro do limite gratuito"
-								: `+${extraDoctors * 20}% no plano`}
+								: `+${extraProfessionals * 20}% no plano`}
 						</p>
 					</CardContent>
 				</Card>
@@ -194,7 +194,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 						</p>
 						<p>
 							• {members.length} profissional{members.length !== 1 ? "is" : ""}{" "}
-							na clínica — limite gratuito: {FREE_DOCTORS}
+							na clínica — limite gratuito: {FREE_PROFESSIONALS}
 						</p>
 						<p>
 							• {totalFreeQuota} consultas gratuitas totais (
@@ -204,10 +204,11 @@ export function ClinicFinancialTab({ clinic }: Props) {
 							• {totalPaid} consulta{totalPaid !== 1 ? "s" : ""} além da cota
 							gratuita
 						</p>
-						{extraDoctors > 0 && (
+						{extraProfessionals > 0 && (
 							<p>
-								• {extraDoctors} profissional{extraDoctors !== 1 ? "is" : ""}{" "}
-								extra — plano com +{extraDoctors * 20}% no valor base
+								• {extraProfessionals} profissional
+								{extraProfessionals !== 1 ? "is" : ""} extra — plano com +
+								{extraProfessionals * 20}% no valor base
 							</p>
 						)}
 					</div>

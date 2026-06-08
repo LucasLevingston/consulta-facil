@@ -45,11 +45,9 @@ export function useAppointmentFormSetup({
 	const serviceIdParam = searchParams.get("serviceid");
 	const { user: authUser } = useUserStore();
 
-	const { data: doctorsPage, isLoading: doctorsLoading } = useProfessionals(
-		0,
-		100,
-	);
-	const doctors = doctorsPage?.content ?? [];
+	const { data: professionalsPage, isLoading: professionalsLoading } =
+		useProfessionals(0, 100);
+	const professionals = professionalsPage?.content ?? [];
 
 	const scheduleAppointment = useScheduleAppointment();
 	const cancelAppointment = useCancelAppointment();
@@ -84,23 +82,23 @@ export function useAppointmentFormSetup({
 
 	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
-	const selectedDoctor = doctors.find(
+	const selectedProfessional = professionals.find(
 		(d) =>
 			d.id === selectedProfessionalId || d.userId === selectedProfessionalId,
 	);
 
 	const { data: scheduleList = [], isLoading: scheduleLoading } =
-		useProfessionalSchedule(selectedDoctor?.id ?? "");
+		useProfessionalSchedule(selectedProfessional?.id ?? "");
 
 	const { data: professionalServices = [] } = useGetProfessionalServices(
-		selectedDoctor?.id ?? "",
+		selectedProfessional?.id ?? "",
 	);
 	const selectedService = professionalServices.find(
 		(s) => s.id === selectedServiceId,
 	);
 
 	const { data: professionalAppointmentsPage } = useProfessionalAppointments(
-		selectedDoctor?.id ?? "",
+		selectedProfessional?.id ?? "",
 		0,
 		200,
 	);
@@ -143,7 +141,7 @@ export function useAppointmentFormSetup({
 	}, [selectedDate, scheduleList, selectedService]);
 
 	const isQueueMode =
-		!!selectedDoctor && !scheduleLoading && scheduleList.length === 0;
+		!!selectedProfessional && !scheduleLoading && scheduleList.length === 0;
 
 	const isDayDisabled = (date: Date): boolean => {
 		if (date < new Date(new Date().setHours(0, 0, 0, 0))) return true;
@@ -165,7 +163,7 @@ export function useAppointmentFormSetup({
 		try {
 			if (type === "create" || type === "schedule") {
 				const created = await scheduleAppointment.mutateAsync({
-					professionalId: selectedDoctor?.id ?? values.professionalId,
+					professionalId: selectedProfessional?.id ?? values.professionalId,
 					scheduledAt: (values.scheduledAt as Date).toISOString(),
 					reason: values.reason ?? undefined,
 					notes: values.notes ?? undefined,
@@ -203,9 +201,9 @@ export function useAppointmentFormSetup({
 
 	return {
 		form,
-		doctors,
-		doctorsLoading,
-		selectedDoctor,
+		professionals,
+		professionalsLoading,
+		selectedProfessional,
 		selectedDate,
 		selectedServiceId,
 		setSelectedServiceId,
