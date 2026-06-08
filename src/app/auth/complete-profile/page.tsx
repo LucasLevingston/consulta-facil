@@ -8,7 +8,7 @@ import { Logo } from "@/components/logo";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
 
-export default function CompletarCadastroPage() {
+export default function CompleteProfilePage() {
 	const router = useRouter();
 	const { isAuthenticated } = useAuthStore();
 	const { user } = useUserStore();

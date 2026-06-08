@@ -18,7 +18,7 @@ export default function RegisterPage() {
 			await register.mutateAsync(data);
 			await login.mutateAsync({ email: data.email, password: data.password });
 			toast.success("Conta criada com sucesso!");
-			router.push("/auth/completar-cadastro");
+			router.push("/auth/complete-profile");
 		} catch {
 			toast.error("Erro ao criar conta. Tente novamente.");
 		}

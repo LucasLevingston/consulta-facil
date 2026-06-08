@@ -30,7 +30,7 @@ export const UserForm = () => {
 		try {
 			await register.mutateAsync(data);
 			await login.mutateAsync({ email: data.email, password: data.password });
-			router.push("/auth/completar-cadastro");
+			router.push("/auth/complete-profile");
 		} catch {
 			toast.error("Erro ao registrar usuário.");
 		}
