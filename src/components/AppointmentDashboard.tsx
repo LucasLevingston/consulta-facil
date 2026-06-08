@@ -15,12 +15,10 @@ import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 
 interface AppointmentsDashboardProps {
 	appointments: AppointmentResponse[];
-	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN";
 }
 
 const AppointmentsDashboard = ({
 	appointments,
-	userRole,
 }: AppointmentsDashboardProps) => {
 	const router = useRouter();
 	const pathname = usePathname();
@@ -75,7 +73,7 @@ const AppointmentsDashboard = ({
 		(currentPage + 1) * ITEMS_PER_PAGE,
 	);
 
-	const columns = useMemo(() => makeColumns(userRole), [userRole]);
+	const columns = useMemo(() => makeColumns(), []);
 
 	return (
 		<div className="space-y-6">

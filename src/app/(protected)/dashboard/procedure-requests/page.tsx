@@ -4,12 +4,11 @@ import { CalendarClock } from "lucide-react";
 
 import PageHeader from "@/components/custom/page-header";
 import { ProcedureRequestsContent } from "@/components/procedure-requests/ProcedureRequestsContent";
-import { useUserStore } from "@/store/useUserStore";
+import { usePermission } from "@/hooks/use-permission";
 
 export default function ProcedureRequestsPage() {
-	const { user } = useUserStore();
-	const role = user?.role ?? "PATIENT";
-	const isProfessional = role === "PROFESSIONAL" || role === "ADMIN";
+	const { can } = usePermission();
+	const isProfessional = can("procedure:manage");
 
 	return (
 		<div className="space-y-6">

@@ -38,6 +38,32 @@ describe("PERMISSIONS", () => {
 	describe("clinic", () => {
 		allowed("clinic:manage", "PROFESSIONAL", "ADMIN");
 	});
+	describe("clinic — ownership", () => {
+		it("clinic:manage:own — PROFESSIONAL owner → true", () => {
+			expect(
+				PERMISSIONS["clinic:manage:own"]("PROFESSIONAL", {
+					userId: "u1",
+					ownerId: "u1",
+				}),
+			).toBe(true);
+		});
+		it("clinic:manage:own — PROFESSIONAL non-owner → false", () => {
+			expect(
+				PERMISSIONS["clinic:manage:own"]("PROFESSIONAL", {
+					userId: "u1",
+					ownerId: "u2",
+				}),
+			).toBe(false);
+		});
+		it("clinic:manage:own — ADMIN bypasses → true", () => {
+			expect(
+				PERMISSIONS["clinic:manage:own"]("ADMIN", {
+					userId: "u1",
+					ownerId: "u2",
+				}),
+			).toBe(true);
+		});
+	});
 	describe("professional", () => {
 		allowed("professional:apply", "PATIENT", "ADMIN");
 		allowed("professional:manage", "PROFESSIONAL", "ADMIN");

@@ -38,7 +38,7 @@ const makeAppt = (overrides = {}): AppointmentResponse =>
 
 describe("AppointmentsDashboard", () => {
 	it("renders stat cards", () => {
-		render(<AppointmentsDashboard appointments={[]} userRole="PATIENT" />);
+		render(<AppointmentsDashboard appointments={[]} />);
 		expect(screen.getByText("Todas")).toBeInTheDocument();
 		expect(screen.getByText("Confirmadas")).toBeInTheDocument();
 		expect(screen.getByText("Pendentes")).toBeInTheDocument();
@@ -47,19 +47,19 @@ describe("AppointmentsDashboard", () => {
 	});
 
 	it("renders search input", () => {
-		render(<AppointmentsDashboard appointments={[]} userRole="PATIENT" />);
+		render(<AppointmentsDashboard appointments={[]} />);
 		expect(
 			screen.getByPlaceholderText(/Buscar por paciente/),
 		).toBeInTheDocument();
 	});
 
 	it("renders data table", () => {
-		render(<AppointmentsDashboard appointments={[]} userRole="PATIENT" />);
+		render(<AppointmentsDashboard appointments={[]} />);
 		expect(screen.getByTestId("data-table")).toBeInTheDocument();
 	});
 
 	it("renders pagination", () => {
-		render(<AppointmentsDashboard appointments={[]} userRole="PATIENT" />);
+		render(<AppointmentsDashboard appointments={[]} />);
 		expect(screen.getByTestId("pagination")).toBeInTheDocument();
 	});
 
@@ -69,17 +69,13 @@ describe("AppointmentsDashboard", () => {
 			makeAppt({ status: "PENDING" }),
 			makeAppt({ status: "CANCELED" }),
 		];
-		render(
-			<AppointmentsDashboard appointments={appointments} userRole="PATIENT" />,
-		);
+		render(<AppointmentsDashboard appointments={appointments} />);
 		expect(screen.getByText("3")).toBeInTheDocument();
 	});
 
 	it("renders all rows in table", () => {
 		const appointments = [makeAppt(), makeAppt(), makeAppt()];
-		render(
-			<AppointmentsDashboard appointments={appointments} userRole="PATIENT" />,
-		);
+		render(<AppointmentsDashboard appointments={appointments} />);
 		expect(screen.getByText("3 rows")).toBeInTheDocument();
 	});
 
@@ -93,9 +89,7 @@ describe("AppointmentsDashboard", () => {
 			makeAppt({ patientName: "Carlos" }),
 			makeAppt({ patientName: "Maria" }),
 		];
-		render(
-			<AppointmentsDashboard appointments={appointments} userRole="PATIENT" />,
-		);
+		render(<AppointmentsDashboard appointments={appointments} />);
 		expect(screen.getByText("1 rows")).toBeInTheDocument();
 	});
 });

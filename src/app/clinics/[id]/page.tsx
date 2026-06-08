@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
 import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -23,10 +24,13 @@ export default function ClinicDetailPage() {
 	const user = useUserStore((s) => s.user);
 	const { data: clinic, isLoading, error } = useClinicById(clinicId);
 	const { data: myDoctorProfile } = useApplicationStatus();
+	const { can } = usePermission();
 
 	const isOwner = !!user && clinic?.ownerId === user.id;
 	const isAdmin = user?.role === "ADMIN";
-	const isManager = isOwner || isAdmin;
+	const isManager =
+		!!clinic &&
+		can("clinic:manage:own", { userId: user?.id, ownerId: clinic.ownerId });
 
 	const myMembership = clinic?.members?.find(
 		(m) => m.professionalProfileId === myDoctorProfile?.id,

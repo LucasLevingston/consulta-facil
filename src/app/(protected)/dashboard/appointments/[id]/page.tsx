@@ -795,15 +795,15 @@ function AppointmentDetail({
 			{/* Exams */}
 			<ExamsSection
 				appointmentId={appointment.id}
-				isPatient={isPatient}
-				isProfessional={isProfessional}
+				isPatient={can("exam:review:patient")}
+				isProfessional={can("exam:manage")}
 			/>
 
-			{/* Anamnesis — editable by patient (and professional) */}
+			{/* Anamnesis — editable by patient and professional */}
 			<AnamnesisSection
 				appointmentId={appointment.id}
-				canEdit={isPatient || isProfessional}
-				showAiHelper={isPatient}
+				canEdit={can("appointment:anamnesis:save")}
+				showAiHelper={can("exam:review:patient")}
 			/>
 
 			{/* Prontuario — editable only by the assigned professional */}

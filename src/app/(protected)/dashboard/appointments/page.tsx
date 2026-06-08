@@ -53,7 +53,7 @@ export default function AppointmentsPage() {
 
 			<QueryBoundary isLoading={isLoading} error={query.error}>
 				<Suspense>
-					<AppointmentsDashboard appointments={appointments} userRole={role} />
+					<AppointmentsDashboard appointments={appointments} />
 				</Suspense>
 			</QueryBoundary>
 		</div>

@@ -161,7 +161,7 @@ export default function AdminPage() {
 				error={doctorQuery.error}
 			>
 				<Suspense>
-					<AppointmentsDashboard appointments={appointments} userRole="ADMIN" />
+					<AppointmentsDashboard appointments={appointments} />
 				</Suspense>
 			</QueryBoundary>
 		</div>

@@ -51,6 +51,8 @@ export const PERMISSIONS = {
 
 	// ── Clinic ───────────────────────────────────────────────────────────
 	"clinic:manage": allow("PROFESSIONAL", "ADMIN"),
+	// ownership: ownerId = clinic.ownerId, userId = current user
+	"clinic:manage:own": allowOwn("PROFESSIONAL", "ADMIN"),
 
 	// ── Professional ────────────────────────────────────────────────────
 	"professional:apply": allow("PATIENT", "ADMIN"),

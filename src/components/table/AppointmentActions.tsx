@@ -16,35 +16,38 @@ import {
 } from "@/components/ui/dialog";
 import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
+import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { useUserStore } from "@/store/useUserStore";
 
 interface AppointmentActionsProps {
 	appointment: AppointmentResponse;
-	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN";
 }
 
-export function AppointmentActions({
-	appointment,
-	userRole,
-}: AppointmentActionsProps) {
+export function AppointmentActions({ appointment }: AppointmentActionsProps) {
 	const [cancelOpen, setCancelOpen] = useState(false);
 	const [rateOpen, setRateOpen] = useState(false);
 	const confirm = useConfirmAppointment();
 	const complete = useCompleteAppointment();
+	const { can } = usePermission();
+	const { user } = useUserStore();
 
 	const { status } = appointment;
-	const isPatient = userRole === "PATIENT";
-	const isProfessional = userRole === "PROFESSIONAL";
-	const isAdmin = userRole === "ADMIN";
 
 	const canCancel =
-		(isPatient || isAdmin) && (status === "PENDING" || status === "CONFIRMED");
-	const canConfirm = (isProfessional || isAdmin) && status === "PENDING";
+		can("appointment:cancel:own", {
+			userId: user?.id,
+			ownerId: appointment.patientId,
+		}) &&
+		(status === "PENDING" || status === "CONFIRMED");
+	const canConfirm = can("appointment:confirm") && status === "PENDING";
 	const canComplete =
-		(isProfessional || isAdmin) &&
+		can("appointment:complete") &&
 		(status === "CONFIRMED" || status === "IN_PROGRESS");
 	const canRate =
-		isPatient && status === "COMPLETED" && appointment.rating == null;
+		can("appointment:rate") &&
+		status === "COMPLETED" &&
+		appointment.rating == null;
 
 	if (!canCancel && !canConfirm && !canComplete && !canRate) return null;
 

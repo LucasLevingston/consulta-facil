@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 
-export function makeColumns(
-	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN",
-): ColumnDef<AppointmentResponse>[] {
+export function makeColumns(): ColumnDef<AppointmentResponse>[] {
 	return [
 		{
 			header: "#",
@@ -66,7 +64,7 @@ export function makeColumns(
 							Ver
 						</Link>
 					</Button>
-					<AppointmentActions appointment={row.original} userRole={userRole} />
+					<AppointmentActions appointment={row.original} />
 				</div>
 			),
 		},

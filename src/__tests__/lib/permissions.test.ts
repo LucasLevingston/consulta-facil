@@ -112,4 +112,40 @@ describe("PERMISSIONS — ownership-aware rules (allowOwn)", () => {
 			}),
 		).toBe(true);
 	});
+
+	it("clinic:manage:own — PROFESSIONAL owner allowed", () => {
+		expect(
+			PERMISSIONS["clinic:manage:own"]("PROFESSIONAL", {
+				userId: user,
+				ownerId: user,
+			}),
+		).toBe(true);
+	});
+
+	it("clinic:manage:own — PROFESSIONAL non-owner denied", () => {
+		expect(
+			PERMISSIONS["clinic:manage:own"]("PROFESSIONAL", {
+				userId: user,
+				ownerId: other,
+			}),
+		).toBe(false);
+	});
+
+	it("clinic:manage:own — ADMIN bypasses ownership", () => {
+		expect(
+			PERMISSIONS["clinic:manage:own"]("ADMIN", {
+				userId: user,
+				ownerId: other,
+			}),
+		).toBe(true);
+	});
+
+	it("clinic:manage:own — PATIENT denied", () => {
+		expect(
+			PERMISSIONS["clinic:manage:own"]("PATIENT", {
+				userId: user,
+				ownerId: user,
+			}),
+		).toBe(false);
+	});
 });
