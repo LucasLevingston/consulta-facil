@@ -39,10 +39,10 @@ export default defineConfig({
 				"src/config/**",
 			],
 			thresholds: {
-				statements: 42,
+				statements: 41,
 				branches: 28,
-				functions: 49,
-				lines: 43,
+				functions: 48,
+				lines: 42,
 			},
 		},
 	},

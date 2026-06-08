@@ -5,6 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { AnamnesisAIChat } from "@/components/anamnesis/AnamnesisAIChat";
+import { AnamnesisReadView } from "@/components/appointments/detail/AnamnesisReadView";
+import { MedicalRecordField } from "@/components/appointments/detail/MedicalRecordField";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -14,66 +16,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
 import { useSaveAnamnesis } from "@/hooks/api/anamnesis/use-save-anamnesis";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
-import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
-
-export function MedicalRecordField({
-	label,
-	value,
-	onChange,
-}: {
-	label: string;
-	value: string;
-	onChange: (v: string) => void;
-}) {
-	return (
-		<div className="space-y-1.5">
-			<Label className="text-xs font-semibold text-primary">{label}</Label>
-			<Textarea
-				value={value}
-				onChange={(e) => onChange(e.target.value)}
-				rows={2}
-				className="resize-none rounded-xl border-border bg-bg-input text-sm"
-			/>
-		</div>
-	);
-}
-
-function AnamnesisReadView({ anamnesis }: { anamnesis: AnamnesisResponse }) {
-	const fields: [string, string | undefined][] = [
-		["Queixa principal", anamnesis.chiefComplaint],
-		["Medicamentos em uso", anamnesis.currentMedications],
-		["Alergias", anamnesis.allergies],
-		["Histórico médico", anamnesis.medicalHistory],
-		["Histórico familiar", anamnesis.familyHistory],
-		["Observações", anamnesis.observations],
-	];
-
-	const filled = fields.filter(([, v]) => v);
-	if (filled.length === 0)
-		return (
-			<p className="text-sm text-muted-foreground">
-				Sem informações preenchidas.
-			</p>
-		);
-
-	return (
-		<div className="space-y-3">
-			{filled.map(([label, value], i) => (
-				<div key={label}>
-					{i > 0 && <Separator className="mb-3" />}
-					<p className="text-xs text-muted-foreground mb-0.5">{label}</p>
-					<p className="text-sm leading-relaxed whitespace-pre-wrap">{value}</p>
-				</div>
-			))}
-		</div>
-	);
-}
 
 export function AnamnesisSection({
 	appointmentId,

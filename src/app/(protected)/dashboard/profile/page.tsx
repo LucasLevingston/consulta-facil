@@ -1,15 +1,11 @@
 "use client";
 
-import {
-	ProfileAppointmentStats,
-	ProfileStatsBanner,
-} from "@/components/profile/ProfileAppointmentStats";
+import { ProfileAppointmentStats } from "@/components/profile/ProfileAppointmentStats";
 import { ProfileHero } from "@/components/profile/ProfileHero";
 import { ProfileNextAppointment } from "@/components/profile/ProfileNextAppointment";
-import {
-	ProfilePatientMedicalInfo,
-	ProfilePersonalInfo,
-} from "@/components/profile/ProfilePersonalInfo";
+import { ProfilePatientMedicalInfo } from "@/components/profile/ProfilePatientMedicalInfo";
+import { ProfilePersonalInfo } from "@/components/profile/ProfilePersonalInfo";
+import { ProfileStatsBanner } from "@/components/profile/ProfileStatsBanner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
