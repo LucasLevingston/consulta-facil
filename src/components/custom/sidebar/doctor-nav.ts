@@ -5,6 +5,7 @@ import {
 	CalendarDays,
 	CalendarPlus,
 	Clock,
+	CreditCard,
 	TrendingUp,
 	UserRound,
 } from "lucide-react";
@@ -74,6 +75,11 @@ export const doctorNav = [
 				title: "Financeiro",
 				url: "/dashboard/financial",
 				icon: TrendingUp,
+			},
+			{
+				title: "Pagamentos",
+				url: "/dashboard/payments",
+				icon: CreditCard,
 			},
 		],
 	},

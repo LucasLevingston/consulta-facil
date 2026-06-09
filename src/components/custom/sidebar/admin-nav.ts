@@ -3,8 +3,10 @@ import {
 	Briefcase,
 	CalendarClock,
 	CalendarDays,
+	CreditCard,
 	Settings,
 	User,
+	Users,
 } from "lucide-react";
 
 export const adminNav = [
@@ -20,6 +22,16 @@ export const adminNav = [
 				title: "Pacientes",
 				url: "/dashboard/patients",
 				icon: BadgeCheck,
+			},
+			{
+				title: "Usuários",
+				url: "/dashboard/users",
+				icon: Users,
+			},
+			{
+				title: "Pagamentos",
+				url: "/dashboard/payments",
+				icon: CreditCard,
 			},
 			{
 				title: "Admin Dashboard",
