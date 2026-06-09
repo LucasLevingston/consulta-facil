@@ -5,6 +5,7 @@ export const appointmentPaymentStatusSchema = z.enum([
 	"PENDING_PAYMENT",
 	"PAID",
 	"REFUNDED",
+	"FREE",
 ]);
 
 export type AppointmentPaymentStatus = z.infer<

@@ -30,6 +30,7 @@ const PAYMENT_LABELS: Record<AppointmentPaymentStatus, string> = {
 	PENDING_PAYMENT: "Aguardando pagamento",
 	PAID: "Pago",
 	REFUNDED: "Reembolsado",
+	FREE: "Gratuito",
 };
 
 const PAYMENT_VARIANTS: Record<
@@ -40,6 +41,7 @@ const PAYMENT_VARIANTS: Record<
 	PENDING_PAYMENT: "secondary",
 	PAID: "default",
 	REFUNDED: "destructive",
+	FREE: "secondary",
 };
 
 function PaymentsContent() {
@@ -141,6 +143,7 @@ function PaymentsContent() {
 							<SelectItem value="PENDING_PAYMENT">Aguardando</SelectItem>
 							<SelectItem value="UNPAID">Não pago</SelectItem>
 							<SelectItem value="REFUNDED">Reembolsado</SelectItem>
+							<SelectItem value="FREE">Gratuito</SelectItem>
 						</SelectContent>
 					</Select>
 				</div>

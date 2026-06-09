@@ -6,6 +6,7 @@ const iconMap: Record<string, ElementType> = {
 	fullName: User,
 	email: AtSign,
 	password: Lock,
+	confirmPassword: Lock,
 	phone: Phone,
 	birthDate: Calendar,
 	date: Calendar,
