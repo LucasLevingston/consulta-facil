@@ -52,18 +52,18 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Recepção", url: "/dashboard/reception", icon: MonitorCheck },
 	],
 	ADMIN: [
-		{ title: "Usuários", url: "/dashboard/admin/users", icon: UserRound },
+		{ title: "Usuários", url: "/admin/users", icon: UserRound },
 		{
 			title: "Solicitações",
-			url: "/dashboard/admin/requests",
+			url: "/admin/requests",
 			icon: UserRound,
 		},
 		{
 			title: "Pagamentos",
-			url: "/dashboard/admin/payments",
+			url: "/admin/payments",
 			icon: RiMoneyCnyBoxFill,
 		},
-		{ title: "Uso", url: "/dashboard/admin/usage", icon: BadgeCheck },
+		{ title: "Uso", url: "/admin/usage", icon: BadgeCheck },
 	],
 };
 
@@ -117,7 +117,7 @@ export function Header() {
 					</>
 				) : (
 					<div className="flex items-center gap-2">
-						<Link href="/auth/register">
+						<Link href="/auth/register" className="hidden sm:block">
 							<CustomButton variant="outline">Criar conta</CustomButton>
 						</Link>
 						<Link href="/auth/login">
