@@ -1,19 +1,69 @@
 "use client";
 
+import { BadgeCheck, Building2, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePlans } from "@/hooks/api/plans/use-plans";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
+import type { PlanResponse } from "@/lib/api/plans.api";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { PLANS } from "../../../lib/utils/plans";
-import { PRO_PLAN_IDS } from "../../../lib/utils/pro-plan-ids";
-import ClinicPlans from "./ClinicPlans";
+import { PRO_PLAN_IDS } from "../../../utils/constants/pro-plan-ids";
 import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
+import type { Plan } from "./types";
+
+const TIER_ICONS: Record<string, React.ReactNode> = {
+	FREE: <BadgeCheck className="h-5 w-5" />,
+	STARTER: <Zap className="h-5 w-5" />,
+	PRO: <Sparkles className="h-5 w-5" />,
+	CLINIC: <Building2 className="h-5 w-5" />,
+};
+
+const HIGHLIGHT_TIERS = new Set(["PRO"]);
+
+function apiPlanToUiPlan(p: PlanResponse): Plan {
+	const limitLabel =
+		p.maxAppointments !== null && p.maxAppointments !== undefined
+			? `Até ${p.maxAppointments} consultas/mês`
+			: "Consultas ilimitadas";
+
+	return {
+		id: p.slug,
+		title: p.name,
+		monthlyEquiv:
+			p.price === 0
+				? "0,00"
+				: p.price.toLocaleString("pt-BR", {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2,
+					}),
+		totalPrice:
+			p.price === 0
+				? "Grátis"
+				: p.price.toLocaleString("pt-BR", {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2,
+					}),
+		period: "/mês",
+		description: p.description ?? "",
+		features: [...p.features, limitLabel],
+		highlight: HIGHLIGHT_TIERS.has(p.tier),
+		icon: TIER_ICONS[p.tier] ?? <Zap className="h-5 w-5" />,
+		maxAppointments: p.maxAppointments,
+	};
+}
 
 export default function Plans() {
-	const { data: subscription, isLoading, error } = useMySubscription();
+	const {
+		data: plansData,
+		isLoading: plansLoading,
+		error: plansError,
+	} = usePlans();
+	const {
+		data: subscription,
+		isLoading: subLoading,
+		error: subError,
+	} = useMySubscription();
 	const checkout = useCreateCheckout();
 
 	function handleSelect(planId: string) {
@@ -22,59 +72,47 @@ export default function Plans() {
 		});
 	}
 
-	const hasProSubscription =
+	const hasActiveSubscription =
 		subscription &&
 		subscription.status === "ACTIVE" &&
 		PRO_PLAN_IDS.has(subscription.planId);
 
-	const defaultTab = subscription?.planId?.startsWith("clinic")
-		? "clinic"
-		: "professional";
+	const plans = (plansData ?? [])
+		.sort((a, b) => a.displayOrder - b.displayOrder)
+		.map(apiPlanToUiPlan);
 
 	return (
-		<QueryBoundary isLoading={isLoading} error={error}>
-			{/* Active plan banner — show regardless of tab */}
+		<QueryBoundary
+			isLoading={plansLoading || subLoading}
+			error={plansError ?? subError}
+		>
 			{subscription && subscription.status !== "EXPIRED" && (
 				<SubscriptionBanner subscription={subscription} />
 			)}
 
-			<Tabs defaultValue={defaultTab} className="space-y-6">
-				<TabsList className="w-full sm:w-auto">
-					<TabsTrigger value="professional" className="flex-1 sm:flex-none">
-						Profissional
-					</TabsTrigger>
-					<TabsTrigger value="clinic" className="flex-1 sm:flex-none">
-						Clínica
-					</TabsTrigger>
-				</TabsList>
+			<div className="space-y-6">
+				<div>
+					<h2 className="text-lg font-semibold text-foreground">
+						Planos disponíveis
+					</h2>
+					<p className="mt-1 text-sm text-muted-foreground">
+						Escolha o plano ideal para seu volume de consultas e funcionalidades
+						necessárias.
+					</p>
+				</div>
 
-				<TabsContent value="professional" className="space-y-6 mt-0">
-					<div>
-						<h2 className="text-lg font-semibold text-foreground">
-							Planos Pro
-						</h2>
-						<p className="mt-1 text-sm text-muted-foreground">
-							Para profissionais de saúde que usam a plataforma individualmente.
-						</p>
-					</div>
-
-					<div className="grid gap-6 sm:grid-cols-2">
-						{PLANS.map((plan) => (
-							<PlanCard
-								key={plan.id}
-								plan={plan}
-								subscription={hasProSubscription ? subscription : undefined}
-								onSelect={handleSelect}
-								isPending={checkout.isPending}
-							/>
-						))}
-					</div>
-				</TabsContent>
-
-				<TabsContent value="clinic" className="mt-0">
-					<ClinicPlans />
-				</TabsContent>
-			</Tabs>
+				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					{plans.map((plan) => (
+						<PlanCard
+							key={plan.id}
+							plan={plan}
+							subscription={hasActiveSubscription ? subscription : undefined}
+							onSelect={plan.id === "free" ? () => {} : handleSelect}
+							isPending={checkout.isPending}
+						/>
+					))}
+				</div>
+			</div>
 		</QueryBoundary>
 	);
 }

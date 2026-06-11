@@ -8,4 +8,5 @@ export interface Plan {
 	features: string[];
 	highlight?: boolean;
 	icon: React.ReactNode;
+	maxAppointments?: number | null;
 }
