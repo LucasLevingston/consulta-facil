@@ -2,7 +2,6 @@
 
 import { Stethoscope } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
-import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -15,6 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { VoiceBookingResult } from "@/lib/types/ai";
 import { ServiceSelector } from "./ServiceSelector";
 import { DateTimeStep } from "./steps/DateTimeStep";
 import { DetailsStep } from "./steps/DetailsStep";

@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
+import { api } from "@/config/api";
+import type { VoiceBookingResult } from "@/lib/types/ai";
 
 type Status = "idle" | "listening" | "processing" | "done" | "error";
 
@@ -42,14 +43,13 @@ export function useVoiceBooking() {
 			setStatus("processing");
 
 			try {
-				const res = await fetch("/api/voice-booking", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ transcript: text }),
-				});
-				const data = await res.json();
-				if (!res.ok) throw new Error(data.error ?? "Erro ao processar.");
-				setResult(data as VoiceBookingResult);
+				const { data } = await api.post<VoiceBookingResult>(
+					"/ai/voice-booking",
+					{
+						transcript: text,
+					},
+				);
+				setResult(data);
 				setStatus("done");
 			} catch (e) {
 				setError(e instanceof Error ? e.message : "Erro ao processar voz.");

@@ -94,6 +94,43 @@ describe("useMyProfessionalProfile", () => {
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(result.current.data).toEqual(professional);
 	});
+
+	it("404 → isError=true, data=undefined (profissional sem perfil cadastrado)", async () => {
+		const err404 = Object.assign(new Error("Not Found"), {
+			response: { status: 404 },
+		});
+		mockGetMyProfile.mockRejectedValueOnce(err404);
+
+		const { result } = renderHook(() => useMyProfessionalProfile(true), {
+			wrapper: wrapper(),
+		});
+		await waitFor(() => expect(result.current.isError).toBe(true));
+
+		expect(result.current.data).toBeUndefined();
+		expect(result.current.error).toBeTruthy();
+	});
+
+	it("retry:false garante apenas 1 chamada quando 404", async () => {
+		const err404 = Object.assign(new Error("Not Found"), {
+			response: { status: 404 },
+		});
+		mockGetMyProfile.mockRejectedValue(err404);
+
+		const { result } = renderHook(() => useMyProfessionalProfile(true), {
+			wrapper: wrapper(),
+		});
+		await waitFor(() => expect(result.current.isError).toBe(true));
+
+		expect(mockGetMyProfile).toHaveBeenCalledTimes(1);
+	});
+
+	it("não chama a API quando enabled=false (cenário: usuário ADMIN sem perfil)", () => {
+		const { result } = renderHook(() => useMyProfessionalProfile(false), {
+			wrapper: wrapper(),
+		});
+		expect(result.current.fetchStatus).toBe("idle");
+		expect(mockGetMyProfile).not.toHaveBeenCalled();
+	});
 });
 
 describe("useSearchProfessionals", () => {

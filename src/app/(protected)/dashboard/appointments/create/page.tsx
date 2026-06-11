@@ -2,10 +2,10 @@
 
 import { CalendarPlus } from "lucide-react";
 import { Suspense, useState } from "react";
-import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import PageHeader from "@/components/custom/page-header";
 import { VoiceBookingButton } from "@/components/custom/voice-booking-button";
 import { AppointmentForm } from "@/components/forms/Appointments/AppointmentForm";
+import type { VoiceBookingResult } from "@/lib/types/ai";
 
 export default function CreateAppointment() {
 	const [voicePreset, setVoicePreset] = useState<VoiceBookingResult | null>(

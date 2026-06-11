@@ -1,10 +1,10 @@
 "use client";
 
 import { Loader2, Mic, MicOff, X } from "lucide-react";
-import type { VoiceBookingResult } from "@/app/api/voice-booking/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useVoiceBooking } from "@/hooks/use-voice-booking";
+import type { VoiceBookingResult } from "@/lib/types/ai";
 import { cn } from "@/lib/utils/cn";
 
 interface VoiceBookingButtonProps {

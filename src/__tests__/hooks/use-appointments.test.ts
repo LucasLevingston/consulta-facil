@@ -72,6 +72,17 @@ describe("useProfessionalAppointments", () => {
 		expect(result.current.fetchStatus).toBe("idle");
 	});
 
+	it("idle quando professionalProfileId ainda não carregou (perfil em loading)", () => {
+		// Simula o estado inicial no appointments/page.tsx:
+		// professionalProfileId = professionalProfileQuery.data?.id ?? ""
+		// enquanto /professionals/me carrega, o id fica "" e useProfessionalAppointments não deve disparar
+		const { result } = renderHook(() => useProfessionalAppointments(""), {
+			wrapper: wrapper(),
+		});
+		expect(result.current.fetchStatus).toBe("idle");
+		expect(mockByProfessional).not.toHaveBeenCalled();
+	});
+
 	it("fetches when professionalId provided", async () => {
 		mockByProfessional.mockResolvedValueOnce(page as never);
 		const { result } = renderHook(() => useProfessionalAppointments("prof-1"), {

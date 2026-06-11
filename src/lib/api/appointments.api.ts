@@ -160,4 +160,17 @@ export const appointmentsApi = {
 		);
 		return response.data;
 	},
+
+	getAll: async (
+		page = 0,
+		size = 100,
+	): Promise<ApiPage<AppointmentResponse>> => {
+		const response = await api.get<ApiPage<AppointmentResponse>>(
+			"/appointments",
+			{
+				params: { page, size },
+			},
+		);
+		return response.data;
+	},
 };

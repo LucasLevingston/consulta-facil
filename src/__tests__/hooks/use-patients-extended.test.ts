@@ -61,6 +61,33 @@ describe("useProfessionalPatients", () => {
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(result.current.data).toHaveLength(1);
 	});
+
+	it("404 → isError=true, data=undefined (userId sem ProfessionalProfile no backend)", async () => {
+		const err404 = Object.assign(new Error("Not Found"), {
+			response: { status: 404 },
+		});
+		mockGetProfessionalPatients.mockRejectedValueOnce(err404);
+
+		const { result } = renderHook(
+			() => useProfessionalPatients("user-sem-perfil", { page: 0, size: 10 }),
+			{ wrapper: wrapper() },
+		);
+		await waitFor(() => expect(result.current.isError).toBe(true));
+
+		expect(result.current.data).toBeUndefined();
+		expect(result.current.error).toBeTruthy();
+	});
+
+	it("não dispara quando professionalId não fornecido (enabled guard)", () => {
+		const { result } = renderHook(
+			() => useProfessionalPatients("", { page: 0 }),
+			{
+				wrapper: wrapper(),
+			},
+		);
+		expect(result.current.fetchStatus).toBe("idle");
+		expect(mockGetProfessionalPatients).not.toHaveBeenCalled();
+	});
 });
 
 describe("useMedicalRecords", () => {

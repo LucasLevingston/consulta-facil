@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
+import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
@@ -14,15 +15,16 @@ import { useUserStore } from "@/store/useUserStore";
 
 export default function AppointmentsPage() {
 	const { user } = useUserStore();
-	const { can } = usePermission();
+	const { role } = usePermission();
 	const userId = user?.id ?? "";
-	const isProfessional = can("appointment:view:professional");
+	const isProfessional = role === "PROFESSIONAL";
+	const isAdmin = role === "ADMIN";
 
 	const professionalProfileQuery = useMyProfessionalProfile(isProfessional);
 	const professionalProfileId = professionalProfileQuery.data?.id ?? "";
 
 	const patientQuery = usePatientAppointments(
-		isProfessional ? "" : userId,
+		!isProfessional && !isAdmin ? userId : "",
 		0,
 		100,
 	);
@@ -31,19 +33,30 @@ export default function AppointmentsPage() {
 		0,
 		100,
 	);
+	const adminQuery = useAllAdminAppointments(0, 100);
 
-	const query = isProfessional ? professionalQuery : patientQuery;
+	const query = isAdmin
+		? adminQuery
+		: isProfessional
+			? professionalQuery
+			: patientQuery;
 	const appointments = query.data?.content ?? [];
 
-	const isLoading = isProfessional
-		? professionalProfileQuery.isLoading || professionalQuery.isLoading
-		: patientQuery.isLoading;
+	const isLoading = isAdmin
+		? adminQuery.isLoading
+		: isProfessional
+			? professionalProfileQuery.isLoading || professionalQuery.isLoading
+			: patientQuery.isLoading;
 
 	return (
 		<div className="space-y-6">
 			<PageHeader
-				title="Minhas Consultas"
-				description="Acompanhe e gerencie seus agendamentos."
+				title={isAdmin ? "Consultas" : "Minhas Consultas"}
+				description={
+					isAdmin
+						? "Todas as consultas do sistema."
+						: "Acompanhe e gerencie seus agendamentos."
+				}
 				icon={<CalendarDays className="h-6 w-6" />}
 				count={query.data?.totalElements}
 				countLabel="consulta"

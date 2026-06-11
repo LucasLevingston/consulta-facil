@@ -1,5 +1,6 @@
 "use client";
 
+import { RiMoneyCnyBoxFill } from "@remixicon/react";
 import {
 	BadgeCheck,
 	Building2,
@@ -51,9 +52,18 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Recepção", url: "/dashboard/reception", icon: MonitorCheck },
 	],
 	ADMIN: [
-		{ title: "Usuários", url: "/dashboard/users", icon: UserRound },
-		{ title: "Pagamentos", url: "/dashboard/payments", icon: UserRound },
-		{ title: "Admin", url: "/admin", icon: BadgeCheck },
+		{ title: "Usuários", url: "/dashboard/admin/users", icon: UserRound },
+		{
+			title: "Solicitações",
+			url: "/dashboard/admin/requests",
+			icon: UserRound,
+		},
+		{
+			title: "Pagamentos",
+			url: "/dashboard/admin/payments",
+			icon: RiMoneyCnyBoxFill,
+		},
+		{ title: "Uso", url: "/dashboard/admin/usage", icon: BadgeCheck },
 	],
 };
 

@@ -2,13 +2,15 @@
 
 import { Bot, Send, ShieldAlert, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { AnamnesisMessage } from "@/app/api/anamnesis-ai/route";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { api } from "@/config/api";
+import { env } from "@/env";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
+import type { AnamnesisMessage } from "@/lib/types/ai";
 
 type ChatMessage = AnamnesisMessage & { id: string };
 
@@ -54,14 +56,21 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch("/api/anamnesis-ai", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					messages: toApiMessages(nextMessages),
-					mode: "chat",
-				}),
-			});
+			const token =
+				typeof window !== "undefined"
+					? localStorage.getItem("authToken")
+					: null;
+			const response = await fetch(
+				`${env.NEXT_PUBLIC_API_URL}/ai/anamnesis/chat`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						...(token ? { Authorization: `Bearer ${token}` } : {}),
+					},
+					body: JSON.stringify({ messages: toApiMessages(nextMessages) }),
+				},
+			);
 
 			const reader = response.body?.getReader();
 			if (!reader) return;
@@ -90,15 +99,9 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 	async function handleSave() {
 		setIsSaving(true);
 		try {
-			const response = await fetch("/api/anamnesis-ai", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					messages: toApiMessages(messages),
-					mode: "extract",
-				}),
+			const { data } = await api.post<AnamnesisInput>("/ai/anamnesis/extract", {
+				messages: toApiMessages(messages),
 			});
-			const data = (await response.json()) as AnamnesisInput;
 			await onSave(data);
 			onClose();
 		} finally {

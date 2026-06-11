@@ -5,7 +5,6 @@ import { ptBR } from "date-fns/locale";
 import { CreditCard, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useDeferredValue } from "react";
-
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -18,11 +17,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
+import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentPaymentStatus } from "@/lib/schemas/appointment/appointment-payment-status.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
-
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 
 const PAYMENT_LABELS: Record<AppointmentPaymentStatus, string> = {
@@ -45,6 +45,10 @@ const PAYMENT_VARIANTS: Record<
 };
 
 function PaymentsContent() {
+	const { role } = usePermission();
+	const isAdmin = role === "ADMIN";
+	const isProfessional = role === "PROFESSIONAL";
+
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
@@ -68,21 +72,28 @@ function PaymentsContent() {
 		router.push(`${pathname}?${params.toString()}`, { scroll: false });
 	}
 
-	const { data: profile } = useMyProfessionalProfile(true);
+	const { data: profile } = useMyProfessionalProfile(isProfessional);
 	const professionalId = profile?.id ?? "";
 
-	const { data, isLoading, error } = useProfessionalAppointments(
-		professionalId,
+	const adminQuery = useAllAdminAppointments(page, PAGE_SIZE);
+	const professionalQuery = useProfessionalAppointments(
+		isProfessional ? professionalId : "",
 		page,
 		PAGE_SIZE,
 	);
+
+	const { data, isLoading, error } = isAdmin ? adminQuery : professionalQuery;
 
 	const allAppointments = data?.content ?? [];
 
 	const appointments = allAppointments.filter((a) => {
 		const matchesSearch =
 			!debouncedSearch ||
-			a.patientName?.toLowerCase().includes(debouncedSearch.toLowerCase());
+			a.patientName?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+			(isAdmin &&
+				a.professionalName
+					?.toLowerCase()
+					.includes(debouncedSearch.toLowerCase()));
 		const matchesStatus = !statusFilter || a.paymentStatus === statusFilter;
 		return matchesSearch && matchesStatus;
 	});
@@ -98,7 +109,11 @@ function PaymentsContent() {
 		<div className="space-y-6">
 			<PageHeader
 				title="Pagamentos"
-				description="Histórico de pagamentos das suas consultas."
+				description={
+					isAdmin
+						? "Histórico de pagamentos de toda a plataforma."
+						: "Histórico de pagamentos das suas consultas."
+				}
 				icon={<CreditCard className="h-6 w-6" />}
 				count={totalElements}
 				countLabel="consulta"
@@ -106,7 +121,9 @@ function PaymentsContent() {
 
 			{totalPaid > 0 && (
 				<div className="rounded-2xl border border-border bg-card p-4">
-					<p className="text-sm text-muted-foreground">Total recebido</p>
+					<p className="text-sm text-muted-foreground">
+						{isAdmin ? "Total recebido na plataforma" : "Total recebido"}
+					</p>
 					<p className="text-2xl font-bold text-foreground">
 						{totalPaid.toLocaleString("pt-BR", {
 							style: "currency",
@@ -116,12 +133,16 @@ function PaymentsContent() {
 				</div>
 			)}
 
-			<QueryBoundary isLoading={isLoading || !professionalId} error={error}>
+			<QueryBoundary isLoading={isLoading} error={error}>
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center">
 					<div className="relative flex-1">
 						<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 						<Input
-							placeholder="Buscar por paciente..."
+							placeholder={
+								isAdmin
+									? "Buscar por paciente ou profissional..."
+									: "Buscar por paciente..."
+							}
 							value={search}
 							onChange={(e) => updateParams({ q: e.target.value || null })}
 							className="pl-9 rounded-xl"
@@ -167,13 +188,16 @@ function PaymentsContent() {
 											<p className="truncate font-semibold text-foreground">
 												{a.patientName ?? "Paciente"}
 											</p>
+											{isAdmin && a.professionalName && (
+												<p className="truncate text-xs text-muted-foreground mt-0.5">
+													{a.professionalName}
+												</p>
+											)}
 											<p className="mt-0.5 text-xs text-muted-foreground">
 												{format(
 													new Date(a.scheduledAt),
 													"dd/MM/yyyy 'às' HH:mm",
-													{
-														locale: ptBR,
-													},
+													{ locale: ptBR },
 												)}
 											</p>
 										</div>

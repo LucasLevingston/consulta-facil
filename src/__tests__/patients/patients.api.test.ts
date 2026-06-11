@@ -143,5 +143,78 @@ describe("patientsApi", () => {
 				params: { page: 1, size: 10, search: "Maria", sort: "name" },
 			});
 		});
+
+		it("retorna página vazia quando nenhum paciente encontrado", async () => {
+			const emptyPage = {
+				content: [],
+				totalElements: 0,
+				totalPages: 0,
+				number: 0,
+			};
+			mockGet.mockResolvedValueOnce({ data: emptyPage });
+
+			const result = await patientsApi.getProfessionalPatients("d-1", {
+				search: "NaoExiste",
+			});
+
+			expect(result.content).toHaveLength(0);
+			expect(result.totalElements).toBe(0);
+		});
+
+		it("propaga erro 404 quando o userId do profissional não existe no backend", async () => {
+			const error = Object.assign(new Error("Not Found"), {
+				response: { status: 404 },
+			});
+			mockGet.mockRejectedValueOnce(error);
+
+			await expect(
+				patientsApi.getProfessionalPatients("id-inexistente", {
+					page: 0,
+					size: 10,
+				}),
+			).rejects.toThrow("Not Found");
+			expect(mockGet).toHaveBeenCalledWith(
+				"/patients/professional/id-inexistente",
+				expect.anything(),
+			);
+		});
+
+		it("envia o ID passado diretamente no path da URL", async () => {
+			mockGet.mockResolvedValueOnce({ data: patientSummaryPage });
+
+			await patientsApi.getProfessionalPatients("user-abc-xyz", {
+				page: 0,
+				size: 10,
+			});
+
+			expect(mockGet).toHaveBeenCalledWith(
+				"/patients/professional/user-abc-xyz",
+				expect.anything(),
+			);
+		});
+	});
+
+	describe("getMyProfile — propagação de erro", () => {
+		it("propaga erro 401 quando não autenticado", async () => {
+			const error = Object.assign(new Error("Unauthorized"), {
+				response: { status: 401 },
+			});
+			mockGet.mockRejectedValueOnce(error);
+
+			await expect(patientsApi.getMyProfile()).rejects.toThrow("Unauthorized");
+		});
+	});
+
+	describe("getMedicalRecords — propagação de erro", () => {
+		it("propaga erro 404 quando prontuário não encontrado", async () => {
+			const error = Object.assign(new Error("Not Found"), {
+				response: { status: 404 },
+			});
+			mockGet.mockRejectedValueOnce(error);
+
+			await expect(patientsApi.getMedicalRecords("u-999")).rejects.toThrow(
+				"Not Found",
+			);
+		});
 	});
 });

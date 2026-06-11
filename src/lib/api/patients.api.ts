@@ -65,4 +65,13 @@ export const patientsApi = {
 		);
 		return response.data;
 	},
+
+	getAll: async (
+		params: ProfessionalPatientsParams,
+	): Promise<ApiPage<PatientSummary>> => {
+		const response = await api.get<ApiPage<PatientSummary>>("/patients", {
+			params,
+		});
+		return response.data;
+	},
 };

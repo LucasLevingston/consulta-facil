@@ -20,7 +20,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useAllAdminPatients } from "@/hooks/api/patients/use-all-admin-patients";
 import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
+import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -30,7 +32,9 @@ type SortOption = "name" | "recent";
 
 function PatientsContent() {
 	const { user } = useUserStore();
-	const professionalId = user?.id ?? "";
+	const { role } = usePermission();
+	const isAdmin = role === "ADMIN";
+	const professionalId = role === "PROFESSIONAL" ? (user?.id ?? "") : "";
 
 	const router = useRouter();
 	const pathname = usePathname();
@@ -55,12 +59,15 @@ function PatientsContent() {
 		router.push(`${pathname}?${params.toString()}`, { scroll: false });
 	}
 
-	const { data, isLoading, error } = useProfessionalPatients(professionalId, {
-		page,
-		size: PAGE_SIZE,
-		search: debouncedSearch,
-		sort,
-	});
+	const queryParams = { page, size: PAGE_SIZE, search: debouncedSearch, sort };
+
+	const adminQuery = useAllAdminPatients(queryParams);
+	const professionalQuery = useProfessionalPatients(
+		professionalId,
+		queryParams,
+	);
+
+	const { data, isLoading, error } = isAdmin ? adminQuery : professionalQuery;
 
 	const patients = data?.content ?? [];
 	const totalPages = data?.totalPages ?? 0;
@@ -70,7 +77,11 @@ function PatientsContent() {
 		<div className="space-y-6">
 			<PageHeader
 				title="Pacientes"
-				description="Lista de pacientes com consultas agendadas com você."
+				description={
+					isAdmin
+						? "Todos os pacientes do sistema."
+						: "Lista de pacientes com consultas agendadas com você."
+				}
 				icon={<UserRound className="h-6 w-6" />}
 				count={totalElements}
 				countLabel="paciente"
