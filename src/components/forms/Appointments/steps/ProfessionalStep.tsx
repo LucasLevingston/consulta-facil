@@ -27,6 +27,7 @@ import {
 import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { cn } from "@/lib/utils/cn";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface ProfessionalStepProps {
 	control: Control<AppointmentFormValues>;
@@ -110,7 +111,8 @@ export function ProfessionalStep({
 														{selectedProfessional.name}
 													</p>
 													<p className="text-xs text-muted-foreground">
-														{selectedProfessional.specialty}
+														{SPECIALTY_LABELS[selectedProfessional.specialty] ??
+															selectedProfessional.specialty}
 													</p>
 												</div>
 											</div>
@@ -156,7 +158,8 @@ export function ProfessionalStep({
 																		{doctor.name}
 																	</p>
 																	<p className="text-xs text-muted-foreground">
-																		{doctor.specialty}
+																		{SPECIALTY_LABELS[doctor.specialty] ??
+																			doctor.specialty}
 																	</p>
 																</div>
 															</div>
@@ -187,7 +190,8 @@ export function ProfessionalStep({
 					<div className="flex-1 min-w-0">
 						<p className="text-sm font-medium">{selectedProfessional.name}</p>
 						<p className="text-xs text-muted-foreground">
-							{selectedProfessional.specialty}
+							{SPECIALTY_LABELS[selectedProfessional.specialty] ??
+								selectedProfessional.specialty}
 						</p>
 					</div>
 					{!professionalIdParam && (

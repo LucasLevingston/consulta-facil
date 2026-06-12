@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useVoiceBooking } from "@/hooks/use-voice-booking";
 import type { VoiceBookingResult } from "@/lib/types/ai";
 import { cn } from "@/lib/utils/cn";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface VoiceBookingButtonProps {
 	onResult: (result: VoiceBookingResult) => void;
@@ -39,7 +40,7 @@ export function VoiceBookingButton({
 				<div className="flex flex-wrap gap-1.5">
 					{result.specialty && (
 						<Badge variant="secondary" className="text-xs">
-							{result.specialty}
+							{SPECIALTY_LABELS[result.specialty] ?? result.specialty}
 						</Badge>
 					)}
 					{result.date && (

@@ -1,9 +1,18 @@
 import { api } from "@/config/api";
 import type { CreateExamRequestInput } from "@/lib/schemas/examRequest/create-exam-request.schema";
 import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+import type { ExamRequestStatus } from "@/lib/schemas/examRequest/exam-request-status.schema";
 import type { ReviewExamRequestInput } from "@/lib/schemas/examRequest/review-exam-request.schema";
 
 export const examRequestApi = {
+	getMy: async (status?: ExamRequestStatus): Promise<ExamRequestResponse[]> => {
+		const params = status ? { status } : {};
+		const response = await api.get<ExamRequestResponse[]>("/exams/my", {
+			params,
+		});
+		return response.data;
+	},
+
 	getByAppointment: async (
 		appointmentId: string,
 	): Promise<ExamRequestResponse[]> => {

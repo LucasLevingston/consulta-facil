@@ -31,12 +31,17 @@ import {
 	createExamRequestSchema,
 } from "@/lib/schemas/examRequest/create-exam-request.schema";
 import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+import {
+	EXAM_TYPE_LABELS,
+	EXAM_TYPE_OPTIONS,
+} from "@/utils/constants/exam-types";
 
 const STATUS_CONFIG: Record<
 	ExamRequestResponse["status"],
 	{ label: string; variant: "default" | "secondary" | "outline" }
 > = {
 	PENDING: { label: "Pendente", variant: "secondary" },
+	SCHEDULED: { label: "Agendado", variant: "secondary" },
 	UPLOADED: { label: "Enviado", variant: "default" },
 	REVIEWED: { label: "Analisado", variant: "outline" },
 };
@@ -96,7 +101,9 @@ function ExamCard({
 				<div className="flex items-center gap-2">
 					<FlaskConical className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
 					<div>
-						<p className="text-sm font-medium">{exam.examName}</p>
+						<p className="text-sm font-medium">
+							{EXAM_TYPE_LABELS[exam.examName] ?? exam.examName}
+						</p>
 						{exam.instructions && (
 							<p className="text-xs text-muted-foreground mt-0.5">
 								{exam.instructions}
@@ -198,7 +205,7 @@ function RequestExamForm({ appointmentId }: { appointmentId: string }) {
 
 	const form = useForm<CreateExamRequestInput>({
 		resolver: zodResolver(createExamRequestSchema),
-		defaultValues: { examName: "", instructions: "" },
+		defaultValues: { instructions: "" },
 	});
 
 	async function onSubmit(values: CreateExamRequestInput) {
@@ -231,10 +238,11 @@ function RequestExamForm({ appointmentId }: { appointmentId: string }) {
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
 				<CustomFormField
 					form={form}
-					fieldType={FormFieldType.INPUT}
+					fieldType={FormFieldType.SELECT}
 					name="examName"
 					label="Nome do exame"
-					placeholder="Ex: Hemograma completo"
+					placeholder="Selecione o exame"
+					selectOptions={EXAM_TYPE_OPTIONS}
 				/>
 				<CustomFormField
 					form={form}

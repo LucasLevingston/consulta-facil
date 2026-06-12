@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface AppointmentRowProps {
 	appointment: AppointmentResponse;
@@ -47,7 +48,7 @@ export function AppointmentRow({
 			<div className="flex items-center gap-2">
 				{!isProfessional && appointment.specialty && (
 					<Badge variant="outline" className="hidden text-xs sm:inline-flex">
-						{appointment.specialty}
+						{SPECIALTY_LABELS[appointment.specialty] ?? appointment.specialty}
 					</Badge>
 				)}
 				<StatusBadge status={appointment.status} />

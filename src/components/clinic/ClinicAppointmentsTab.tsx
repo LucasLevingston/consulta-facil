@@ -20,6 +20,7 @@ import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema
 import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
 import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";
 import { ALL } from "@/utils/constants/filter-sentinels";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface Props {
 	clinic: ClinicResponse;
@@ -94,7 +95,9 @@ export function ClinicAppointmentsTab({
 									key={m.professionalProfileId}
 									value={m.professionalProfileId}
 								>
-									{m.professionalName ?? m.specialty}
+									{m.professionalName ??
+										SPECIALTY_LABELS[m.specialty] ??
+										m.specialty}
 								</SelectItem>
 							))}
 						</SelectContent>
@@ -151,7 +154,10 @@ export function ClinicAppointmentsTab({
 										</Badge>
 									</div>
 									<p className="mt-0.5 text-xs text-muted-foreground">
-										{appt.professionalName ?? "—"} · {appt.specialty ?? "—"}
+										{appt.professionalName ?? "—"} ·{" "}
+										{appt.specialty
+											? (SPECIALTY_LABELS[appt.specialty] ?? appt.specialty)
+											: "—"}
 									</p>
 								</div>
 								<div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">

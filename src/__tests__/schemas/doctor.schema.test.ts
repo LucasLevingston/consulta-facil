@@ -4,8 +4,8 @@ import { createDoctorSchema } from "@/lib/schemas/doctor/create-professional.sch
 
 describe("createDoctorSchema", () => {
 	const valid = {
-		profession: "Médico",
-		specialty: "Cardiologia",
+		profession: "MEDICO",
+		specialty: "CARDIOLOGIA",
 		licenseNumber: "CRM-SP-12345",
 	};
 

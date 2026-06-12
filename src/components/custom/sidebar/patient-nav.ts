@@ -1,4 +1,9 @@
-import { CalendarClock, CalendarDays, CalendarPlus } from "lucide-react";
+import {
+	CalendarClock,
+	CalendarDays,
+	CalendarPlus,
+	FlaskConical,
+} from "lucide-react";
 
 export const patientNav = [
 	{
@@ -19,6 +24,12 @@ export const patientNav = [
 				url: "/dashboard/procedure-requests",
 				icon: CalendarClock,
 				tooltip: "Procedimentos solicitados pelo seu profissional",
+			},
+			{
+				title: "Exames",
+				url: "/dashboard/exams",
+				icon: FlaskConical,
+				tooltip: "Exames solicitados pelos seus profissionais",
 			},
 		],
 	},

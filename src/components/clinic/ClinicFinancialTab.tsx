@@ -20,6 +20,7 @@ import { appointmentsApi } from "@/lib/api/appointments.api";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface Props {
 	clinic: ClinicResponse;
@@ -170,7 +171,7 @@ export function ClinicFinancialTab({ clinic }: Props) {
 										</div>
 									</div>
 									<p className="text-xs text-muted-foreground">
-										{member.specialty}
+										{SPECIALTY_LABELS[member.specialty] ?? member.specialty}
 									</p>
 								</div>
 							</div>

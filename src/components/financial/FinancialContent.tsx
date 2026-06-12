@@ -13,6 +13,7 @@ import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { formatBRL } from "@/utils/format-brl";
 import { MonthBar } from "./MonthBar";
 import { SummaryCard } from "./SummaryCard";
@@ -181,7 +182,7 @@ export function FinancialContent({
 												variant="secondary"
 												className="hidden text-xs sm:inline-flex"
 											>
-												{a.specialty}
+												{SPECIALTY_LABELS[a.specialty] ?? a.specialty}
 											</Badge>
 										)}
 										<span className="font-semibold text-green-600 text-sm">

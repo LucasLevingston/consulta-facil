@@ -16,8 +16,9 @@ import { Form } from "@/components/ui/form";
 import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
 import {
 	PROFESSION_SPECIALTIES,
-	professions,
+	SPECIALTY_LABELS,
 } from "@/utils/constants/profession-specialties";
+import { PROFESSIONAL_TYPE_OPTIONS } from "@/utils/constants/professional-types";
 
 const becomeProfessionalSchema = z.object({
 	profession: z.string().min(1, "Selecione uma profissão"),
@@ -67,15 +68,17 @@ export function BecomeProfessionalForm() {
 	}
 
 	const licenseHint =
-		selectedProfession === "Médico"
+		selectedProfession === "MEDICO"
 			? "Ex: CRM/SP 123456"
-			: selectedProfession === "Nutricionista"
+			: selectedProfession === "NUTRICIONISTA"
 				? "Ex: CRN/SP 1234"
-				: selectedProfession === "Fisioterapeuta"
+				: selectedProfession === "FISIOTERAPEUTA"
 					? "Ex: CREFITO/SP 12345"
-					: selectedProfession === "Psicólogo"
+					: selectedProfession === "PSICOLOGO"
 						? "Ex: CRP/SP 123456"
-						: "Ex: CRM/CRN/CRP/CREFITO 123456";
+						: selectedProfession === "DENTISTA"
+							? "Ex: CRO/SP 123456"
+							: "Ex: CRM/CRN/CRP/CREFITO 123456";
 
 	return (
 		<Card>
@@ -94,7 +97,7 @@ export function BecomeProfessionalForm() {
 							fieldType={FormFieldType.SELECT}
 							label="Profissão"
 							placeholder="Selecione sua profissão"
-							selectOptions={professions.map((p) => ({ value: p, label: p }))}
+							selectOptions={PROFESSIONAL_TYPE_OPTIONS}
 						/>
 
 						<CustomFormField
@@ -109,7 +112,7 @@ export function BecomeProfessionalForm() {
 							}
 							selectOptions={availableSpecialties.map((s) => ({
 								value: s,
-								label: s,
+								label: SPECIALTY_LABELS[s] ?? s,
 							}))}
 							disabled={!selectedProfession}
 						/>

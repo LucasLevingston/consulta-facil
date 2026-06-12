@@ -5,6 +5,7 @@ import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -55,7 +56,9 @@ export default function DoctorsMapInner({
 					<Popup>
 						<div className="text-sm space-y-1">
 							<p className="font-semibold">{doctor.name}</p>
-							<p className="text-muted-foreground">{doctor.specialty}</p>
+							<p className="text-muted-foreground">
+								{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
+							</p>
 							{doctor.clinicName && <p>{doctor.clinicName}</p>}
 							{doctor.city && (
 								<p className="text-xs text-muted-foreground">

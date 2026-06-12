@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function PatientAppointmentHistory({
 	appointments,
@@ -43,7 +44,7 @@ export function PatientAppointmentHistory({
 									</p>
 									{appt.specialty && (
 										<Badge variant="outline" className="mt-1 text-xs">
-											{appt.specialty}
+											{SPECIALTY_LABELS[appt.specialty] ?? appt.specialty}
 										</Badge>
 									)}
 								</div>

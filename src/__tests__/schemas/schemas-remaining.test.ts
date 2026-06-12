@@ -400,7 +400,9 @@ describe("scheduleProcedureRequestSchema", () => {
 
 describe("createExamRequestSchema — examName obrigatório", () => {
 	it("aceita examName válido", () => {
-		const result = createExamRequestSchema.safeParse({ examName: "Hemograma" });
+		const result = createExamRequestSchema.safeParse({
+			examName: "HEMOGRAMA_COMPLETO",
+		});
 		expect(result.success).toBe(true);
 	});
 
@@ -415,7 +417,9 @@ describe("createExamRequestSchema — examName obrigatório", () => {
 	});
 
 	it("instructions é opcional", () => {
-		const result = createExamRequestSchema.safeParse({ examName: "ECG" });
+		const result = createExamRequestSchema.safeParse({
+			examName: "ELETROCARDIOGRAMA",
+		});
 		expect(result.success).toBe(true);
 		if (result.success) expect(result.data.instructions).toBeUndefined();
 	});
@@ -423,7 +427,7 @@ describe("createExamRequestSchema — examName obrigatório", () => {
 	it("instructions aceita até 1000 caracteres", () => {
 		const longInstructions = "a".repeat(1000);
 		const result = createExamRequestSchema.safeParse({
-			examName: "ECG",
+			examName: "ELETROCARDIOGRAMA",
 			instructions: longInstructions,
 		});
 		expect(result.success).toBe(true);
@@ -432,7 +436,7 @@ describe("createExamRequestSchema — examName obrigatório", () => {
 	it("rejeita instructions com mais de 1000 caracteres", () => {
 		const tooLong = "a".repeat(1001);
 		const result = createExamRequestSchema.safeParse({
-			examName: "ECG",
+			examName: "ELETROCARDIOGRAMA",
 			instructions: tooLong,
 		});
 		expect(result.success).toBe(false);

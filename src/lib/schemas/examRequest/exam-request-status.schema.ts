@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const examRequestStatusSchema = z.enum([
 	"PENDING",
+	"SCHEDULED",
 	"UPLOADED",
 	"REVIEWED",
 ]);

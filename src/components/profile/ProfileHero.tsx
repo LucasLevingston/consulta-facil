@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface ProfessionalData {
 	specialty?: string | null;
@@ -73,7 +74,10 @@ export function ProfileHero({
 						<div className="flex flex-wrap gap-2 mt-2">
 							<Badge variant="outline" className="gap-1.5">
 								<Shield className="h-3 w-3" />
-								{professionalData.specialty}
+								{professionalData.specialty
+									? (SPECIALTY_LABELS[professionalData.specialty] ??
+										professionalData.specialty)
+									: ""}
 							</Badge>
 							<Badge variant="outline" className="gap-1.5 font-mono text-xs">
 								CRM {professionalData.licenseNumber}

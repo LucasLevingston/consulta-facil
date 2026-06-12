@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useProfessional } from "@/hooks/api/doctors/use-professional";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export default function DoctorProfilePage() {
 	const { id } = useParams<{ id: string }>();
@@ -85,7 +86,7 @@ export default function DoctorProfilePage() {
 						</div>
 						{doctor.specialty && (
 							<Badge variant="secondary" className="text-sm px-3 py-1">
-								{doctor.specialty}
+								{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
 							</Badge>
 						)}
 						{doctor.rating != null && (
@@ -175,7 +176,7 @@ export default function DoctorProfilePage() {
 								className="px-4 py-2 text-sm rounded-full"
 							>
 								<Stethoscope className="h-3.5 w-3.5 mr-1.5" />
-								{doctor.specialty}
+								{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
 							</Badge>
 						) : (
 							<p className="text-sm text-muted-foreground">

@@ -13,6 +13,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
 
 interface ClinicCardProps {
@@ -95,7 +96,7 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 								variant="secondary"
 								className="text-xs"
 							>
-								{m.specialty}
+								{SPECIALTY_LABELS[m.specialty] ?? m.specialty}
 							</Badge>
 						))}
 						{clinic.members.length > 3 && (

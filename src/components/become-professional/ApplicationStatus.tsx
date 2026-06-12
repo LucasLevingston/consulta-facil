@@ -4,6 +4,8 @@ import { Clock, XCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import { PROFESSIONAL_TYPE_LABELS } from "@/utils/constants/professional-types";
 import { BecomeProfessionalForm } from "./BecomeProfessionalForm";
 
 export function ApplicationStatus() {
@@ -33,14 +35,19 @@ export function ApplicationStatus() {
 							<p className="text-xs font-medium text-muted-foreground mb-0.5">
 								Profissão
 							</p>
-							<p className="text-sm font-semibold">{application.profession}</p>
+							<p className="text-sm font-semibold">
+								{PROFESSIONAL_TYPE_LABELS[application.profession] ??
+									application.profession}
+							</p>
 						</div>
 					)}
 					<div>
 						<p className="text-xs font-medium text-muted-foreground mb-0.5">
 							Especialidade
 						</p>
-						<p className="text-sm font-semibold">{application.specialty}</p>
+						<p className="text-sm font-semibold">
+							{SPECIALTY_LABELS[application.specialty] ?? application.specialty}
+						</p>
 					</div>
 				</div>
 				<Button variant="outline" asChild className="mt-2">

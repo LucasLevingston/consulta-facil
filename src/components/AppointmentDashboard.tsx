@@ -12,6 +12,7 @@ import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-
 import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
 
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface AppointmentsDashboardProps {
 	appointments: AppointmentResponse[];
@@ -60,6 +61,11 @@ const AppointmentsDashboard = ({
 					a.patientName?.toLowerCase().includes(q) ||
 					a.professionalName?.toLowerCase().includes(q) ||
 					a.specialty?.toLowerCase().includes(q) ||
+					(a.specialty
+						? (SPECIALTY_LABELS[a.specialty] ?? a.specialty)
+								.toLowerCase()
+								.includes(q)
+						: false) ||
 					a.reason?.toLowerCase().includes(q),
 			);
 		}

@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
 import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function AppointmentCheckInCard({
 	appointment,
@@ -47,7 +48,7 @@ export function AppointmentCheckInCard({
 					</p>
 					{appointment.specialty && (
 						<p className="text-xs text-muted-foreground">
-							{appointment.specialty}
+							{SPECIALTY_LABELS[appointment.specialty] ?? appointment.specialty}
 						</p>
 					)}
 					<p className="text-xs text-muted-foreground mt-0.5">

@@ -14,6 +14,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
 
 interface DoctorCardProps {
@@ -58,7 +59,9 @@ export default function DoctorCard({
 						</CardTitle>
 					</Link>
 					<Badge variant="secondary" className="mt-1.5 text-xs">
-						{doctor.specialty ?? "Especialidade não informada"}
+						{doctor.specialty
+							? (SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty)
+							: "Especialidade não informada"}
 					</Badge>
 				</div>
 			</CardHeader>

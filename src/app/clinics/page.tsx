@@ -34,6 +34,7 @@ import { cn } from "@/lib/utils/cn";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { DAYS, type DayKey } from "@/utils/constants/days-of-week";
 import { ALL } from "@/utils/constants/filter-sentinels";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 
 type ViewMode = "list" | "map";
@@ -376,7 +377,7 @@ export default function ClinicsPage() {
 										<SelectItem value={ALL}>Todas as especialidades</SelectItem>
 										{availableSpecialties.map((s) => (
 											<SelectItem key={s} value={s}>
-												{s}
+												{SPECIALTY_LABELS[s] ?? s}
 											</SelectItem>
 										))}
 									</SelectContent>

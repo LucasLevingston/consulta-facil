@@ -5,6 +5,7 @@ import { Clock, Stethoscope, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function QueueCard({
 	professionalName,
@@ -28,7 +29,9 @@ export function QueueCard({
 					<div>
 						<CardTitle className="text-base">{professionalName}</CardTitle>
 						{specialty && (
-							<p className="text-xs text-muted-foreground">{specialty}</p>
+							<p className="text-xs text-muted-foreground">
+								{SPECIALTY_LABELS[specialty] ?? specialty}
+							</p>
 						)}
 					</div>
 					<Badge variant="secondary" className="ml-auto gap-1 text-xs">

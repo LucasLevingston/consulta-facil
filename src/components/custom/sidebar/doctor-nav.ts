@@ -6,6 +6,7 @@ import {
 	CalendarPlus,
 	Clock,
 	CreditCard,
+	FlaskConical,
 	TrendingUp,
 	UserRound,
 } from "lucide-react";
@@ -50,6 +51,12 @@ export const doctorNav = [
 				url: "/dashboard/procedure-requests",
 				icon: CalendarClock,
 				tooltip: "Solicitações de procedimento para pacientes",
+			},
+			{
+				title: "Exames",
+				url: "/dashboard/exams",
+				icon: FlaskConical,
+				tooltip: "Exames solicitados para seus pacientes",
 			},
 		],
 	},

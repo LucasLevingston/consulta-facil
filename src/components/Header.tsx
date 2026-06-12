@@ -6,6 +6,7 @@ import {
 	Building2,
 	CalendarDays,
 	CalendarPlus,
+	FlaskConical,
 	Home,
 	MonitorCheck,
 	TrendingUp,
@@ -33,6 +34,7 @@ const navByRole: Record<string, NavItem[]> = {
 		{ title: "Dashboard", url: "/dashboard", icon: Home },
 		{ title: "Profissionais", url: "/professionals", icon: Users },
 		{ title: "Clínicas", url: "/clinics", icon: Building2 },
+		{ title: "Laboratórios", url: "/laboratories", icon: FlaskConical },
 	],
 	PROTECTED: [
 		{ title: "Consultas", url: "/dashboard/appointments", icon: CalendarDays },
@@ -41,6 +43,11 @@ const navByRole: Record<string, NavItem[]> = {
 		{
 			title: "Agendar",
 			url: "/dashboard/appointments/create",
+			icon: CalendarPlus,
+		},
+		{
+			title: "Exames",
+			url: "/dashboard/exams",
 			icon: CalendarPlus,
 		},
 	],

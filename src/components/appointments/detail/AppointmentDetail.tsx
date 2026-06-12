@@ -19,7 +19,6 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
-
 import { AbacGuard } from "@/components/AbacGuard";
 import { CustomButton } from "@/components/custom/custom-button";
 import { VideoRoom } from "@/components/custom/VideoRoom";
@@ -45,6 +44,7 @@ import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { useUserStore } from "@/store/useUserStore";
 import { STATUS_CONFIG } from "@/utils/constants/appointment-status-config";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 import { AnamnesisSection } from "./AnamnesisSection";
 import { ProntuarioSection } from "./ProntuarioSection";
@@ -132,7 +132,8 @@ export function AppointmentDetail({
 						<p className="font-semibold">{appointment.professionalName}</p>
 						{appointment.specialty && (
 							<p className="text-sm text-muted-foreground">
-								{appointment.specialty}
+								{SPECIALTY_LABELS[appointment.specialty] ??
+									appointment.specialty}
 							</p>
 						)}
 					</div>

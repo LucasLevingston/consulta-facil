@@ -21,6 +21,7 @@ import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-mem
 import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface Props {
 	clinic: ClinicResponse;
@@ -137,7 +138,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 												{doctor.name}
 											</p>
 											<p className="text-xs text-muted-foreground">
-												{doctor.specialty}
+												{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
 											</p>
 										</div>
 										{sendInvite.isPending && (
@@ -192,7 +193,7 @@ export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
 										)}
 									</div>
 									<p className="text-xs text-muted-foreground">
-										{member.specialty}
+										{SPECIALTY_LABELS[member.specialty] ?? member.specialty}
 									</p>
 								</div>
 

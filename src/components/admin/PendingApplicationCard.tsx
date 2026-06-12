@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useApproveApplication } from "@/hooks/api/doctors/use-approve-application";
 import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application";
 import type { DoctorResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
 	const { mutateAsync: approve, isPending: isApproving } =
@@ -48,7 +49,7 @@ export function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
 				<p className="truncate font-medium text-sm">{doctor.name}</p>
 				<p className="truncate text-xs text-muted-foreground">{doctor.email}</p>
 				<Badge variant="secondary" className="mt-1 text-xs">
-					{doctor.specialty}
+					{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
 				</Badge>
 			</div>
 			<div className="flex shrink-0 gap-2">
