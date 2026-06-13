@@ -1,7 +1,10 @@
 import { api } from "@/config/api";
 import type {
+	CouponResponse,
 	CouponUsageResponse,
 	CouponValidationResult,
+	CreateCouponData,
+	UpdateCouponData,
 } from "@/lib/schemas/billing/coupon.schema";
 
 export const couponApi = {
@@ -50,6 +53,41 @@ export const couponApi = {
 	): Promise<CouponUsageResponse[]> => {
 		const res = await api.get<CouponUsageResponse[]>(
 			`/admin/billing/coupons/${couponId}/usages`,
+		);
+		return res.data;
+	},
+
+	adminListCoupons: async (): Promise<CouponResponse[]> => {
+		const res = await api.get<CouponResponse[]>("/admin/billing/coupons/codes");
+		return res.data;
+	},
+
+	adminCreateCoupon: async (
+		data: CreateCouponData,
+	): Promise<CouponResponse> => {
+		const payload = {
+			...data,
+			maxUsesPerUser: data.maxUsesPerUser ?? 1,
+			expiresAt: data.expiresAt ? `${data.expiresAt}T23:59:59` : undefined,
+		};
+		const res = await api.post<CouponResponse>(
+			"/admin/billing/coupons/codes",
+			payload,
+		);
+		return res.data;
+	},
+
+	adminUpdateCoupon: async (
+		id: string,
+		data: UpdateCouponData,
+	): Promise<CouponResponse> => {
+		const payload = {
+			...data,
+			expiresAt: data.expiresAt ? `${data.expiresAt}T23:59:59` : undefined,
+		};
+		const res = await api.patch<CouponResponse>(
+			`/admin/billing/coupons/codes/${id}`,
+			payload,
 		);
 		return res.data;
 	},
