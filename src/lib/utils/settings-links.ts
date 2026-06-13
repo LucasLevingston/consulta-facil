@@ -4,8 +4,11 @@ import {
 	Clock,
 	CreditCard,
 	Palette,
+	Share2,
 	Stethoscope,
+	Tag,
 	User,
+	Wallet,
 } from "lucide-react";
 
 type NavLink = {
@@ -43,6 +46,24 @@ export const SETTINGS_LINKS: NavLink[] = [
 		label: "Serviços",
 		icon: Stethoscope,
 		roles: ["PROFESSIONAL"],
+	},
+	{
+		href: "/settings/wallet",
+		label: "Carteira",
+		icon: Wallet,
+		roles: ["PATIENT", "PROFESSIONAL"],
+	},
+	{
+		href: "/settings/referrals",
+		label: "Indicações",
+		icon: Share2,
+		roles: ["PATIENT", "PROFESSIONAL"],
+	},
+	{
+		href: "/settings/coupons",
+		label: "Cupons",
+		icon: Tag,
+		roles: ["PATIENT", "PROFESSIONAL"],
 	},
 	{
 		href: "/settings/billing",
