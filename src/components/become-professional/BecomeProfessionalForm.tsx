@@ -14,6 +14,8 @@ import { CustomSubmitButton } from "@/components/custom/forms-components/custom-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
+import { professionalTypeSchema } from "@/lib/schemas/professional/professional-type.schema";
+import { specialtySchema } from "@/lib/schemas/professional/specialty.schema";
 import {
 	PROFESSION_SPECIALTIES,
 	SPECIALTY_LABELS,
@@ -21,8 +23,8 @@ import {
 import { PROFESSIONAL_TYPE_OPTIONS } from "@/utils/constants/professional-types";
 
 const becomeProfessionalSchema = z.object({
-	profession: z.string().min(1, "Selecione uma profissão"),
-	specialty: z.string().min(1, "Selecione uma especialidade"),
+	profession: professionalTypeSchema,
+	specialty: specialtySchema,
 	licenseNumber: z
 		.string()
 		.min(5, "Número de registro deve ter pelo menos 5 caracteres")
@@ -37,7 +39,7 @@ export function BecomeProfessionalForm() {
 
 	const form = useForm<BecomeProfessionalValues>({
 		resolver: zodResolver(becomeProfessionalSchema),
-		defaultValues: { profession: "", specialty: "", licenseNumber: "" },
+		defaultValues: { licenseNumber: "" },
 	});
 
 	const selectedProfession = useWatch({
@@ -50,7 +52,7 @@ export function BecomeProfessionalForm() {
 
 	useEffect(() => {
 		if (selectedProfession) {
-			form.setValue("specialty", "", { shouldValidate: false });
+			form.resetField("specialty");
 		}
 	}, [selectedProfession, form]);
 
