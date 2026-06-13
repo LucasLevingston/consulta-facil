@@ -1,12 +1,15 @@
 "use client";
 
 import {
+	CalendarClock,
 	CheckCircle,
 	FileText,
 	FlaskConical,
 	MapPin,
 	Paperclip,
+	Phone,
 	Upload,
+	X,
 } from "lucide-react";
 import Link from "next/link";
 import { useDeferredValue, useRef, useState } from "react";
@@ -18,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useCancelExamScheduling } from "@/hooks/api/exam-labs/use-cancel-exam-scheduling";
 import { useMyExams } from "@/hooks/api/exam-requests/use-my-exams";
 import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
 import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
@@ -56,6 +60,8 @@ function ExamListItem({
 }) {
 	const { mutateAsync: upload } = useUploadExamResult();
 	const { mutateAsync: review } = useReviewExam();
+	const { mutateAsync: cancelScheduling, isPending: cancelling } =
+		useCancelExamScheduling();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [uploading, setUploading] = useState(false);
 	const [reviewNotes, setReviewNotes] = useState("");
@@ -74,6 +80,16 @@ function ExamListItem({
 			toast.error("Erro ao enviar arquivo.");
 		} finally {
 			setUploading(false);
+		}
+	}
+
+	async function handleCancelScheduling() {
+		if (!exam.schedulingId) return;
+		try {
+			await cancelScheduling(exam.schedulingId);
+			toast.success("Agendamento cancelado.");
+		} catch {
+			toast.error("Erro ao cancelar agendamento.");
 		}
 	}
 
@@ -141,33 +157,78 @@ function ExamListItem({
 					</div>
 				)}
 
-				{isPatient && exam.status === "PENDING" && (
-					<div className="flex flex-wrap gap-2">
-						<Link href={`/laboratories?examId=${exam.id}`}>
-							<Button size="sm" variant="default" className="gap-2">
-								<MapPin className="h-3.5 w-3.5" />
-								Escolher laboratório
-							</Button>
-						</Link>
-						<input
-							ref={fileInputRef}
-							type="file"
-							accept=".pdf,.jpg,.jpeg,.png"
-							className="hidden"
-							onChange={handleUpload}
-						/>
-						<Button
-							size="sm"
-							variant="outline"
-							className="gap-2"
-							disabled={uploading}
-							onClick={() => fileInputRef.current?.click()}
-						>
-							<Upload className="h-3.5 w-3.5" />
-							{uploading ? "Enviando..." : "Enviar resultado"}
-						</Button>
+				{isPatient && exam.status === "SCHEDULED" && exam.labName && (
+					<div className="rounded-lg bg-muted/50 p-3 space-y-1.5">
+						<p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+							<CalendarClock className="h-3 w-3" />
+							Agendamento
+						</p>
+						{exam.scheduledAt && (
+							<p className="text-sm">
+								{new Date(exam.scheduledAt).toLocaleString("pt-BR", {
+									dateStyle: "long",
+									timeStyle: "short",
+								})}
+							</p>
+						)}
+						<p className="text-sm font-medium">{exam.labName}</p>
+						{exam.labAddress && (
+							<p className="text-xs text-muted-foreground flex items-center gap-1">
+								<MapPin className="h-3 w-3 shrink-0" />
+								{exam.labAddress}
+							</p>
+						)}
+						{exam.labPhone && (
+							<p className="text-xs text-muted-foreground flex items-center gap-1">
+								<Phone className="h-3 w-3 shrink-0" />
+								{exam.labPhone}
+							</p>
+						)}
 					</div>
 				)}
+
+				{isPatient &&
+					(exam.status === "PENDING" || exam.status === "SCHEDULED") && (
+						<div className="flex flex-wrap gap-2">
+							{exam.status === "PENDING" && (
+								<Link href={`/laboratories?examId=${exam.id}`}>
+									<Button size="sm" variant="default" className="gap-2">
+										<MapPin className="h-3.5 w-3.5" />
+										Escolher laboratório
+									</Button>
+								</Link>
+							)}
+							{exam.status === "SCHEDULED" && exam.schedulingId && (
+								<Button
+									size="sm"
+									variant="destructive"
+									className="gap-2"
+									disabled={cancelling}
+									onClick={handleCancelScheduling}
+								>
+									<X className="h-3.5 w-3.5" />
+									{cancelling ? "Cancelando..." : "Cancelar agendamento"}
+								</Button>
+							)}
+							<input
+								ref={fileInputRef}
+								type="file"
+								accept=".pdf,.jpg,.jpeg,.png"
+								className="hidden"
+								onChange={handleUpload}
+							/>
+							<Button
+								size="sm"
+								variant="outline"
+								className="gap-2"
+								disabled={uploading}
+								onClick={() => fileInputRef.current?.click()}
+							>
+								<Upload className="h-3.5 w-3.5" />
+								{uploading ? "Enviando..." : "Enviar resultado"}
+							</Button>
+						</div>
+					)}
 
 				{isProfessional && exam.status === "UPLOADED" && !showReviewForm && (
 					<Button

@@ -16,6 +16,11 @@ export const examRequestResponseSchema = z.object({
 	professionalNotes: z.string().nullable().optional(),
 	createdAt: z.string().nullable().optional(),
 	updatedAt: z.string().nullable().optional(),
+	schedulingId: z.string().nullable().optional(),
+	scheduledAt: z.string().nullable().optional(),
+	labName: z.string().nullable().optional(),
+	labAddress: z.string().nullable().optional(),
+	labPhone: z.string().nullable().optional(),
 });
 
 export type ExamRequestResponse = z.infer<typeof examRequestResponseSchema>;
