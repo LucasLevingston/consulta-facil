@@ -26,6 +26,9 @@ export const professionalResponseSchema = z.object({
 	consultationPrice: z.number().nullable().optional(),
 	acceptedPaymentMethods: z.array(paymentMethodSchema).optional().default([]),
 	paymentTiming: paymentTimingSchema.nullable().optional(),
+	instagramUrl: z.string().nullable().optional(),
+	linkedinUrl: z.string().nullable().optional(),
+	websiteUrl: z.string().nullable().optional(),
 });
 
 export type ProfessionalResponse = z.infer<typeof professionalResponseSchema>;

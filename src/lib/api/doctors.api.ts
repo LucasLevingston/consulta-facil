@@ -1,7 +1,9 @@
 import { api } from "@/config/api";
 import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
+import type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { UpdateSocialLinksInput } from "@/lib/schemas/doctor/update-social-links.schema";
 
 export const professionalsApi = {
 	getAll: async (
@@ -126,6 +128,23 @@ export const professionalsApi = {
 					profession: profession || undefined,
 				},
 			},
+		);
+		return response.data;
+	},
+
+	getRatings: async (professionalId: string): Promise<ProfessionalRating> => {
+		const response = await api.get<ProfessionalRating>(
+			`/professionals/${professionalId}/ratings`,
+		);
+		return response.data;
+	},
+
+	updateSocialLinks: async (
+		data: UpdateSocialLinksInput,
+	): Promise<ProfessionalResponse> => {
+		const response = await api.patch<ProfessionalResponse>(
+			"/professionals/me/social-links",
+			data,
 		);
 		return response.data;
 	},

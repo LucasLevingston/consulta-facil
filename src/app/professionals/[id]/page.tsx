@@ -2,19 +2,23 @@
 
 import {
 	Calendar,
+	ExternalLink,
 	FileCheck,
+	Globe,
 	Mail,
 	Phone,
 	Star,
 	Stethoscope,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { RatingDistributionCard } from "@/components/professionals/RatingDistributionCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useProfessional } from "@/hooks/api/doctors/use-professional";
+import { useProfessionalRatings } from "@/hooks/api/doctors/use-professional-ratings";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
@@ -22,6 +26,7 @@ export default function DoctorProfilePage() {
 	const { id } = useParams<{ id: string }>();
 	const router = useRouter();
 	const { data: doctor, isLoading, error } = useProfessional(id);
+	const { data: ratings } = useProfessionalRatings(id);
 
 	if (!doctor) {
 		return (
@@ -186,6 +191,51 @@ export default function DoctorProfilePage() {
 					</div>
 				</CardContent>
 			</Card>
+
+			{(doctor.instagramUrl || doctor.linkedinUrl || doctor.websiteUrl) && (
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-base">Redes sociais</CardTitle>
+					</CardHeader>
+					<CardContent className="flex flex-wrap gap-3">
+						{doctor.instagramUrl && (
+							<a
+								href={doctor.instagramUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								<ExternalLink className="h-4 w-4" />
+								Instagram
+							</a>
+						)}
+						{doctor.linkedinUrl && (
+							<a
+								href={doctor.linkedinUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								<ExternalLink className="h-4 w-4" />
+								LinkedIn
+							</a>
+						)}
+						{doctor.websiteUrl && (
+							<a
+								href={doctor.websiteUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								<Globe className="h-4 w-4" />
+								Website
+							</a>
+						)}
+					</CardContent>
+				</Card>
+			)}
+
+			{ratings && <RatingDistributionCard ratings={ratings} />}
 		</QueryBoundary>
 	);
 }

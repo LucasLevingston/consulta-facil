@@ -6,6 +6,7 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
+import { SocialLinksForm } from "@/components/professionals/SocialLinksForm";
 import {
 	Card,
 	CardContent,
@@ -13,6 +14,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
 import { usePermission } from "@/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -21,6 +23,7 @@ export default function SettingsPage() {
 	const { can } = usePermission();
 
 	const isProfessional = can("professional:manage");
+	const { data: myProfile } = useApplicationStatus();
 
 	return (
 		<div className="space-y-6">
@@ -57,6 +60,10 @@ export default function SettingsPage() {
 					/>
 				)}
 			</div>
+
+			{isProfessional && myProfile && (
+				<SocialLinksForm professional={myProfile} />
+			)}
 		</div>
 	);
 }

@@ -16,6 +16,7 @@ export const professionalKeys = {
 	search: (specialty: string) =>
 		[...professionalKeys.all, "search", specialty] as const,
 	detail: (id: string) => [...professionalKeys.all, id] as const,
+	ratings: (id: string) => [...professionalKeys.all, id, "ratings"] as const,
 	nearby: (
 		lat: number,
 		lng: number,
