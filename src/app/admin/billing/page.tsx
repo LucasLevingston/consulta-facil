@@ -1,7 +1,17 @@
 "use client";
 
-import { CreditCard, FileText, Settings, Sliders, Tag } from "lucide-react";
+import {
+	BadgePercent,
+	CreditCard,
+	FileText,
+	Settings,
+	Sliders,
+	Tag,
+	Users,
+	Wallet,
+} from "lucide-react";
 import Link from "next/link";
+import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const SECTIONS = [
@@ -35,17 +45,40 @@ const SECTIONS = [
 		title: "Configurações",
 		description: "Configurações globais de cobrança",
 	},
+	{
+		href: "/admin/billing/coupons",
+		icon: Tag,
+		title: "Cupons",
+		description: "Historico de uso de cupons",
+	},
+	{
+		href: "/admin/billing/referrals",
+		icon: Users,
+		title: "Indicacoes",
+		description: "Programa de indicacao",
+	},
+	{
+		href: "/admin/billing/commissions",
+		icon: BadgePercent,
+		title: "Comissoes",
+		description: "Comissoes de indicacao",
+	},
+	{
+		href: "/admin/billing/wallets",
+		icon: Wallet,
+		title: "Carteiras",
+		description: "Carteiras financeiras dos usuarios",
+	},
 ];
 
 export default function AdminBillingPage() {
 	return (
 		<div className="space-y-6 p-6">
-			<div>
-				<h1 className="text-2xl font-bold">Módulo Financeiro</h1>
-				<p className="text-muted-foreground">
-					Gerencie pagamentos, planos e configurações de cobrança.
-				</p>
-			</div>
+			<PageHeader
+				title="Módulo Financeiro"
+				description="Gerencie pagamentos, planos e configurações de cobrança."
+				icon={<Wallet className="h-6 w-6" />}
+			/>
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 				{SECTIONS.map(({ href, icon: Icon, title, description }) => (
 					<Link key={href} href={href}>

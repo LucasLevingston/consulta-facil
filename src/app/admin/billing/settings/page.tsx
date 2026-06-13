@@ -1,9 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Settings } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -58,100 +60,100 @@ export default function AdminBillingSettingsPage() {
 		});
 	}
 
-	if (isLoading) return <Skeleton className="h-96 w-full m-6" />;
-
 	return (
 		<div className="space-y-6 p-6 max-w-xl">
-			<div>
-				<h1 className="text-2xl font-bold">Configurações de Cobrança</h1>
-				<p className="text-muted-foreground">
-					Parâmetros globais do módulo financeiro.
-				</p>
-			</div>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-					<FormField
-						control={form.control}
-						name="defaultCurrency"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Moeda padrão</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="defaultGateway"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Gateway padrão</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="pixExpirationMinutes"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Expiração PIX (minutos)</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="invoiceExpirationDays"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Expiração de cobrança (dias)</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="defaultTrialDays"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Dias de trial padrão</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit" disabled={updateSettings.isPending}>
-						{updateSettings.isPending ? "Salvando..." : "Salvar"}
-					</Button>
-				</form>
-			</Form>
+			<PageHeader
+				title="Configurações de Cobrança"
+				description="Parâmetros globais do módulo financeiro."
+				icon={<Settings className="h-6 w-6" />}
+			/>
+			{isLoading && <Skeleton className="h-96 w-full" />}
+			{!isLoading && (
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+						<FormField
+							control={form.control}
+							name="defaultCurrency"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Moeda padrão</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="defaultGateway"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Gateway padrão</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="pixExpirationMinutes"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Expiração PIX (minutos)</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											{...field}
+											onChange={(e) => field.onChange(Number(e.target.value))}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="invoiceExpirationDays"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Expiração de cobrança (dias)</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											{...field}
+											onChange={(e) => field.onChange(Number(e.target.value))}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="defaultTrialDays"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Dias de trial padrão</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											{...field}
+											onChange={(e) => field.onChange(Number(e.target.value))}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button type="submit" disabled={updateSettings.isPending}>
+							{updateSettings.isPending ? "Salvando..." : "Salvar"}
+						</Button>
+					</form>
+				</Form>
+			)}
 		</div>
 	);
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Tag, Trash2 } from "lucide-react";
 import { useState } from "react";
+import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -43,12 +44,13 @@ export default function AdminFeaturesPage() {
 
 	return (
 		<div className="space-y-6 p-6">
-			<div>
-				<h1 className="text-2xl font-bold">Features</h1>
-				<p className="text-muted-foreground">
-					Recursos disponíveis nos planos.
-				</p>
-			</div>
+			<PageHeader
+				title="Features"
+				description="Recursos disponíveis nos planos de assinatura."
+				count={features.length}
+				countLabel="recurso"
+				icon={<Tag className="h-6 w-6" />}
+			/>
 
 			<div className="flex gap-2 items-end">
 				<div className="space-y-1">

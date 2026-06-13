@@ -1,6 +1,8 @@
 "use client";
 
+import { CreditCard } from "lucide-react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
+import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAdminBillingPayments } from "@/hooks/api/billing/use-billing-payments";
 
@@ -9,12 +11,13 @@ export default function AdminBillingPaymentsPage() {
 
 	return (
 		<div className="space-y-6 p-6">
-			<div>
-				<h1 className="text-2xl font-bold">Pagamentos</h1>
-				<p className="text-muted-foreground">
-					Todos os pagamentos processados na plataforma.
-				</p>
-			</div>
+			<PageHeader
+				title="Pagamentos"
+				description="Todos os pagamentos processados na plataforma."
+				count={payments.length}
+				countLabel="transação"
+				icon={<CreditCard className="h-6 w-6" />}
+			/>
 			{isLoading ? (
 				<Skeleton className="h-64 w-full" />
 			) : (

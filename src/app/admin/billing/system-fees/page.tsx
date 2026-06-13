@@ -1,6 +1,8 @@
 "use client";
 
+import { Sliders } from "lucide-react";
 import { useState } from "react";
+import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -65,12 +67,13 @@ export default function AdminSystemFeesPage() {
 
 	return (
 		<div className="space-y-6 p-6">
-			<div>
-				<h1 className="text-2xl font-bold">Taxas do Sistema</h1>
-				<p className="text-muted-foreground">
-					Taxas cobradas por tipo de transação.
-				</p>
-			</div>
+			<PageHeader
+				title="Taxas do Sistema"
+				description="Taxas cobradas por tipo de transação. Os valores são salvos no momento da cobrança."
+				count={fees.length}
+				countLabel="taxa"
+				icon={<Sliders className="h-6 w-6" />}
+			/>
 			{isLoading ? (
 				<Skeleton className="h-64 w-full" />
 			) : (

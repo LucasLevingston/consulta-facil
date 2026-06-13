@@ -1,0 +1,66 @@
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+import type {
+	WalletTransactionResponse,
+	WalletTransactionType,
+} from "@/lib/schemas/billing/wallet.schema";
+
+const TYPE_LABELS: Record<WalletTransactionType, string> = {
+	REFERRAL_COMMISSION: "Comissao de Indicacao",
+	WITHDRAW: "Saque",
+	DEPOSIT: "Deposito",
+	ADJUSTMENT: "Ajuste",
+};
+
+const brl = (n: number) =>
+	new Intl.NumberFormat("pt-BR", {
+		style: "currency",
+		currency: "BRL",
+	}).format(n);
+
+interface WalletHistoryTableProps {
+	transactions: WalletTransactionResponse[];
+}
+
+export function WalletHistoryTable({ transactions }: WalletHistoryTableProps) {
+	if (transactions.length === 0) {
+		return (
+			<p className="text-sm text-muted-foreground py-4">
+				Nenhuma transacao encontrada.
+			</p>
+		);
+	}
+
+	return (
+		<Table>
+			<TableHeader>
+				<TableRow>
+					<TableHead>Tipo</TableHead>
+					<TableHead>Valor</TableHead>
+					<TableHead>Descricao</TableHead>
+					<TableHead>Data</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				{transactions.map((t) => (
+					<TableRow key={t.id}>
+						<TableCell>{TYPE_LABELS[t.type]}</TableCell>
+						<TableCell>{brl(t.amount)}</TableCell>
+						<TableCell className="text-muted-foreground">
+							{t.description ?? "-"}
+						</TableCell>
+						<TableCell>
+							{new Date(t.createdAt).toLocaleDateString("pt-BR")}
+						</TableCell>
+					</TableRow>
+				))}
+			</TableBody>
+		</Table>
+	);
+}
