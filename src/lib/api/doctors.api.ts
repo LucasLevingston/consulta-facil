@@ -3,6 +3,7 @@ import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
 import type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { UpdateBioInput } from "@/lib/schemas/doctor/update-bio.schema";
 import type { UpdateSocialLinksInput } from "@/lib/schemas/doctor/update-social-links.schema";
 
 export const professionalsApi = {
@@ -135,6 +136,14 @@ export const professionalsApi = {
 	getRatings: async (professionalId: string): Promise<ProfessionalRating> => {
 		const response = await api.get<ProfessionalRating>(
 			`/professionals/${professionalId}/ratings`,
+		);
+		return response.data;
+	},
+
+	updateBio: async (data: UpdateBioInput): Promise<ProfessionalResponse> => {
+		const response = await api.patch<ProfessionalResponse>(
+			"/professionals/me/bio",
+			data,
 		);
 		return response.data;
 	},

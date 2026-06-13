@@ -168,6 +168,19 @@ export default function DoctorProfilePage() {
 				</CardContent>
 			</Card>
 
+			{doctor.bio && (
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-base">Sobre</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
+							{doctor.bio}
+						</p>
+					</CardContent>
+				</Card>
+			)}
+
 			{/* Specialties & expertise */}
 			<Card>
 				<CardHeader>

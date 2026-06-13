@@ -43,6 +43,7 @@ export default defineConfig({
 				"src/components/professionals/**",
 				"src/hooks/api/doctors/use-professional-ratings.ts",
 				"src/hooks/api/doctors/use-update-social-links.ts",
+				"src/hooks/api/doctors/use-update-bio.ts",
 				"src/lib/api/analytics/**",
 				"src/providers/**",
 				"src/components/custom/map/**",

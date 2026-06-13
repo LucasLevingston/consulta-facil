@@ -29,6 +29,7 @@ export const professionalResponseSchema = z.object({
 	instagramUrl: z.string().nullable().optional(),
 	linkedinUrl: z.string().nullable().optional(),
 	websiteUrl: z.string().nullable().optional(),
+	bio: z.string().nullable().optional(),
 });
 
 export type ProfessionalResponse = z.infer<typeof professionalResponseSchema>;

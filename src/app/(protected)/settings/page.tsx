@@ -6,6 +6,7 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
+import { BioForm } from "@/components/professionals/BioForm";
 import { SocialLinksForm } from "@/components/professionals/SocialLinksForm";
 import {
 	Card,
@@ -60,6 +61,8 @@ export default function SettingsPage() {
 					/>
 				)}
 			</div>
+
+			{isProfessional && myProfile && <BioForm professional={myProfile} />}
 
 			{isProfessional && myProfile && (
 				<SocialLinksForm professional={myProfile} />
