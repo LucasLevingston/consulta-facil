@@ -6,6 +6,10 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
+import { DocumentPhotoGrid } from "@/components/patients/health/DocumentPhotoGrid";
+import { EmergencyContactList } from "@/components/patients/health/EmergencyContactList";
+import { MedicalHealthForm } from "@/components/patients/health/MedicalHealthForm";
+import { VaccineList } from "@/components/patients/health/VaccineList";
 import { AddressForm } from "@/components/professionals/AddressForm";
 import { BioForm } from "@/components/professionals/BioForm";
 import { CertificateList } from "@/components/professionals/CertificateList";
@@ -88,6 +92,14 @@ export default function SettingsPage() {
 			{isProfessional && myProfile && (
 				<CertificateList professional={myProfile} />
 			)}
+
+			{!isProfessional && user && <MedicalHealthForm userId={user.id} />}
+
+			{!isProfessional && <EmergencyContactList />}
+
+			{!isProfessional && <VaccineList />}
+
+			{!isProfessional && <DocumentPhotoGrid />}
 		</div>
 	);
 }
