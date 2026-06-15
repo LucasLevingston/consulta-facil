@@ -29,7 +29,51 @@ export const professionalResponseSchema = z.object({
 	instagramUrl: z.string().nullable().optional(),
 	linkedinUrl: z.string().nullable().optional(),
 	websiteUrl: z.string().nullable().optional(),
+	facebookUrl: z.string().nullable().optional(),
 	bio: z.string().nullable().optional(),
+	councilType: z.string().nullable().optional(),
+	councilState: z.string().nullable().optional(),
+	zipCode: z.string().nullable().optional(),
+	neighborhood: z.string().nullable().optional(),
+	streetNumber: z.string().nullable().optional(),
+	complement: z.string().nullable().optional(),
+	education: z
+		.array(
+			z.object({
+				id: z.string().optional(),
+				degree: z.string(),
+				institution: z.string(),
+				fieldOfStudy: z.string().nullable().optional(),
+				graduationYear: z.number().nullable().optional(),
+			}),
+		)
+		.optional()
+		.default([]),
+	experience: z
+		.array(
+			z.object({
+				id: z.string().optional(),
+				position: z.string(),
+				institution: z.string(),
+				startYear: z.number(),
+				endYear: z.number().nullable().optional(),
+				description: z.string().nullable().optional(),
+			}),
+		)
+		.optional()
+		.default([]),
+	certificates: z
+		.array(
+			z.object({
+				id: z.string().optional(),
+				title: z.string(),
+				issuingOrganization: z.string().nullable().optional(),
+				issueYear: z.number().nullable().optional(),
+				certificateUrl: z.string().nullable().optional(),
+			}),
+		)
+		.optional()
+		.default([]),
 });
 
 export type ProfessionalResponse = z.infer<typeof professionalResponseSchema>;

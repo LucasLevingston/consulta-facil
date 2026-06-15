@@ -12,6 +12,7 @@ export const updateSocialLinksSchema = z.object({
 	instagramUrl: urlOrEmpty,
 	linkedinUrl: urlOrEmpty,
 	websiteUrl: urlOrEmpty,
+	facebookUrl: urlOrEmpty,
 });
 
 export type UpdateSocialLinksInput = z.infer<typeof updateSocialLinksSchema>;

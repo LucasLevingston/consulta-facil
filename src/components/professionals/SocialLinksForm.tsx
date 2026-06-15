@@ -42,6 +42,7 @@ export function SocialLinksForm({ professional }: SocialLinksFormProps) {
 			instagramUrl: professional.instagramUrl ?? "",
 			linkedinUrl: professional.linkedinUrl ?? "",
 			websiteUrl: professional.websiteUrl ?? "",
+			facebookUrl: professional.facebookUrl ?? "",
 		},
 	});
 
@@ -50,6 +51,7 @@ export function SocialLinksForm({ professional }: SocialLinksFormProps) {
 			instagramUrl: professional.instagramUrl ?? "",
 			linkedinUrl: professional.linkedinUrl ?? "",
 			websiteUrl: professional.websiteUrl ?? "",
+			facebookUrl: professional.facebookUrl ?? "",
 		});
 	}, [professional, form]);
 
@@ -58,6 +60,7 @@ export function SocialLinksForm({ professional }: SocialLinksFormProps) {
 			instagramUrl: data.instagramUrl || null,
 			linkedinUrl: data.linkedinUrl || null,
 			websiteUrl: data.websiteUrl || null,
+			facebookUrl: data.facebookUrl || null,
 		};
 		mutate(payload, {
 			onSuccess: () => toast.success("Redes sociais atualizadas!"),
@@ -126,6 +129,26 @@ export function SocialLinksForm({ professional }: SocialLinksFormProps) {
 									<FormControl>
 										<Input
 											placeholder="https://seusite.com.br"
+											{...field}
+											value={field.value ?? ""}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="facebookUrl"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="flex items-center gap-2">
+										<ExternalLink className="h-4 w-4" />
+										Facebook
+									</FormLabel>
+									<FormControl>
+										<Input
+											placeholder="https://facebook.com/seu_usuario"
 											{...field}
 											value={field.value ?? ""}
 										/>

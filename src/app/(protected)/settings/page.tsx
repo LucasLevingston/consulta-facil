@@ -6,7 +6,12 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
+import { AddressForm } from "@/components/professionals/AddressForm";
 import { BioForm } from "@/components/professionals/BioForm";
+import { CertificateList } from "@/components/professionals/CertificateList";
+import { CouncilForm } from "@/components/professionals/CouncilForm";
+import { EducationList } from "@/components/professionals/EducationList";
+import { ExperienceList } from "@/components/professionals/ExperienceList";
 import { SocialLinksForm } from "@/components/professionals/SocialLinksForm";
 import {
 	Card,
@@ -66,6 +71,22 @@ export default function SettingsPage() {
 
 			{isProfessional && myProfile && (
 				<SocialLinksForm professional={myProfile} />
+			)}
+
+			{isProfessional && myProfile && <CouncilForm professional={myProfile} />}
+
+			{isProfessional && myProfile && <AddressForm professional={myProfile} />}
+
+			{isProfessional && myProfile && (
+				<EducationList professional={myProfile} />
+			)}
+
+			{isProfessional && myProfile && (
+				<ExperienceList professional={myProfile} />
+			)}
+
+			{isProfessional && myProfile && (
+				<CertificateList professional={myProfile} />
 			)}
 		</div>
 	);
