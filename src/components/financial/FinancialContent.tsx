@@ -10,6 +10,7 @@ import {
 	TrendingUp,
 } from "lucide-react";
 import { useMemo } from "react";
+import { FeeCalculator } from "@/components/custom/fees/FeeCalculator";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
@@ -195,6 +196,8 @@ export function FinancialContent({
 					)}
 				</CardContent>
 			</Card>
+
+			<FeeCalculator />
 		</div>
 	);
 }
