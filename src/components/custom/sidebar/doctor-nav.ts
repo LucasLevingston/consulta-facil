@@ -7,6 +7,7 @@ import {
 	Clock,
 	CreditCard,
 	FlaskConical,
+	MessageCircle,
 	TrendingUp,
 	UserRound,
 } from "lucide-react";
@@ -34,6 +35,11 @@ export const doctorNav = [
 				title: "Pacientes",
 				url: "/dashboard/patients",
 				icon: UserRound,
+			},
+			{
+				title: "Mensagens",
+				url: "/dashboard/messages",
+				icon: MessageCircle,
 			},
 		],
 	},

@@ -6,6 +6,7 @@ import {
 	FileCheck,
 	Globe,
 	Mail,
+	MessageCircle,
 	Phone,
 	Star,
 	Stethoscope,
@@ -17,9 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
 import { useProfessional } from "@/hooks/api/doctors/use-professional";
 import { useProfessionalRatings } from "@/hooks/api/doctors/use-professional-ratings";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { useUserStore } from "@/store/useUserStore";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export default function DoctorProfilePage() {
@@ -27,6 +30,15 @@ export default function DoctorProfilePage() {
 	const router = useRouter();
 	const { data: doctor, isLoading, error } = useProfessional(id);
 	const { data: ratings } = useProfessionalRatings(id);
+	const user = useUserStore((s) => s.user);
+	const startConversation = useStartConversation();
+
+	function handleMessage() {
+		if (!doctor?.userId) return;
+		startConversation.mutate(doctor.userId, {
+			onSuccess: (conv) => router.push(`/dashboard/messages?c=${conv.id}`),
+		});
+	}
 
 	if (!doctor) {
 		return (
@@ -68,17 +80,30 @@ export default function DoctorProfilePage() {
 								{initials}
 							</AvatarFallback>
 						</Avatar>
-						<Button
-							onClick={() =>
-								router.push(
-									`/dashboard/appointments/create?doctorid=${doctor.id}`,
-								)
-							}
-							className="gap-2 shrink-0"
-						>
-							<Calendar className="h-4 w-4" />
-							Agendar consulta
-						</Button>
+						<div className="flex gap-2 flex-wrap">
+							{user && (
+								<Button
+									variant="outline"
+									onClick={handleMessage}
+									disabled={startConversation.isPending}
+									className="gap-2 shrink-0"
+								>
+									<MessageCircle className="h-4 w-4" />
+									Enviar mensagem
+								</Button>
+							)}
+							<Button
+								onClick={() =>
+									router.push(
+										`/dashboard/appointments/create?doctorid=${doctor.id}`,
+									)
+								}
+								className="gap-2 shrink-0"
+							>
+								<Calendar className="h-4 w-4" />
+								Agendar consulta
+							</Button>
+						</div>
 					</div>
 
 					<div className="mt-4 space-y-2">

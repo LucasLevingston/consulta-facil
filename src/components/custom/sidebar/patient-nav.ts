@@ -3,6 +3,7 @@ import {
 	CalendarDays,
 	CalendarPlus,
 	FlaskConical,
+	MessageCircle,
 	Users,
 } from "lucide-react";
 
@@ -36,6 +37,11 @@ export const patientNav = [
 				title: "Dependentes",
 				url: "/dashboard/dependents",
 				icon: Users,
+			},
+			{
+				title: "Mensagens",
+				url: "/dashboard/messages",
+				icon: MessageCircle,
 			},
 		],
 	},
