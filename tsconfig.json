@@ -26,6 +26,15 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@cf/appointments/*": [
+        "./src/features/appointments/*"
+      ],
+      "@cf/patients/*": [
+        "./src/features/patients/*"
+      ],
+      "@cf/messaging/*": [
+        "./src/features/messaging/*"
       ]
     }
   },
