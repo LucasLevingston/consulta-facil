@@ -3,6 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { invoiceApi } from "@/lib/api/billing/invoice.api";
 
+export function useMyInvoices() {
+	return useQuery({
+		queryKey: ["billing", "invoices", "mine"],
+		queryFn: invoiceApi.listMine,
+	});
+}
+
 export function useAdminInvoices() {
 	return useQuery({
 		queryKey: ["billing", "invoices", "all"],

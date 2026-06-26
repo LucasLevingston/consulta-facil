@@ -5,26 +5,14 @@ import { Suspense } from "react";
 import { InvoiceTable } from "@/components/billing/InvoiceTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyBillingPayments } from "@/hooks/api/billing/use-billing-payments";
-import { useUserStore } from "@/store/useUserStore";
+import { useMyInvoices } from "@/hooks/api/billing/use-invoices";
 
 function UserInvoicesContent() {
-	const { user } = useUserStore();
-	const { data: payments = [], isLoading } = useMyBillingPayments(
-		user?.id ?? "",
-	);
+	const { data: invoices = [], isLoading } = useMyInvoices();
 
 	if (isLoading) return <Skeleton className="h-64 w-full" />;
 
-	if (payments.filter((p) => p.status === "PAID").length === 0) {
-		return (
-			<p className="text-center text-muted-foreground py-8">
-				Nenhuma nota fiscal disponível.
-			</p>
-		);
-	}
-
-	return <InvoiceTable invoices={[]} />;
+	return <InvoiceTable invoices={invoices} />;
 }
 
 export default function UserInvoicesPage() {

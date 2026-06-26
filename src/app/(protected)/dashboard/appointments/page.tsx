@@ -15,10 +15,10 @@ import { useUserStore } from "@/store/useUserStore";
 
 export default function AppointmentsPage() {
 	const { user } = useUserStore();
-	const { role } = usePermission();
+	const { can } = usePermission();
 	const userId = user?.id ?? "";
-	const isProfessional = role === "PROFESSIONAL";
-	const isAdmin = role === "ADMIN";
+	const isProfessional = can("professional:manage");
+	const isAdmin = can("admin:access");
 
 	const professionalProfileQuery = useMyProfessionalProfile(isProfessional);
 	const professionalProfileId = professionalProfileQuery.data?.id ?? "";
