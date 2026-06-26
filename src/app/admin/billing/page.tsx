@@ -1,9 +1,11 @@
 "use client";
 
 import {
+	BadgeCheck,
 	BadgePercent,
 	CreditCard,
 	FileText,
+	Layers,
 	Settings,
 	Sliders,
 	Tag,
@@ -15,6 +17,18 @@ import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const SECTIONS = [
+	{
+		href: "/admin/billing/plans",
+		icon: Layers,
+		title: "Planos",
+		description: "Planos de assinatura da plataforma",
+	},
+	{
+		href: "/admin/billing/subscriptions",
+		icon: BadgeCheck,
+		title: "Assinaturas",
+		description: "Assinaturas ativas de usuários",
+	},
 	{
 		href: "/admin/billing/payments",
 		icon: CreditCard,

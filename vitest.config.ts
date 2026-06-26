@@ -104,6 +104,10 @@ export default defineConfig({
 				"src/components/anamnesis/**",
 				"src/components/custom/plans/**",
 				"src/components/custom/avatar-upload.tsx",
+				"src/components/clinics/**",
+				"src/components/laboratories/**",
+				"src/hooks/api/subscriptions/**",
+				"src/lib/api/subscriptions/**",
 			],
 			thresholds: {
 				statements: 39,
