@@ -1,11 +1,10 @@
 "use client";
 
 import { Camera, Loader2 } from "lucide-react";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { useRef } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { api } from "@/config/api";
+import { useAvatarUpload } from "@/hooks/use-avatar-upload";
 import { useUserStore } from "@/store/useUserStore";
 
 interface AvatarUploadProps {
@@ -34,9 +33,9 @@ const sizeMap = {
 };
 
 export function AvatarUpload({ size = "md" }: AvatarUploadProps) {
-	const { user, loadUser } = useUserStore();
+	const { user } = useUserStore();
+	const { uploading, uploadAvatar } = useAvatarUpload();
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [uploading, setUploading] = useState(false);
 
 	const s = sizeMap[size];
 
@@ -52,26 +51,8 @@ export function AvatarUpload({ size = "md" }: AvatarUploadProps) {
 	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
-		if (!file.type.startsWith("image/")) {
-			toast.error("Selecione uma imagem válida.");
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append("file", file);
-		setUploading(true);
-		try {
-			await api.post("/users/me/avatar", formData, {
-				headers: { "Content-Type": "multipart/form-data" },
-			});
-			await loadUser();
-			toast.success("Foto atualizada com sucesso!");
-		} catch {
-			toast.error("Erro ao enviar a foto.");
-		} finally {
-			setUploading(false);
-			e.target.value = "";
-		}
+		await uploadAvatar(file);
+		e.target.value = "";
 	};
 
 	return (

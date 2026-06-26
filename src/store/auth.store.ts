@@ -1,28 +1,8 @@
-import Cookies from "js-cookie";
 import { create } from "zustand";
 
 import { api } from "@/config/api";
+import { getStoredToken, setStoredToken } from "@/lib/utils/token-storage";
 import { useUserStore } from "./useUserStore";
-
-function getStoredToken() {
-	if (typeof window === "undefined") return null;
-	return localStorage.getItem("authToken");
-}
-
-function setStoredToken(token: string | null) {
-	if (typeof window === "undefined") return;
-
-	if (token) {
-		localStorage.setItem("authToken", token);
-		Cookies.set("token", token);
-		api.defaults.headers.common.Authorization = `Bearer ${token}`;
-		return;
-	}
-
-	localStorage.removeItem("authToken");
-	Cookies.remove("token");
-	delete api.defaults.headers.common.Authorization;
-}
 
 interface AuthState {
 	token: string | null;

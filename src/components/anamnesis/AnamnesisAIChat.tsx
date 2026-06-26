@@ -7,21 +7,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { api } from "@/config/api";
-import { env } from "@/env";
+import { useAnamnesisChat } from "@/hooks/use-anamnesis-chat";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
-import type { AnamnesisMessage } from "@/lib/types/ai";
-
-type ChatMessage = AnamnesisMessage & { id: string };
-
-function makeMsg(role: AnamnesisMessage["role"], content: string): ChatMessage {
-	return { id: `${Date.now()}-${Math.random()}`, role, content };
-}
-
-const INITIAL_MESSAGE = makeMsg(
-	"assistant",
-	"Olá! Sou seu assistente de anamnese. Vou fazer algumas perguntas para ajudar o profissional a entender melhor sua situação antes da consulta. As informações ficam registradas apenas no seu prontuário.\n\nPrimeiro, qual é sua queixa principal hoje? O que motivou essa consulta?",
-);
 
 interface AnamnesisAIChatProps {
 	onSave: (data: AnamnesisInput) => Promise<void>;
@@ -29,84 +16,21 @@ interface AnamnesisAIChatProps {
 }
 
 export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
-	const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
+	const { messages, isLoading, isSaving, sendMessage, saveAnamnesis } =
+		useAnamnesisChat();
 	const [input, setInput] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [isSaving, setIsSaving] = useState(false);
 	const bottomRef = useRef<HTMLDivElement>(null);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: scroll on new messages
 	useEffect(() => {
 		if (messages.length > 0) {
 			bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 		}
 	}, [messages]);
 
-	function toApiMessages(msgs: ChatMessage[]): AnamnesisMessage[] {
-		return msgs.map(({ role, content }) => ({ role, content }));
-	}
-
-	async function sendMessage() {
-		const text = input.trim();
-		if (!text || isLoading) return;
-
-		const userMsg = makeMsg("user", text);
-		const nextMessages = [...messages, userMsg];
-		setMessages(nextMessages);
+	async function handleSend() {
+		await sendMessage(input);
 		setInput("");
-		setIsLoading(true);
-
-		try {
-			const token =
-				typeof window !== "undefined"
-					? localStorage.getItem("authToken")
-					: null;
-			const response = await fetch(
-				`${env.NEXT_PUBLIC_API_URL}/ai/anamnesis/chat`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						...(token ? { Authorization: `Bearer ${token}` } : {}),
-					},
-					body: JSON.stringify({ messages: toApiMessages(nextMessages) }),
-				},
-			);
-
-			const reader = response.body?.getReader();
-			if (!reader) return;
-
-			const decoder = new TextDecoder();
-			const assistantMsg = makeMsg("assistant", "");
-			setMessages((prev) => [...prev, assistantMsg]);
-
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				const chunk = decoder.decode(value);
-				setMessages((prev) => {
-					const last = prev[prev.length - 1];
-					return [
-						...prev.slice(0, -1),
-						{ ...last, content: last.content + chunk },
-					];
-				});
-			}
-		} finally {
-			setIsLoading(false);
-		}
-	}
-
-	async function handleSave() {
-		setIsSaving(true);
-		try {
-			const { data } = await api.post<AnamnesisInput>("/ai/anamnesis/extract", {
-				messages: toApiMessages(messages),
-			});
-			await onSave(data);
-			onClose();
-		} finally {
-			setIsSaving(false);
-		}
 	}
 
 	return (
@@ -166,7 +90,7 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 					onKeyDown={(e) => {
 						if (e.key === "Enter" && !e.shiftKey) {
 							e.preventDefault();
-							sendMessage();
+							handleSend();
 						}
 					}}
 					placeholder="Digite sua resposta..."
@@ -178,7 +102,7 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 					type="button"
 					size="icon"
 					className="h-auto shrink-0 rounded-xl"
-					onClick={sendMessage}
+					onClick={handleSend}
 					disabled={isLoading || !input.trim()}
 				>
 					<Send className="h-4 w-4" />
@@ -187,7 +111,7 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 
 			<div className="flex gap-2 pt-1">
 				<CustomButton
-					onClick={handleSave}
+					onClick={() => saveAnamnesis(onSave, onClose)}
 					disabled={isSaving || messages.length < 3}
 					className="flex-1"
 				>

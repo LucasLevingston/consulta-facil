@@ -37,13 +37,11 @@ import {
 	SidebarRail,
 	SidebarSeparator,
 } from "@/components/ui/sidebar";
+import "@/lib/nav/load-nav";
+import type { UserRole } from "@/lib/nav/nav-registry";
+import { getNavGroupsForRole } from "@/lib/nav/nav-registry";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/useUserStore";
-import { adminNav } from "./admin-nav";
-import { defaultNav } from "./default-nav";
-import { doctorNav } from "./doctor-nav";
-import { patientNav } from "./patient-nav";
-import { receptionistNav } from "./receptionist-nav";
 
 export default function AppSidebar() {
 	const [mounted, setMounted] = React.useState(false);
@@ -58,18 +56,8 @@ export default function AppSidebar() {
 
 	if (!mounted) return null;
 
-	const isProfessional = user?.role === "PROFESSIONAL";
-	const isAdmin = user?.role === "ADMIN";
-	const isReceptionist = user?.role === "RECEPTIONIST";
-
-	const roleNav = isAdmin
-		? adminNav
-		: isProfessional
-			? doctorNav
-			: isReceptionist
-				? receptionistNav
-				: patientNav;
-	const navigation = [...defaultNav, ...roleNav];
+	const role = (user?.role ?? "PATIENT") as UserRole;
+	const navigation = getNavGroupsForRole(role);
 
 	const initials = user?.name
 		? user.name
@@ -81,6 +69,9 @@ export default function AppSidebar() {
 		: (user?.email?.slice(0, 2).toUpperCase() ?? "CF");
 
 	const displayName = user?.name ?? user?.email ?? "Usuário";
+	const isProfessional = user?.role === "PROFESSIONAL";
+	const isAdmin = user?.role === "ADMIN";
+	const isReceptionist = user?.role === "RECEPTIONIST";
 
 	const handleLogout = () => {
 		logout();

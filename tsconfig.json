@@ -30,11 +30,38 @@
       "@cf/appointments/*": [
         "./src/features/appointments/*"
       ],
-      "@cf/patients/*": [
-        "./src/features/patients/*"
+      "@cf/auth/*": [
+        "./src/features/auth/*"
+      ],
+      "@cf/billing/*": [
+        "./src/features/billing/*"
+      ],
+      "@cf/clinics/*": [
+        "./src/features/clinics/*"
+      ],
+      "@cf/dependents/*": [
+        "./src/features/dependents/*"
+      ],
+      "@cf/doctors/*": [
+        "./src/features/doctors/*"
+      ],
+      "@cf/exams/*": [
+        "./src/features/exams/*"
       ],
       "@cf/messaging/*": [
         "./src/features/messaging/*"
+      ],
+      "@cf/patients/*": [
+        "./src/features/patients/*"
+      ],
+      "@cf/procedure-requests/*": [
+        "./src/features/procedure-requests/*"
+      ],
+      "@cf/schedule/*": [
+        "./src/features/schedule/*"
+      ],
+      "@cf/services/*": [
+        "./src/features/services/*"
       ]
     }
   },

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { api } from "@/config/api";
 import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
+import { getStoredToken, setStoredToken } from "@/lib/utils/token-storage";
 
 function getErrorStatus(error: unknown) {
 	if (typeof error === "object" && error !== null && "response" in error) {
@@ -20,28 +21,15 @@ interface UserStore {
 	clearUser: () => void;
 }
 
-function getStoredToken() {
-	if (typeof window === "undefined") {
-		return null;
-	}
-
-	return localStorage.getItem("authToken");
-}
-
 export const useUserStore = create<UserStore>((set, get) => ({
 	user: null,
 	isLoading: false,
 	token: getStoredToken(),
-	getToken: () => {
-		return get().token;
-	},
+	getToken: () => get().token,
 	loadUser: async () => {
 		set({ isLoading: true });
 		try {
-			const token =
-				typeof window !== "undefined"
-					? localStorage.getItem("authToken")
-					: null;
+			const token = getStoredToken();
 
 			if (!token) {
 				set({ user: null, token: null, isLoading: false });
@@ -50,31 +38,18 @@ export const useUserStore = create<UserStore>((set, get) => ({
 
 			const { data } = await api.get("/users/me");
 
-			set({
-				user: data,
-				token,
-				isLoading: false,
-			});
+			set({ user: data, token, isLoading: false });
 		} catch (error: unknown) {
 			if (getErrorStatus(error) === 401) {
 				set({ user: null, token: null, isLoading: false });
 				return;
 			}
-			set({
-				user: null,
-				token:
-					typeof window !== "undefined"
-						? localStorage.getItem("authToken")
-						: null,
-				isLoading: false,
-			});
+			set({ user: null, token: getStoredToken(), isLoading: false });
 		}
 	},
 
 	clearUser: () => {
-		if (typeof window !== "undefined") {
-			localStorage.removeItem("authToken");
-		}
+		setStoredToken(null);
 		set({ user: null, token: null });
 	},
 }));
