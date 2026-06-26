@@ -1,6 +1,5 @@
 "use client";
 
-import { useQueries } from "@tanstack/react-query";
 import { CalendarDays, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -13,9 +12,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
-import { appointmentsApi } from "@/lib/api/appointments.api";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { useClinicAppointments } from "@/hooks/api/appointments/use-clinic-appointments";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
 import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";
@@ -42,19 +39,7 @@ export function ClinicAppointmentsTab({
 			? [myProfessionalProfileId]
 			: [];
 
-	const results = useQueries({
-		queries: targetIds.map((id) => ({
-			queryKey: appointmentKeys.byProfessional(id),
-			queryFn: () => appointmentsApi.getByProfessional(id, 0, 100),
-		})),
-	});
-
-	const isLoading = results.some((r) => r.isLoading);
-
-	const appointments: AppointmentResponse[] = useMemo(
-		() => results.flatMap((r) => r.data?.content ?? []),
-		[results],
-	);
+	const { appointments, isLoading } = useClinicAppointments(targetIds);
 
 	const filtered = useMemo(() => {
 		let list = appointments;
@@ -78,7 +63,6 @@ export function ClinicAppointmentsTab({
 
 	return (
 		<div className="space-y-4">
-			{/* Filters */}
 			<div className="flex flex-wrap items-center gap-2">
 				{isManager && (
 					<Select
@@ -123,7 +107,6 @@ export function ClinicAppointmentsTab({
 				</p>
 			</div>
 
-			{/* Appointment list */}
 			{filtered.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
 					<div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">

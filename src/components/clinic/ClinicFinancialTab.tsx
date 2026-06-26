@@ -1,8 +1,6 @@
 "use client";
 
-import { useQueries } from "@tanstack/react-query";
 import { CheckCircle2, Loader2, TrendingUp, Users, Zap } from "lucide-react";
-import { useMemo } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,8 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { useClinicFinancialStats } from "@/hooks/api/appointments/use-clinic-financial-stats";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
@@ -29,33 +26,15 @@ interface Props {
 export function ClinicFinancialTab({ clinic }: Props) {
 	const members = clinic.members ?? [];
 
-	const results = useQueries({
-		queries: members.map((m) => ({
-			queryKey: appointmentKeys.byProfessional(m.professionalProfileId),
-			queryFn: () =>
-				appointmentsApi.getByProfessional(m.professionalProfileId, 0, 100),
-		})),
-	});
-
-	const isLoading = results.some((r) => r.isLoading);
-
-	const memberStats = useMemo(
-		() =>
-			members.map((member, i) => {
-				const appts = results[i]?.data?.content ?? [];
-				const completed = appts.filter((a) => a.status === "COMPLETED").length;
-				const freeUsed = Math.min(completed, FREE_CONSULTS_PER_DOCTOR);
-				const paidCount = Math.max(0, completed - FREE_CONSULTS_PER_DOCTOR);
-				return { member, completed, freeUsed, paidCount };
-			}),
-		[results, members],
-	);
-
-	const totalCompleted = memberStats.reduce((s, m) => s + m.completed, 0);
-	const totalFreeUsed = memberStats.reduce((s, m) => s + m.freeUsed, 0);
-	const totalFreeQuota = members.length * FREE_CONSULTS_PER_DOCTOR;
-	const totalPaid = memberStats.reduce((s, m) => s + m.paidCount, 0);
-	const extraProfessionals = Math.max(0, members.length - FREE_PROFESSIONALS);
+	const {
+		isLoading,
+		memberStats,
+		totalCompleted,
+		totalFreeUsed,
+		totalFreeQuota,
+		totalPaid,
+		extraProfessionals,
+	} = useClinicFinancialStats(members);
 
 	if (isLoading) {
 		return (
@@ -67,7 +46,6 @@ export function ClinicFinancialTab({ clinic }: Props) {
 
 	return (
 		<div className="space-y-4">
-			{/* Summary stats */}
 			<div className="grid gap-4 sm:grid-cols-3">
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -128,7 +106,6 @@ export function ClinicFinancialTab({ clinic }: Props) {
 				</Card>
 			</div>
 
-			{/* Free quota progress */}
 			<Card>
 				<CardHeader className="pb-3">
 					<div className="flex items-center gap-2">

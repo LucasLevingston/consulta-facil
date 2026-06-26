@@ -5,22 +5,14 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-import CustomFormField, {
-	FormFieldType,
-} from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
-import { FileUploader } from "@/components/FileUploader";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
-import { GenderOptions } from "@/utils/constants/gender-options";
-import { IdentificationTypes } from "@/utils/constants/identification-types";
 import { PatientFormValidation } from "./FormValidation";
+import { PatientConsentSection } from "./PatientConsentSection";
+import { PatientIdentificationSection } from "./PatientIdentificationSection";
+import { PatientMedicalSection } from "./PatientMedicalSection";
+import { PatientPersonalSection } from "./PatientPersonalSection";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -107,222 +99,13 @@ const PatientDetailsForm = ({
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="flex-1 space-y-12"
 			>
-				{/* Informações Pessoais */}
-				<section className="space-y-6">
-					<div className="mb-9 space-y-1">
-						<h2 className="sub-header">Informações Pessoais</h2>
-					</div>
+				<PatientPersonalSection form={form} />
+				<PatientMedicalSection form={form} />
 
-					<div className="flex w-full items-start gap-6">
-						<div className="flex min-w-[50%] flex-col gap-6">
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.INPUT}
-								name="name"
-								label="Nome completo"
-								placeholder="João da Silva"
-							/>
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.EMAIL}
-								name="email"
-								label="Endereço de E-mail"
-							/>
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.INPUT}
-								name="phone"
-								label="Número de Telefone"
-								placeholder="(11) 91234-5678"
-								type="tel"
-							/>
-						</div>
-
-						<div className="flex min-w-[50%] flex-col gap-6">
-							<FormField
-								control={form.control}
-								name="imageProfile"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-sm font-semibold text-primary">
-											Foto de perfil
-										</FormLabel>
-										<FormControl>
-											<FileUploader
-												files={field.value}
-												onChange={field.onChange}
-												imageProfile
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-
-							<CustomFormField
-								form={form}
-								name="gender"
-								fieldType={FormFieldType.SELECT}
-								label="Gênero"
-							>
-								{GenderOptions.map((option) => (
-									<option key={option.value} value={option.value}>
-										{option.label}
-									</option>
-								))}
-							</CustomFormField>
-						</div>
-					</div>
-
-					<CustomFormField
-						form={form}
-						fieldType={FormFieldType.INPUT}
-						name="cpf"
-						label="CPF"
-						placeholder="12345678900"
-					/>
-
-					<div className="flex flex-col gap-6 xl:flex-row">
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.INPUT}
-							name="address"
-							label="Endereço"
-							placeholder="14 rua, Nova Iorque, NY - 5101"
-						/>
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.INPUT}
-							name="occupation"
-							label="Ocupação"
-							placeholder="Engenheiro de Software"
-						/>
-					</div>
-
-					<div className="flex flex-col gap-6 xl:flex-row">
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.INPUT}
-							name="emergencyContactName"
-							label="Nome do Contato de Emergência"
-							placeholder="Nome do responsável"
-						/>
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.INPUT}
-							name="emergencyContactNumber"
-							label="Número do Contato de Emergência"
-							placeholder="(11) 91234-5678"
-							type="tel"
-						/>
-					</div>
-				</section>
-
-				{/* Informações Médicas */}
-				<section className="space-y-6">
-					<div className="mb-9 space-y-1">
-						<h2 className="sub-header">Informações Médicas</h2>
-					</div>
-
-					<div className="flex flex-col gap-6 xl:flex-row">
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.TEXTAREA}
-							name="allergies"
-							label="Alergias (se houver)"
-							placeholder="Amendoins, Penicilina, Polen"
-						/>
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.TEXTAREA}
-							name="currentMedication"
-							label="Medicações Atuais"
-							placeholder="Ibuprofeno 200mg, Levotiroxina 50mcg"
-						/>
-					</div>
-
-					<div className="flex flex-col gap-6 xl:flex-row">
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.TEXTAREA}
-							name="familyMedicalHistory"
-							label="Histórico Médico Familiar (se relevante)"
-							placeholder="Mãe teve câncer cerebral, Pai tem hipertensão"
-						/>
-						<CustomFormField
-							form={form}
-							fieldType={FormFieldType.TEXTAREA}
-							name="pastMedicalHistory"
-							label="Histórico Médico Anterior"
-							placeholder="Apendicectomia em 2015, Diagnóstico de asma na infância"
-						/>
-					</div>
-				</section>
-
-				{/* Identificação e Consentimento — apenas no modo criação */}
 				{type === "create" && (
 					<>
-						<section className="space-y-6">
-							<div className="mb-9 space-y-1">
-								<h2 className="sub-header">Identificação e Verificação</h2>
-							</div>
-
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.SELECT}
-								name="identificationDocumentType"
-								label="Tipo de Identificação"
-								placeholder="Selecione o tipo de identificação"
-							>
-								{IdentificationTypes.map((idType) => (
-									<option key={idType} value={idType}>
-										{idType}
-									</option>
-								))}
-							</CustomFormField>
-
-							<FormField
-								control={form.control}
-								name="identificationDocument"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-sm font-semibold text-primary">
-											Cópia Escaneada do Documento de Identificação
-										</FormLabel>
-										<FormControl>
-											<FileUploader
-												files={field.value}
-												onChange={field.onChange}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						</section>
-
-						<section className="space-y-6">
-							<div className="mb-9 space-y-1">
-								<h2 className="sub-header">Consentimento e Privacidade</h2>
-							</div>
-
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.CHECKBOX}
-								name="treatmentConsent"
-								label="Eu consinto em receber tratamento para minha condição de saúde."
-							/>
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.CHECKBOX}
-								name="disclosureConsent"
-								label="Eu consinto com o uso e divulgação das minhas informações de saúde para fins de tratamento."
-							/>
-							<CustomFormField
-								form={form}
-								fieldType={FormFieldType.CHECKBOX}
-								name="privacyConsent"
-								label="Eu reconheço que revisei e concordo com a política de privacidade."
-							/>
-						</section>
+						<PatientIdentificationSection form={form} />
+						<PatientConsentSection form={form} />
 					</>
 				)}
 
