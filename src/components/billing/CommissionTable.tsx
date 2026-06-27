@@ -7,10 +7,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type {
-	CommissionStatus,
-	ReferralCommissionResponse,
-} from "@/lib/schemas/billing/commission.schema";
+import type { CommissionStatus } from "@/lib/schemas/billing/commission.schema";
+import type { CommissionTableProps } from "./CommissionTable.types";
 
 const STATUS_LABELS: Record<CommissionStatus, string> = {
 	PENDING: "Pendente",
@@ -34,10 +32,6 @@ const brl = (n: number) =>
 		style: "currency",
 		currency: "BRL",
 	}).format(n);
-
-interface CommissionTableProps {
-	commissions: ReferralCommissionResponse[];
-}
 
 export function CommissionTable({ commissions }: CommissionTableProps) {
 	if (commissions.length === 0) {

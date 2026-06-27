@@ -3,10 +3,7 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-interface CopyReferralButtonProps {
-	code: string;
-}
+import type { CopyReferralButtonProps } from "./CopyReferralButton.types";
 
 export function CopyReferralButton({ code }: CopyReferralButtonProps) {
 	const [copied, setCopied] = useState(false);

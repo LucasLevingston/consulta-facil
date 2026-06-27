@@ -23,15 +23,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUpdateSocialLinks } from "@/hooks/api/doctors/use-update-social-links";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import {
 	type UpdateSocialLinksInput,
 	updateSocialLinksSchema,
 } from "@/lib/schemas/doctor/update-social-links.schema";
-
-interface SocialLinksFormProps {
-	professional: ProfessionalResponse;
-}
+import type { SocialLinksFormProps } from "./SocialLinksForm.types";
 
 export function SocialLinksForm({ professional }: SocialLinksFormProps) {
 	const { mutate, isPending } = useUpdateSocialLinks();

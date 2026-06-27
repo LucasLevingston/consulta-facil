@@ -6,13 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
 import { ExamCard } from "./ExamCard";
+import type { ExamsSectionProps } from "./ExamsSection.types";
 import { RequestExamForm } from "./RequestExamForm";
-
-interface ExamsSectionProps {
-	appointmentId: string;
-	isPatient: boolean;
-	isProfessional: boolean;
-}
 
 export function ExamsSection({
 	appointmentId,

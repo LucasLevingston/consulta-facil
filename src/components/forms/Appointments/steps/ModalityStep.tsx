@@ -1,8 +1,7 @@
 "use client";
 
-import type { Control } from "react-hook-form";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
+import type { ModalityStepProps } from "./ModalityStep.types";
 
 const MODALITY_OPTIONS = [
 	{
@@ -16,10 +15,6 @@ const MODALITY_OPTIONS = [
 		desc: "Videochamada via Google Meet",
 	},
 ];
-
-interface ModalityStepProps {
-	control: Control<AppointmentFormValues>;
-}
 
 export function ModalityStep({ control }: ModalityStepProps) {
 	return (

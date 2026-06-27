@@ -1,11 +1,9 @@
 import Link from "next/link";
-import type React from "react";
+import type { LogoProps } from "./Logo.types";
 import { LogoContent } from "./logo-content";
 import { LogoIcon } from "./logo-icon";
 
-type logoProps = React.ComponentProps<"p">;
-
-export const Logo = (props: logoProps) => {
+export const Logo = (props: LogoProps) => {
 	return (
 		<Link href="/" className="flex items-center gap-2">
 			<LogoIcon {...props} />

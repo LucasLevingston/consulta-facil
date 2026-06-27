@@ -13,11 +13,7 @@ import {
 	type RegisterInput,
 	registerSchema,
 } from "@/lib/schemas/auth/register.schema";
-
-interface RegisterFormProps {
-	onSubmit: (data: RegisterInput) => Promise<void>;
-	isPending: boolean;
-}
+import type { RegisterFormProps } from "./registerForm.types";
 
 export function RegisterForm({ onSubmit, isPending }: RegisterFormProps) {
 	const form = useForm<RegisterInput>({

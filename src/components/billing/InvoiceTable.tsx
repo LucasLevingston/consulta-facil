@@ -10,11 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { InvoiceResponse } from "@/lib/schemas/billing/invoice.schema";
-
-interface InvoiceTableProps {
-	invoices: InvoiceResponse[];
-}
+import type { InvoiceTableProps } from "./InvoiceTable.types";
 
 export function InvoiceTable({ invoices }: InvoiceTableProps) {
 	if (invoices.length === 0) {

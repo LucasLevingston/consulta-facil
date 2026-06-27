@@ -1,18 +1,11 @@
 "use client";
 
 import { Banknote, CreditCard, Info } from "lucide-react";
-import type { Control } from "react-hook-form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
 import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
 import { PAYMENT_METHOD_LABELS } from "@/lib/schemas/doctor/payment-method-labels";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
-
-interface PaymentStepProps {
-	control: Control<AppointmentFormValues>;
-	selectedProfessional: ProfessionalResponse;
-}
+import type { PaymentStepProps } from "./PaymentStep.types";
 
 export function PaymentStep({
 	control,

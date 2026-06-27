@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import type { BillingPaymentStatus } from "@/lib/schemas/billing/payment.schema";
+import type { PaymentStatusBadgeProps } from "./PaymentStatusBadge.types";
 
 const STATUS_CONFIG: Record<
 	BillingPaymentStatus,
@@ -14,10 +15,6 @@ const STATUS_CONFIG: Record<
 	REFUNDED: { label: "Reembolsado", variant: "outline" },
 	CANCELED: { label: "Cancelado", variant: "outline" },
 };
-
-interface PaymentStatusBadgeProps {
-	status: BillingPaymentStatus;
-}
 
 export function PaymentStatusBadge({ status }: PaymentStatusBadgeProps) {
 	const config = STATUS_CONFIG[status] ?? {

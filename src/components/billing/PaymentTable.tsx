@@ -8,8 +8,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { BillingPaymentResponse } from "@/lib/schemas/billing/payment.schema";
 import { PaymentStatusBadge } from "./PaymentStatusBadge";
+import type { PaymentTableProps } from "./PaymentTable.types";
 
 const PAYMENT_TYPE_LABELS: Record<string, string> = {
 	CONSULTATION: "Consulta",
@@ -27,10 +27,6 @@ function formatCurrency(value: number) {
 
 function formatDate(iso: string) {
 	return new Date(iso).toLocaleDateString("pt-BR");
-}
-
-interface PaymentTableProps {
-	payments: BillingPaymentResponse[];
 }
 
 export function PaymentTable({ payments }: PaymentTableProps) {

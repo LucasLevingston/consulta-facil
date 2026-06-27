@@ -23,15 +23,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUpdateAddress } from "@/hooks/api/doctors/use-update-address";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import {
 	type UpdateAddressInput,
 	updateAddressSchema,
 } from "@/lib/schemas/doctor/update-address.schema";
-
-interface AddressFormProps {
-	professional: ProfessionalResponse;
-}
+import type { AddressFormProps } from "./AddressForm.types";
 
 export function AddressForm({ professional }: AddressFormProps) {
 	const { mutate, isPending } = useUpdateAddress();

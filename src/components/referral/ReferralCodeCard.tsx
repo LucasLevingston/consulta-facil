@@ -1,11 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CopyReferralButton } from "./CopyReferralButton";
-
-interface ReferralCodeCardProps {
-	code: string;
-	isLoading?: boolean;
-}
+import type { ReferralCodeCardProps } from "./ReferralCodeCard.types";
 
 export function ReferralCodeCard({ code, isLoading }: ReferralCodeCardProps) {
 	if (isLoading) {

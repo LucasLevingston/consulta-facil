@@ -8,14 +8,10 @@ import { StatCard } from "@/components/StatCard";
 import { makeColumns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
 import { Input } from "@/components/ui/input";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-
-interface AppointmentsDashboardProps {
-	appointments: AppointmentResponse[];
-}
+import type { AppointmentsDashboardProps } from "./AppointmentDashboard.types";
 
 const AppointmentsDashboard = ({
 	appointments,

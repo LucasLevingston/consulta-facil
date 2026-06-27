@@ -1,9 +1,6 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-interface FeatureBadgeProps {
-	value: string;
-}
+import type { FeatureBadgeProps } from "./FeatureBadge.types";
 
 export function FeatureBadge({ value }: FeatureBadgeProps) {
 	if (value === "true") {

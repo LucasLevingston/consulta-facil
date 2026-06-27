@@ -9,11 +9,7 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { type EmailInput, emailSchema } from "@/lib/schemas/auth/email.schema";
-
-interface MagicLinkRequestFormProps {
-	onSubmit: (email: string) => Promise<void>;
-	isPending: boolean;
-}
+import type { MagicLinkRequestFormProps } from "./MagicLinkRequestForm.types";
 
 export default function MagicLinkRequestForm({
 	onSubmit,

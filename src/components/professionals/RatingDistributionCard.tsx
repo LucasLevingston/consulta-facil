@@ -3,11 +3,7 @@
 import { Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
-
-interface RatingDistributionCardProps {
-	ratings: ProfessionalRating;
-}
+import type { RatingDistributionCardProps } from "./RatingDistributionCard.types";
 
 export function RatingDistributionCard({
 	ratings,

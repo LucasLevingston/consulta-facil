@@ -1,16 +1,14 @@
 import { Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils/cn";
-
+import type { SubmitButtonProps } from "./SubmitButton.types";
 import { Button } from "./ui/button";
 
-interface ButtonProps {
-	isLoading: boolean;
-	className?: string;
-	children: React.ReactNode;
-}
-
-const SubmitButton = ({ isLoading, className, children }: ButtonProps) => {
+const SubmitButton = ({
+	isLoading,
+	className,
+	children,
+}: SubmitButtonProps) => {
 	return (
 		<Button
 			type="submit"

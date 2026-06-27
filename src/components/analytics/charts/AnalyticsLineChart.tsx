@@ -7,15 +7,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { TimeSeries } from "@/lib/schemas/analytics/analytics.schema";
-
-interface AnalyticsLineChartProps {
-	data: TimeSeries[];
-	dataKey?: string;
-	label?: string;
-	color?: string;
-	valueFormatter?: (v: number) => string;
-}
+import type { AnalyticsLineChartProps } from "./AnalyticsLineChart.types";
 
 export function AnalyticsLineChart({
 	data,

@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -11,16 +10,11 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import {
 	type RescheduleAppointmentInput,
 	rescheduleAppointmentSchema,
 } from "@/lib/schemas/appointment/reschedule-appointment.schema";
-
-interface RescheduleAppointmentFormProps {
-	appointment: AppointmentResponse;
-	setOpen: Dispatch<SetStateAction<boolean>>;
-}
+import type { RescheduleAppointmentFormProps } from "./RescheduleAppointmentForm.types";
 
 export function RescheduleAppointmentForm({
 	appointment,

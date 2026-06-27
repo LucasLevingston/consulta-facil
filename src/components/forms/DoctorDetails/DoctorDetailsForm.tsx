@@ -13,20 +13,13 @@ import { CustomSubmitButton } from "@/components/custom/forms-components/custom-
 import { Form } from "@/components/ui/form";
 import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
 import { useUpdateProfessional } from "@/hooks/api/doctors/use-update-professional";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { GenderOptions } from "@/utils/constants/gender-options";
 import {
 	PROFESSION_SPECIALTIES,
 	professions,
 } from "@/utils/constants/profession-specialties";
+import type { DoctorDetailsProps } from "./DoctorDetailsForm.types";
 import { DoctorFormValidation } from "./FormValidation";
-
-interface DoctorDetailsProps {
-	userId: string;
-	userEmail: string;
-	type: "edit" | "create";
-	defaultData?: ProfessionalResponse;
-}
 
 function DoctorDetailsForm({
 	userId,

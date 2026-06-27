@@ -1,6 +1,5 @@
-import Image, { type ImageProps } from "next/image";
-
-type LogoIconProps = Omit<ImageProps, "src" | "alt">;
+import Image from "next/image";
+import type { LogoIconProps } from "./logo-icon.types";
 
 export const LogoIcon = (props: LogoIconProps) => {
 	return (

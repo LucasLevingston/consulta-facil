@@ -1,19 +1,13 @@
 "use client";
 
 import { Star } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useRateAppointment } from "@/hooks/api/appointments/use-rate-appointment";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-
-interface RateAppointmentFormProps {
-	appointment: AppointmentResponse;
-	setOpen: Dispatch<SetStateAction<boolean>>;
-}
+import type { RateAppointmentFormProps } from "./RateAppointmentForm.types";
 
 export function RateAppointmentForm({
 	appointment,

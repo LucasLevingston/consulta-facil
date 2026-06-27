@@ -1,13 +1,8 @@
 import { Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { WalletResponse } from "@/lib/schemas/billing/wallet.schema";
 import { WalletBalance } from "./WalletBalance";
-
-interface WalletCardProps {
-	wallet?: WalletResponse;
-	isLoading?: boolean;
-}
+import type { WalletCardProps } from "./WalletCard.types";
 
 export function WalletCard({ wallet, isLoading }: WalletCardProps) {
 	return (

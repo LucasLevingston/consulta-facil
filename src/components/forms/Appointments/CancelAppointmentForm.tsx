@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
@@ -12,13 +11,8 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { cancelAppointmentSchema } from "@/lib/schemas/appointment/cancel-appointment.schema";
-
-interface CancelAppointmentFormProps {
-	appointment: AppointmentResponse;
-	setOpen: Dispatch<SetStateAction<boolean>>;
-}
+import type { CancelAppointmentFormProps } from "./CancelAppointmentForm.types";
 
 export function CancelAppointmentForm({
 	appointment,

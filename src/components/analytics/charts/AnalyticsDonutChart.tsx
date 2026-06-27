@@ -7,7 +7,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { Breakdown } from "@/lib/schemas/analytics/analytics.schema";
+import type { AnalyticsDonutChartProps } from "./AnalyticsDonutChart.types";
 
 const COLORS = [
 	"hsl(var(--chart-1))",
@@ -16,10 +16,6 @@ const COLORS = [
 	"hsl(var(--chart-4))",
 	"hsl(var(--chart-5))",
 ];
-
-interface AnalyticsDonutChartProps {
-	data: Breakdown[];
-}
 
 export function AnalyticsDonutChart({ data }: AnalyticsDonutChartProps) {
 	const config: ChartConfig = Object.fromEntries(
