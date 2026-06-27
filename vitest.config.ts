@@ -108,6 +108,7 @@ export default defineConfig({
 				"src/components/clinics/**",
 				"src/hooks/use-clinics-filters.ts",
 				"src/hooks/use-lab-filters.ts",
+				"src/hooks/use-professionals-filters.ts",
 				"src/components/dependents/**",
 				"src/components/exams/**",
 				"src/components/laboratories/**",
