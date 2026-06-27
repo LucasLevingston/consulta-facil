@@ -1,13 +1,10 @@
+import type { WalletBalanceProps } from "./WalletBalance.types";
+
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {
 		style: "currency",
 		currency: "BRL",
 	}).format(n);
-
-interface WalletBalanceProps {
-	balance: number;
-	pendingBalance: number;
-}
 
 export function WalletBalance({ balance, pendingBalance }: WalletBalanceProps) {
 	return (

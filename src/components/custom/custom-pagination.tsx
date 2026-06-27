@@ -4,16 +4,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
 import { getPageNumbers } from "@/lib/utils/get-page-numbers";
-
-interface CustomPaginationProps {
-	/** Current page, 0-indexed */
-	currentPage: number;
-	totalPages: number;
-	onPageChange: (page: number) => void;
-	className?: string;
-	/** Show "Página X de Y" label. Default: true */
-	showInfo?: boolean;
-}
+import type { CustomPaginationProps } from "./custom-pagination.types";
 
 export function CustomPagination({
 	currentPage,

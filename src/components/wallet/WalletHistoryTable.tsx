@@ -6,10 +6,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type {
-	WalletTransactionResponse,
-	WalletTransactionType,
-} from "@/lib/schemas/billing/wallet.schema";
+import type { WalletTransactionType } from "@/lib/schemas/billing/wallet.schema";
+import type { WalletHistoryTableProps } from "./WalletHistoryTable.types";
 
 const TYPE_LABELS: Record<WalletTransactionType, string> = {
 	REFERRAL_COMMISSION: "Comissao de Indicacao",
@@ -23,10 +21,6 @@ const brl = (n: number) =>
 		style: "currency",
 		currency: "BRL",
 	}).format(n);
-
-interface WalletHistoryTableProps {
-	transactions: WalletTransactionResponse[];
-}
 
 export function WalletHistoryTable({ transactions }: WalletHistoryTableProps) {
 	if (transactions.length === 0) {

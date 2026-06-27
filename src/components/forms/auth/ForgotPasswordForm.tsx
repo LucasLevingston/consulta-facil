@@ -9,11 +9,7 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
 import { type EmailInput, emailSchema } from "@/lib/schemas/auth/email.schema";
-
-interface ForgotPasswordFormProps {
-	onSubmit: (email: string) => Promise<void>;
-	isPending: boolean;
-}
+import type { ForgotPasswordFormProps } from "./ForgotPasswordForm.types";
 
 export default function ForgotPasswordForm({
 	onSubmit,

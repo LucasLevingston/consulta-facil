@@ -17,12 +17,8 @@ import {
 import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
 import { usePermission } from "@/hooks/use-permission";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { useUserStore } from "@/store/useUserStore";
-
-interface AppointmentActionsProps {
-	appointment: AppointmentResponse;
-}
+import type { AppointmentActionsProps } from "./AppointmentActions.types";
 
 export function AppointmentActions({ appointment }: AppointmentActionsProps) {
 	const [cancelOpen, setCancelOpen] = useState(false);

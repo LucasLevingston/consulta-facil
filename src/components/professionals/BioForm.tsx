@@ -22,15 +22,11 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useUpdateBio } from "@/hooks/api/doctors/use-update-bio";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import {
 	type UpdateBioInput,
 	updateBioSchema,
 } from "@/lib/schemas/doctor/update-bio.schema";
-
-interface BioFormProps {
-	professional: ProfessionalResponse;
-}
+import type { BioFormProps } from "./BioForm.types";
 
 export function BioForm({ professional }: BioFormProps) {
 	const { mutate, isPending } = useUpdateBio();

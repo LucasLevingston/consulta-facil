@@ -5,13 +5,7 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { convertFileToUrl } from "@/lib/utils/convert-file-to-url";
-
-type FileUploaderProps = {
-	files: File[] | undefined;
-	onChange: (files: File[]) => void;
-	imageProfile?: boolean;
-	currentFile?: string;
-};
+import type { FileUploaderProps } from "./FileUploader.types";
 
 export const FileUploader = ({
 	files,

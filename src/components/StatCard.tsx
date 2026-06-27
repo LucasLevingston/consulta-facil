@@ -1,16 +1,7 @@
 "use client";
 
-import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
 import { cn } from "@/lib/utils/cn";
-
-type StatCardProps = {
-	type?: AppointmentStatus;
-	count: number;
-	label: string;
-	icon: string;
-	onClick?: () => void;
-	onActive: boolean;
-};
+import type { StatCardProps } from "./StatCard.types";
 
 const statusStyles: Record<
 	string,

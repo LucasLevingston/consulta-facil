@@ -17,6 +17,7 @@ import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
 import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
 import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
+import type { ExamCardProps } from "./ExamCard.types";
 
 const STATUS_CONFIG: Record<
 	ExamRequestResponse["status"],
@@ -27,12 +28,6 @@ const STATUS_CONFIG: Record<
 	UPLOADED: { label: "Enviado", variant: "default" },
 	REVIEWED: { label: "Analisado", variant: "outline" },
 };
-
-interface ExamCardProps {
-	exam: ExamRequestResponse;
-	isPatient: boolean;
-	isProfessional: boolean;
-}
 
 export function ExamCard({ exam, isPatient, isProfessional }: ExamCardProps) {
 	const { mutateAsync: upload } = useUploadExamResult();

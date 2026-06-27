@@ -4,8 +4,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { DoctorsMapInnerProps } from "./DoctorsMapInner.types";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -15,12 +15,6 @@ const markerIcon = L.icon({
 	popupAnchor: [1, -34],
 	shadowSize: [41, 41],
 });
-
-interface DoctorsMapInnerProps {
-	doctors: ProfessionalResponse[];
-	center?: [number, number];
-	zoom?: number;
-}
 
 export default function DoctorsMapInner({
 	doctors,

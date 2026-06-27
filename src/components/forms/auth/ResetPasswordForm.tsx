@@ -11,11 +11,7 @@ import {
 	type ResetPasswordInput,
 	resetPasswordSchema,
 } from "@/lib/schemas/auth/reset-password.schema";
-
-interface ResetPasswordFormProps {
-	onSubmit: (newPassword: string) => Promise<void>;
-	isPending: boolean;
-}
+import type { ResetPasswordFormProps } from "./ResetPasswordForm.types";
 
 export default function ResetPasswordForm({
 	onSubmit,

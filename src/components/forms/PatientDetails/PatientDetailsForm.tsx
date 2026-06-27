@@ -10,20 +10,12 @@ import { Form } from "@/components/ui/form";
 import { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
 import { PatientFormValidation } from "./FormValidation";
 import { PatientConsentSection } from "./PatientConsentSection";
+import type { PatientDetailsProps } from "./PatientDetailsForm.types";
 import { PatientIdentificationSection } from "./PatientIdentificationSection";
 import { PatientMedicalSection } from "./PatientMedicalSection";
 import { PatientPersonalSection } from "./PatientPersonalSection";
 
 import "react-datepicker/dist/react-datepicker.css";
-
-type PatientDefaultData = Partial<z.infer<typeof PatientFormValidation>>;
-
-interface PatientDetailsProps {
-	userId: string;
-	userEmail: string;
-	type: "edit" | "create";
-	defaultData?: PatientDefaultData;
-}
 
 const PatientDetailsForm = ({
 	userId: _userId,

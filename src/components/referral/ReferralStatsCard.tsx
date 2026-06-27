@@ -1,15 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import type { ReferralStatsResponse } from "@/lib/schemas/billing/referral.schema";
+import type { ReferralStatsCardProps } from "./ReferralStatsCard.types";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {
 		style: "currency",
 		currency: "BRL",
 	}).format(n);
-
-interface ReferralStatsCardProps {
-	stats: ReferralStatsResponse;
-}
 
 export function ReferralStatsCard({ stats }: ReferralStatsCardProps) {
 	const items = [

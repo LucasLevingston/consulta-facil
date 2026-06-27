@@ -20,16 +20,12 @@ import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professiona
 import { useUserStore } from "@/store/useUserStore";
 import { adminCards } from "./admin-cards";
 import { AppointmentsList } from "./appointments-list";
+import type { DashboardProps } from "./Dashboard.types";
 import { ProfessionalHeroSubtitle } from "./ProfessionalHeroSubtitle";
 import { patientCards } from "./patient-cards";
 import { professionalCards } from "./professional-cards";
 import { QuickAccessCard } from "./QuickAccessCard";
 import { StatCard } from "./stat-card";
-
-interface DashboardProps {
-	firstName: string;
-	userRole: "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
-}
 
 export function Dashboard({ firstName, userRole }: DashboardProps) {
 	const { user } = useUserStore();

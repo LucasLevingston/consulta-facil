@@ -5,17 +5,13 @@ import { api } from "@/config/api";
 import { env } from "@/env";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 import type { AnamnesisMessage } from "@/lib/types/ai";
+import { INITIAL_ANAMNESIS_MESSAGE } from "@/utils/constants/anamnesis-initial-message";
 
 type ChatMessage = AnamnesisMessage & { id: string };
 
 function makeMsg(role: AnamnesisMessage["role"], content: string): ChatMessage {
 	return { id: `${Date.now()}-${Math.random()}`, role, content };
 }
-
-export const INITIAL_ANAMNESIS_MESSAGE = makeMsg(
-	"assistant",
-	"Olá! Sou seu assistente de anamnese. Vou fazer algumas perguntas para ajudar o profissional a entender melhor sua situação antes da consulta. As informações ficam registradas apenas no seu prontuário.\n\nPrimeiro, qual é sua queixa principal hoje? O que motivou essa consulta?",
-);
 
 export function useAnamnesisChat() {
 	const [messages, setMessages] = useState<ChatMessage[]>([

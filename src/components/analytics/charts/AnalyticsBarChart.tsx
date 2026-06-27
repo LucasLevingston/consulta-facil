@@ -7,12 +7,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { Breakdown } from "@/lib/schemas/analytics/analytics.schema";
-
-interface AnalyticsBarChartProps {
-	data: Breakdown[];
-	color?: string;
-}
+import type { AnalyticsBarChartProps } from "./AnalyticsBarChart.types";
 
 export function AnalyticsBarChart({
 	data,

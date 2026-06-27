@@ -5,6 +5,11 @@ import L from "leaflet";
 import { useEffect, useRef } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 
+import type {
+	ClickHandlerProps,
+	LocationPickerInnerProps,
+} from "./LocationPickerInner.types";
+
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
 	shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -14,10 +19,6 @@ const markerIcon = L.icon({
 	shadowSize: [41, 41],
 });
 
-interface ClickHandlerProps {
-	onLocationSelect: (lat: number, lng: number) => void;
-}
-
 function ClickHandler({ onLocationSelect }: ClickHandlerProps) {
 	useMapEvents({
 		click(e) {
@@ -25,12 +26,6 @@ function ClickHandler({ onLocationSelect }: ClickHandlerProps) {
 		},
 	});
 	return null;
-}
-
-interface LocationPickerInnerProps {
-	lat: number | null;
-	lng: number | null;
-	onLocationSelect: (lat: number, lng: number) => void;
 }
 
 export default function LocationPickerInner({

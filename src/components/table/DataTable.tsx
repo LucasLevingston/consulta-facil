@@ -1,7 +1,6 @@
 "use client";
 
 import {
-	type ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	getPaginationRowModel,
@@ -16,12 +15,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-
-interface DataTableProps<TData> {
-	// biome-ignore lint/suspicious/noExplicitAny: tanstack table requires any for column value type
-	columns: ColumnDef<TData, any>[];
-	data: TData[];
-}
+import type { DataTableProps } from "./DataTable.types";
 
 export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
 	const table = useReactTable({

@@ -1,11 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-
-interface StatCardProps {
-	icon: React.ReactNode;
-	count: number;
-	label: string;
-	colorClass: string;
-}
+import type { StatCardProps } from "./stat-card.types";
 
 export function StatCard({ icon, count, label, colorClass }: StatCardProps) {
 	return (

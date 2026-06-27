@@ -1,13 +1,9 @@
 "use client";
 
-import type { ElementType } from "react";
 import { cn } from "@/lib/utils/cn";
 import { getIconByFormName } from "@/utils/get-icon-by-form-name";
 import { Input } from "../ui/input";
-
-type CustomInputProps = React.ComponentProps<typeof Input> & {
-	icon?: ElementType;
-};
+import type { CustomInputProps } from "./custom-input.types";
 
 export const CustomInput = ({
 	icon: Icon,

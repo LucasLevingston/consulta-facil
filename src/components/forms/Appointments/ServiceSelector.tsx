@@ -4,13 +4,7 @@ import { AlertTriangle, Stethoscope } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
-
-interface ServiceSelectorProps {
-	professionalId: string;
-	consultationPrice: number | null | undefined;
-	value: string | null;
-	onChange: (id: string | null) => void;
-}
+import type { ServiceSelectorProps } from "./ServiceSelector.types";
 
 function formatPrice(price: number): string {
 	return price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });

@@ -2,7 +2,6 @@
 
 import { Check, ChevronsUpDown, Search, Stethoscope, X } from "lucide-react";
 import { useState } from "react";
-import type { Control } from "react-hook-form";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,21 +23,9 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { cn } from "@/lib/utils/cn";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-
-interface ProfessionalStepProps {
-	control: Control<AppointmentFormValues>;
-	professionals: ProfessionalResponse[];
-	professionalsLoading: boolean;
-	professionalIdParam: string | null;
-	selectedProfessional: ProfessionalResponse | undefined;
-	initialSpecialtyFilter?: string;
-	onDoctorSelect: () => void;
-	onDoctorClear: () => void;
-}
+import type { ProfessionalStepProps } from "./ProfessionalStep.types";
 
 function getInitials(name: string | null | undefined): string {
 	return (

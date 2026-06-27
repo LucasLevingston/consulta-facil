@@ -30,16 +30,12 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useUpdateCouncil } from "@/hooks/api/doctors/use-update-council";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import {
 	councilTypeOptions,
 	type UpdateCouncilInput,
 	updateCouncilSchema,
 } from "@/lib/schemas/doctor/update-council.schema";
-
-interface CouncilFormProps {
-	professional: ProfessionalResponse;
-}
+import type { CouncilFormProps } from "./CouncilForm.types";
 
 export function CouncilForm({ professional }: CouncilFormProps) {
 	const { mutate, isPending } = useUpdateCouncil();

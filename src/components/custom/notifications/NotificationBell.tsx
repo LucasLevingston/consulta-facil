@@ -18,9 +18,9 @@ import { useDeclineInvite } from "@/hooks/api/notifications/use-decline-invite";
 import { useMarkAllAsRead } from "@/hooks/api/notifications/use-mark-all-as-read";
 import { useNotifications } from "@/hooks/api/notifications/use-notifications";
 import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
-import type { NotificationResponse } from "@/lib/schemas/notification/notification.schema";
 import { cn } from "@/lib/utils/cn";
 import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
+import type { NotificationItemProps } from "./NotificationBell.types";
 
 function timeAgo(dateStr: string) {
 	const diff = Date.now() - new Date(dateStr).getTime();
@@ -30,10 +30,6 @@ function timeAgo(dateStr: string) {
 	const hrs = Math.floor(mins / 60);
 	if (hrs < 24) return `${hrs}h atrás`;
 	return `${Math.floor(hrs / 24)}d atrás`;
-}
-
-interface NotificationItemProps {
-	notification: NotificationResponse;
 }
 
 function NotificationItem({ notification }: NotificationItemProps) {

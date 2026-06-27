@@ -3,7 +3,6 @@
 import { format, setHours, setMinutes } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon, Check, Clock, Users } from "lucide-react";
-import type { Control } from "react-hook-form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -18,25 +17,10 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { cn } from "@/lib/utils/cn";
+import type { DateTimeStepProps } from "./DateTimeStep.types";
 
-export type TimeSlot = { label: string; hours: number; minutes: number };
-
-interface DateTimeStepProps {
-	control: Control<AppointmentFormValues>;
-	selectedProfessional: ProfessionalResponse | undefined;
-	scheduleLoading: boolean;
-	availableSlots: TimeSlot[];
-	bookedTimesForDate: Set<string>;
-	isQueueMode: boolean;
-	isDayDisabled: (date: Date) => boolean;
-	selectedDate: Date | undefined;
-	selectedTime: string;
-	onTimeSelect: (slot: TimeSlot) => void;
-	onDateChange: () => void;
-}
+export type { TimeSlot } from "./DateTimeStep.types";
 
 export function DateTimeStep({
 	control,

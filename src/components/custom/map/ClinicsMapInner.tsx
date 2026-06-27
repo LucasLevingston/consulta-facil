@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicsMapInnerProps } from "./ClinicsMapInner.types";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -14,12 +14,6 @@ const markerIcon = L.icon({
 	popupAnchor: [1, -34],
 	shadowSize: [41, 41],
 });
-
-interface ClinicsMapInnerProps {
-	clinics: ClinicResponse[];
-	center?: [number, number];
-	zoom?: number;
-}
 
 export default function ClinicsMapInner({
 	clinics,

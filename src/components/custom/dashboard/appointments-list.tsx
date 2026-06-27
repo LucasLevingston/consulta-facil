@@ -2,15 +2,8 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { AppointmentRow } from "./appointment-row";
-
-interface AppointmentsListProps {
-	appointments: AppointmentResponse[];
-	isProfessional: boolean;
-	onConfirm?: (id: string) => void;
-	onComplete?: (id: string) => void;
-}
+import type { AppointmentsListProps } from "./appointments-list.types";
 
 export function AppointmentsList({
 	appointments,

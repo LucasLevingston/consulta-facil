@@ -12,13 +12,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
-
-interface ClinicCardProps {
-	clinic: ClinicResponse;
-}
+import type { ClinicCardProps } from "./ClinicCard.types";
 
 export default function ClinicCard({ clinic }: ClinicCardProps) {
 	const memberCount = clinic.members?.length ?? 0;

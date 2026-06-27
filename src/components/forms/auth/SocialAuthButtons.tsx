@@ -3,12 +3,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils/cn";
-
-interface SocialAuthButtonsProps {
-	onGoogleClick: () => void;
-	googleDisabled?: boolean;
-	googleLoading?: boolean;
-}
+import type { SocialAuthButtonsProps } from "./SocialAuthButtons.types";
 
 export default function SocialAuthButtons({
 	onGoogleClick,

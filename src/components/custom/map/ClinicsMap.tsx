@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicsMapProps } from "./ClinicsMap.types";
 
 const ClinicsMapInner = dynamic(() => import("./ClinicsMapInner"), {
 	ssr: false,
@@ -12,13 +12,6 @@ const ClinicsMapInner = dynamic(() => import("./ClinicsMapInner"), {
 		</div>
 	),
 });
-
-interface ClinicsMapProps {
-	clinics: ClinicResponse[];
-	center?: [number, number];
-	zoom?: number;
-	className?: string;
-}
 
 export function ClinicsMap({
 	clinics,

@@ -23,15 +23,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/store/auth.store";
-
-interface HeaderDropdownProps {
-	user: {
-		id: string;
-		email: string;
-		role: "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
-		imageUrl?: string | null;
-	};
-}
+import type { HeaderDropdownProps } from "./header-dropdown.types";
 
 export function HeaderDropdown({ user }: HeaderDropdownProps) {
 	const { logout } = useAuthStore();

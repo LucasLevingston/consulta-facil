@@ -1,7 +1,6 @@
 "use client";
 
 import { FileText } from "lucide-react";
-import type { Control } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
 import {
 	FormControl,
@@ -11,11 +10,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
-
-interface DetailsStepProps {
-	control: Control<AppointmentFormValues>;
-}
+import type { DetailsStepProps } from "./DetailsStep.types";
 
 export function DetailsStep({ control }: DetailsStepProps) {
 	return (
