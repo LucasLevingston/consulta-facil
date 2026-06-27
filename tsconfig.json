@@ -60,8 +60,14 @@
       "@cf/schedule/*": [
         "./src/features/schedule/*"
       ],
+      "@cf/plans/*": [
+        "./src/features/plans/*"
+      ],
       "@cf/services/*": [
         "./src/features/services/*"
+      ],
+      "@cf/subscriptions/*": [
+        "./src/features/subscriptions/*"
       ]
     }
   },
