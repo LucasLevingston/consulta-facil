@@ -2,20 +2,15 @@ import { api } from "@/config/api";
 import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 import type { PatientProfile } from "@/lib/schemas/patient/patient-profile.schema";
 import type { UpdatePatientInput } from "@/lib/schemas/patient/update-patient.schema";
+import type {
+	PatientSummary,
+	ProfessionalPatientsParams,
+} from "./patient-profile.api.types";
 
-export interface PatientSummary {
-	id: string;
-	name: string;
-	lastAppointment: string;
-	totalAppointments: number;
-}
-
-export interface ProfessionalPatientsParams {
-	page?: number;
-	size?: number;
-	search?: string;
-	sort?: "name" | "recent";
-}
+export type {
+	PatientSummary,
+	ProfessionalPatientsParams,
+} from "./patient-profile.api.types";
 
 export const patientProfileApi = {
 	getMyProfile: async (): Promise<PatientProfile> => {

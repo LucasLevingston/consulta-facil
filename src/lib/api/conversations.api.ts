@@ -1,15 +1,8 @@
 import { api } from "@/config/api";
-import type {
-	ConversationResponse,
-	MessageResponse,
-} from "@/lib/schemas/messaging/message.schema";
+import type { ConversationResponse } from "@/lib/schemas/messaging/message.schema";
+import type { MessagesPage } from "./conversations.api.types";
 
-export interface MessagesPage {
-	content: MessageResponse[];
-	totalPages: number;
-	totalElements: number;
-	number: number;
-}
+export type { MessagesPage } from "./conversations.api.types";
 
 export const conversationsApi = {
 	list: async (): Promise<ConversationResponse[]> => {

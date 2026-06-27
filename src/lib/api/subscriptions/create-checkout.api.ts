@@ -1,9 +1,7 @@
 import { api } from "@/config/api";
+import type { CheckoutResponse } from "./create-checkout.api.types";
 
-export interface CheckoutResponse {
-	checkoutUrl: string;
-	preferenceId: string;
-}
+export type { CheckoutResponse } from "./create-checkout.api.types";
 
 export async function createCheckoutApi(
 	planId: string,
