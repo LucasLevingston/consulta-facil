@@ -8,8 +8,10 @@ import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscr
 import { cn } from "@/lib/utils/cn";
 
 import { PLAN_LABELS } from "@/utils/constants/plan-labels";
-import { SUBSCRIPTION_STATUS_COLOR } from "./subscription-status-color";
-import { SUBSCRIPTION_STATUS_LABEL } from "./subscription-status-label";
+import {
+	SUBSCRIPTION_STATUS_COLOR,
+	SUBSCRIPTION_STATUS_LABEL,
+} from "@/utils/constants/subscription-status";
 
 interface SubscriptionBannerProps {
 	subscription: SubscriptionResponse;
