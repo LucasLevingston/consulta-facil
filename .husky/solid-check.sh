@@ -1,0 +1,78 @@
+#!/bin/sh
+MAX_LINES=300
+FOUND=0
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+
+for file in $staged; do
+  case "$file" in *.ts|*.tsx|*.js|*.jsx) ;; *) continue ;; esac
+
+  content=$(git show ":$file" 2>/dev/null)
+
+  # 1. Tamanho
+  lines=$(printf '%s\n' "$content" | wc -l)
+  if [ "$lines" -gt "$MAX_LINES" ]; then
+    echo "BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
+    echo "  Divida: custom hooks, services, sub-components, utils"
+    FOUND=1
+  fi
+
+  # 2. Constantes uppercase fora de constants/
+  case "$file" in
+    *constants*|*Constants*)
+      ;;
+    *)
+      n=$(printf '%s\n' "$content" | grep -E "^export const [A-Z][A-Z0-9_]{2,}" | wc -l)
+      if [ "$n" -gt 0 ]; then
+        echo "BLOCKED [CONSTANTS] $file — $n constante(s) uppercase fora de constants/"
+        echo "  Mova para src/constants/ ou <feature>/constants.ts"
+        FOUND=1
+      fi
+      ;;
+  esac
+
+  # 3. Props/types inline em arquivo TSX
+  case "$file" in
+    *.tsx)
+      case "$file" in
+        *.types.*|*.props.*|*types.ts|*props.ts|*/ui/*)
+          ;;
+        *)
+          n=$(printf '%s\n' "$content" | grep -E "^(export )?(interface|type) [A-Za-z]+Props" | wc -l)
+          if [ "$n" -gt 0 ]; then
+            echo "BLOCKED [PROPS] $file — Props definidas inline"
+            echo "  Extraia para ${file%.tsx}.types.ts"
+            FOUND=1
+          fi
+          ;;
+      esac
+      ;;
+  esac
+
+  # 4. Funções utilitárias exportadas dentro de componente TSX
+  case "$file" in
+    *.tsx)
+      case "$file" in
+        */hooks/*|*utils*|*helpers*|*functions*)
+          ;;
+        *)
+          n=$(printf '%s\n' "$content" | grep -E "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" | wc -l)
+          if [ "$n" -gt 0 ]; then
+            echo "BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s) exportada(s) em componente"
+            echo "  Mova para utils/, helpers/ ou <feature>/utils.ts"
+            FOUND=1
+          fi
+          ;;
+      esac
+      ;;
+  esac
+
+done
+
+if [ "$FOUND" -eq 1 ]; then
+  echo ""
+  echo "Commit bloqueado. Mantenha separados: constants/ | *.types.ts | utils/ | componentes"
+  exit 1
+fi
+
+exit 0
