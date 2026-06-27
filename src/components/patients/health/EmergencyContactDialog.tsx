@@ -33,8 +33,9 @@ import {
 	emergencyContactSchema,
 	RELATIONSHIP_LABELS,
 } from "@/lib/schemas/patient/emergency-contact.schema";
+import type { ContactItem } from "./EmergencyContactDialog.types";
 
-export type ContactItem = EmergencyContactInput & { id?: string };
+export type { ContactItem } from "./EmergencyContactDialog.types";
 
 interface Props {
 	open: boolean;

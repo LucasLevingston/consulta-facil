@@ -1,14 +1,10 @@
 import { api } from "@/config/api";
+import type { SubscriptionResponse } from "./get-my-subscription.api.types";
 
-export type SubscriptionStatus = "PENDING" | "ACTIVE" | "CANCELLED" | "EXPIRED";
-
-export interface SubscriptionResponse {
-	id: string;
-	planId: string;
-	status: SubscriptionStatus;
-	expiresAt: string | null;
-	createdAt: string;
-}
+export type {
+	SubscriptionResponse,
+	SubscriptionStatus,
+} from "./get-my-subscription.api.types";
 
 export async function getMySubscriptionApi(): Promise<SubscriptionResponse | null> {
 	const response = await api.get<SubscriptionResponse>("/subscriptions/me");

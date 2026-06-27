@@ -1,12 +1,7 @@
 import { api } from "@/config/api";
-import type { SubscriptionResponse } from "./get-my-subscription.api";
+import type { AdminSubscriptionResponse } from "./subscriptions.api.types";
 
-export interface AdminSubscriptionResponse extends SubscriptionResponse {
-	userId: string;
-	userEmail: string;
-	planName: string;
-	ownerType: "DOCTOR" | "CLINIC" | "LABORATORY";
-}
+export type { AdminSubscriptionResponse } from "./subscriptions.api.types";
 
 export const subscriptionsApi = {
 	adminListAll: async (): Promise<AdminSubscriptionResponse[]> => {
