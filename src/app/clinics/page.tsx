@@ -1,151 +1,25 @@
 "use client";
 
 import { Building2 } from "lucide-react";
-import { useMemo, useState } from "react";
 import { ClinicsFilters } from "@/components/clinics/ClinicsFilters";
 import ClinicCard from "@/components/custom/clinic/ClinicCard";
 import { ClinicsMap } from "@/components/custom/map/ClinicsMap";
 import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
-import { useClinics } from "@/hooks/api/clinics/use-clinics";
-import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
+import { useClinicsFilters } from "@/hooks/use-clinics-filters";
 import { QueryBoundary } from "@/providers/query-boundary";
-import type { DayKey } from "@/utils/constants/days-of-week";
-
-type ViewMode = "list" | "map";
 
 export default function ClinicsPage() {
-	const [viewMode, setViewMode] = useState<ViewMode>("list");
-	const [userLocation, setUserLocation] = useState<{
-		lat: number;
-		lng: number;
-	} | null>(null);
-	const [locationLoading, setLocationLoading] = useState(false);
-	const [radiusKm, setRadiusKm] = useState(50);
-
-	const [search, setSearch] = useState("");
-	const [filterState, setFilterState] = useState("");
-	const [filterCity, setFilterCity] = useState("");
-	const [filterSpecialty, setFilterSpecialty] = useState("");
-	const [filterProfession, setFilterProfession] = useState("");
-	const [selectedDays, setSelectedDays] = useState<DayKey[]>([]);
-	const [expanded, setExpanded] = useState(false);
-
-	const isNearbyMode = userLocation !== null;
-
+	const clinics = useClinicsFilters();
 	const {
-		data: allClinics = [],
-		isLoading: allLoading,
-		error: allError,
-	} = useClinics();
-
-	const {
-		data: nearbyClinics = [],
-		isLoading: nearbyLoading,
-		error: nearbyError,
-	} = useClinicsNearby(
-		userLocation?.lat ?? null,
-		userLocation?.lng ?? null,
-		radiusKm,
-	);
-
-	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
-	const error = isNearbyMode ? nearbyError : allError;
-
-	const availableStates = useMemo(
-		() =>
-			[
-				...new Set(allClinics.flatMap((c) => (c.state ? [c.state] : []))),
-			].sort(),
-		[allClinics],
-	);
-
-	const availableSpecialties = useMemo(
-		() =>
-			[
-				...new Set(
-					allClinics.flatMap((c) => c.members?.map((m) => m.specialty) ?? []),
-				),
-			].sort(),
-		[allClinics],
-	);
-
-	const availableProfessions = useMemo(
-		() =>
-			[
-				...new Set(
-					allClinics.flatMap((c) => c.members?.map((m) => m.role) ?? []),
-				),
-			].sort(),
-		[allClinics],
-	);
-
-	const baseList = isNearbyMode ? nearbyClinics : allClinics;
-
-	const displayed = useMemo(() => {
-		let result = baseList;
-
-		if (search.trim())
-			result = result.filter((c) =>
-				c.name.toLowerCase().includes(search.toLowerCase()),
-			);
-		if (filterState) result = result.filter((c) => c.state === filterState);
-		if (filterCity)
-			result = result.filter((c) =>
-				c.city?.toLowerCase().includes(filterCity.toLowerCase()),
-			);
-		if (filterSpecialty)
-			result = result.filter((c) =>
-				c.members?.some((m) => m.specialty === filterSpecialty),
-			);
-		if (filterProfession)
-			result = result.filter((c) =>
-				c.members?.some((m) => m.role === filterProfession),
-			);
-
-		return result;
-	}, [
-		baseList,
-		search,
-		filterState,
-		filterCity,
-		filterSpecialty,
-		filterProfession,
-	]);
-
-	const advancedCount = [
-		filterCity,
-		filterSpecialty,
-		filterProfession,
-		selectedDays.length > 0,
-	].filter(Boolean).length;
-	const totalActive =
-		[search, filterState].filter(Boolean).length + advancedCount;
-
-	function clearFilters() {
-		setSearch("");
-		setFilterState("");
-		setFilterCity("");
-		setFilterSpecialty("");
-		setFilterProfession("");
-		setSelectedDays([]);
-	}
-
-	function requestLocation() {
-		if (!navigator.geolocation) return;
-		setLocationLoading(true);
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				setUserLocation({
-					lat: pos.coords.latitude,
-					lng: pos.coords.longitude,
-				});
-				setViewMode("map");
-				setLocationLoading(false);
-			},
-			() => setLocationLoading(false),
-		);
-	}
+		filterState: fs,
+		location: loc,
+		derived,
+		actions,
+		displayed,
+		isLoading,
+		error,
+	} = clinics;
 
 	return (
 		<QueryBoundary isLoading={isLoading} error={error}>
@@ -157,39 +31,9 @@ export default function ClinicsPage() {
 				countLabel="clínica"
 			/>
 
-			<ClinicsFilters
-				search={search}
-				onSearchChange={setSearch}
-				filterState={filterState}
-				onStateChange={setFilterState}
-				filterCity={filterCity}
-				onCityChange={setFilterCity}
-				filterSpecialty={filterSpecialty}
-				onSpecialtyChange={setFilterSpecialty}
-				filterProfession={filterProfession}
-				onProfessionChange={setFilterProfession}
-				selectedDays={selectedDays}
-				onDaysChange={setSelectedDays}
-				availableStates={availableStates}
-				availableSpecialties={availableSpecialties}
-				availableProfessions={availableProfessions}
-				totalActive={totalActive}
-				advancedCount={advancedCount}
-				expanded={expanded}
-				onExpandedChange={setExpanded}
-				isNearbyMode={isNearbyMode}
-				radiusKm={radiusKm}
-				onRadiusChange={setRadiusKm}
-				locationLoading={locationLoading}
-				onRequestLocation={requestLocation}
-				onClearLocation={() => setUserLocation(null)}
-				onClearFilters={clearFilters}
-				viewMode={viewMode}
-				onViewModeChange={setViewMode}
-			/>
+			<ClinicsFilters hook={clinics} />
 
-			{/* Content */}
-			{viewMode === "map" ? (
+			{fs.viewMode === "map" ? (
 				<div className="space-y-3">
 					{displayed.filter((c) => c.latitude != null).length === 0 && (
 						<p className="text-sm text-muted-foreground">
@@ -200,9 +44,11 @@ export default function ClinicsPage() {
 					<ClinicsMap
 						clinics={displayed}
 						center={
-							userLocation ? [userLocation.lat, userLocation.lng] : undefined
+							loc.userLocation
+								? [loc.userLocation.lat, loc.userLocation.lng]
+								: undefined
 						}
-						zoom={userLocation ? 10 : 5}
+						zoom={loc.userLocation ? 10 : 5}
 						className="h-[520px] w-full"
 					/>
 				</div>
@@ -219,12 +65,12 @@ export default function ClinicsPage() {
 							<p className="mt-2 text-sm text-muted-foreground">
 								Tente ajustar os filtros ou buscar por outro termo.
 							</p>
-							{totalActive > 0 && (
+							{derived.totalActive > 0 && (
 								<Button
 									variant="outline"
 									size="sm"
 									className="mt-4"
-									onClick={clearFilters}
+									onClick={actions.clearFilters}
 								>
 									Limpar filtros
 								</Button>
