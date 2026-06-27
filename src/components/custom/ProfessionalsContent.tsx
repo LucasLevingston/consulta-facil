@@ -8,9 +8,7 @@ import {
 	Users,
 	X,
 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-
+import { useSearchParams } from "next/navigation";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
 import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
@@ -25,114 +23,27 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
-import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
-import { ITEMS_PER_PAGE } from "@/lib/utils/items-per-page";
+import { useProfessionalsFilters } from "@/hooks/use-professionals-filters";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
-
-type ViewMode = "list" | "map";
 
 export default function ProfessionalsContent() {
-	const router = useRouter();
 	const searchParams = useSearchParams();
-
-	const name = searchParams.get("name") ?? "";
-	const profession = searchParams.get("profession") ?? "";
-	const specialty = searchParams.get("specialty") ?? "";
-	const serviceTitle = searchParams.get("serviceTitle") ?? "";
-	const state = searchParams.get("state") ?? "";
 	const days = searchParams.get("days")?.split(",").filter(Boolean) ?? [];
-	const page = Number(searchParams.get("page") ?? "0");
-
-	const [viewMode, setViewMode] = useState<ViewMode>("list");
-	const [userLocation, setUserLocation] = useState<{
-		lat: number;
-		lng: number;
-	} | null>(null);
-	const [locationLoading, setLocationLoading] = useState(false);
-	const [radiusKm, setRadiusKm] = useState(50);
-
-	const isNearbyMode = userLocation !== null;
 
 	const {
-		data: pageData,
-		isLoading: listLoading,
-		error: listError,
-	} = useProfessionals(
-		page,
-		ITEMS_PER_PAGE,
-		profession,
-		specialty,
-		name,
-		serviceTitle,
-	);
-
-	const {
-		data: nearbyRaw = [],
-		isLoading: nearbyLoading,
-		error: nearbyError,
-	} = useProfessionalsNearby(
-		userLocation?.lat ?? null,
-		userLocation?.lng ?? null,
-		radiusKm,
-		specialty || undefined,
-		profession || undefined,
-	);
-
-	const isLoading = isNearbyMode ? nearbyLoading : listLoading;
-	const error = isNearbyMode ? nearbyError : listError;
-
-	// Client-side filters (state + days) applied on top of API results
-	const professionals = useMemo(() => {
-		let base = isNearbyMode ? nearbyRaw : (pageData?.content ?? []);
-
-		if (state) {
-			base = base.filter((p) => p.state === state);
-		}
-
-		// dayOfWeek filter: best-effort client-side (professionals don't include schedule in list)
-		// Kept as URL state so it reflects in badges; actual deep filter requires backend support
-
-		return base;
-	}, [isNearbyMode, nearbyRaw, pageData, state]);
-
-	const totalPages = pageData?.totalPages ?? 1;
-	const totalElements = isNearbyMode
-		? professionals.length
-		: state
-			? professionals.length
-			: (pageData?.totalElements ?? 0);
-
-	const professionalsWithLocation = professionals.filter(
-		(d) => d.latitude != null && d.longitude != null,
-	);
-
-	function goToPage(p: number) {
-		const params = new URLSearchParams(searchParams.toString());
-		params.set("page", String(p));
-		router.replace(`/professionals?${params.toString()}`);
-	}
-
-	function requestLocation() {
-		if (!navigator.geolocation) return;
-		setLocationLoading(true);
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				setUserLocation({
-					lat: pos.coords.latitude,
-					lng: pos.coords.longitude,
-				});
-				setViewMode("map");
-				setLocationLoading(false);
-			},
-			() => setLocationLoading(false),
-		);
-	}
-
-	function clearLocation() {
-		setUserLocation(null);
-	}
+		viewMode,
+		location: loc,
+		actions,
+		displayed,
+		professionalsWithLocation,
+		totalElements,
+		totalPages,
+		currentPage,
+		isNearbyMode,
+		isLoading,
+		error,
+		radiusOptions,
+	} = useProfessionalsFilters();
 
 	return (
 		<QueryBoundary isLoading={isLoading} error={error}>
@@ -149,18 +60,17 @@ export default function ProfessionalsContent() {
 					<DoctorFilters />
 
 					<div className="flex items-center gap-2 shrink-0">
-						{/* Nearby / location controls */}
 						{isNearbyMode ? (
 							<div className="flex items-center gap-2">
 								<Select
-									value={String(radiusKm)}
-									onValueChange={(v) => setRadiusKm(Number(v))}
+									value={String(loc.radiusKm)}
+									onValueChange={(v) => actions.setRadiusKm(Number(v))}
 								>
 									<SelectTrigger className="h-9 w-[100px] rounded-xl text-sm">
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent className="rounded-xl">
-										{RADIUS_OPTIONS.map(({ value, label }) => (
+										{radiusOptions.map(({ value, label }) => (
 											<SelectItem key={value} value={value}>
 												{label}
 											</SelectItem>
@@ -175,7 +85,7 @@ export default function ProfessionalsContent() {
 									Perto de você
 									<button
 										type="button"
-										onClick={clearLocation}
+										onClick={actions.clearLocation}
 										className="ml-0.5 hover:opacity-70 transition-opacity"
 									>
 										<X className="h-3.5 w-3.5" />
@@ -186,11 +96,11 @@ export default function ProfessionalsContent() {
 							<Button
 								variant="outline"
 								size="sm"
-								onClick={requestLocation}
-								disabled={locationLoading}
+								onClick={actions.requestLocation}
+								disabled={loc.locationLoading}
 								className="rounded-xl gap-2"
 							>
-								{locationLoading ? (
+								{loc.locationLoading ? (
 									<Loader2 className="h-4 w-4 animate-spin" />
 								) : (
 									<Navigation className="h-4 w-4" />
@@ -203,7 +113,7 @@ export default function ProfessionalsContent() {
 							<Button
 								variant={viewMode === "list" ? "default" : "ghost"}
 								size="sm"
-								onClick={() => setViewMode("list")}
+								onClick={() => actions.setViewMode("list")}
 								className="rounded-none"
 							>
 								<LayoutList className="h-4 w-4" />
@@ -211,7 +121,7 @@ export default function ProfessionalsContent() {
 							<Button
 								variant={viewMode === "map" ? "default" : "ghost"}
 								size="sm"
-								onClick={() => setViewMode("map")}
+								onClick={() => actions.setViewMode("map")}
 								className="rounded-none"
 							>
 								<MapIcon className="h-4 w-4" />
@@ -235,22 +145,24 @@ export default function ProfessionalsContent() {
 							</p>
 						)}
 						<DoctorsMap
-							doctors={professionals}
+							doctors={displayed}
 							center={
-								userLocation ? [userLocation.lat, userLocation.lng] : undefined
+								loc.userLocation
+									? [loc.userLocation.lat, loc.userLocation.lng]
+									: undefined
 							}
-							zoom={userLocation ? 10 : 5}
+							zoom={loc.userLocation ? 10 : 5}
 							className="h-[520px] w-full"
 						/>
 					</div>
 				) : (
 					<>
-						<DoctorsList doctors={professionals} />
+						<DoctorsList doctors={displayed} />
 						{!isNearbyMode && (
 							<CustomPagination
-								currentPage={page}
+								currentPage={currentPage}
 								totalPages={totalPages}
-								onPageChange={goToPage}
+								onPageChange={actions.goToPage}
 								className="pt-2"
 							/>
 						)}
