@@ -2,10 +2,7 @@
 
 import { cn } from "@/lib/utils/cn";
 import { Button } from "../ui/button";
-
-type CustomButtonProps = React.ComponentProps<typeof Button> & {
-	variant?: "default" | "outline" | "destructive" | "secondary" | "ghost";
-};
+import type { CustomButtonProps } from "./custom-button.types";
 
 const baseStyles =
 	"h-14 w-full min-w-32 max-w-[366px] rounded-full cursor-pointer font-semibold tracking-wide transition-all duration-300 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50";

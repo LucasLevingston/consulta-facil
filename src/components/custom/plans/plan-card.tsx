@@ -10,17 +10,8 @@ import {
 	CardFooter,
 	CardHeader,
 } from "@/components/ui/card";
-import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
 import { cn } from "@/lib/utils/cn";
-
-import type { Plan } from "./types";
-
-interface PlanCardProps {
-	plan: Plan;
-	subscription: SubscriptionResponse | null | undefined;
-	onSelect: (planId: string) => void;
-	isPending: boolean;
-}
+import type { PlanCardProps } from "./plan-card.types";
 
 const YEARLY_SAVINGS: Record<string, string> = {
 	yearly: "Economize R$ 179,88",

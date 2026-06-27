@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { DoctorsMapProps } from "./DoctorsMap.types";
 
 const DoctorsMapInner = dynamic(() => import("./DoctorsMapInner"), {
 	ssr: false,
@@ -12,13 +12,6 @@ const DoctorsMapInner = dynamic(() => import("./DoctorsMapInner"), {
 		</div>
 	),
 });
-
-interface DoctorsMapProps {
-	doctors: ProfessionalResponse[];
-	center?: [number, number];
-	zoom?: number;
-	className?: string;
-}
 
 export function DoctorsMap({
 	doctors,

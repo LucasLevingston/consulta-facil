@@ -14,41 +14,15 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils/cn";
+import type { CustomFilterProps } from "./custom-filter.types";
 
-export interface FilterSearchConfig {
-	placeholder?: string;
-	value: string;
-	onChange: (value: string) => void;
-}
-
-export interface FilterSelectOption {
-	label: string;
-	value: string;
-}
-
-export interface FilterSelectConfig {
-	id: string;
-	label: string;
-	placeholder?: string;
-	value: string;
-	onChange: (value: string) => void;
-	options: FilterSelectOption[];
-}
-
-export interface FilterSwitchConfig {
-	id: string;
-	label: string;
-	checked: boolean;
-	onChange: (checked: boolean) => void;
-}
-
-export interface CustomFilterProps {
-	search?: FilterSearchConfig;
-	selects?: FilterSelectConfig[];
-	switches?: FilterSwitchConfig[];
-	onReset?: () => void;
-	className?: string;
-}
+export type {
+	CustomFilterProps,
+	FilterSearchConfig,
+	FilterSelectConfig,
+	FilterSelectOption,
+	FilterSwitchConfig,
+} from "./custom-filter.types";
 
 function countActiveFilters(props: CustomFilterProps): number {
 	let count = 0;

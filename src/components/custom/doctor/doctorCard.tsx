@@ -13,14 +13,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
-
-interface DoctorCardProps {
-	doctor: ProfessionalResponse;
-	isActiveAppointmentButton?: boolean;
-}
+import type { DoctorCardProps } from "./doctorCard.types";
 
 export default function DoctorCard({
 	doctor,

@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import { CalendarIcon, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import type { UseFormReturn } from "react-hook-form";
 import { CustomInput } from "@/components/custom/custom-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -31,23 +30,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils/cn";
 import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
 import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
+import type { CustomFormFieldProps } from "./custom-form-field.types";
 import { FormFieldType } from "./form-field-type";
 
 export { FormFieldType } from "./form-field-type";
-
-interface CustomFormFieldProps {
-	// biome-ignore lint/suspicious/noExplicitAny: shared field component works with any form schema
-	form: UseFormReturn<any, any, any>;
-	name: string;
-	label?: string;
-	placeholder?: string;
-	fieldType: FormFieldType;
-	type?: string;
-	disabled?: boolean;
-	children?: React.ReactNode;
-	className?: string;
-	selectOptions?: { value: string; label: string }[];
-}
 
 export default function CustomFormField({
 	form,

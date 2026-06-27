@@ -1,13 +1,5 @@
 import { BellRing, Sparkles } from "lucide-react";
-import type { ReactNode } from "react";
-
-interface PageHeaderProps {
-	title: string;
-	description: string;
-	count?: number;
-	countLabel?: string;
-	icon?: ReactNode;
-}
+import type { PageHeaderProps } from "./page-header.types";
 
 const PageHeader = ({
 	title,

@@ -4,14 +4,9 @@ import { Loader2, Mic, MicOff, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useVoiceBooking } from "@/hooks/use-voice-booking";
-import type { VoiceBookingResult } from "@/lib/types/ai";
 import { cn } from "@/lib/utils/cn";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-
-interface VoiceBookingButtonProps {
-	onResult: (result: VoiceBookingResult) => void;
-	className?: string;
-}
+import type { VoiceBookingButtonProps } from "./voice-booking-button.types";
 
 export function VoiceBookingButton({
 	onResult,

@@ -3,6 +3,8 @@
 import { MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 
+import type { LocationPickerProps } from "./LocationPicker.types";
+
 const LocationPickerInner = dynamic(() => import("./LocationPickerInner"), {
 	ssr: false,
 	loading: () => (
@@ -11,13 +13,6 @@ const LocationPickerInner = dynamic(() => import("./LocationPickerInner"), {
 		</div>
 	),
 });
-
-interface LocationPickerProps {
-	lat: number | null;
-	lng: number | null;
-	onLocationSelect: (lat: number, lng: number) => void;
-	className?: string;
-}
 
 export function LocationPicker({
 	lat,

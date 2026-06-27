@@ -9,13 +9,7 @@ import {
 import { Mic, MicOff, Phone, Video, VideoOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { CustomButton } from "@/components/custom/custom-button";
-import type { VideoRoom as VideoRoomData } from "@/lib/schemas/video/video-room.schema";
-
-interface VideoRoomProps {
-	room: VideoRoomData;
-	onEnd: () => void;
-	isProfessional?: boolean;
-}
+import type { VideoRoomProps } from "./VideoRoom.types";
 
 function VideoControls({ onEnd }: { onEnd: () => void }) {
 	const daily = useDaily();

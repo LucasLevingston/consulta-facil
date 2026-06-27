@@ -6,10 +6,7 @@ import { useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAvatarUpload } from "@/hooks/use-avatar-upload";
 import { useUserStore } from "@/store/useUserStore";
-
-interface AvatarUploadProps {
-	size?: "sm" | "md" | "lg";
-}
+import type { AvatarUploadProps } from "./avatar-upload.types";
 
 const sizeMap = {
 	sm: {
