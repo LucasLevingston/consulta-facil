@@ -1,5 +1,5 @@
+import { PERMISSIONS } from "@/lib/constants/permissions";
 import type { PermissionKey } from "@/lib/permission-key";
-import { PERMISSIONS } from "@/lib/permissions";
 import { useUserStore } from "@/store/useUserStore";
 
 type Attrs = Record<string, unknown>;

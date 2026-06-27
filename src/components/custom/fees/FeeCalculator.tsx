@@ -7,11 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useFeeConfig } from "@/hooks/api/fees/use-fee-config";
-import {
-	calculateFees,
-	type FeePaymentMethod,
-	PAYMENT_METHOD_LABELS,
-} from "@/lib/utils/calculate-fees";
+import { PAYMENT_METHOD_LABELS } from "@/lib/constants/fee-payment-method-labels";
+import type { FeePaymentMethod } from "@/lib/types/fee-payment-method";
+import { calculateFees } from "@/lib/utils/calculate-fees";
 import { formatBRL } from "@/utils/format-brl";
 
 export function FeeCalculator() {

@@ -19,8 +19,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { BRAZILIAN_STATES } from "@/lib/utils/brazilian-states";
 import { cn } from "@/lib/utils/cn";
+import { BRAZILIAN_STATES } from "@/utils/constants/brazilian-states";
 import { DAYS } from "@/utils/constants/days-of-week";
 import { ALL } from "@/utils/constants/filter-sentinels";
 import { professions } from "@/utils/constants/profession-specialties";

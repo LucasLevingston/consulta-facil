@@ -4,24 +4,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
-import { ITEMS_PER_PAGE } from "@/lib/utils/items-per-page";
+import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
+import type {
+	ProfessionalsFiltersActions,
+	ProfessionalsLocationState,
+	ProfessionalsViewMode,
+} from "./use-professionals-filters.types";
 
-export type ProfessionalsViewMode = "list" | "map";
-
-export interface ProfessionalsLocationState {
-	userLocation: { lat: number; lng: number } | null;
-	locationLoading: boolean;
-	radiusKm: number;
-}
-
-export interface ProfessionalsFiltersActions {
-	setViewMode: (v: ProfessionalsViewMode) => void;
-	setRadiusKm: (v: number) => void;
-	requestLocation: () => void;
-	clearLocation: () => void;
-	goToPage: (p: number) => void;
-}
+export type {
+	ProfessionalsFiltersActions,
+	ProfessionalsLocationState,
+	ProfessionalsViewMode,
+} from "./use-professionals-filters.types";
 
 export interface UseProfessionalsFiltersReturn {
 	viewMode: ProfessionalsViewMode;
