@@ -8,6 +8,12 @@ echo "║        Verificações pré-commit       ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 
+# 0a. SOLID check
+echo "▶ [SOLID] Verificando violações SOLID/SRP..."
+sh "$(dirname "$0")/solid-check.sh"
+echo "✓ SOLID ok"
+echo ""
+
 # 0. Regenerar cliente API (orval) a partir do openapi.json local
 echo "▶ [0/4] Gerando integração API (orval)..."
 npm run api:generate
