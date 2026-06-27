@@ -1,4 +1,4 @@
-import type { PaymentMethod } from "./payment-method.schema";
+import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
 
 export const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
 	MERCADOPAGO: "MercadoPago",

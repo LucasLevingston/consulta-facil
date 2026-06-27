@@ -1,20 +1,6 @@
-import type { LucideIcon } from "lucide-react";
+import type { NavEntry, NavGroup, UserRole } from "./nav-registry.types";
 
-export type UserRole = "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
-
-export interface NavEntry {
-	roles: UserRole[];
-	label: string;
-	title: string;
-	url: string;
-	icon: LucideIcon;
-	tooltip?: string;
-}
-
-export interface NavGroup {
-	label: string;
-	items: Omit<NavEntry, "roles" | "label">[];
-}
+export type { NavEntry, NavGroup, UserRole } from "./nav-registry.types";
 
 const registry: NavEntry[] = [];
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PERMISSIONS } from "@/lib/permissions";
+import { PERMISSIONS } from "@/lib/constants/permissions";
 
 describe("PERMISSIONS — role-only rules", () => {
 	it("appointment:schedule — PATIENT allowed, PROFESSIONAL denied", () => {

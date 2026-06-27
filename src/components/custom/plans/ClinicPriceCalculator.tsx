@@ -12,9 +12,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { BASE_PRICE } from "@/utils/constants/base-price";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
-import { BASE_PRICE } from "../../../lib/utils/base-price";
 
 function calcMonthlyPrice(totalProfessionals: number): number {
 	const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);

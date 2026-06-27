@@ -2,13 +2,9 @@ import type {
 	FeeConfig,
 	PaymentMethodBreakdown,
 } from "@/lib/schemas/fees/fee-calculation.schema";
+import type { FeePaymentMethod } from "@/lib/types/fee-payment-method";
 
-export type FeePaymentMethod =
-	| "PIX"
-	| "CREDIT_CARD"
-	| "DEBIT_CARD"
-	| "CASH"
-	| "MERCADOPAGO";
+export type { FeePaymentMethod } from "@/lib/types/fee-payment-method";
 
 const MP_RATES: Record<FeePaymentMethod, (cfg: FeeConfig) => number> = {
 	PIX: (cfg) => cfg.pixFeeRate,
@@ -16,14 +12,6 @@ const MP_RATES: Record<FeePaymentMethod, (cfg: FeeConfig) => number> = {
 	MERCADOPAGO: (cfg) => cfg.creditCardFeeRate,
 	DEBIT_CARD: (cfg) => cfg.debitFeeRate,
 	CASH: () => 0,
-};
-
-export const PAYMENT_METHOD_LABELS: Record<FeePaymentMethod, string> = {
-	PIX: "PIX",
-	CREDIT_CARD: "Cartão de crédito",
-	DEBIT_CARD: "Cartão de débito",
-	CASH: "Dinheiro",
-	MERCADOPAGO: "MercadoPago",
 };
 
 const ALL_METHODS: FeePaymentMethod[] = [

@@ -1,5 +1,5 @@
 import { Crown, Zap } from "lucide-react";
-import type { Plan } from "../../components/custom/plans/types";
+import type { Plan } from "@/components/custom/plans/types";
 
 export const PLANS: Plan[] = [
 	{

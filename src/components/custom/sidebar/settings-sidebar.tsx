@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils/cn";
-import { SETTINGS_LINKS } from "@/lib/utils/settings-links";
 import { useUserStore } from "@/store/useUserStore";
+import { SETTINGS_LINKS } from "@/utils/constants/settings-links";
 
 export function SettingsSidebar() {
 	const pathname = usePathname();
