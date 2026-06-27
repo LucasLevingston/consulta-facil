@@ -85,11 +85,74 @@ for file in $staged; do
       ;;
   esac
 
+  # [O] OCP - Sem switch statements em componentes (use Record/Map para extensibilidade)
+  case "$file" in
+    *.tsx)
+      case "$file" in
+        */hooks/*|*utils*|*helpers*|*/ui/*|*.types.*|*__tests__*|*.test.*)
+          ;;
+        *)
+          n=$(printf '%s\n' "$content" | grep -E "[[:space:]]+switch[[:space:]]*\(" | wc -l)
+          if [ "$n" -gt 0 ]; then
+            echo "BLOCKED [OCP] $file — $n switch statement(s) em componente"
+            echo "  Use Record/Map para selecionar variantes sem modificar o componente"
+            FOUND=1
+          fi
+          ;;
+      esac
+      ;;
+  esac
+
+  # [L] LSP - Sem double casts que contornam contratos de tipo (exceto testes)
+  case "$file" in
+    *__tests__*|*.test.*|*.spec.*)
+      ;;
+    *)
+      n=$(printf '%s\n' "$content" | grep -E " as unknown as " | wc -l)
+      if [ "$n" -gt 0 ]; then
+        echo "BLOCKED [LSP] $file — uso de 'as unknown as' contorna contrato de tipo"
+        echo "  Corrija a tipagem em vez de usar double cast"
+        FOUND=1
+      fi
+      ;;
+  esac
+
+  # [I] ISP - Props/types com mais de 10 campos opcionais indicam interface inflada
+  case "$file" in
+    *.types.ts|*.types.tsx)
+      n=$(printf '%s\n' "$content" | grep -E "[[:space:]]+[a-zA-Z_]+[?]:" | wc -l)
+      if [ "$n" -gt 10 ]; then
+        echo "BLOCKED [ISP] $file — $n campos opcionais (>10) indica interface muito grande"
+        echo "  Divida em interfaces menores ou use composição de tipos"
+        FOUND=1
+      fi
+      ;;
+  esac
+
+  # [D] DIP - Componentes TSX não devem importar valores diretamente da camada de API
+  case "$file" in
+    *.tsx)
+      case "$file" in
+        */hooks/*|*.types.*)
+          ;;
+        *)
+          n=$(printf '%s\n' "$content" | grep -E "^import .* from ['\"]@/(lib/api|config/api)" | grep -v "^import type " | wc -l)
+          if [ "$n" -gt 0 ]; then
+            echo "BLOCKED [DIP] $file — componente importa direto da camada de API"
+            echo "  Use hook em hooks/api/ em vez de importar @/lib/api ou @/config/api"
+            FOUND=1
+          fi
+          ;;
+      esac
+      ;;
+  esac
+
 done
 
 if [ "$FOUND" -eq 1 ]; then
   echo ""
   echo "Commit bloqueado. Mantenha separados: constants/ | *.types.ts | utils/ | componentes"
+  echo "SOLID: [S]RP [O]CP [L]SP [I]SP [D]IP — todos os pilares ativos"
   exit 1
 fi
 
