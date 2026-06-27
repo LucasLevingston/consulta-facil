@@ -11,7 +11,8 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { authApi } from "@/lib/api/auth.api";
+import { loginApi } from "@/lib/api/auth/login.api";
+import { registerApi } from "@/lib/api/auth/register.api";
 
 const mockPost = vi.mocked(api.post);
 
@@ -28,12 +29,12 @@ const userResponse = {
 	role: "PATIENT",
 };
 
-describe("authApi.login", () => {
+describe("loginApi", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("posts to /auth/login with credentials", async () => {
 		mockPost.mockResolvedValueOnce({ data: loginResponse });
-		await authApi.login({ email: "j@e.com", password: "pass123" });
+		await loginApi({ email: "j@e.com", password: "pass123" });
 		expect(mockPost).toHaveBeenCalledWith("/auth/login", {
 			email: "j@e.com",
 			password: "pass123",
@@ -42,7 +43,7 @@ describe("authApi.login", () => {
 
 	it("returns LoginResponse", async () => {
 		mockPost.mockResolvedValueOnce({ data: loginResponse });
-		const result = await authApi.login({
+		const result = await loginApi({
 			email: "j@e.com",
 			password: "pass123",
 		});
@@ -51,12 +52,12 @@ describe("authApi.login", () => {
 	});
 });
 
-describe("authApi.register", () => {
+describe("registerApi", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("posts to /auth/register with user data", async () => {
 		mockPost.mockResolvedValueOnce({ data: userResponse });
-		await authApi.register({
+		await registerApi({
 			name: "João",
 			email: "j@e.com",
 			password: "pass123",
@@ -73,7 +74,7 @@ describe("authApi.register", () => {
 
 	it("returns UserResponse", async () => {
 		mockPost.mockResolvedValueOnce({ data: userResponse });
-		const result = await authApi.register({
+		const result = await registerApi({
 			name: "João",
 			email: "j@e.com",
 			password: "pass123",

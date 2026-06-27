@@ -12,8 +12,8 @@ vi.mock("@/config/api", () => ({
 		defaults: { headers: { common: {} } },
 	},
 }));
-vi.mock("@/lib/api/patients.api", () => ({
-	patientsApi: {
+vi.mock("@/lib/api/patients/patient-profile.api", () => ({
+	patientProfileApi: {
 		getMyProfile: vi.fn(),
 		getProfile: vi.fn(),
 		getMedicalRecords: vi.fn(),
@@ -22,10 +22,10 @@ vi.mock("@/lib/api/patients.api", () => ({
 
 import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
 import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 
-const mockGetMine = vi.mocked(patientsApi.getMyProfile);
-const mockGetProfile = vi.mocked(patientsApi.getProfile);
+const mockGetMine = vi.mocked(patientProfileApi.getMyProfile);
+const mockGetProfile = vi.mocked(patientProfileApi.getProfile);
 
 const profile = { id: "pp-1", userId: "u-1", name: "João" };
 

@@ -2,13 +2,13 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
 import { patientKeys } from "./patient-keys";
 
 export function useDeleteVaccine() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: patientsApi.deleteVaccine,
+		mutationFn: patientVaccinesApi.deleteVaccine,
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
 	});

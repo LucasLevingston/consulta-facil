@@ -6,13 +6,17 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/patients.api", () => ({
-	patientsApi: {
+vi.mock("@/lib/api/patients/patient-profile.api", () => ({
+	patientProfileApi: {
 		getProfessionalPatients: vi.fn(),
-		getMedicalRecords: vi.fn(),
 		getMyProfile: vi.fn(),
 		getProfile: vi.fn(),
 		updateMyProfile: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/patients/patient-health.api", () => ({
+	patientHealthApi: {
+		getMedicalRecords: vi.fn(),
 		updateMedicalRecords: vi.fn(),
 	},
 }));
@@ -23,16 +27,19 @@ import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
 import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
 import { useUpdateMedicalRecords } from "@/hooks/api/patients/use-update-medical-records";
 import { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientHealthApi } from "@/lib/api/patients/patient-health.api";
+import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 
 const mockGetProfessionalPatients = vi.mocked(
-	patientsApi.getProfessionalPatients,
+	patientProfileApi.getProfessionalPatients,
 );
-const mockGetMedicalRecords = vi.mocked(patientsApi.getMedicalRecords);
-const mockGetMyProfile = vi.mocked(patientsApi.getMyProfile);
-const mockGetProfile = vi.mocked(patientsApi.getProfile);
-const mockUpdateMyProfile = vi.mocked(patientsApi.updateMyProfile);
-const mockUpdateMedicalRecords = vi.mocked(patientsApi.updateMedicalRecords);
+const mockGetMedicalRecords = vi.mocked(patientHealthApi.getMedicalRecords);
+const mockGetMyProfile = vi.mocked(patientProfileApi.getMyProfile);
+const mockGetProfile = vi.mocked(patientProfileApi.getProfile);
+const mockUpdateMyProfile = vi.mocked(patientProfileApi.updateMyProfile);
+const mockUpdateMedicalRecords = vi.mocked(
+	patientHealthApi.updateMedicalRecords,
+);
 
 const patient = { id: "p-1", name: "João", email: "joao@test.com" };
 const medicalRecords = { patientId: "p-1", bloodType: "O+", allergies: [] };

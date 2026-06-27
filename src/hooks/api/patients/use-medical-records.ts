@@ -2,13 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientHealthApi } from "@/lib/api/patients/patient-health.api";
 import { patientKeys } from "./patient-keys";
 
 export function useMedicalRecords(userId: string) {
 	return useQuery({
 		queryKey: patientKeys.medicalRecords(userId),
-		queryFn: () => patientsApi.getMedicalRecords(userId),
+		queryFn: () => patientHealthApi.getMedicalRecords(userId),
 		enabled: !!userId,
 	});
 }

@@ -7,4 +7,3 @@ export type {
 } from "@/lib/api/patients/patient-profile.api";
 export { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 export { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
-export { patientsApi } from "@/lib/api/patients.api";

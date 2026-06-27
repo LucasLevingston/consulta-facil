@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type {
 	GetMyProfile200,
@@ -73,7 +71,7 @@ export const getGetPatientMedicalRecordsQueryKey = (userId: string) => {
 
 export const getGetPatientMedicalRecordsQueryOptions = <
 	TData = Awaited<ReturnType<typeof getPatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -112,11 +110,11 @@ export const getGetPatientMedicalRecordsQueryOptions = <
 export type GetPatientMedicalRecordsQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getPatientMedicalRecords>>
 >;
-export type GetPatientMedicalRecordsQueryError = ErrorType<unknown>;
+export type GetPatientMedicalRecordsQueryError = unknown;
 
 export function useGetPatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof getPatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options: {
@@ -143,7 +141,7 @@ export function useGetPatientMedicalRecords<
 };
 export function useGetPatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof getPatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -170,7 +168,7 @@ export function useGetPatientMedicalRecords<
 };
 export function useGetPatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof getPatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -193,7 +191,7 @@ export function useGetPatientMedicalRecords<
 
 export function useGetPatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof getPatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -259,7 +257,7 @@ export const updatePatientMedicalRecords = async (
 
 export const getUpdatePatientMedicalRecordsQueryKey = (
 	userId: string,
-	updatePatientMedicalRecordsBody?: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody?: UpdatePatientMedicalRecordsBody,
 ) => {
 	return [
 		"PUT",
@@ -270,10 +268,10 @@ export const getUpdatePatientMedicalRecordsQueryKey = (
 
 export const getUpdatePatientMedicalRecordsQueryOptions = <
 	TData = Awaited<ReturnType<typeof updatePatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
-	updatePatientMedicalRecordsBody: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody: UpdatePatientMedicalRecordsBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -317,14 +315,14 @@ export const getUpdatePatientMedicalRecordsQueryOptions = <
 export type UpdatePatientMedicalRecordsQueryResult = NonNullable<
 	Awaited<ReturnType<typeof updatePatientMedicalRecords>>
 >;
-export type UpdatePatientMedicalRecordsQueryError = ErrorType<unknown>;
+export type UpdatePatientMedicalRecordsQueryError = unknown;
 
 export function useUpdatePatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof updatePatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
-	updatePatientMedicalRecordsBody: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody: UpdatePatientMedicalRecordsBody,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -349,10 +347,10 @@ export function useUpdatePatientMedicalRecords<
 };
 export function useUpdatePatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof updatePatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
-	updatePatientMedicalRecordsBody: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody: UpdatePatientMedicalRecordsBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -377,10 +375,10 @@ export function useUpdatePatientMedicalRecords<
 };
 export function useUpdatePatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof updatePatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
-	updatePatientMedicalRecordsBody: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody: UpdatePatientMedicalRecordsBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -401,10 +399,10 @@ export function useUpdatePatientMedicalRecords<
 
 export function useUpdatePatientMedicalRecords<
 	TData = Awaited<ReturnType<typeof updatePatientMedicalRecords>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
-	updatePatientMedicalRecordsBody: BodyType<UpdatePatientMedicalRecordsBody>,
+	updatePatientMedicalRecordsBody: UpdatePatientMedicalRecordsBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -467,7 +465,7 @@ export const getGetMyProfileQueryKey = () => {
 
 export const getGetMyProfileQueryOptions = <
 	TData = Awaited<ReturnType<typeof getMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(options?: {
 	query?: Partial<
 		UseQueryOptions<Awaited<ReturnType<typeof getMyProfile>>, TError, TData>
@@ -492,11 +490,11 @@ export const getGetMyProfileQueryOptions = <
 export type GetMyProfileQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getMyProfile>>
 >;
-export type GetMyProfileQueryError = ErrorType<unknown>;
+export type GetMyProfileQueryError = unknown;
 
 export function useGetMyProfile<
 	TData = Awaited<ReturnType<typeof getMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options: {
 		query: Partial<
@@ -518,7 +516,7 @@ export function useGetMyProfile<
 };
 export function useGetMyProfile<
 	TData = Awaited<ReturnType<typeof getMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -540,7 +538,7 @@ export function useGetMyProfile<
 };
 export function useGetMyProfile<
 	TData = Awaited<ReturnType<typeof getMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -558,7 +556,7 @@ export function useGetMyProfile<
 
 export function useGetMyProfile<
 	TData = Awaited<ReturnType<typeof getMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -612,16 +610,16 @@ export const updateMyProfile = async (
 };
 
 export const getUpdateMyProfileQueryKey = (
-	updateMyProfileBody?: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody?: UpdateMyProfileBody,
 ) => {
 	return ["PUT", `/patients/me`, updateMyProfileBody] as const;
 };
 
 export const getUpdateMyProfileQueryOptions = <
 	TData = Awaited<ReturnType<typeof updateMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	updateMyProfileBody: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody: UpdateMyProfileBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -652,13 +650,13 @@ export const getUpdateMyProfileQueryOptions = <
 export type UpdateMyProfileQueryResult = NonNullable<
 	Awaited<ReturnType<typeof updateMyProfile>>
 >;
-export type UpdateMyProfileQueryError = ErrorType<unknown>;
+export type UpdateMyProfileQueryError = unknown;
 
 export function useUpdateMyProfile<
 	TData = Awaited<ReturnType<typeof updateMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	updateMyProfileBody: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody: UpdateMyProfileBody,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -683,9 +681,9 @@ export function useUpdateMyProfile<
 };
 export function useUpdateMyProfile<
 	TData = Awaited<ReturnType<typeof updateMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	updateMyProfileBody: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody: UpdateMyProfileBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -710,9 +708,9 @@ export function useUpdateMyProfile<
 };
 export function useUpdateMyProfile<
 	TData = Awaited<ReturnType<typeof updateMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	updateMyProfileBody: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody: UpdateMyProfileBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -733,9 +731,9 @@ export function useUpdateMyProfile<
 
 export function useUpdateMyProfile<
 	TData = Awaited<ReturnType<typeof updateMyProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	updateMyProfileBody: BodyType<UpdateMyProfileBody>,
+	updateMyProfileBody: UpdateMyProfileBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -801,7 +799,7 @@ export const getGetPatientProfileQueryKey = (userId: string) => {
 
 export const getGetPatientProfileQueryOptions = <
 	TData = Awaited<ReturnType<typeof getPatientProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -839,11 +837,11 @@ export const getGetPatientProfileQueryOptions = <
 export type GetPatientProfileQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getPatientProfile>>
 >;
-export type GetPatientProfileQueryError = ErrorType<unknown>;
+export type GetPatientProfileQueryError = unknown;
 
 export function useGetPatientProfile<
 	TData = Awaited<ReturnType<typeof getPatientProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options: {
@@ -870,7 +868,7 @@ export function useGetPatientProfile<
 };
 export function useGetPatientProfile<
 	TData = Awaited<ReturnType<typeof getPatientProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -897,7 +895,7 @@ export function useGetPatientProfile<
 };
 export function useGetPatientProfile<
 	TData = Awaited<ReturnType<typeof getPatientProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -920,7 +918,7 @@ export function useGetPatientProfile<
 
 export function useGetPatientProfile<
 	TData = Awaited<ReturnType<typeof getPatientProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {

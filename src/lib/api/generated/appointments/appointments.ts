@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type {
 	AppointmentResponseDTO,
@@ -70,7 +68,7 @@ export const getConfirmAppointmentQueryKey = (appointmentId: string) => {
 
 export const getConfirmAppointmentQueryOptions = <
 	TData = Awaited<ReturnType<typeof confirmAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -109,11 +107,11 @@ export const getConfirmAppointmentQueryOptions = <
 export type ConfirmAppointmentQueryResult = NonNullable<
 	Awaited<ReturnType<typeof confirmAppointment>>
 >;
-export type ConfirmAppointmentQueryError = ErrorType<unknown>;
+export type ConfirmAppointmentQueryError = unknown;
 
 export function useConfirmAppointment<
 	TData = Awaited<ReturnType<typeof confirmAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options: {
@@ -140,7 +138,7 @@ export function useConfirmAppointment<
 };
 export function useConfirmAppointment<
 	TData = Awaited<ReturnType<typeof confirmAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -167,7 +165,7 @@ export function useConfirmAppointment<
 };
 export function useConfirmAppointment<
 	TData = Awaited<ReturnType<typeof confirmAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -190,7 +188,7 @@ export function useConfirmAppointment<
 
 export function useConfirmAppointment<
 	TData = Awaited<ReturnType<typeof confirmAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -258,7 +256,7 @@ export const getCompleteAppointmentQueryKey = (appointmentId: string) => {
 
 export const getCompleteAppointmentQueryOptions = <
 	TData = Awaited<ReturnType<typeof completeAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -297,11 +295,11 @@ export const getCompleteAppointmentQueryOptions = <
 export type CompleteAppointmentQueryResult = NonNullable<
 	Awaited<ReturnType<typeof completeAppointment>>
 >;
-export type CompleteAppointmentQueryError = ErrorType<unknown>;
+export type CompleteAppointmentQueryError = unknown;
 
 export function useCompleteAppointment<
 	TData = Awaited<ReturnType<typeof completeAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options: {
@@ -328,7 +326,7 @@ export function useCompleteAppointment<
 };
 export function useCompleteAppointment<
 	TData = Awaited<ReturnType<typeof completeAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -355,7 +353,7 @@ export function useCompleteAppointment<
 };
 export function useCompleteAppointment<
 	TData = Awaited<ReturnType<typeof completeAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -378,7 +376,7 @@ export function useCompleteAppointment<
 
 export function useCompleteAppointment<
 	TData = Awaited<ReturnType<typeof completeAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -444,7 +442,7 @@ export const cancelAppointment = async (
 
 export const getCancelAppointmentQueryKey = (
 	appointmentId: string,
-	cancelAppointmentDTO?: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO?: CancelAppointmentDTO,
 ) => {
 	return [
 		"PUT",
@@ -455,10 +453,10 @@ export const getCancelAppointmentQueryKey = (
 
 export const getCancelAppointmentQueryOptions = <
 	TData = Awaited<ReturnType<typeof cancelAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
-	cancelAppointmentDTO: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO: CancelAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -499,14 +497,14 @@ export const getCancelAppointmentQueryOptions = <
 export type CancelAppointmentQueryResult = NonNullable<
 	Awaited<ReturnType<typeof cancelAppointment>>
 >;
-export type CancelAppointmentQueryError = ErrorType<unknown>;
+export type CancelAppointmentQueryError = unknown;
 
 export function useCancelAppointment<
 	TData = Awaited<ReturnType<typeof cancelAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
-	cancelAppointmentDTO: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO: CancelAppointmentDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -531,10 +529,10 @@ export function useCancelAppointment<
 };
 export function useCancelAppointment<
 	TData = Awaited<ReturnType<typeof cancelAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
-	cancelAppointmentDTO: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO: CancelAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -559,10 +557,10 @@ export function useCancelAppointment<
 };
 export function useCancelAppointment<
 	TData = Awaited<ReturnType<typeof cancelAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
-	cancelAppointmentDTO: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO: CancelAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -583,10 +581,10 @@ export function useCancelAppointment<
 
 export function useCancelAppointment<
 	TData = Awaited<ReturnType<typeof cancelAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
-	cancelAppointmentDTO: BodyType<CancelAppointmentDTO>,
+	cancelAppointmentDTO: CancelAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -651,16 +649,16 @@ export const scheduleAppointment = async (
 };
 
 export const getScheduleAppointmentQueryKey = (
-	createAppointmentDTO?: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO?: CreateAppointmentDTO,
 ) => {
 	return ["POST", `/appointments`, createAppointmentDTO] as const;
 };
 
 export const getScheduleAppointmentQueryOptions = <
 	TData = Awaited<ReturnType<typeof scheduleAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createAppointmentDTO: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO: CreateAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -693,13 +691,13 @@ export const getScheduleAppointmentQueryOptions = <
 export type ScheduleAppointmentQueryResult = NonNullable<
 	Awaited<ReturnType<typeof scheduleAppointment>>
 >;
-export type ScheduleAppointmentQueryError = ErrorType<unknown>;
+export type ScheduleAppointmentQueryError = unknown;
 
 export function useScheduleAppointment<
 	TData = Awaited<ReturnType<typeof scheduleAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createAppointmentDTO: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO: CreateAppointmentDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -724,9 +722,9 @@ export function useScheduleAppointment<
 };
 export function useScheduleAppointment<
 	TData = Awaited<ReturnType<typeof scheduleAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createAppointmentDTO: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO: CreateAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -751,9 +749,9 @@ export function useScheduleAppointment<
 };
 export function useScheduleAppointment<
 	TData = Awaited<ReturnType<typeof scheduleAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createAppointmentDTO: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO: CreateAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -774,9 +772,9 @@ export function useScheduleAppointment<
 
 export function useScheduleAppointment<
 	TData = Awaited<ReturnType<typeof scheduleAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createAppointmentDTO: BodyType<CreateAppointmentDTO>,
+	createAppointmentDTO: CreateAppointmentDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -842,7 +840,7 @@ export const getGetAppointmentByIdQueryKey = (appointmentId: string) => {
 
 export const getGetAppointmentByIdQueryOptions = <
 	TData = Awaited<ReturnType<typeof getAppointmentById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -881,11 +879,11 @@ export const getGetAppointmentByIdQueryOptions = <
 export type GetAppointmentByIdQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getAppointmentById>>
 >;
-export type GetAppointmentByIdQueryError = ErrorType<unknown>;
+export type GetAppointmentByIdQueryError = unknown;
 
 export function useGetAppointmentById<
 	TData = Awaited<ReturnType<typeof getAppointmentById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options: {
@@ -912,7 +910,7 @@ export function useGetAppointmentById<
 };
 export function useGetAppointmentById<
 	TData = Awaited<ReturnType<typeof getAppointmentById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -939,7 +937,7 @@ export function useGetAppointmentById<
 };
 export function useGetAppointmentById<
 	TData = Awaited<ReturnType<typeof getAppointmentById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -962,7 +960,7 @@ export function useGetAppointmentById<
 
 export function useGetAppointmentById<
 	TData = Awaited<ReturnType<typeof getAppointmentById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -1029,7 +1027,7 @@ export const getDeleteAppointmentQueryKey = (appointmentId: string) => {
 
 export const getDeleteAppointmentQueryOptions = <
 	TData = Awaited<ReturnType<typeof deleteAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -1068,11 +1066,11 @@ export const getDeleteAppointmentQueryOptions = <
 export type DeleteAppointmentQueryResult = NonNullable<
 	Awaited<ReturnType<typeof deleteAppointment>>
 >;
-export type DeleteAppointmentQueryError = ErrorType<unknown>;
+export type DeleteAppointmentQueryError = unknown;
 
 export function useDeleteAppointment<
 	TData = Awaited<ReturnType<typeof deleteAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options: {
@@ -1099,7 +1097,7 @@ export function useDeleteAppointment<
 };
 export function useDeleteAppointment<
 	TData = Awaited<ReturnType<typeof deleteAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -1126,7 +1124,7 @@ export function useDeleteAppointment<
 };
 export function useDeleteAppointment<
 	TData = Awaited<ReturnType<typeof deleteAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -1149,7 +1147,7 @@ export function useDeleteAppointment<
 
 export function useDeleteAppointment<
 	TData = Awaited<ReturnType<typeof deleteAppointment>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	appointmentId: string,
 	options?: {
@@ -1237,7 +1235,7 @@ export const getGetPatientAppointmentsQueryKey = (
 
 export const getGetPatientAppointmentsQueryOptions = <
 	TData = Awaited<ReturnType<typeof getPatientAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	params: GetPatientAppointmentsParams,
@@ -1277,11 +1275,11 @@ export const getGetPatientAppointmentsQueryOptions = <
 export type GetPatientAppointmentsQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getPatientAppointments>>
 >;
-export type GetPatientAppointmentsQueryError = ErrorType<unknown>;
+export type GetPatientAppointmentsQueryError = unknown;
 
 export function useGetPatientAppointments<
 	TData = Awaited<ReturnType<typeof getPatientAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	params: GetPatientAppointmentsParams,
@@ -1309,7 +1307,7 @@ export function useGetPatientAppointments<
 };
 export function useGetPatientAppointments<
 	TData = Awaited<ReturnType<typeof getPatientAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	params: GetPatientAppointmentsParams,
@@ -1337,7 +1335,7 @@ export function useGetPatientAppointments<
 };
 export function useGetPatientAppointments<
 	TData = Awaited<ReturnType<typeof getPatientAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	params: GetPatientAppointmentsParams,
@@ -1361,7 +1359,7 @@ export function useGetPatientAppointments<
 
 export function useGetPatientAppointments<
 	TData = Awaited<ReturnType<typeof getPatientAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	params: GetPatientAppointmentsParams,
@@ -1454,7 +1452,7 @@ export const getGetDoctorAppointmentsQueryKey = (
 
 export const getGetDoctorAppointmentsQueryOptions = <
 	TData = Awaited<ReturnType<typeof getDoctorAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	params: GetDoctorAppointmentsParams,
@@ -1495,11 +1493,11 @@ export const getGetDoctorAppointmentsQueryOptions = <
 export type GetDoctorAppointmentsQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getDoctorAppointments>>
 >;
-export type GetDoctorAppointmentsQueryError = ErrorType<unknown>;
+export type GetDoctorAppointmentsQueryError = unknown;
 
 export function useGetDoctorAppointments<
 	TData = Awaited<ReturnType<typeof getDoctorAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	params: GetDoctorAppointmentsParams,
@@ -1527,7 +1525,7 @@ export function useGetDoctorAppointments<
 };
 export function useGetDoctorAppointments<
 	TData = Awaited<ReturnType<typeof getDoctorAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	params: GetDoctorAppointmentsParams,
@@ -1555,7 +1553,7 @@ export function useGetDoctorAppointments<
 };
 export function useGetDoctorAppointments<
 	TData = Awaited<ReturnType<typeof getDoctorAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	params: GetDoctorAppointmentsParams,
@@ -1579,7 +1577,7 @@ export function useGetDoctorAppointments<
 
 export function useGetDoctorAppointments<
 	TData = Awaited<ReturnType<typeof getDoctorAppointments>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	params: GetDoctorAppointmentsParams,

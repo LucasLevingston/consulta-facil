@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type {
 	CreateUserDTO,
@@ -61,17 +59,15 @@ export const register = async (
 	});
 };
 
-export const getRegisterQueryKey = (
-	createUserDTO?: BodyType<CreateUserDTO>,
-) => {
+export const getRegisterQueryKey = (createUserDTO?: CreateUserDTO) => {
 	return ["POST", `/auth/register`, createUserDTO] as const;
 };
 
 export const getRegisterQueryOptions = <
 	TData = Awaited<ReturnType<typeof register>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createUserDTO: BodyType<CreateUserDTO>,
+	createUserDTO: CreateUserDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
@@ -97,13 +93,13 @@ export const getRegisterQueryOptions = <
 export type RegisterQueryResult = NonNullable<
 	Awaited<ReturnType<typeof register>>
 >;
-export type RegisterQueryError = ErrorType<unknown>;
+export type RegisterQueryError = unknown;
 
 export function useRegister<
 	TData = Awaited<ReturnType<typeof register>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createUserDTO: BodyType<CreateUserDTO>,
+	createUserDTO: CreateUserDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
@@ -124,9 +120,9 @@ export function useRegister<
 };
 export function useRegister<
 	TData = Awaited<ReturnType<typeof register>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createUserDTO: BodyType<CreateUserDTO>,
+	createUserDTO: CreateUserDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
@@ -147,9 +143,9 @@ export function useRegister<
 };
 export function useRegister<
 	TData = Awaited<ReturnType<typeof register>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createUserDTO: BodyType<CreateUserDTO>,
+	createUserDTO: CreateUserDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
@@ -166,9 +162,9 @@ export function useRegister<
 
 export function useRegister<
 	TData = Awaited<ReturnType<typeof register>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createUserDTO: BodyType<CreateUserDTO>,
+	createUserDTO: CreateUserDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof register>>, TError, TData>
@@ -220,17 +216,15 @@ export const login = async (
 	});
 };
 
-export const getLoginQueryKey = (
-	loginRequestDTO?: BodyType<LoginRequestDTO>,
-) => {
+export const getLoginQueryKey = (loginRequestDTO?: LoginRequestDTO) => {
 	return ["POST", `/auth/login`, loginRequestDTO] as const;
 };
 
 export const getLoginQueryOptions = <
 	TData = Awaited<ReturnType<typeof login>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	loginRequestDTO: BodyType<LoginRequestDTO>,
+	loginRequestDTO: LoginRequestDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
@@ -254,13 +248,13 @@ export const getLoginQueryOptions = <
 };
 
 export type LoginQueryResult = NonNullable<Awaited<ReturnType<typeof login>>>;
-export type LoginQueryError = ErrorType<unknown>;
+export type LoginQueryError = unknown;
 
 export function useLogin<
 	TData = Awaited<ReturnType<typeof login>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	loginRequestDTO: BodyType<LoginRequestDTO>,
+	loginRequestDTO: LoginRequestDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
@@ -281,9 +275,9 @@ export function useLogin<
 };
 export function useLogin<
 	TData = Awaited<ReturnType<typeof login>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	loginRequestDTO: BodyType<LoginRequestDTO>,
+	loginRequestDTO: LoginRequestDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
@@ -304,9 +298,9 @@ export function useLogin<
 };
 export function useLogin<
 	TData = Awaited<ReturnType<typeof login>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	loginRequestDTO: BodyType<LoginRequestDTO>,
+	loginRequestDTO: LoginRequestDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>
@@ -323,9 +317,9 @@ export function useLogin<
 
 export function useLogin<
 	TData = Awaited<ReturnType<typeof login>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	loginRequestDTO: BodyType<LoginRequestDTO>,
+	loginRequestDTO: LoginRequestDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof login>>, TError, TData>

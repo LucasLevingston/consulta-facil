@@ -9,13 +9,16 @@ for file in $staged; do
 
   content=$(git show ":$file" 2>/dev/null)
 
-  # 1. Tamanho
-  lines=$(printf '%s\n' "$content" | wc -l)
-  if [ "$lines" -gt "$MAX_LINES" ]; then
-    echo "BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
-    echo "  Divida: custom hooks, services, sub-components, utils"
-    FOUND=1
-  fi
+  # 1. Tamanho (excluir arquivos gerados)
+  case "$file" in *generated*|*orval*) ;;
+    *)
+      lines=$(printf '%s\n' "$content" | wc -l)
+      if [ "$lines" -gt "$MAX_LINES" ]; then
+        echo "BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
+        echo "  Divida: custom hooks, services, sub-components, utils"
+        FOUND=1
+      fi ;;
+  esac
 
   # 2. Constantes uppercase fora de constants/
   case "$file" in

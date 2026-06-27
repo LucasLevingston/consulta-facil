@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type {
 	CreateDoctorDTO,
@@ -65,7 +63,7 @@ export const getGetDoctorByIdQueryKey = (doctorId: string) => {
 
 export const getGetDoctorByIdQueryOptions = <
 	TData = Awaited<ReturnType<typeof getDoctorById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -98,11 +96,11 @@ export const getGetDoctorByIdQueryOptions = <
 export type GetDoctorByIdQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getDoctorById>>
 >;
-export type GetDoctorByIdQueryError = ErrorType<unknown>;
+export type GetDoctorByIdQueryError = unknown;
 
 export function useGetDoctorById<
 	TData = Awaited<ReturnType<typeof getDoctorById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options: {
@@ -125,7 +123,7 @@ export function useGetDoctorById<
 };
 export function useGetDoctorById<
 	TData = Awaited<ReturnType<typeof getDoctorById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -148,7 +146,7 @@ export function useGetDoctorById<
 };
 export function useGetDoctorById<
 	TData = Awaited<ReturnType<typeof getDoctorById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -167,7 +165,7 @@ export function useGetDoctorById<
 
 export function useGetDoctorById<
 	TData = Awaited<ReturnType<typeof getDoctorById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -223,17 +221,17 @@ export const updateDoctor = async (
 
 export const getUpdateDoctorQueryKey = (
 	doctorId: string,
-	createDoctorDTO?: BodyType<CreateDoctorDTO>,
+	createDoctorDTO?: CreateDoctorDTO,
 ) => {
 	return ["PUT", `/doctors/${doctorId}`, createDoctorDTO] as const;
 };
 
 export const getUpdateDoctorQueryOptions = <
 	TData = Awaited<ReturnType<typeof updateDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
@@ -266,14 +264,14 @@ export const getUpdateDoctorQueryOptions = <
 export type UpdateDoctorQueryResult = NonNullable<
 	Awaited<ReturnType<typeof updateDoctor>>
 >;
-export type UpdateDoctorQueryError = ErrorType<unknown>;
+export type UpdateDoctorQueryError = unknown;
 
 export function useUpdateDoctor<
 	TData = Awaited<ReturnType<typeof updateDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
@@ -294,10 +292,10 @@ export function useUpdateDoctor<
 };
 export function useUpdateDoctor<
 	TData = Awaited<ReturnType<typeof updateDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
@@ -318,10 +316,10 @@ export function useUpdateDoctor<
 };
 export function useUpdateDoctor<
 	TData = Awaited<ReturnType<typeof updateDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
@@ -338,10 +336,10 @@ export function useUpdateDoctor<
 
 export function useUpdateDoctor<
 	TData = Awaited<ReturnType<typeof updateDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof updateDoctor>>, TError, TData>
@@ -400,7 +398,7 @@ export const getDeleteDoctorQueryKey = (doctorId: string) => {
 
 export const getDeleteDoctorQueryOptions = <
 	TData = Awaited<ReturnType<typeof deleteDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -433,11 +431,11 @@ export const getDeleteDoctorQueryOptions = <
 export type DeleteDoctorQueryResult = NonNullable<
 	Awaited<ReturnType<typeof deleteDoctor>>
 >;
-export type DeleteDoctorQueryError = ErrorType<unknown>;
+export type DeleteDoctorQueryError = unknown;
 
 export function useDeleteDoctor<
 	TData = Awaited<ReturnType<typeof deleteDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options: {
@@ -460,7 +458,7 @@ export function useDeleteDoctor<
 };
 export function useDeleteDoctor<
 	TData = Awaited<ReturnType<typeof deleteDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -483,7 +481,7 @@ export function useDeleteDoctor<
 };
 export function useDeleteDoctor<
 	TData = Awaited<ReturnType<typeof deleteDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -502,7 +500,7 @@ export function useDeleteDoctor<
 
 export function useDeleteDoctor<
 	TData = Awaited<ReturnType<typeof deleteDoctor>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	doctorId: string,
 	options?: {
@@ -572,7 +570,7 @@ export const getGetAllDoctorsQueryKey = (params?: GetAllDoctorsParams) => {
 
 export const getGetAllDoctorsQueryOptions = <
 	TData = Awaited<ReturnType<typeof getAllDoctors>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: GetAllDoctorsParams,
 	options?: {
@@ -600,11 +598,11 @@ export const getGetAllDoctorsQueryOptions = <
 export type GetAllDoctorsQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getAllDoctors>>
 >;
-export type GetAllDoctorsQueryError = ErrorType<unknown>;
+export type GetAllDoctorsQueryError = unknown;
 
 export function useGetAllDoctors<
 	TData = Awaited<ReturnType<typeof getAllDoctors>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: GetAllDoctorsParams,
 	options: {
@@ -627,7 +625,7 @@ export function useGetAllDoctors<
 };
 export function useGetAllDoctors<
 	TData = Awaited<ReturnType<typeof getAllDoctors>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: GetAllDoctorsParams,
 	options?: {
@@ -650,7 +648,7 @@ export function useGetAllDoctors<
 };
 export function useGetAllDoctors<
 	TData = Awaited<ReturnType<typeof getAllDoctors>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: GetAllDoctorsParams,
 	options?: {
@@ -669,7 +667,7 @@ export function useGetAllDoctors<
 
 export function useGetAllDoctors<
 	TData = Awaited<ReturnType<typeof getAllDoctors>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: GetAllDoctorsParams,
 	options?: {
@@ -728,16 +726,16 @@ export const createDoctorProfile = async (
 };
 
 export const getCreateDoctorProfileQueryKey = (
-	createDoctorDTO?: BodyType<CreateDoctorDTO>,
+	createDoctorDTO?: CreateDoctorDTO,
 ) => {
 	return ["POST", `/doctors`, createDoctorDTO] as const;
 };
 
 export const getCreateDoctorProfileQueryOptions = <
 	TData = Awaited<ReturnType<typeof createDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -769,13 +767,13 @@ export const getCreateDoctorProfileQueryOptions = <
 export type CreateDoctorProfileQueryResult = NonNullable<
 	Awaited<ReturnType<typeof createDoctorProfile>>
 >;
-export type CreateDoctorProfileQueryError = ErrorType<unknown>;
+export type CreateDoctorProfileQueryError = unknown;
 
 export function useCreateDoctorProfile<
 	TData = Awaited<ReturnType<typeof createDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -800,9 +798,9 @@ export function useCreateDoctorProfile<
 };
 export function useCreateDoctorProfile<
 	TData = Awaited<ReturnType<typeof createDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -827,9 +825,9 @@ export function useCreateDoctorProfile<
 };
 export function useCreateDoctorProfile<
 	TData = Awaited<ReturnType<typeof createDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -850,9 +848,9 @@ export function useCreateDoctorProfile<
 
 export function useCreateDoctorProfile<
 	TData = Awaited<ReturnType<typeof createDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createDoctorDTO: BodyType<CreateDoctorDTO>,
+	createDoctorDTO: CreateDoctorDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -931,7 +929,7 @@ export const getSearchBySpecialtyQueryKey = (
 
 export const getSearchBySpecialtyQueryOptions = <
 	TData = Awaited<ReturnType<typeof searchBySpecialty>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: SearchBySpecialtyParams,
 	options?: {
@@ -964,11 +962,11 @@ export const getSearchBySpecialtyQueryOptions = <
 export type SearchBySpecialtyQueryResult = NonNullable<
 	Awaited<ReturnType<typeof searchBySpecialty>>
 >;
-export type SearchBySpecialtyQueryError = ErrorType<unknown>;
+export type SearchBySpecialtyQueryError = unknown;
 
 export function useSearchBySpecialty<
 	TData = Awaited<ReturnType<typeof searchBySpecialty>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: SearchBySpecialtyParams,
 	options: {
@@ -995,7 +993,7 @@ export function useSearchBySpecialty<
 };
 export function useSearchBySpecialty<
 	TData = Awaited<ReturnType<typeof searchBySpecialty>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: SearchBySpecialtyParams,
 	options?: {
@@ -1022,7 +1020,7 @@ export function useSearchBySpecialty<
 };
 export function useSearchBySpecialty<
 	TData = Awaited<ReturnType<typeof searchBySpecialty>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: SearchBySpecialtyParams,
 	options?: {
@@ -1045,7 +1043,7 @@ export function useSearchBySpecialty<
 
 export function useSearchBySpecialty<
 	TData = Awaited<ReturnType<typeof searchBySpecialty>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	params: SearchBySpecialtyParams,
 	options?: {
@@ -1109,7 +1107,7 @@ export const getGetMyDoctorProfileQueryKey = () => {
 
 export const getGetMyDoctorProfileQueryOptions = <
 	TData = Awaited<ReturnType<typeof getMyDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(options?: {
 	query?: Partial<
 		UseQueryOptions<
@@ -1138,11 +1136,11 @@ export const getGetMyDoctorProfileQueryOptions = <
 export type GetMyDoctorProfileQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getMyDoctorProfile>>
 >;
-export type GetMyDoctorProfileQueryError = ErrorType<unknown>;
+export type GetMyDoctorProfileQueryError = unknown;
 
 export function useGetMyDoctorProfile<
 	TData = Awaited<ReturnType<typeof getMyDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options: {
 		query: Partial<
@@ -1168,7 +1166,7 @@ export function useGetMyDoctorProfile<
 };
 export function useGetMyDoctorProfile<
 	TData = Awaited<ReturnType<typeof getMyDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -1194,7 +1192,7 @@ export function useGetMyDoctorProfile<
 };
 export function useGetMyDoctorProfile<
 	TData = Awaited<ReturnType<typeof getMyDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -1216,7 +1214,7 @@ export function useGetMyDoctorProfile<
 
 export function useGetMyDoctorProfile<
 	TData = Awaited<ReturnType<typeof getMyDoctorProfile>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<

@@ -2,13 +2,13 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
 import { patientKeys } from "./patient-keys";
 
 export function useDeleteEmergencyContact() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: patientsApi.deleteEmergencyContact,
+		mutationFn: patientEmergencyContactsApi.deleteEmergencyContact,
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: patientKeys.emergencyContacts,

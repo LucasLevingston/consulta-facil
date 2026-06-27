@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type {
 	CheckoutResponseDTO,
@@ -60,15 +58,15 @@ export const webhook = async (
 	});
 };
 
-export const getWebhookQueryKey = (webhookBody?: BodyType<WebhookBody>) => {
+export const getWebhookQueryKey = (webhookBody?: WebhookBody) => {
 	return ["POST", `/subscriptions/webhook`, webhookBody] as const;
 };
 
 export const getWebhookQueryOptions = <
 	TData = Awaited<ReturnType<typeof webhook>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	webhookBody: BodyType<WebhookBody>,
+	webhookBody: WebhookBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
@@ -94,13 +92,13 @@ export const getWebhookQueryOptions = <
 export type WebhookQueryResult = NonNullable<
 	Awaited<ReturnType<typeof webhook>>
 >;
-export type WebhookQueryError = ErrorType<unknown>;
+export type WebhookQueryError = unknown;
 
 export function useWebhook<
 	TData = Awaited<ReturnType<typeof webhook>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	webhookBody: BodyType<WebhookBody>,
+	webhookBody: WebhookBody,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
@@ -121,9 +119,9 @@ export function useWebhook<
 };
 export function useWebhook<
 	TData = Awaited<ReturnType<typeof webhook>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	webhookBody: BodyType<WebhookBody>,
+	webhookBody: WebhookBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
@@ -144,9 +142,9 @@ export function useWebhook<
 };
 export function useWebhook<
 	TData = Awaited<ReturnType<typeof webhook>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	webhookBody: BodyType<WebhookBody>,
+	webhookBody: WebhookBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
@@ -163,9 +161,9 @@ export function useWebhook<
 
 export function useWebhook<
 	TData = Awaited<ReturnType<typeof webhook>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	webhookBody: BodyType<WebhookBody>,
+	webhookBody: WebhookBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof webhook>>, TError, TData>
@@ -217,16 +215,16 @@ export const createCheckout = async (
 };
 
 export const getCreateCheckoutQueryKey = (
-	createCheckoutDTO?: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO?: CreateCheckoutDTO,
 ) => {
 	return ["POST", `/subscriptions/checkout`, createCheckoutDTO] as const;
 };
 
 export const getCreateCheckoutQueryOptions = <
 	TData = Awaited<ReturnType<typeof createCheckout>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createCheckoutDTO: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO: CreateCheckoutDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
@@ -253,13 +251,13 @@ export const getCreateCheckoutQueryOptions = <
 export type CreateCheckoutQueryResult = NonNullable<
 	Awaited<ReturnType<typeof createCheckout>>
 >;
-export type CreateCheckoutQueryError = ErrorType<unknown>;
+export type CreateCheckoutQueryError = unknown;
 
 export function useCreateCheckout<
 	TData = Awaited<ReturnType<typeof createCheckout>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createCheckoutDTO: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO: CreateCheckoutDTO,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
@@ -280,9 +278,9 @@ export function useCreateCheckout<
 };
 export function useCreateCheckout<
 	TData = Awaited<ReturnType<typeof createCheckout>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createCheckoutDTO: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO: CreateCheckoutDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
@@ -303,9 +301,9 @@ export function useCreateCheckout<
 };
 export function useCreateCheckout<
 	TData = Awaited<ReturnType<typeof createCheckout>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createCheckoutDTO: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO: CreateCheckoutDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
@@ -322,9 +320,9 @@ export function useCreateCheckout<
 
 export function useCreateCheckout<
 	TData = Awaited<ReturnType<typeof createCheckout>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	createCheckoutDTO: BodyType<CreateCheckoutDTO>,
+	createCheckoutDTO: CreateCheckoutDTO,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof createCheckout>>, TError, TData>
@@ -381,7 +379,7 @@ export const getGetMySubscriptionQueryKey = () => {
 
 export const getGetMySubscriptionQueryOptions = <
 	TData = Awaited<ReturnType<typeof getMySubscription>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(options?: {
 	query?: Partial<
 		UseQueryOptions<
@@ -410,11 +408,11 @@ export const getGetMySubscriptionQueryOptions = <
 export type GetMySubscriptionQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getMySubscription>>
 >;
-export type GetMySubscriptionQueryError = ErrorType<unknown>;
+export type GetMySubscriptionQueryError = unknown;
 
 export function useGetMySubscription<
 	TData = Awaited<ReturnType<typeof getMySubscription>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options: {
 		query: Partial<
@@ -440,7 +438,7 @@ export function useGetMySubscription<
 };
 export function useGetMySubscription<
 	TData = Awaited<ReturnType<typeof getMySubscription>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -466,7 +464,7 @@ export function useGetMySubscription<
 };
 export function useGetMySubscription<
 	TData = Awaited<ReturnType<typeof getMySubscription>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -488,7 +486,7 @@ export function useGetMySubscription<
 
 export function useGetMySubscription<
 	TData = Awaited<ReturnType<typeof getMySubscription>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<

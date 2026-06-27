@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import {
 	type ProfessionalPatientsParams,
-	patientsApi,
-} from "@/lib/api/patients.api";
+	patientProfileApi,
+} from "@/lib/api/patients/patient-profile.api";
 import { patientKeys } from "./patient-keys";
 
 export function useProfessionalPatients(
@@ -14,7 +14,8 @@ export function useProfessionalPatients(
 ) {
 	return useQuery({
 		queryKey: [...patientKeys.all, "professional", professionalId, params],
-		queryFn: () => patientsApi.getProfessionalPatients(professionalId, params),
+		queryFn: () =>
+			patientProfileApi.getProfessionalPatients(professionalId, params),
 		enabled: !!professionalId,
 	});
 }

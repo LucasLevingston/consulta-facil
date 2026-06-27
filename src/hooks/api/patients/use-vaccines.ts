@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
 import { patientKeys } from "./patient-keys";
 
 export function useVaccines() {
 	return useQuery({
 		queryKey: patientKeys.vaccines,
-		queryFn: patientsApi.listVaccines,
+		queryFn: patientVaccinesApi.listVaccines,
 	});
 }
