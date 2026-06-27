@@ -10,7 +10,6 @@ import {
 	SlidersHorizontal,
 	X,
 } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,67 +20,32 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import type { UseLabFiltersReturn } from "@/hooks/use-lab-filters";
 import { ALL } from "@/utils/constants/filter-sentinels";
-import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 
-interface LabFiltersProps {
-	search: string;
-	onSearchChange: (v: string) => void;
-	filterState: string;
-	onStateChange: (v: string) => void;
-	filterCity: string;
-	onCityChange: (v: string) => void;
-	availableStates: string[];
-	totalActive: number;
-	advancedCount: number;
-	expanded: boolean;
-	onExpandedChange: (v: boolean) => void;
-	isNearbyMode: boolean;
-	radiusKm: number;
-	onRadiusChange: (v: number) => void;
-	locationLoading: boolean;
-	onRequestLocation: () => void;
-	onClearLocation: () => void;
-	onClearFilters: () => void;
+interface Props {
+	hook: UseLabFiltersReturn;
 }
 
-export function LabFilters({
-	search,
-	onSearchChange,
-	filterState,
-	onStateChange,
-	filterCity,
-	onCityChange,
-	availableStates,
-	totalActive,
-	advancedCount,
-	expanded,
-	onExpandedChange,
-	isNearbyMode,
-	radiusKm,
-	onRadiusChange,
-	locationLoading,
-	onRequestLocation,
-	onClearLocation,
-	onClearFilters,
-}: LabFiltersProps) {
+export function LabFilters({ hook }: Props) {
+	const { filterState: fs, location: loc, options, derived, actions } = hook;
+
 	return (
 		<div className="space-y-3">
-			{/* Filter row */}
 			<div className="flex flex-wrap items-center gap-2">
 				<div className="relative min-w-[180px] flex-1 max-w-xs">
 					<Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
 					<Input
 						placeholder="Buscar por laboratório ou exame..."
-						value={search}
-						onChange={(e) => onSearchChange(e.target.value)}
+						value={fs.search}
+						onChange={(e) => actions.setSearch(e.target.value)}
 						className="pl-8 rounded-xl"
 					/>
 				</div>
 
 				<Select
-					value={filterState || ALL}
-					onValueChange={(v) => onStateChange(v === ALL ? "" : v)}
+					value={fs.filterState || ALL}
+					onValueChange={(v) => actions.setFilterState(v === ALL ? "" : v)}
 				>
 					<SelectTrigger className="w-[130px] rounded-xl">
 						<div className="flex items-center gap-2">
@@ -91,7 +55,7 @@ export function LabFilters({
 					</SelectTrigger>
 					<SelectContent className="rounded-xl">
 						<SelectItem value={ALL}>Todos os estados</SelectItem>
-						{availableStates.map((s) => (
+						{options.availableStates.map((s) => (
 							<SelectItem key={s} value={s}>
 								{s}
 							</SelectItem>
@@ -102,48 +66,47 @@ export function LabFilters({
 				<Button
 					variant="outline"
 					size="sm"
-					onClick={() => onExpandedChange(!expanded)}
+					onClick={() => actions.setExpanded(!fs.expanded)}
 					className="rounded-xl gap-2 shrink-0"
 				>
 					<SlidersHorizontal className="h-4 w-4" />
 					Mais filtros
-					{advancedCount > 0 && (
+					{derived.advancedCount > 0 && (
 						<Badge className="h-5 min-w-5 px-1.5 text-[10px] leading-none">
-							{advancedCount}
+							{derived.advancedCount}
 						</Badge>
 					)}
-					{expanded ? (
+					{fs.expanded ? (
 						<ChevronUp className="h-3 w-3" />
 					) : (
 						<ChevronDown className="h-3 w-3" />
 					)}
 				</Button>
 
-				{totalActive > 0 && (
+				{derived.totalActive > 0 && (
 					<Button
 						variant="ghost"
 						size="sm"
-						onClick={onClearFilters}
+						onClick={actions.clearFilters}
 						className="gap-1.5 text-muted-foreground rounded-xl"
 					>
 						<X className="h-3.5 w-3.5" />
-						Limpar ({totalActive})
+						Limpar ({derived.totalActive})
 					</Button>
 				)}
 
-				{/* Nearby toggle */}
 				<div className="ml-auto flex items-center gap-2">
-					{isNearbyMode ? (
+					{derived.isNearbyMode ? (
 						<div className="flex items-center gap-2">
 							<Select
-								value={String(radiusKm)}
-								onValueChange={(v) => onRadiusChange(Number(v))}
+								value={String(loc.radiusKm)}
+								onValueChange={(v) => actions.setRadiusKm(Number(v))}
 							>
 								<SelectTrigger className="h-9 w-[100px] rounded-xl text-sm">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent className="rounded-xl">
-									{RADIUS_OPTIONS.map(({ value, label }) => (
+									{options.radiusOptions.map(({ value, label }) => (
 										<SelectItem key={value} value={value}>
 											{label}
 										</SelectItem>
@@ -155,11 +118,11 @@ export function LabFilters({
 								className="gap-1.5 px-3 py-1.5 rounded-full text-sm"
 							>
 								<Navigation className="h-3.5 w-3.5 text-primary" />
-								Perto de você ({radiusKm}km)
+								Perto de você ({loc.radiusKm}km)
 								<button
 									type="button"
 									aria-label="Remover localização"
-									onClick={onClearLocation}
+									onClick={actions.clearLocation}
 									className="ml-0.5 hover:opacity-70 transition-opacity cursor-pointer"
 								>
 									<X className="h-3.5 w-3.5" />
@@ -170,11 +133,11 @@ export function LabFilters({
 						<Button
 							variant="outline"
 							size="sm"
-							onClick={onRequestLocation}
-							disabled={locationLoading}
+							onClick={actions.requestLocation}
+							disabled={loc.locationLoading}
 							className="rounded-xl gap-2"
 						>
-							{locationLoading ? (
+							{loc.locationLoading ? (
 								<Loader2 className="h-4 w-4 animate-spin" />
 							) : (
 								<Navigation className="h-4 w-4" />
@@ -185,8 +148,7 @@ export function LabFilters({
 				</div>
 			</div>
 
-			{/* Advanced filters */}
-			{expanded && (
+			{fs.expanded && (
 				<div className="rounded-xl border border-border bg-muted/30 p-4 animate-in fade-in-0 slide-in-from-top-2 duration-200">
 					<div className="max-w-xs space-y-1.5">
 						<label
@@ -201,8 +163,8 @@ export function LabFilters({
 							<Input
 								id="filter-city"
 								placeholder="Ex: João Pessoa, Campina Grande..."
-								value={filterCity}
-								onChange={(e) => onCityChange(e.target.value)}
+								value={fs.filterCity}
+								onChange={(e) => actions.setFilterCity(e.target.value)}
 								className="pl-9 h-9 rounded-xl text-sm"
 							/>
 						</div>
@@ -210,54 +172,53 @@ export function LabFilters({
 				</div>
 			)}
 
-			{/* Active filter chips */}
-			{totalActive > 0 && (
+			{derived.totalActive > 0 && (
 				<div className="flex flex-wrap gap-2">
-					{search && (
+					{fs.search && (
 						<Badge
 							variant="secondary"
 							className="gap-1.5 px-3 py-1 rounded-full text-xs"
 						>
 							<Search className="h-3 w-3" />
-							&ldquo;{search}&rdquo;
+							&ldquo;{fs.search}&rdquo;
 							<button
 								type="button"
 								aria-label="Remover busca"
-								onClick={() => onSearchChange("")}
+								onClick={() => actions.setSearch("")}
 								className="ml-0.5 hover:opacity-70 transition-opacity cursor-pointer"
 							>
 								<X className="h-3 w-3" />
 							</button>
 						</Badge>
 					)}
-					{filterState && (
+					{fs.filterState && (
 						<Badge
 							variant="secondary"
 							className="gap-1.5 px-3 py-1 rounded-full text-xs"
 						>
 							<MapPin className="h-3 w-3" />
-							{filterState}
+							{fs.filterState}
 							<button
 								type="button"
 								aria-label="Remover filtro de estado"
-								onClick={() => onStateChange("")}
+								onClick={() => actions.setFilterState("")}
 								className="ml-0.5 hover:opacity-70 transition-opacity cursor-pointer"
 							>
 								<X className="h-3 w-3" />
 							</button>
 						</Badge>
 					)}
-					{filterCity && (
+					{fs.filterCity && (
 						<Badge
 							variant="secondary"
 							className="gap-1.5 px-3 py-1 rounded-full text-xs"
 						>
 							<MapPin className="h-3 w-3" />
-							{filterCity}
+							{fs.filterCity}
 							<button
 								type="button"
 								aria-label="Remover filtro de cidade"
-								onClick={() => onCityChange("")}
+								onClick={() => actions.setFilterCity("")}
 								className="ml-0.5 hover:opacity-70 transition-opacity cursor-pointer"
 							>
 								<X className="h-3 w-3" />

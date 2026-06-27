@@ -2,100 +2,20 @@
 
 import { FlaskConical } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useMemo, useState } from "react";
-
+import { Suspense } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { LabCard } from "@/components/laboratories/LabCard";
 import { LabFilters } from "@/components/laboratories/LabFilters";
 import { Button } from "@/components/ui/button";
-import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
-import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
+import { useLabFilters } from "@/hooks/use-lab-filters";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 function LaboratoriesPageContent() {
 	const searchParams = useSearchParams();
 	const examRequestId = searchParams.get("examId");
 
-	const [search, setSearch] = useState("");
-	const [filterState, setFilterState] = useState("");
-	const [filterCity, setFilterCity] = useState("");
-	const [userLocation, setUserLocation] = useState<{
-		lat: number;
-		lng: number;
-	} | null>(null);
-	const [locationLoading, setLocationLoading] = useState(false);
-	const [radiusKm, setRadiusKm] = useState(50);
-	const [expanded, setExpanded] = useState(false);
-
-	const isNearbyMode = userLocation !== null;
-
-	const {
-		data: allLabs = [],
-		isLoading: allLoading,
-		error: allError,
-	} = useExamLabs();
-	const {
-		data: nearbyLabs = [],
-		isLoading: nearbyLoading,
-		error: nearbyError,
-	} = useExamLabsNearby(
-		userLocation?.lat ?? null,
-		userLocation?.lng ?? null,
-		radiusKm,
-	);
-
-	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
-	const error = isNearbyMode ? nearbyError : allError;
-
-	const availableStates = useMemo(
-		() =>
-			[...new Set(allLabs.flatMap((l) => (l.state ? [l.state] : [])))].sort(),
-		[allLabs],
-	);
-
-	const baseList = isNearbyMode ? nearbyLabs : allLabs;
-
-	const displayed = useMemo(() => {
-		let result = baseList;
-		if (search.trim())
-			result = result.filter(
-				(l) =>
-					l.name.toLowerCase().includes(search.toLowerCase()) ||
-					l.acceptedExams?.some((e) =>
-						e.toLowerCase().includes(search.toLowerCase()),
-					),
-			);
-		if (filterState) result = result.filter((l) => l.state === filterState);
-		if (filterCity)
-			result = result.filter((l) =>
-				l.city?.toLowerCase().includes(filterCity.toLowerCase()),
-			);
-		return result;
-	}, [baseList, search, filterState, filterCity]);
-
-	const totalActive = [search, filterState, filterCity].filter(Boolean).length;
-	const advancedCount = [filterCity].filter(Boolean).length;
-
-	function clearFilters() {
-		setSearch("");
-		setFilterState("");
-		setFilterCity("");
-	}
-
-	function requestLocation() {
-		if (!navigator.geolocation) return;
-		setLocationLoading(true);
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				setUserLocation({
-					lat: pos.coords.latitude,
-					lng: pos.coords.longitude,
-				});
-				setLocationLoading(false);
-			},
-			() => setLocationLoading(false),
-		);
-	}
+	const labs = useLabFilters();
+	const { derived, actions, displayed, isLoading, error } = labs;
 
 	return (
 		<QueryBoundary isLoading={isLoading} error={error}>
@@ -121,26 +41,7 @@ function LaboratoriesPageContent() {
 				</div>
 			)}
 
-			<LabFilters
-				search={search}
-				onSearchChange={setSearch}
-				filterState={filterState}
-				onStateChange={setFilterState}
-				filterCity={filterCity}
-				onCityChange={setFilterCity}
-				availableStates={availableStates}
-				totalActive={totalActive}
-				advancedCount={advancedCount}
-				expanded={expanded}
-				onExpandedChange={setExpanded}
-				isNearbyMode={isNearbyMode}
-				radiusKm={radiusKm}
-				onRadiusChange={setRadiusKm}
-				locationLoading={locationLoading}
-				onRequestLocation={requestLocation}
-				onClearLocation={() => setUserLocation(null)}
-				onClearFilters={clearFilters}
-			/>
+			<LabFilters hook={labs} />
 
 			{displayed.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-xl border border-dashed p-12 text-center">
@@ -153,12 +54,12 @@ function LaboratoriesPageContent() {
 					<p className="mt-2 text-sm text-muted-foreground">
 						Tente ajustar os filtros ou buscar por outro exame.
 					</p>
-					{totalActive > 0 && (
+					{derived.totalActive > 0 && (
 						<Button
 							variant="outline"
 							size="sm"
 							className="mt-4"
-							onClick={clearFilters}
+							onClick={actions.clearFilters}
 						>
 							Limpar filtros
 						</Button>
