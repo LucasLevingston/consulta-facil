@@ -67,6 +67,24 @@ for file in $staged; do
       ;;
   esac
 
+  # 5. Tipos/interfaces definidos diretamente em arquivos *.api.ts
+  case "$file" in
+    *.api.ts)
+      case "$file" in
+        *generated*)
+          ;;
+        *)
+          n=$(printf '%s\n' "$content" | grep -E "^export (interface [A-Za-z]|type [A-Za-z][A-Za-z0-9]*[ =<])" | wc -l)
+          if [ "$n" -gt 0 ]; then
+            echo "BLOCKED [API-TYPES] $file — $n tipo(s)/interface(s) definido(s) em .api.ts"
+            echo "  Extraia para ${file%.ts}.types.ts"
+            FOUND=1
+          fi
+          ;;
+      esac
+      ;;
+  esac
+
 done
 
 if [ "$FOUND" -eq 1 ]; then
