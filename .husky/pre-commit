@@ -8,33 +8,87 @@ echo "║        Verificações pré-commit       ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 
-# 0. Regenerar cliente API (orval) a partir do openapi.json local
-echo "▶ [0/4] Gerando integração API (orval)..."
+# 0. Estrutura SOLID dos arquivos
+echo "▶ [0/5] Verificando estrutura dos arquivos..."
+MAX_LINES=300
+FOUND=0
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+  case "$file" in *.ts|*.tsx|*.js|*.jsx) ;; *) continue ;; esac
+  content=$(git show ":$file" 2>/dev/null)
+
+  lines=$(printf '%s\n' "$content" | wc -l)
+  if [ "$lines" -gt "$MAX_LINES" ]; then
+    echo "  BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
+    echo "    Divida: custom hooks, services, sub-components, utils"
+    FOUND=1
+  fi
+
+  case "$file" in *constants*|*Constants*) ;; *)
+    n=$(printf '%s\n' "$content" | grep -E "^export const [A-Z][A-Z0-9_]{2,}" | wc -l)
+    if [ "$n" -gt 0 ]; then
+      echo "  BLOCKED [CONSTANTS] $file — $n constante(s) uppercase fora de constants/"
+      echo "    Mova para src/constants/ ou <feature>/constants.ts"
+      FOUND=1
+    fi
+  ;; esac
+
+  case "$file" in *.tsx)
+    case "$file" in *.types.*|*.props.*|*types.ts|*props.ts) ;; *)
+      n=$(printf '%s\n' "$content" | grep -E "^(export )?(interface|type) [A-Za-z]+Props" | wc -l)
+      if [ "$n" -gt 0 ]; then
+        echo "  BLOCKED [PROPS] $file — Props definidas inline"
+        echo "    Extraia para ${file%.tsx}.types.ts"
+        FOUND=1
+      fi
+    ;; esac
+  ;; esac
+
+  case "$file" in *.tsx)
+    case "$file" in *utils*|*helpers*|*functions*) ;; *)
+      n=$(printf '%s\n' "$content" | grep -E "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" | wc -l)
+      if [ "$n" -gt 0 ]; then
+        echo "  BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s) em componente"
+        echo "    Mova para utils/, helpers/ ou <feature>/utils.ts"
+        FOUND=1
+      fi
+    ;; esac
+  ;; esac
+done
+if [ "$FOUND" -eq 1 ]; then
+  echo ""
+  echo "  Commit bloqueado. Separe: constants/ | *.types.ts | utils/ | componentes"
+  exit 1
+fi
+echo "✓ Estrutura OK"
+echo ""
+
+# 1. Regenerar cliente API (orval) a partir do openapi.json local
+echo "▶ [1/5] Gerando integração API (orval)..."
 npm run api:generate
 git add src/lib/api/generated
 echo "✓ Integração API gerada"
 echo ""
 
-# 1. Checagem de tipos TypeScript
-echo "▶ [1/4] Checagem de tipos (TypeScript)..."
+# 2. Checagem de tipos TypeScript
+echo "▶ [2/5] Checagem de tipos (TypeScript)..."
 npx tsc --noEmit
 echo "✓ Sem erros de tipagem"
 echo ""
 
-# 2. Lint (só nos arquivos staged)
-echo "▶ [2/4] Lint + format (staged files)..."
+# 3. Lint (só nos arquivos staged)
+echo "▶ [3/5] Lint + format (staged files)..."
 npx lint-staged
 echo "✓ Lint passou"
 echo ""
 
-# 3. Testes + cobertura
-echo "▶ [3/4] Testes com cobertura..."
+# 4. Testes + cobertura
+echo "▶ [4/5] Testes com cobertura..."
 npm run test:coverage
 echo "✓ Testes passaram"
 echo ""
 
-# 4. Build
-echo "▶ [4/4] Build de produção..."
+# 5. Build
+echo "▶ [5/5] Build de produção..."
 npm run build
 echo "✓ Build concluído"
 echo ""

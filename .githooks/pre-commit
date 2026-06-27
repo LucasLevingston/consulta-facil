@@ -1,78 +1,97 @@
 #!/bin/sh
+
+set -e
+
+echo ""
+echo "╔══════════════════════════════════════╗"
+echo "║        Verificações pré-commit       ║"
+echo "╚══════════════════════════════════════╝"
+echo ""
+
+# 0. Estrutura SOLID dos arquivos
+echo "▶ [0/5] Verificando estrutura dos arquivos..."
 MAX_LINES=300
 FOUND=0
-
-staged=$(git diff --cached --name-only --diff-filter=ACM)
-
-for file in $staged; do
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
   case "$file" in *.ts|*.tsx|*.js|*.jsx) ;; *) continue ;; esac
-
   content=$(git show ":$file" 2>/dev/null)
 
-  # 1. Tamanho
   lines=$(printf '%s\n' "$content" | wc -l)
   if [ "$lines" -gt "$MAX_LINES" ]; then
-    echo "BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
-    echo "  Divida: custom hooks, services, sub-components, utils"
+    echo "  BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
+    echo "    Divida: custom hooks, services, sub-components, utils"
     FOUND=1
   fi
 
-  # 2. Constantes uppercase fora de constants/
-  case "$file" in
-    *constants*|*Constants*)
-      ;;
-    *)
-      n=$(printf '%s\n' "$content" | grep -E "^export const [A-Z][A-Z0-9_]{2,}" | wc -l)
+  case "$file" in *constants*|*Constants*) ;; *)
+    n=$(printf '%s\n' "$content" | grep -E "^export const [A-Z][A-Z0-9_]{2,}" | wc -l)
+    if [ "$n" -gt 0 ]; then
+      echo "  BLOCKED [CONSTANTS] $file — $n constante(s) uppercase fora de constants/"
+      echo "    Mova para src/constants/ ou <feature>/constants.ts"
+      FOUND=1
+    fi
+  ;; esac
+
+  case "$file" in *.tsx)
+    case "$file" in *.types.*|*.props.*|*types.ts|*props.ts) ;; *)
+      n=$(printf '%s\n' "$content" | grep -E "^(export )?(interface|type) [A-Za-z]+Props" | wc -l)
       if [ "$n" -gt 0 ]; then
-        echo "BLOCKED [CONSTANTS] $file — $n constante(s) uppercase fora de constants/"
-        echo "  Mova para src/constants/ ou <feature>/constants.ts"
+        echo "  BLOCKED [PROPS] $file — Props definidas inline"
+        echo "    Extraia para ${file%.tsx}.types.ts"
         FOUND=1
       fi
-      ;;
-  esac
+    ;; esac
+  ;; esac
 
-  # 3. Props/types inline em arquivo TSX
-  case "$file" in
-    *.tsx)
-      case "$file" in
-        *.types.*|*.props.*|*types.ts|*props.ts)
-          ;;
-        *)
-          n=$(printf '%s\n' "$content" | grep -E "^(export )?(interface|type) [A-Za-z]+Props" | wc -l)
-          if [ "$n" -gt 0 ]; then
-            echo "BLOCKED [PROPS] $file — Props definidas inline"
-            echo "  Extraia para ${file%.tsx}.types.ts"
-            FOUND=1
-          fi
-          ;;
-      esac
-      ;;
-  esac
-
-  # 4. Funções utilitárias exportadas dentro de componente TSX
-  case "$file" in
-    *.tsx)
-      case "$file" in
-        *utils*|*helpers*|*functions*)
-          ;;
-        *)
-          n=$(printf '%s\n' "$content" | grep -E "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" | wc -l)
-          if [ "$n" -gt 0 ]; then
-            echo "BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s) exportada(s) em componente"
-            echo "  Mova para utils/, helpers/ ou <feature>/utils.ts"
-            FOUND=1
-          fi
-          ;;
-      esac
-      ;;
-  esac
-
+  case "$file" in *.tsx)
+    case "$file" in *utils*|*helpers*|*functions*) ;; *)
+      n=$(printf '%s\n' "$content" | grep -E "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" | wc -l)
+      if [ "$n" -gt 0 ]; then
+        echo "  BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s) em componente"
+        echo "    Mova para utils/, helpers/ ou <feature>/utils.ts"
+        FOUND=1
+      fi
+    ;; esac
+  ;; esac
 done
-
 if [ "$FOUND" -eq 1 ]; then
   echo ""
-  echo "Commit bloqueado. Mantenha separados: constants/ | *.types.ts | utils/ | componentes"
+  echo "  Commit bloqueado. Separe: constants/ | *.types.ts | utils/ | componentes"
   exit 1
 fi
+echo "✓ Estrutura OK"
+echo ""
 
-exit 0
+# 1. Regenerar cliente API (orval) a partir do openapi.json local
+echo "▶ [1/5] Gerando integração API (orval)..."
+npm run api:generate
+git add src/lib/api/generated
+echo "✓ Integração API gerada"
+echo ""
+
+# 2. Checagem de tipos TypeScript
+echo "▶ [2/5] Checagem de tipos (TypeScript)..."
+npx tsc --noEmit
+echo "✓ Sem erros de tipagem"
+echo ""
+
+# 3. Lint (só nos arquivos staged)
+echo "▶ [3/5] Lint + format (staged files)..."
+npx lint-staged
+echo "✓ Lint passou"
+echo ""
+
+# 4. Testes + cobertura
+echo "▶ [4/5] Testes com cobertura..."
+npm run test:coverage
+echo "✓ Testes passaram"
+echo ""
+
+# 5. Build
+echo "▶ [5/5] Build de produção..."
+npm run build
+echo "✓ Build concluído"
+echo ""
+
+echo "✅ Todas as verificações passaram. Commit liberado."
+echo ""
