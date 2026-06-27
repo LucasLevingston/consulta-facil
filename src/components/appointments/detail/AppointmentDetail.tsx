@@ -25,8 +25,6 @@ export function AppointmentDetail({
 }) {
 	const { user } = useUserStore();
 	const { can } = usePermission();
-	const [qrOpen, setQrOpen] = useState(false);
-	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 	const [videoActive, setVideoActive] = useState(false);
 	const [videoAppointmentId, setVideoAppointmentId] = useState<string | null>(
 		null,
@@ -61,10 +59,6 @@ export function AppointmentDetail({
 				userId={user?.id}
 				canReschedule={canReschedule}
 				videoRoom={videoRoom}
-				qrOpen={qrOpen}
-				rescheduleOpen={rescheduleOpen}
-				onQrOpen={setQrOpen}
-				onRescheduleOpen={setRescheduleOpen}
 				onVideoStart={handleVideoStart}
 			/>
 

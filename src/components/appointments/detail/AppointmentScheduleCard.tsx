@@ -10,6 +10,7 @@ import {
 	User,
 	Video,
 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { AbacGuard } from "@/components/AbacGuard";
 import { CustomButton } from "@/components/custom/custom-button";
@@ -30,8 +31,6 @@ import type { VideoRoom } from "@/lib/schemas/video/video-room.schema";
 
 import { QrCodeDialog } from "./QrCodeDialog";
 
-type BooleanSetter = React.Dispatch<React.SetStateAction<boolean>>;
-
 interface Props {
 	appointment: AppointmentResponse;
 	isPatient: boolean;
@@ -39,10 +38,6 @@ interface Props {
 	userId: string | undefined;
 	canReschedule: boolean;
 	videoRoom: VideoRoom | undefined;
-	qrOpen: boolean;
-	rescheduleOpen: boolean;
-	onQrOpen: BooleanSetter;
-	onRescheduleOpen: BooleanSetter;
 	onVideoStart: (appointmentId: string) => void;
 }
 
@@ -53,12 +48,10 @@ export function AppointmentScheduleCard({
 	userId,
 	canReschedule,
 	videoRoom,
-	qrOpen,
-	rescheduleOpen,
-	onQrOpen,
-	onRescheduleOpen,
 	onVideoStart,
 }: Props) {
+	const [qrOpen, setQrOpen] = useState(false);
+	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 	const { mutateAsync: generateMeetLink, isPending: generatingLink } =
 		useGenerateMeetLink();
 	const { mutateAsync: createRoom, isPending: creatingRoom } = useCreateRoom();
@@ -137,7 +130,7 @@ export function AppointmentScheduleCard({
 									variant="outline"
 									size="sm"
 									className="gap-2"
-									onClick={() => onQrOpen(true)}
+									onClick={() => setQrOpen(true)}
 								>
 									<QrCode className="h-3.5 w-3.5" />
 									QR Check-in
@@ -157,7 +150,7 @@ export function AppointmentScheduleCard({
 										variant="outline"
 										size="sm"
 										className="gap-2"
-										onClick={() => onRescheduleOpen(true)}
+										onClick={() => setRescheduleOpen(true)}
 									>
 										<RefreshCw className="h-3.5 w-3.5" />
 										Remarcar
@@ -239,7 +232,7 @@ export function AppointmentScheduleCard({
 				</CardContent>
 			</Card>
 
-			<Dialog open={rescheduleOpen} onOpenChange={onRescheduleOpen}>
+			<Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
 				<DialogContent className="sm:max-w-md">
 					<DialogHeader className="mb-2 space-y-1">
 						<DialogTitle>Remarcar consulta</DialogTitle>
@@ -249,12 +242,12 @@ export function AppointmentScheduleCard({
 					</DialogHeader>
 					<RescheduleAppointmentForm
 						appointment={appointment}
-						setOpen={onRescheduleOpen}
+						setOpen={setRescheduleOpen}
 					/>
 				</DialogContent>
 			</Dialog>
 
-			<Dialog open={qrOpen} onOpenChange={onQrOpen}>
+			<Dialog open={qrOpen} onOpenChange={setQrOpen}>
 				<DialogContent className="sm:max-w-sm">
 					<DialogHeader className="mb-2 space-y-1">
 						<DialogTitle>QR Code para check-in</DialogTitle>
