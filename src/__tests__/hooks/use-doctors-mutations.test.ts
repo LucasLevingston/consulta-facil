@@ -6,19 +6,27 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/doctors.api", () => ({
-	professionalsApi: {
+vi.mock("@/lib/api/professionals/professionals.api", () => ({
+	professionalsListingApi: {
 		getAll: vi.fn(),
 		getById: vi.fn(),
 		getNearby: vi.fn(),
 		searchBySpecialty: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/professionals/professional-applications.api", () => ({
+	professionalApplicationsApi: {
 		create: vi.fn(),
-		update: vi.fn(),
-		delete: vi.fn(),
 		approve: vi.fn(),
 		reject: vi.fn(),
 		getPendingApplications: vi.fn(),
 		getApplicationStatus: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/professionals/professional-profile.api", () => ({
+	professionalProfileApi: {
+		update: vi.fn(),
+		delete: vi.fn(),
 	},
 }));
 vi.mock("@/lib/api/doctors/get-my-doctor-profile.api", () => ({
@@ -34,15 +42,21 @@ import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application
 import { useSearchProfessionals } from "@/hooks/api/doctors/use-search-professionals";
 import { useUpdateProfessional } from "@/hooks/api/doctors/use-update-professional";
 import { getMyProfessionalProfileApi } from "@/lib/api/doctors/get-my-doctor-profile.api";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
+import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
-const mockApprove = vi.mocked(professionalsApi.approve);
-const mockReject = vi.mocked(professionalsApi.reject);
-const mockGetPending = vi.mocked(professionalsApi.getPendingApplications);
-const mockCreate = vi.mocked(professionalsApi.create);
-const mockDelete = vi.mocked(professionalsApi.delete);
-const mockUpdate = vi.mocked(professionalsApi.update);
-const mockSearchBySpecialty = vi.mocked(professionalsApi.searchBySpecialty);
+const mockApprove = vi.mocked(professionalApplicationsApi.approve);
+const mockReject = vi.mocked(professionalApplicationsApi.reject);
+const mockGetPending = vi.mocked(
+	professionalApplicationsApi.getPendingApplications,
+);
+const mockCreate = vi.mocked(professionalApplicationsApi.create);
+const mockDelete = vi.mocked(professionalProfileApi.delete);
+const mockUpdate = vi.mocked(professionalProfileApi.update);
+const mockSearchBySpecialty = vi.mocked(
+	professionalsListingApi.searchBySpecialty,
+);
 const mockGetMyProfile = vi.mocked(getMyProfessionalProfileApi);
 
 const professional = {

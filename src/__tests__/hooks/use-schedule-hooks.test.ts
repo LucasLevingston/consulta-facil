@@ -6,12 +6,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/schedule.api", () => ({
-	scheduleApi: {
+vi.mock("@/lib/api/professionals/professional-schedule.api", () => ({
+	professionalScheduleApi: {
 		getMySchedule: vi.fn(),
 		getScheduleByProfessional: vi.fn(),
-		getClinicWorkingHours: vi.fn(),
 		saveMySchedule: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/clinics/clinic-working-hours.api", () => ({
+	clinicWorkingHoursApi: {
+		getClinicWorkingHours: vi.fn(),
 		saveClinicWorkingHours: vi.fn(),
 	},
 }));
@@ -21,13 +25,20 @@ import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 import { useSaveClinicWorkingHours } from "@/hooks/api/schedule/use-save-clinic-working-hours";
 import { useSaveMySchedule } from "@/hooks/api/schedule/use-save-my-schedule";
-import { scheduleApi } from "@/lib/api/schedule.api";
+import { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
+import { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";
 
-const mockGetMySchedule = vi.mocked(scheduleApi.getMySchedule);
-const mockGetByProfessional = vi.mocked(scheduleApi.getScheduleByProfessional);
-const mockGetClinicHours = vi.mocked(scheduleApi.getClinicWorkingHours);
-const mockSaveMySchedule = vi.mocked(scheduleApi.saveMySchedule);
-const mockSaveClinicHours = vi.mocked(scheduleApi.saveClinicWorkingHours);
+const mockGetMySchedule = vi.mocked(professionalScheduleApi.getMySchedule);
+const mockGetByProfessional = vi.mocked(
+	professionalScheduleApi.getScheduleByProfessional,
+);
+const mockGetClinicHours = vi.mocked(
+	clinicWorkingHoursApi.getClinicWorkingHours,
+);
+const mockSaveMySchedule = vi.mocked(professionalScheduleApi.saveMySchedule);
+const mockSaveClinicHours = vi.mocked(
+	clinicWorkingHoursApi.saveClinicWorkingHours,
+);
 
 const schedule = [{ day: "MONDAY", startTime: "08:00", endTime: "17:00" }];
 const clinicHours = [{ day: "MONDAY", open: "08:00", close: "18:00" }];

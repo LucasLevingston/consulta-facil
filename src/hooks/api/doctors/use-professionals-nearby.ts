@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 import { professionalKeys } from "./professional-keys";
 
 export function useProfessionalsNearby(
@@ -20,7 +20,7 @@ export function useProfessionalsNearby(
 			profession,
 		),
 		queryFn: () =>
-			professionalsApi.getNearby(
+			professionalsListingApi.getNearby(
 				lat ?? 0,
 				lng ?? 0,
 				radiusKm,

@@ -4,4 +4,5 @@ export { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
 export { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 export { useSaveClinicWorkingHours } from "@/hooks/api/schedule/use-save-clinic-working-hours";
 export { useSaveMySchedule } from "@/hooks/api/schedule/use-save-my-schedule";
-export { scheduleApi } from "@/lib/api/schedule.api";
+export { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
+export { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";

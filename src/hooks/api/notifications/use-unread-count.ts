@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { notificationsApi } from "@/lib/api/notifications.api";
+import { notificationsApi } from "@/lib/api/notifications/notifications.api";
 import { notificationKeys } from "./notification-keys";
 
 export function useUnreadCount() {

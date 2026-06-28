@@ -3,7 +3,7 @@
 import { useQueries } from "@tanstack/react-query";
 import { useMemo } from "react";
 import type { z } from "zod";
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 import type { clinicMemberSchema } from "@/lib/schemas/clinic/clinic-member.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
@@ -16,7 +16,7 @@ export function useClinicFinancialStats(members: ClinicMember[]) {
 		queries: members.map((m) => ({
 			queryKey: appointmentKeys.byProfessional(m.professionalProfileId),
 			queryFn: () =>
-				appointmentsApi.getByProfessional(m.professionalProfileId, 0, 100),
+				appointmentsCrudApi.getByProfessional(m.professionalProfileId, 0, 100),
 		})),
 	});
 

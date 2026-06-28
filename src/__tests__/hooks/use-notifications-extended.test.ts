@@ -6,12 +6,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/notifications.api", () => ({
+vi.mock("@/lib/api/notifications/notifications.api", () => ({
 	notificationsApi: {
 		getAll: vi.fn(),
 		getUnreadCount: vi.fn(),
 		markAsRead: vi.fn(),
 		markAllAsRead: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/notifications/invites.api", () => ({
+	invitesApi: {
 		acceptInvite: vi.fn(),
 		declineInvite: vi.fn(),
 		sendClinicInvite: vi.fn(),
@@ -25,15 +29,16 @@ import { useMarkAsRead } from "@/hooks/api/notifications/use-mark-as-read";
 import { useNotifications } from "@/hooks/api/notifications/use-notifications";
 import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
 import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
-import { notificationsApi } from "@/lib/api/notifications.api";
+import { invitesApi } from "@/lib/api/notifications/invites.api";
+import { notificationsApi } from "@/lib/api/notifications/notifications.api";
 
 const mockGetAll = vi.mocked(notificationsApi.getAll);
 const mockGetUnreadCount = vi.mocked(notificationsApi.getUnreadCount);
 const mockMarkAsRead = vi.mocked(notificationsApi.markAsRead);
 const mockMarkAllAsRead = vi.mocked(notificationsApi.markAllAsRead);
-const mockAcceptInvite = vi.mocked(notificationsApi.acceptInvite);
-const mockDeclineInvite = vi.mocked(notificationsApi.declineInvite);
-const mockSendClinicInvite = vi.mocked(notificationsApi.sendClinicInvite);
+const mockAcceptInvite = vi.mocked(invitesApi.acceptInvite);
+const mockDeclineInvite = vi.mocked(invitesApi.declineInvite);
+const mockSendClinicInvite = vi.mocked(invitesApi.sendClinicInvite);
 
 const notification = { id: "n-1", title: "Test", read: false };
 

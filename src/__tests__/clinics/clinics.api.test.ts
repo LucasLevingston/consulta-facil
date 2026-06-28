@@ -5,7 +5,9 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicQueueApi } from "@/lib/api/clinics/clinic-queue.api";
+import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPost = vi.mocked(api.post);
@@ -25,13 +27,13 @@ const receptionist = { id: "rec-1", name: "Maria", email: "maria@clinica.com" };
 
 // ── getAll ────────────────────────────────────────────────────────────────────
 
-describe("clinicsApi — getAll", () => {
+describe("clinicsCrudApi — getAll", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("retorna lista de clínicas", async () => {
 		mockGet.mockResolvedValueOnce({ data: [clinic] });
 
-		const result = await clinicsApi.getAll();
+		const result = await clinicsCrudApi.getAll();
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics");
 		expect(result).toHaveLength(1);
@@ -41,7 +43,7 @@ describe("clinicsApi — getAll", () => {
 	it("retorna array vazio quando não há clínicas", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await clinicsApi.getAll();
+		const result = await clinicsCrudApi.getAll();
 
 		expect(result).toEqual([]);
 	});
@@ -50,7 +52,7 @@ describe("clinicsApi — getAll", () => {
 		const clinics = [clinic, { ...clinic, id: "clinic-2", name: "Saúde Sul" }];
 		mockGet.mockResolvedValueOnce({ data: clinics });
 
-		const result = await clinicsApi.getAll();
+		const result = await clinicsCrudApi.getAll();
 
 		expect(result).toHaveLength(2);
 	});
@@ -58,13 +60,13 @@ describe("clinicsApi — getAll", () => {
 
 // ── getById ───────────────────────────────────────────────────────────────────
 
-describe("clinicsApi — getById", () => {
+describe("clinicsCrudApi — getById", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("busca clínica pelo ID correto", async () => {
 		mockGet.mockResolvedValueOnce({ data: clinic });
 
-		const result = await clinicsApi.getById("clinic-1");
+		const result = await clinicsCrudApi.getById("clinic-1");
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics/clinic-1");
 		expect(result.id).toBe("clinic-1");
@@ -75,8 +77,8 @@ describe("clinicsApi — getById", () => {
 			.mockResolvedValueOnce({ data: clinic })
 			.mockResolvedValueOnce({ data: { ...clinic, id: "clinic-2" } });
 
-		await clinicsApi.getById("clinic-1");
-		await clinicsApi.getById("clinic-2");
+		await clinicsCrudApi.getById("clinic-1");
+		await clinicsCrudApi.getById("clinic-2");
 
 		expect(mockGet.mock.calls[0][0]).toBe("/clinics/clinic-1");
 		expect(mockGet.mock.calls[1][0]).toBe("/clinics/clinic-2");
@@ -85,13 +87,13 @@ describe("clinicsApi — getById", () => {
 
 // ── getMy ─────────────────────────────────────────────────────────────────────
 
-describe("clinicsApi — getMy", () => {
+describe("clinicsCrudApi — getMy", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("chama endpoint correto e retorna clínicas do usuário", async () => {
 		mockGet.mockResolvedValueOnce({ data: [clinic] });
 
-		const result = await clinicsApi.getMy();
+		const result = await clinicsCrudApi.getMy();
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics/my");
 		expect(result).toHaveLength(1);
@@ -100,7 +102,7 @@ describe("clinicsApi — getMy", () => {
 	it("retorna array vazio quando profissional não tem clínica", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await clinicsApi.getMy();
+		const result = await clinicsCrudApi.getMy();
 
 		expect(result).toEqual([]);
 	});
@@ -108,13 +110,13 @@ describe("clinicsApi — getMy", () => {
 
 // ── getNearby — filtros de localização ───────────────────────────────────────
 
-describe("clinicsApi — getNearby filtros", () => {
+describe("clinicsCrudApi — getNearby filtros", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("passa lat, lng e radiusKm para a API", async () => {
 		mockGet.mockResolvedValueOnce({ data: [clinic] });
 
-		await clinicsApi.getNearby(-23.55, -46.63, 10);
+		await clinicsCrudApi.getNearby(-23.55, -46.63, 10);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/clinics/nearby",
@@ -131,7 +133,7 @@ describe("clinicsApi — getNearby filtros", () => {
 	it("usa radiusKm padrão 50 quando não informado", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		await clinicsApi.getNearby(-7.12, -34.84);
+		await clinicsCrudApi.getNearby(-7.12, -34.84);
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -144,8 +146,8 @@ describe("clinicsApi — getNearby filtros", () => {
 			.mockResolvedValueOnce({ data: [clinic] })
 			.mockResolvedValueOnce({ data: [clinic, { ...clinic, id: "clinic-2" }] });
 
-		const near = await clinicsApi.getNearby(-23.55, -46.63, 5);
-		const far = await clinicsApi.getNearby(-23.55, -46.63, 100);
+		const near = await clinicsCrudApi.getNearby(-23.55, -46.63, 5);
+		const far = await clinicsCrudApi.getNearby(-23.55, -46.63, 100);
 
 		expect(near).toHaveLength(1);
 		expect(far).toHaveLength(2);
@@ -154,7 +156,7 @@ describe("clinicsApi — getNearby filtros", () => {
 	it("coordenadas diferentes passam valores corretos", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		await clinicsApi.getNearby(-7.12, -34.84, 25);
+		await clinicsCrudApi.getNearby(-7.12, -34.84, 25);
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -167,7 +169,7 @@ describe("clinicsApi — getNearby filtros", () => {
 	it("retorna array vazio quando nenhuma clínica no raio", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await clinicsApi.getNearby(-90, 0, 1);
+		const result = await clinicsCrudApi.getNearby(-90, 0, 1);
 
 		expect(result).toEqual([]);
 	});
@@ -175,13 +177,13 @@ describe("clinicsApi — getNearby filtros", () => {
 
 // ── getReceptionists ──────────────────────────────────────────────────────────
 
-describe("clinicsApi — getReceptionists", () => {
+describe("clinicStaffApi — getReceptionists", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("busca recepcionistas pelo clinicId correto", async () => {
 		mockGet.mockResolvedValueOnce({ data: [receptionist] });
 
-		const result = await clinicsApi.getReceptionists("clinic-1");
+		const result = await clinicStaffApi.getReceptionists("clinic-1");
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics/clinic-1/receptionists");
 		expect(result).toHaveLength(1);
@@ -191,7 +193,7 @@ describe("clinicsApi — getReceptionists", () => {
 	it("clínica sem recepcionistas retorna array vazio", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await clinicsApi.getReceptionists("clinic-1");
+		const result = await clinicStaffApi.getReceptionists("clinic-1");
 
 		expect(result).toEqual([]);
 	});
@@ -200,7 +202,7 @@ describe("clinicsApi — getReceptionists", () => {
 		const recs = [receptionist, { ...receptionist, id: "rec-2", name: "João" }];
 		mockGet.mockResolvedValueOnce({ data: recs });
 
-		const result = await clinicsApi.getReceptionists("clinic-1");
+		const result = await clinicStaffApi.getReceptionists("clinic-1");
 
 		expect(result).toHaveLength(2);
 	});
@@ -208,7 +210,7 @@ describe("clinicsApi — getReceptionists", () => {
 
 // ── getQueue ──────────────────────────────────────────────────────────────────
 
-describe("clinicsApi — getQueue", () => {
+describe("clinicQueueApi — getQueue", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	const appointment = { id: "apt-1", status: "CONFIRMED" };
@@ -216,7 +218,7 @@ describe("clinicsApi — getQueue", () => {
 	it("busca fila pelo clinicId correto", async () => {
 		mockGet.mockResolvedValueOnce({ data: [appointment] });
 
-		const result = await clinicsApi.getQueue("clinic-1");
+		const result = await clinicQueueApi.getQueue("clinic-1");
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics/clinic-1/queue");
 		expect(result).toHaveLength(1);
@@ -225,7 +227,7 @@ describe("clinicsApi — getQueue", () => {
 	it("fila vazia retorna array vazio", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await clinicsApi.getQueue("clinic-1");
+		const result = await clinicQueueApi.getQueue("clinic-1");
 
 		expect(result).toEqual([]);
 	});
@@ -233,19 +235,19 @@ describe("clinicsApi — getQueue", () => {
 
 // ── CRUD ──────────────────────────────────────────────────────────────────────
 
-describe("clinicsApi — create e update", () => {
+describe("clinicsCrudApi — create e update", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	const input = {
 		name: "Nova Clínica",
 		city: "Recife",
 		state: "PE",
-	} as Parameters<typeof clinicsApi.create>[0];
+	} as Parameters<typeof clinicsCrudApi.create>[0];
 
 	it("create chama POST /clinics com payload correto", async () => {
 		mockPost.mockResolvedValueOnce({ data: { ...clinic, ...input } });
 
-		await clinicsApi.create(input);
+		await clinicsCrudApi.create(input);
 
 		expect(mockPost).toHaveBeenCalledWith("/clinics", input);
 	});
@@ -253,7 +255,7 @@ describe("clinicsApi — create e update", () => {
 	it("update chama PUT /clinics/:id com payload correto", async () => {
 		mockPut.mockResolvedValueOnce({ data: { ...clinic, ...input } });
 
-		await clinicsApi.update("clinic-1", input);
+		await clinicsCrudApi.update("clinic-1", input);
 
 		expect(mockPut).toHaveBeenCalledWith("/clinics/clinic-1", input);
 	});
@@ -261,7 +263,7 @@ describe("clinicsApi — create e update", () => {
 	it("addMember chama POST no endpoint correto", async () => {
 		mockPost.mockResolvedValueOnce({ data: undefined });
 
-		await clinicsApi.addMember("clinic-1", "prof-1");
+		await clinicsCrudApi.addMember("clinic-1", "prof-1");
 
 		expect(mockPost).toHaveBeenCalledWith("/clinics/clinic-1/members/prof-1");
 	});
@@ -269,7 +271,7 @@ describe("clinicsApi — create e update", () => {
 	it("removeMember chama DELETE no endpoint correto", async () => {
 		mockDelete.mockResolvedValueOnce({ data: undefined });
 
-		await clinicsApi.removeMember("clinic-1", "prof-1");
+		await clinicsCrudApi.removeMember("clinic-1", "prof-1");
 
 		expect(mockDelete).toHaveBeenCalledWith("/clinics/clinic-1/members/prof-1");
 	});

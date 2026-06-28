@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentPaymentApi } from "@/lib/api/appointments/appointment-payment.api";
 import { appointmentKeys } from "./appointment-keys";
 
 export function useCreatePayment() {
@@ -14,7 +14,7 @@ export function useCreatePayment() {
 		}: {
 			appointmentId: string;
 			amount?: number;
-		}) => appointmentsApi.createPayment(appointmentId, amount),
+		}) => appointmentPaymentApi.createPayment(appointmentId, amount),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});

@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 import { clinicKeys } from "./clinic-keys";
 
 export function useClinicsNearby(
@@ -12,7 +12,7 @@ export function useClinicsNearby(
 ) {
 	return useQuery({
 		queryKey: clinicKeys.nearby(lat ?? 0, lng ?? 0, radiusKm),
-		queryFn: () => clinicsApi.getNearby(lat ?? 0, lng ?? 0, radiusKm),
+		queryFn: () => clinicsCrudApi.getNearby(lat ?? 0, lng ?? 0, radiusKm),
 		enabled: lat !== null && lng !== null,
 	});
 }

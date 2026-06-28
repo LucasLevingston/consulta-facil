@@ -5,4 +5,5 @@ export { useGetProfessionalServices } from "@/hooks/api/services/use-get-profess
 export { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
 export { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
 export { useUpdateService } from "@/hooks/api/services/use-update-service";
-export { servicesApi } from "@/lib/api/services.api";
+export { professionalSettingsApi } from "@/lib/api/professionals/professional-settings.api";
+export { professionalServicesApi } from "@/lib/api/services/professional-services.api";

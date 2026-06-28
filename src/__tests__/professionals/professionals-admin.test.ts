@@ -5,7 +5,8 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPut = vi.mocked(api.put);
@@ -46,7 +47,10 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 		const page = makePage([professional], 3, 1, 0);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getPendingApplications(0, 20);
+		const result = await professionalApplicationsApi.getPendingApplications(
+			0,
+			20,
+		);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals/applications",
@@ -64,7 +68,10 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 		const page = makePage([professional], 45, 3, 1);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getPendingApplications(1, 20);
+		const result = await professionalApplicationsApi.getPendingApplications(
+			1,
+			20,
+		);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals/applications",
@@ -78,7 +85,10 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 		const page = makePage([professional], 45, 3, 2);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getPendingApplications(2, 20);
+		const result = await professionalApplicationsApi.getPendingApplications(
+			2,
+			20,
+		);
 
 		expect(result.last).toBe(true);
 		expect(result.number).toBe(2);
@@ -87,7 +97,7 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 	it("tamanho de página personalizado passa size correto", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0, 5) });
 
-		await professionalsApi.getPendingApplications(0, 5);
+		await professionalApplicationsApi.getPendingApplications(0, 5);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals/applications",
@@ -98,7 +108,10 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 	it("fila vazia retorna totalElements=0 e content vazio", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		const result = await professionalsApi.getPendingApplications(0, 20);
+		const result = await professionalApplicationsApi.getPendingApplications(
+			0,
+			20,
+		);
 
 		expect(result.totalElements).toBe(0);
 		expect(result.totalPages).toBe(0);
@@ -118,9 +131,9 @@ describe("professionalsApi — getPendingApplications pagination", () => {
 				data: makePage([professional], totalElements, 3, 2),
 			});
 
-		const p0 = await professionalsApi.getPendingApplications(0, 20);
-		const p1 = await professionalsApi.getPendingApplications(1, 20);
-		const p2 = await professionalsApi.getPendingApplications(2, 20);
+		const p0 = await professionalApplicationsApi.getPendingApplications(0, 20);
+		const p1 = await professionalApplicationsApi.getPendingApplications(1, 20);
+		const p2 = await professionalApplicationsApi.getPendingApplications(2, 20);
 
 		expect(p0.totalElements).toBe(totalElements);
 		expect(p1.totalElements).toBe(totalElements);
@@ -138,7 +151,7 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("passa lat, lng e radiusKm para a API", async () => {
 		mockGet.mockResolvedValueOnce({ data: [professional] });
 
-		const result = await professionalsApi.getNearby(-23.5, -46.6, 30);
+		const result = await professionalsListingApi.getNearby(-23.5, -46.6, 30);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals/nearby",
@@ -156,7 +169,7 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("filtra por specialty e passa corretamente", async () => {
 		mockGet.mockResolvedValueOnce({ data: [professional] });
 
-		await professionalsApi.getNearby(-23.5, -46.6, 50, "Cardiologia");
+		await professionalsListingApi.getNearby(-23.5, -46.6, 50, "Cardiologia");
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -167,7 +180,13 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("filtra por profession e passa corretamente", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		await professionalsApi.getNearby(-23.5, -46.6, 50, undefined, "Médico");
+		await professionalsListingApi.getNearby(
+			-23.5,
+			-46.6,
+			50,
+			undefined,
+			"Médico",
+		);
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -178,7 +197,13 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("combina specialty + profession em filtro simultâneo", async () => {
 		mockGet.mockResolvedValueOnce({ data: [professional] });
 
-		await professionalsApi.getNearby(-7.1, -34.8, 20, "Pediatria", "Médico");
+		await professionalsListingApi.getNearby(
+			-7.1,
+			-34.8,
+			20,
+			"Pediatria",
+			"Médico",
+		);
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -193,7 +218,7 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("specialty undefined não envia parâmetro", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		await professionalsApi.getNearby(-23.5, -46.6, 50, undefined);
+		await professionalsListingApi.getNearby(-23.5, -46.6, 50, undefined);
 
 		const params = (
 			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
@@ -204,7 +229,7 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 	it("retorna array vazio quando nenhum profissional encontrado", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await professionalsApi.getNearby(-23.5, -46.6, 5);
+		const result = await professionalsListingApi.getNearby(-23.5, -46.6, 5);
 
 		expect(result).toEqual([]);
 	});
@@ -213,7 +238,7 @@ describe("professionalsApi — getNearby filtros de localização", () => {
 		const profs = [professional, { ...professional, id: "prof-2" }];
 		mockGet.mockResolvedValueOnce({ data: profs });
 
-		const result = await professionalsApi.getNearby(-23.5, -46.6, 50);
+		const result = await professionalsListingApi.getNearby(-23.5, -46.6, 50);
 
 		expect(result).toHaveLength(2);
 	});
@@ -228,7 +253,7 @@ describe("professionalsApi — approve e reject", () => {
 		const approved = { ...professional, status: "ACTIVE" };
 		mockPut.mockResolvedValueOnce({ data: approved });
 
-		const result = await professionalsApi.approve("prof-1");
+		const result = await professionalApplicationsApi.approve("prof-1");
 
 		expect(mockPut).toHaveBeenCalledWith("/professionals/prof-1/approve");
 		expect(result.status).toBe("ACTIVE");
@@ -238,7 +263,7 @@ describe("professionalsApi — approve e reject", () => {
 		const rejected = { ...professional, status: "REJECTED" };
 		mockPut.mockResolvedValueOnce({ data: rejected });
 
-		const result = await professionalsApi.reject("prof-1");
+		const result = await professionalApplicationsApi.reject("prof-1");
 
 		expect(mockPut).toHaveBeenCalledWith("/professionals/prof-1/reject");
 		expect(result.status).toBe("REJECTED");

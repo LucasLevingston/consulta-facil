@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/clinics.api", () => ({
-	clinicsApi: {
+vi.mock("@/lib/api/clinics/clinics.api", () => ({
+	clinicsCrudApi: {
 		getAll: vi.fn(),
 		getMy: vi.fn(),
 		getById: vi.fn(),
@@ -18,12 +18,11 @@ vi.mock("@/lib/api/clinics.api", () => ({
 import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
 import { useClinics } from "@/hooks/api/clinics/use-clinics";
 import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
-import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
-const mockGetAll = vi.mocked(clinicsApi.getAll);
-const mockGetById = vi.mocked(clinicsApi.getById);
-const mockGetNearby = vi.mocked(clinicsApi.getNearby);
+const mockGetAll = vi.mocked(clinicsCrudApi.getAll);
+const mockGetById = vi.mocked(clinicsCrudApi.getById);
+const mockGetNearby = vi.mocked(clinicsCrudApi.getNearby);
 
 const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP", state: "SP" };
 

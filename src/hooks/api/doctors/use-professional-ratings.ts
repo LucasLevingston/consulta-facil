@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 import { professionalKeys } from "./professional-keys";
 
 export function useProfessionalRatings(professionalId: string) {
 	return useQuery({
 		queryKey: professionalKeys.ratings(professionalId),
-		queryFn: () => professionalsApi.getRatings(professionalId),
+		queryFn: () => professionalsListingApi.getRatings(professionalId),
 		enabled: !!professionalId,
 	});
 }

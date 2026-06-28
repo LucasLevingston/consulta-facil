@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
 import { professionalKeys } from "./professional-keys";
 
@@ -9,7 +9,7 @@ export function useCreateProfessional() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (data: CreateProfessionalInput) =>
-			professionalsApi.create(data),
+			professionalApplicationsApi.create(data),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all }),
 	});

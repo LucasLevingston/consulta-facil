@@ -11,4 +11,6 @@ export { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
 export { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
 export { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
 export { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
-export { clinicsApi } from "@/lib/api/clinics.api";
+export { clinicQueueApi } from "@/lib/api/clinics/clinic-queue.api";
+export { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
+export { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";

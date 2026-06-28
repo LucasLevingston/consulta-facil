@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 import { appointmentKeys } from "./appointment-keys";
 
 export function useProfessionalAppointments(
@@ -13,7 +13,7 @@ export function useProfessionalAppointments(
 	return useQuery({
 		queryKey: appointmentKeys.byProfessional(professionalId),
 		queryFn: () =>
-			appointmentsApi.getByProfessional(professionalId, page, size),
+			appointmentsCrudApi.getByProfessional(professionalId, page, size),
 		enabled: !!professionalId,
 	});
 }

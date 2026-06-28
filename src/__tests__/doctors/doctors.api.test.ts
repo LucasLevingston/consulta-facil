@@ -6,7 +6,9 @@ vi.mock("@/config/api", () => ({
 
 import { api } from "@/config/api";
 import { professionalKeys as doctorKeys } from "@/hooks/api/doctors/professional-keys";
-import { professionalsApi as doctorsApi } from "@/lib/api/doctors.api";
+import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
+import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPost = vi.mocked(api.post);
@@ -32,7 +34,7 @@ describe("doctorsApi", () => {
 		it("chama GET /professionals com paginação padrão", async () => {
 			mockGet.mockResolvedValueOnce({ data: page });
 
-			const result = await doctorsApi.getAll();
+			const result = await professionalsListingApi.getAll();
 
 			expect(mockGet).toHaveBeenCalledWith(
 				"/professionals",
@@ -46,7 +48,7 @@ describe("doctorsApi", () => {
 		it("chama GET /professionals com paginação customizada", async () => {
 			mockGet.mockResolvedValueOnce({ data: page });
 
-			await doctorsApi.getAll(2, 5);
+			await professionalsListingApi.getAll(2, 5);
 
 			expect(mockGet).toHaveBeenCalledWith(
 				"/professionals",
@@ -61,7 +63,7 @@ describe("doctorsApi", () => {
 		it("chama GET /professionals/:id e retorna o profissional", async () => {
 			mockGet.mockResolvedValueOnce({ data: doctor });
 
-			const result = await doctorsApi.getById("d-1");
+			const result = await professionalsListingApi.getById("d-1");
 
 			expect(mockGet).toHaveBeenCalledWith("/professionals/d-1");
 			expect(result.id).toBe("d-1");
@@ -72,7 +74,8 @@ describe("doctorsApi", () => {
 		it("chama GET /professionals/search com a especialidade", async () => {
 			mockGet.mockResolvedValueOnce({ data: page });
 
-			const result = await doctorsApi.searchBySpecialty("Cardiologia");
+			const result =
+				await professionalsListingApi.searchBySpecialty("Cardiologia");
 
 			expect(mockGet).toHaveBeenCalledWith("/professionals/search", {
 				params: { specialty: "Cardiologia", page: 0, size: 20 },
@@ -85,7 +88,7 @@ describe("doctorsApi", () => {
 		it("chama POST /professionals e retorna o profissional criado", async () => {
 			mockPost.mockResolvedValueOnce({ data: doctor });
 
-			const result = await doctorsApi.create({
+			const result = await professionalApplicationsApi.create({
 				name: doctor.name,
 				email: doctor.email,
 				profession: doctor.profession,
@@ -107,7 +110,7 @@ describe("doctorsApi", () => {
 			const updated = { ...doctor, name: "Dr. João Atualizado" };
 			mockPut.mockResolvedValueOnce({ data: updated });
 
-			const result = await doctorsApi.update("d-1", {
+			const result = await professionalProfileApi.update("d-1", {
 				...doctor,
 				name: "Dr. João Atualizado",
 			});
@@ -124,7 +127,7 @@ describe("doctorsApi", () => {
 		it("chama DELETE /professionals/:id", async () => {
 			mockDelete.mockResolvedValueOnce({ data: undefined });
 
-			await doctorsApi.delete("d-1");
+			await professionalProfileApi.delete("d-1");
 
 			expect(mockDelete).toHaveBeenCalledWith("/professionals/d-1");
 		});
@@ -137,7 +140,7 @@ describe("doctorsApi — getApplicationStatus", () => {
 	it("chama GET /professionals/application-status e retorna perfil", async () => {
 		mockGet.mockResolvedValueOnce({ data: doctor });
 
-		const result = await doctorsApi.getApplicationStatus();
+		const result = await professionalApplicationsApi.getApplicationStatus();
 
 		expect(mockGet).toHaveBeenCalledWith("/professionals/application-status");
 		expect(result.id).toBe("d-1");
@@ -147,7 +150,7 @@ describe("doctorsApi — getApplicationStatus", () => {
 		const pending = { ...doctor, status: "PENDING_REVIEW" };
 		mockGet.mockResolvedValueOnce({ data: pending });
 
-		const result = await doctorsApi.getApplicationStatus();
+		const result = await professionalApplicationsApi.getApplicationStatus();
 
 		expect(result.status).toBe("PENDING_REVIEW");
 	});
@@ -155,7 +158,7 @@ describe("doctorsApi — getApplicationStatus", () => {
 	it("não requer parâmetros na chamada", async () => {
 		mockGet.mockResolvedValueOnce({ data: doctor });
 
-		await doctorsApi.getApplicationStatus();
+		await professionalApplicationsApi.getApplicationStatus();
 
 		expect(mockGet).toHaveBeenCalledWith("/professionals/application-status");
 		expect(mockGet).toHaveBeenCalledTimes(1);

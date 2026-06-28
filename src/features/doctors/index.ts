@@ -22,4 +22,7 @@ export { useUpdateEducation } from "@/hooks/api/doctors/use-update-education";
 export { useUpdateExperience } from "@/hooks/api/doctors/use-update-experience";
 export { useUpdateSocialLinks } from "@/hooks/api/doctors/use-update-social-links";
 export { getMyProfessionalProfileApi } from "@/lib/api/doctors/get-my-doctor-profile.api";
-export { professionalsApi } from "@/lib/api/doctors.api";
+export { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
+export { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
+export { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
+export { professionalsListingApi } from "@/lib/api/professionals/professionals.api";

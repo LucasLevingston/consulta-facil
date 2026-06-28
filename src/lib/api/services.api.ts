@@ -1,8 +1,8 @@
-export { professionalServicesApi } from "./professional-services.api";
-export { professionalSettingsApi } from "./professional-settings.api";
+export { professionalSettingsApi } from "./professionals/professional-settings.api";
+export { professionalServicesApi } from "./services/professional-services.api";
 
-import { professionalServicesApi } from "./professional-services.api";
-import { professionalSettingsApi } from "./professional-settings.api";
+import { professionalSettingsApi } from "./professionals/professional-settings.api";
+import { professionalServicesApi } from "./services/professional-services.api";
 
 export const servicesApi = {
 	...professionalServicesApi,

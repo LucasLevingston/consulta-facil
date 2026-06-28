@@ -6,21 +6,22 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/schedule.api", () => ({
-	scheduleApi: {
+vi.mock("@/lib/api/professionals/professional-schedule.api", () => ({
+	professionalScheduleApi: {
 		getMySchedule: vi.fn(),
 		getScheduleByProfessional: vi.fn(),
 		saveMySchedule: vi.fn(),
-		getClinicWorkingHours: vi.fn(),
 	},
 }));
 
 import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
-import { scheduleApi } from "@/lib/api/schedule.api";
+import { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";
 
-const mockGetMine = vi.mocked(scheduleApi.getMySchedule);
-const mockGetByProf = vi.mocked(scheduleApi.getScheduleByProfessional);
+const mockGetMine = vi.mocked(professionalScheduleApi.getMySchedule);
+const mockGetByProf = vi.mocked(
+	professionalScheduleApi.getScheduleByProfessional,
+);
 
 const schedule = [
 	{ dayOfWeek: "MONDAY", startTime: "08:00", endTime: "17:00", isActive: true },

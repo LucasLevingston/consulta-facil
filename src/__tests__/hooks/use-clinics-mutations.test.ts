@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/clinics.api", () => ({
-	clinicsApi: {
+vi.mock("@/lib/api/clinics/clinics.api", () => ({
+	clinicsCrudApi: {
 		getAll: vi.fn(),
 		getMy: vi.fn(),
 		getById: vi.fn(),
@@ -16,10 +16,18 @@ vi.mock("@/lib/api/clinics.api", () => ({
 		update: vi.fn(),
 		addMember: vi.fn(),
 		removeMember: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/clinics/clinic-staff.api", () => ({
+	clinicStaffApi: {
 		inviteReceptionist: vi.fn(),
 		removeReceptionist: vi.fn(),
-		getQueue: vi.fn(),
 		getReceptionists: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
+	clinicQueueApi: {
+		getQueue: vi.fn(),
 	},
 }));
 
@@ -31,16 +39,18 @@ import { useInviteReceptionist } from "@/hooks/api/clinics/use-invite-receptioni
 import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
 import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
 import { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicQueueApi } from "@/lib/api/clinics/clinic-queue.api";
+import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
-const mockCreate = vi.mocked(clinicsApi.create);
-const mockUpdate = vi.mocked(clinicsApi.update);
-const mockAddMember = vi.mocked(clinicsApi.addMember);
-const mockRemoveMember = vi.mocked(clinicsApi.removeMember);
-const mockInviteReceptionist = vi.mocked(clinicsApi.inviteReceptionist);
-const mockRemoveReceptionist = vi.mocked(clinicsApi.removeReceptionist);
-const mockGetQueue = vi.mocked(clinicsApi.getQueue);
-const mockGetReceptionists = vi.mocked(clinicsApi.getReceptionists);
+const mockCreate = vi.mocked(clinicsCrudApi.create);
+const mockUpdate = vi.mocked(clinicsCrudApi.update);
+const mockAddMember = vi.mocked(clinicsCrudApi.addMember);
+const mockRemoveMember = vi.mocked(clinicsCrudApi.removeMember);
+const mockInviteReceptionist = vi.mocked(clinicStaffApi.inviteReceptionist);
+const mockRemoveReceptionist = vi.mocked(clinicStaffApi.removeReceptionist);
+const mockGetQueue = vi.mocked(clinicQueueApi.getQueue);
+const mockGetReceptionists = vi.mocked(clinicStaffApi.getReceptionists);
 
 const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP" };
 const queueItem = { id: "a-1", status: "WAITING" };

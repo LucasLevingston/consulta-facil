@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
 const mockGet = vi.mocked(api.get);
 
@@ -33,7 +33,7 @@ describe("professionalsApi — getAll pagination", () => {
 		const page = makePage([professional], 1, 1, 0);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(0, 12);
+		const result = await professionalsListingApi.getAll(0, 12);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -50,7 +50,7 @@ describe("professionalsApi — getAll pagination", () => {
 		const page = makePage([professional], 25, 3, 1);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(1, 12);
+		const result = await professionalsListingApi.getAll(1, 12);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -68,7 +68,7 @@ describe("professionalsApi — getAll pagination", () => {
 		};
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(2, 12);
+		const result = await professionalsListingApi.getAll(2, 12);
 
 		expect(result.number).toBe(2);
 		expect(result.last).toBe(true);
@@ -82,8 +82,8 @@ describe("professionalsApi — getAll pagination", () => {
 			.mockResolvedValueOnce({ data: pageOne })
 			.mockResolvedValueOnce({ data: pageTwo });
 
-		const r1 = await professionalsApi.getAll(0, 12);
-		const r2 = await professionalsApi.getAll(1, 12);
+		const r1 = await professionalsListingApi.getAll(0, 12);
+		const r2 = await professionalsListingApi.getAll(1, 12);
 
 		expect(r1.content[0].id).toBe("p-1");
 		expect(r2.content[0].id).toBe("p-2");
@@ -93,7 +93,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("filtra por especialidade e passa para a API", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		await professionalsApi.getAll(0, 12, undefined, "Cardiologia");
+		await professionalsListingApi.getAll(0, 12, undefined, "Cardiologia");
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -106,7 +106,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("filtra por nome", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		await professionalsApi.getAll(0, 12, undefined, undefined, "Ana");
+		await professionalsListingApi.getAll(0, 12, undefined, undefined, "Ana");
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -119,7 +119,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("string vazia para filtros é enviada como undefined", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		await professionalsApi.getAll(0, 12, "", "", "");
+		await professionalsListingApi.getAll(0, 12, "", "", "");
 
 		const callParams = mockGet.mock.calls[0][1] as {
 			params: Record<string, unknown>;
@@ -142,7 +142,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("filtra por serviceTitle e passa para a API", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		await professionalsApi.getAll(
+		await professionalsListingApi.getAll(
 			0,
 			12,
 			undefined,
@@ -162,7 +162,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("serviceTitle vazio é enviado como undefined", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
 
-		await professionalsApi.getAll(0, 12, "", "", "", "");
+		await professionalsListingApi.getAll(0, 12, "", "", "", "");
 
 		const callParams = mockGet.mock.calls[0][1] as {
 			params: Record<string, unknown>;
@@ -173,7 +173,7 @@ describe("professionalsApi — getAll pagination", () => {
 	it("combinação de specialty + serviceTitle envia ambos os filtros", async () => {
 		mockGet.mockResolvedValueOnce({ data: makePage([professional], 1, 1, 0) });
 
-		await professionalsApi.getAll(
+		await professionalsListingApi.getAll(
 			0,
 			12,
 			undefined,
@@ -196,7 +196,7 @@ describe("professionalsApi — getAll pagination", () => {
 				data: makePage([{ ...professional, id: "p-2" }], 25, 3, 1),
 			});
 
-		await professionalsApi.getAll(
+		await professionalsListingApi.getAll(
 			0,
 			12,
 			undefined,
@@ -204,7 +204,7 @@ describe("professionalsApi — getAll pagination", () => {
 			undefined,
 			"Botox",
 		);
-		await professionalsApi.getAll(
+		await professionalsListingApi.getAll(
 			1,
 			12,
 			undefined,
@@ -221,5 +221,5 @@ describe("professionalsApi — getAll pagination", () => {
 });
 
 async function propessionalPage0() {
-	return professionalsApi.getAll(0, 12);
+	return professionalsListingApi.getAll(0, 12);
 }

@@ -6,12 +6,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/services.api", () => ({
-	servicesApi: {
+vi.mock("@/lib/api/services/professional-services.api", () => ({
+	professionalServicesApi: {
 		getByProfessional: vi.fn(),
 		create: vi.fn(),
 		deactivate: vi.fn(),
 		update: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/professionals/professional-settings.api", () => ({
+	professionalSettingsApi: {
 		updatePaymentSettings: vi.fn(),
 		setConsultationPrice: vi.fn(),
 	},
@@ -23,14 +27,21 @@ import { useGetProfessionalServices } from "@/hooks/api/services/use-get-profess
 import { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
 import { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
 import { useUpdateService } from "@/hooks/api/services/use-update-service";
-import { servicesApi } from "@/lib/api/services.api";
+import { professionalSettingsApi } from "@/lib/api/professionals/professional-settings.api";
+import { professionalServicesApi } from "@/lib/api/services/professional-services.api";
 
-const mockGetByProfessional = vi.mocked(servicesApi.getByProfessional);
-const mockCreate = vi.mocked(servicesApi.create);
-const mockDeactivate = vi.mocked(servicesApi.deactivate);
-const mockUpdate = vi.mocked(servicesApi.update);
-const mockUpdatePaymentSettings = vi.mocked(servicesApi.updatePaymentSettings);
-const mockSetConsultationPrice = vi.mocked(servicesApi.setConsultationPrice);
+const mockGetByProfessional = vi.mocked(
+	professionalServicesApi.getByProfessional,
+);
+const mockCreate = vi.mocked(professionalServicesApi.create);
+const mockDeactivate = vi.mocked(professionalServicesApi.deactivate);
+const mockUpdate = vi.mocked(professionalServicesApi.update);
+const mockUpdatePaymentSettings = vi.mocked(
+	professionalSettingsApi.updatePaymentSettings,
+);
+const mockSetConsultationPrice = vi.mocked(
+	professionalSettingsApi.setConsultationPrice,
+);
 
 const service = { id: "svc-1", title: "Consulta", price: 150, active: true };
 

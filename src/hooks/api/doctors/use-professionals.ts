@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 import { professionalKeys } from "./professional-keys";
 
 export function useProfessionals(
@@ -22,7 +22,7 @@ export function useProfessionals(
 			serviceTitle,
 		),
 		queryFn: () =>
-			professionalsApi.getAll(
+			professionalsListingApi.getAll(
 				page,
 				size,
 				profession,

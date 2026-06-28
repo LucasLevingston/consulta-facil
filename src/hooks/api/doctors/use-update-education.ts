@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 import type { ProfessionalEducationInput } from "@/lib/schemas/doctor/professional-education.schema";
 import { professionalKeys } from "./professional-keys";
 
@@ -12,7 +12,7 @@ export function useUpdateEducation() {
 		}: {
 			educationId: string;
 			data: ProfessionalEducationInput;
-		}) => professionalsApi.updateEducation(educationId, data),
+		}) => professionalPortfolioApi.updateEducation(educationId, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

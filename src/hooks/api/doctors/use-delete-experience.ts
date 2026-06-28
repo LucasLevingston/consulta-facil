@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 import { professionalKeys } from "./professional-keys";
 
 export function useDeleteExperience() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (experienceId: string) =>
-			professionalsApi.deleteExperience(experienceId),
+			professionalPortfolioApi.deleteExperience(experienceId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

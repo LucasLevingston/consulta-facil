@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
 import { professionalKeys } from "./professional-keys";
 
@@ -14,7 +14,7 @@ export function useUpdateProfessional() {
 		}: {
 			professionalId: string;
 			data: CreateProfessionalInput;
-		}) => professionalsApi.update(professionalId, data),
+		}) => professionalProfileApi.update(professionalId, data),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all }),
 	});

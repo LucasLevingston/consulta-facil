@@ -2,14 +2,14 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentCheckinApi } from "@/lib/api/appointments/appointment-checkin.api";
 import { queueKeys } from "./queue-keys";
 
 export function useCallPatient() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (appointmentId: string) =>
-			appointmentsApi.callPatient(appointmentId),
+			appointmentCheckinApi.callPatient(appointmentId),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
 	});

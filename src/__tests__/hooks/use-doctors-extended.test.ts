@@ -12,16 +12,17 @@ vi.mock("@/config/api", () => ({
 		defaults: { headers: { common: {} } },
 	},
 }));
-vi.mock("@/lib/api/doctors.api", () => ({
-	professionalsApi: {
+vi.mock("@/lib/api/professionals/professionals.api", () => ({
+	professionalsListingApi: {
 		getAll: vi.fn(),
 		getById: vi.fn(),
 		getNearby: vi.fn(),
+	},
+}));
+vi.mock("@/lib/api/professionals/professional-applications.api", () => ({
+	professionalApplicationsApi: {
 		getPendingApplications: vi.fn(),
 		getApplicationStatus: vi.fn(),
-	},
-	doctorsApi: {
-		getAll: vi.fn(),
 	},
 }));
 
@@ -29,12 +30,15 @@ import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status
 import { useProfessional } from "@/hooks/api/doctors/use-professional";
 import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
-const mockGetAll = vi.mocked(professionalsApi.getAll);
-const mockGetById = vi.mocked(professionalsApi.getById);
-const mockGetNearby = vi.mocked(professionalsApi.getNearby);
-const mockAppStatus = vi.mocked(professionalsApi.getApplicationStatus);
+const mockGetAll = vi.mocked(professionalsListingApi.getAll);
+const mockGetById = vi.mocked(professionalsListingApi.getById);
+const mockGetNearby = vi.mocked(professionalsListingApi.getNearby);
+const mockAppStatus = vi.mocked(
+	professionalApplicationsApi.getApplicationStatus,
+);
 
 const doctor = { id: "d-1", name: "Dra. Ana", specialty: "Cardiologia" };
 const page = { content: [doctor], totalElements: 1, totalPages: 1, number: 0 };

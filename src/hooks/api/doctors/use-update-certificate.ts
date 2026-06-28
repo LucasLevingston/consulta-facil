@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 import type { ProfessionalCertificateInput } from "@/lib/schemas/doctor/professional-certificate.schema";
 import { professionalKeys } from "./professional-keys";
 
@@ -12,7 +12,7 @@ export function useUpdateCertificate() {
 		}: {
 			certificateId: string;
 			data: ProfessionalCertificateInput;
-		}) => professionalsApi.updateCertificate(certificateId, data),
+		}) => professionalPortfolioApi.updateCertificate(certificateId, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},
