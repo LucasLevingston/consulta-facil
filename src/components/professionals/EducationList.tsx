@@ -11,7 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteEducation } from "@/hooks/api/doctors/use-delete-education";
+import { useDeleteEducation } from "@/hooks/api/professionals/use-delete-education";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { EducationDialog } from "./EducationDialog";
 

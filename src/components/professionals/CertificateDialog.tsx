@@ -19,8 +19,8 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAddCertificate } from "@/hooks/api/doctors/use-add-certificate";
-import { useUpdateCertificate } from "@/hooks/api/doctors/use-update-certificate";
+import { useAddCertificate } from "@/hooks/api/professionals/use-add-certificate";
+import { useUpdateCertificate } from "@/hooks/api/professionals/use-update-certificate";
 import {
 	type ProfessionalCertificateInput,
 	professionalCertificateSchema,

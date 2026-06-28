@@ -6,10 +6,10 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(() => ({ replace: vi.fn() })),
 	useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
-vi.mock("@/hooks/api/doctors/use-professionals", () => ({
+vi.mock("@/hooks/api/professionals/use-professionals", () => ({
 	useProfessionals: vi.fn(),
 }));
-vi.mock("@/hooks/api/doctors/use-professionals-nearby", () => ({
+vi.mock("@/hooks/api/professionals/use-professionals-nearby", () => ({
 	useProfessionalsNearby: vi.fn(),
 }));
 vi.mock("@/components/custom/doctor/DoctorFilters", () => ({
@@ -49,8 +49,8 @@ vi.mock("@/components/custom/page-header", () => ({
 }));
 
 import ProfessionalsContent from "@/components/custom/ProfessionalsContent";
-import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
-import { useProfessionalsNearby } from "@/hooks/api/doctors/use-professionals-nearby";
+import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
+import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
 
 const mockUseProfessionals = vi.mocked(useProfessionals);
 const mockUseProfessionalsNearby = vi.mocked(useProfessionalsNearby);

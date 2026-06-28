@@ -9,8 +9,8 @@ import { ProfileStatsBanner } from "@/components/profile/ProfileStatsBanner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
 import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

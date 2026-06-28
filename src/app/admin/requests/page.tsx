@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
-import { usePendingApplications } from "@/hooks/api/doctors/use-pending-applications";
+import { usePendingApplications } from "@/hooks/api/professionals/use-pending-applications";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 

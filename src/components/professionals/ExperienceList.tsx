@@ -11,7 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteExperience } from "@/hooks/api/doctors/use-delete-experience";
+import { useDeleteExperience } from "@/hooks/api/professionals/use-delete-experience";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { ExperienceDialog } from "./ExperienceDialog";
 

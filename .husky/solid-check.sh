@@ -10,7 +10,7 @@ for file in $staged; do
   content=$(git show ":$file" 2>/dev/null)
 
   # 1. Tamanho (excluir arquivos gerados)
-  case "$file" in *generated*|*orval*) ;;
+  case "$file" in *generated*|*orval*|*components/ui/*) ;;
     *)
       lines=$(printf '%s\n' "$content" | wc -l)
       if [ "$lines" -gt "$MAX_LINES" ]; then

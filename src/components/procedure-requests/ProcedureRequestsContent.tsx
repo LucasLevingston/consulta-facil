@@ -1,7 +1,7 @@
 "use client";
 
-import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
 import { useGetMyProcedureRequests } from "@/hooks/api/procedure-requests/use-get-my-procedure-requests";
+import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { PatientView } from "./PatientView";
 import { ProfessionalView } from "./ProfessionalView";

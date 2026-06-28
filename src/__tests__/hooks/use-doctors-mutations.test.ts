@@ -33,14 +33,14 @@ vi.mock("@/lib/api/professionals/my-professional-profile.api", () => ({
 	getMyProfessionalProfileApi: vi.fn(),
 }));
 
-import { useApproveApplication } from "@/hooks/api/doctors/use-approve-application";
-import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
-import { useDeleteProfessional } from "@/hooks/api/doctors/use-delete-professional";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
-import { usePendingApplications } from "@/hooks/api/doctors/use-pending-applications";
-import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application";
-import { useSearchProfessionals } from "@/hooks/api/doctors/use-search-professionals";
-import { useUpdateProfessional } from "@/hooks/api/doctors/use-update-professional";
+import { useApproveApplication } from "@/hooks/api/professionals/use-approve-application";
+import { useCreateProfessional } from "@/hooks/api/professionals/use-create-professional";
+import { useDeleteProfessional } from "@/hooks/api/professionals/use-delete-professional";
+import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import { usePendingApplications } from "@/hooks/api/professionals/use-pending-applications";
+import { useRejectApplication } from "@/hooks/api/professionals/use-reject-application";
+import { useSearchProfessionals } from "@/hooks/api/professionals/use-search-professionals";
+import { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 import { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";

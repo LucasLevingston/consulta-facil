@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateAddress } from "@/hooks/api/doctors/use-update-address";
+import { useUpdateAddress } from "@/hooks/api/professionals/use-update-address";
 import {
 	type UpdateAddressInput,
 	updateAddressSchema,

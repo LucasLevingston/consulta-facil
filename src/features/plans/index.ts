@@ -3,4 +3,4 @@ export {
 	useAdminDeactivatePlan,
 	useAdminPlans,
 	usePlans,
-} from "@/hooks/api/plans/use-plans";
+} from "@/hooks/api/billing/use-plans";

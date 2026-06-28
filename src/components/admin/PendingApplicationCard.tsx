@@ -6,8 +6,8 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useApproveApplication } from "@/hooks/api/doctors/use-approve-application";
-import { useRejectApplication } from "@/hooks/api/doctors/use-reject-application";
+import { useApproveApplication } from "@/hooks/api/professionals/use-approve-application";
+import { useRejectApplication } from "@/hooks/api/professionals/use-reject-application";
 import type { DoctorResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 

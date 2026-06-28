@@ -26,8 +26,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAddEducation } from "@/hooks/api/doctors/use-add-education";
-import { useUpdateEducation } from "@/hooks/api/doctors/use-update-education";
+import { useAddEducation } from "@/hooks/api/professionals/use-add-education";
+import { useUpdateEducation } from "@/hooks/api/professionals/use-update-education";
 import {
 	degreeTypeOptions,
 	type ProfessionalEducationInput,

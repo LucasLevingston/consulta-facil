@@ -24,7 +24,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
 import { usePermission } from "@/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 

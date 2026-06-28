@@ -11,8 +11,8 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
-import { useUpdateProfessional } from "@/hooks/api/doctors/use-update-professional";
+import { useCreateProfessional } from "@/hooks/api/professionals/use-create-professional";
+import { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 import { GenderOptions } from "@/utils/constants/gender-options";
 import {
 	PROFESSION_SPECIALTIES,

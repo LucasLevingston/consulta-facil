@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useAddExperience } from "@/hooks/api/doctors/use-add-experience";
-import { useUpdateExperience } from "@/hooks/api/doctors/use-update-experience";
+import { useAddExperience } from "@/hooks/api/professionals/use-add-experience";
+import { useUpdateExperience } from "@/hooks/api/professionals/use-update-experience";
 import {
 	type ProfessionalExperienceInput,
 	professionalExperienceSchema,

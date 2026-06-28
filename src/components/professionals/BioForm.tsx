@@ -21,7 +21,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpdateBio } from "@/hooks/api/doctors/use-update-bio";
+import { useUpdateBio } from "@/hooks/api/professionals/use-update-bio";
 import {
 	type UpdateBioInput,
 	updateBioSchema,

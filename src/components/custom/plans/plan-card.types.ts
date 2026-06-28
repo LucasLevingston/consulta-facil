@@ -1,4 +1,4 @@
-import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
+import type { SubscriptionResponse } from "@/features/subscriptions";
 import type { Plan } from "./types";
 
 export interface PlanCardProps {

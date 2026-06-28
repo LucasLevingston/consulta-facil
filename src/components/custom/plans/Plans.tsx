@@ -2,7 +2,7 @@
 
 import { BadgeCheck, Building2, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
-import { usePlans } from "@/hooks/api/plans/use-plans";
+import { usePlans } from "@/hooks/api/billing/use-plans";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
 import type { PlanResponse } from "@/lib/api/billing/plans.api";

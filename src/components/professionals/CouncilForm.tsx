@@ -29,7 +29,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUpdateCouncil } from "@/hooks/api/doctors/use-update-council";
+import { useUpdateCouncil } from "@/hooks/api/professionals/use-update-council";
 import {
 	councilTypeOptions,
 	type UpdateCouncilInput,

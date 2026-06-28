@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
 import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentPaymentStatus } from "@/lib/schemas/appointment/appointment-payment-status.schema";
 import { QueryBoundary } from "@/providers/query-boundary";

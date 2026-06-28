@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { professionalKeys as doctorKeys } from "@/hooks/api/doctors/professional-keys";
+import { professionalKeys as doctorKeys } from "@/hooks/api/professionals/professional-keys";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";

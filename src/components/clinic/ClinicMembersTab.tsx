@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
-import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
 import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
+import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 

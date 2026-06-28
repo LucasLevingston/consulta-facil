@@ -25,7 +25,7 @@ vi.mock("@/hooks/api/appointments/use-confirm-appointment", () => ({
 vi.mock("@/hooks/api/appointments/use-complete-appointment", () => ({
 	useCompleteAppointment: vi.fn(),
 }));
-vi.mock("@/hooks/api/doctors/use-my-professional-profile", () => ({
+vi.mock("@/hooks/api/professionals/use-my-professional-profile", () => ({
 	useMyProfessionalProfile: vi.fn(),
 }));
 vi.mock("@/components/custom/dashboard/appointments-list", () => ({
@@ -48,7 +48,7 @@ import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-ap
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
 import { useUserStore } from "@/store/useUserStore";
 
 const mockUseUserStore = vi.mocked(useUserStore);

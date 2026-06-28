@@ -11,7 +11,7 @@ import type { TimeSlot } from "@/components/forms/Appointments/steps/DateTimeSte
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
-import { useProfessionals } from "@/hooks/api/doctors/use-professionals";
+import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 import {

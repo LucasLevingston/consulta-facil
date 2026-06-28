@@ -16,7 +16,7 @@ import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-ap
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
+import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
 import { useUserStore } from "@/store/useUserStore";
 import { adminCards } from "./admin-cards";
 import { AppointmentsList } from "./appointments-list";

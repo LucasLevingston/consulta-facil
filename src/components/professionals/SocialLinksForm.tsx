@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateSocialLinks } from "@/hooks/api/doctors/use-update-social-links";
+import { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
 import {
 	type UpdateSocialLinksInput,
 	updateSocialLinksSchema,

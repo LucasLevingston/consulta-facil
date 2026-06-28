@@ -17,7 +17,7 @@ import {
 import {
 	useAdminDeactivatePlan,
 	useAdminPlans,
-} from "@/hooks/api/plans/use-plans";
+} from "@/hooks/api/billing/use-plans";
 import type { PlanResponse } from "@/lib/api/billing/plans.api";
 
 const PERIOD_LABELS: Record<string, string> = {

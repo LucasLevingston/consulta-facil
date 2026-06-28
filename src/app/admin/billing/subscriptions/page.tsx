@@ -14,11 +14,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import type { AdminSubscriptionResponse } from "@/features/subscriptions";
 import {
 	useAdminCancelSubscription,
 	useAdminSubscriptions,
 } from "@/hooks/api/subscriptions/use-admin-subscriptions";
-import type { AdminSubscriptionResponse } from "@/lib/api/subscriptions/subscriptions.api";
 
 const STATUS_CONFIG: Record<
 	string,
