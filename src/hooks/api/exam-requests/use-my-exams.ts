@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { examRequestApi } from "@/lib/api/examRequest.api";
+import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 import type { ExamRequestStatus } from "@/lib/schemas/examRequest/exam-request-status.schema";
 import { examRequestKeys } from "./exam-request-keys";
 

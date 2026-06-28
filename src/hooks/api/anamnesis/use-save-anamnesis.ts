@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { anamnesisApi } from "@/lib/api/anamnesis.api";
+import { anamnesisApi } from "@/lib/api/anamnesis/anamnesis.api";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 import { anamnesisKeys } from "./anamnesis-keys";
 

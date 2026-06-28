@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { getMyProfessionalProfileApi } from "@/lib/api/doctors/get-my-doctor-profile.api";
+import { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 
 const mockGet = vi.mocked(api.get);
 

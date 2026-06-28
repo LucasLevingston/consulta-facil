@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { examRequestKeys } from "@/hooks/api/exam-requests/exam-request-keys";
-import { examLabApi } from "@/lib/api/examLab.api";
+import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
 
 export function useScheduleExam() {
 	const queryClient = useQueryClient();

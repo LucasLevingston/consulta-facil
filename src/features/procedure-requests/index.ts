@@ -3,4 +3,4 @@ export { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-ca
 export { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
 export { useGetMyProcedureRequests } from "@/hooks/api/procedure-requests/use-get-my-procedure-requests";
 export { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
-export { procedureRequestsApi } from "@/lib/api/procedure-requests.api";
+export { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";

@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { examRequestApi } from "@/lib/api/examRequest.api";
+import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 import type { ReviewExamRequestInput } from "@/lib/schemas/examRequest/review-exam-request.schema";
 import { examRequestKeys } from "./exam-request-keys";
 

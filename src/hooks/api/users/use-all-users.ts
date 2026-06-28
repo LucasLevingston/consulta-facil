@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { usersApi } from "@/lib/api/users.api";
+import { usersApi } from "@/lib/api/users/users.api";
 
 export function useAllUsers(page = 0, size = 20, role?: string) {
 	return useQuery({

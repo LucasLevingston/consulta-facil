@@ -18,7 +18,7 @@ import {
 	useAdminDeactivatePlan,
 	useAdminPlans,
 } from "@/hooks/api/plans/use-plans";
-import type { PlanResponse } from "@/lib/api/plans.api";
+import type { PlanResponse } from "@/lib/api/billing/plans.api";
 
 const PERIOD_LABELS: Record<string, string> = {
 	MONTHLY: "Mensal",

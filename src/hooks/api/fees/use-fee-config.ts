@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { feesApi } from "@/lib/api/fees.api";
+import { feesApi } from "@/lib/api/billing/fees.api";
 
 export function useFeeConfig() {
 	return useQuery({

@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/procedure-requests.api", () => ({
+vi.mock("@/lib/api/procedure-requests/procedure-requests.api", () => ({
 	procedureRequestsApi: {
 		create: vi.fn(),
 		getMine: vi.fn(),
@@ -19,7 +19,7 @@ import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-ca
 import { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
 import { useGetMyProcedureRequests } from "@/hooks/api/procedure-requests/use-get-my-procedure-requests";
 import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
-import { procedureRequestsApi } from "@/lib/api/procedure-requests.api";
+import { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";
 
 const mockCreate = vi.mocked(procedureRequestsApi.create);
 const mockGetMine = vi.mocked(procedureRequestsApi.getMine);

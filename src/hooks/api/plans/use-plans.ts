@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type CreatePlanValues, plansApi } from "@/lib/api/plans.api";
+import { type CreatePlanValues, plansApi } from "@/lib/api/billing/plans.api";
 
 export function usePlans() {
 	return useQuery({

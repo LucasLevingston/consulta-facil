@@ -10,5 +10,5 @@ export { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam
 export { useMyExams } from "@/hooks/api/exam-requests/use-my-exams";
 export { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
 export { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
-export { examLabApi } from "@/lib/api/examLab.api";
-export { examRequestApi } from "@/lib/api/examRequest.api";
+export { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
+export { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";

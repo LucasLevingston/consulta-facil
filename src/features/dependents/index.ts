@@ -3,4 +3,4 @@ export { useCreateDependent } from "@/hooks/api/dependents/use-create-dependent"
 export { useDeleteDependent } from "@/hooks/api/dependents/use-delete-dependent";
 export { useMyDependents } from "@/hooks/api/dependents/use-my-dependents";
 export { useUpdateDependent } from "@/hooks/api/dependents/use-update-dependent";
-export { dependentsApi } from "@/lib/api/dependents.api";
+export { dependentsApi } from "@/lib/api/dependents/dependents.api";

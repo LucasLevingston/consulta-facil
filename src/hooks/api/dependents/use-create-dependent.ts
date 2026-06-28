@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { dependentsApi } from "@/lib/api/dependents.api";
+import { dependentsApi } from "@/lib/api/dependents/dependents.api";
 import { dependentKeys } from "./dependent-keys";
 
 export function useCreateDependent() {

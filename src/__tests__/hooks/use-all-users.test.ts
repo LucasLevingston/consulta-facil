@@ -6,12 +6,12 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/users.api", () => ({
+vi.mock("@/lib/api/users/users.api", () => ({
 	usersApi: { getAll: vi.fn() },
 }));
 
 import { useAllUsers } from "@/hooks/api/users/use-all-users";
-import { usersApi } from "@/lib/api/users.api";
+import { usersApi } from "@/lib/api/users/users.api";
 
 const mockGetAll = vi.mocked(usersApi.getAll);
 

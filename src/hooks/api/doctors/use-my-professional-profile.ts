@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getMyProfessionalProfileApi } from "@/lib/api/doctors/get-my-doctor-profile.api";
+import { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 
 export function useMyProfessionalProfile(enabled: boolean) {
 	return useQuery({

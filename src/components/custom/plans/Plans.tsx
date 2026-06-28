@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { usePlans } from "@/hooks/api/plans/use-plans";
 import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
 import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
-import type { PlanResponse } from "@/lib/api/plans.api";
+import type { PlanResponse } from "@/lib/api/billing/plans.api";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { PRO_PLAN_IDS } from "../../../utils/constants/pro-plan-ids";
 import { PlanCard } from "./plan-card";

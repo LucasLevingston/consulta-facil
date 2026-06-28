@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/examRequest.api", () => ({
+vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 	examRequestApi: {
 		create: vi.fn(),
 		getByAppointment: vi.fn(),
@@ -19,7 +19,7 @@ import { useCreateExamRequest } from "@/hooks/api/exam-requests/use-create-exam-
 import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
 import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
 import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
-import { examRequestApi } from "@/lib/api/examRequest.api";
+import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 
 const mockCreate = vi.mocked(examRequestApi.create);
 const mockGetByAppointment = vi.mocked(examRequestApi.getByAppointment);
