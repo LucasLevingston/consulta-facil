@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
+import { useRescheduleAppointment } from "@/features/appointments";
 import {
 	type RescheduleAppointmentInput,
 	rescheduleAppointmentSchema,

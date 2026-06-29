@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
@@ -29,7 +29,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUpdateCouncil } from "@/hooks/api/professionals/use-update-council";
+import { useUpdateCouncil } from "@/features/professionals";
 import {
 	councilTypeOptions,
 	type UpdateCouncilInput,

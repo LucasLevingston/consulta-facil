@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
+import { useCheckInToken } from "@/features/appointments";
 
 export function QrCodeDialog({ appointmentId }: { appointmentId: string }) {
 	const { data, isLoading } = useCheckInToken(appointmentId);

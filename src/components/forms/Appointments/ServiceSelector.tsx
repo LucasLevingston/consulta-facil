@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { AlertTriangle, Stethoscope } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
+import { useGetProfessionalServices } from "@/features/services";
 import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 import type { ServiceSelectorProps } from "./ServiceSelector.types";
 

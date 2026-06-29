@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Calculator, Trophy } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useFeeConfig } from "@/hooks/api/billing/use-fee-config";
+import { useFeeConfig } from "@/features/billing";
 import { PAYMENT_METHOD_LABELS } from "@/lib/constants/fee-payment-method-labels";
 import type { FeePaymentMethod } from "@/lib/types/fee-payment-method";
 import { calculateFees } from "@/lib/utils/calculate-fees";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ExternalLink, FileText, Plus, Trash2 } from "lucide-react";
 import { useRef, useState } from "react";
@@ -26,9 +26,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useDeleteDocument } from "@/hooks/api/patients/use-delete-document";
-import { usePatientDocuments } from "@/hooks/api/patients/use-patient-documents";
-import { useUploadDocument } from "@/hooks/api/patients/use-upload-document";
+import {
+	useDeleteDocument,
+	usePatientDocuments,
+	useUploadDocument,
+} from "@/features/patients";
 import {
 	DOCUMENT_TYPE_LABELS,
 	type DocumentType,

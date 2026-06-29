@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 
@@ -8,8 +8,8 @@ import { ClinicFinancialTab } from "@/components/clinic/ClinicFinancialTab";
 import { ClinicMembersTab } from "@/components/clinic/ClinicMembersTab";
 import { ClinicOverviewTab } from "@/components/clinic/ClinicOverviewTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
-import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
+import { useClinicById } from "@/features/clinics";
+import { useApplicationStatus } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";

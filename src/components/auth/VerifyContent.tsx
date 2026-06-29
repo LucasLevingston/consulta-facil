@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-import { useMagicLinkVerify } from "@/hooks/api/auth/use-magic-link-verify";
+import { useMagicLinkVerify } from "@/features/auth";
 
 export default function VerifyContent() {
 	const router = useRouter();

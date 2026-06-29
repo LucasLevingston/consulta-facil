@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CalendarDays, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -12,7 +12,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useClinicAppointments } from "@/hooks/api/appointments/use-clinic-appointments";
+import { useClinicAppointments } from "@/features/appointments";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
 import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";

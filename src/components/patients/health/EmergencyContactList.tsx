@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Pencil, Phone, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,8 +11,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteEmergencyContact } from "@/hooks/api/patients/use-delete-emergency-contact";
-import { useEmergencyContacts } from "@/hooks/api/patients/use-emergency-contacts";
+import {
+	useDeleteEmergencyContact,
+	useEmergencyContacts,
+} from "@/features/patients";
 import { RELATIONSHIP_LABELS } from "@/lib/schemas/patient/emergency-contact.schema";
 import {
 	type ContactItem,

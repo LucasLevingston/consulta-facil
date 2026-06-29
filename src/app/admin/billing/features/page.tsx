@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Plus, Tag, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +18,7 @@ import {
 	useCreateFeature,
 	useDeleteFeature,
 	useFeatures,
-} from "@/hooks/api/billing/use-features";
+} from "@/features/billing";
 import type { FeatureResponse } from "@/lib/schemas/billing/feature.schema";
 
 export default function AdminFeaturesPage() {

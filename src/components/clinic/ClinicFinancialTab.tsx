@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CheckCircle2, Loader2, TrendingUp, Users, Zap } from "lucide-react";
 
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { useClinicFinancialStats } from "@/hooks/api/appointments/use-clinic-financial-stats";
+import { useClinicFinancialStats } from "@/features/appointments";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";

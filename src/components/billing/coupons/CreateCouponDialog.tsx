@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
@@ -28,7 +28,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAdminCreateCoupon } from "@/hooks/api/billing/use-coupons";
+import { useAdminCreateCoupon } from "@/features/billing";
 import {
 	type CreateCouponData,
 	createCouponSchema,

@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import MagicLinkRequestForm from "@/components/forms/auth/MagicLinkRequestForm";
-import { useMagicLinkRequest } from "@/hooks/api/auth/use-magic-link-request";
+import { useMagicLinkRequest } from "@/features/auth";
 
 export default function MagicLinkPage() {
 	const [sentTo, setSentTo] = useState<string | null>(null);

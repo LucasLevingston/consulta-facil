@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { DollarSign } from "lucide-react";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
+import { useSetConsultationPrice } from "@/features/services";
 
 export function ConsultationPriceCard({
 	consultationPrice,

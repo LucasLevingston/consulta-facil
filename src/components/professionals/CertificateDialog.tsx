@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,8 +19,10 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAddCertificate } from "@/hooks/api/professionals/use-add-certificate";
-import { useUpdateCertificate } from "@/hooks/api/professionals/use-update-certificate";
+import {
+	useAddCertificate,
+	useUpdateCertificate,
+} from "@/features/professionals";
 import {
 	type ProfessionalCertificateInput,
 	professionalCertificateSchema,

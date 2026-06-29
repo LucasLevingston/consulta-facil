@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -22,8 +22,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { useAvailableSlots } from "@/hooks/api/exam-labs/use-available-slots";
-import { useScheduleExam } from "@/hooks/api/exam-labs/use-schedule-exam";
+import { useAvailableSlots, useScheduleExam } from "@/features/exams";
 import type { ExamLabResponse } from "@/lib/schemas/examLab/exam-lab-response.schema";
 import { cn } from "@/lib/utils/cn";
 

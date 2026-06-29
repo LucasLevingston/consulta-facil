@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
+import { useScheduleProcedureRequest } from "@/features/procedure-requests";
 import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,

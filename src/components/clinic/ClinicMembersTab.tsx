@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Loader2, Search, Trash2, UserPlus } from "lucide-react";
 import { useState } from "react";
@@ -17,9 +17,9 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
-import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
-import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
+import { useRemoveClinicMember } from "@/features/clinics";
+import { useSendClinicInvite } from "@/features/notifications";
+import { useProfessionals } from "@/features/professionals";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	BadgeCheck,
@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { useAllUsers } from "@/hooks/api/users/use-all-users";
+import { useAllAdminAppointments } from "@/features/appointments";
+import { useAllUsers } from "@/features/users";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 

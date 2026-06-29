@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -9,8 +9,7 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
-import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
+import { useCheckInByQr, useCheckInToken } from "@/features/appointments";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 

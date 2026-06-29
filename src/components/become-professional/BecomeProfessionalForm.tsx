@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BadgeCheck } from "lucide-react";
@@ -13,7 +13,7 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useCreateProfessional } from "@/hooks/api/professionals/use-create-professional";
+import { useCreateProfessional } from "@/features/professionals";
 import { professionalTypeSchema } from "@/lib/schemas/professional/professional-type.schema";
 import { specialtySchema } from "@/lib/schemas/professional/specialty.schema";
 import {

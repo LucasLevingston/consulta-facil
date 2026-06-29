@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Briefcase, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteExperience } from "@/hooks/api/professionals/use-delete-experience";
+import { useDeleteExperience } from "@/features/professionals";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { ExperienceDialog } from "./ExperienceDialog";
 

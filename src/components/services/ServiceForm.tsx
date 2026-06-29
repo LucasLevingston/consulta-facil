@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateService } from "@/hooks/api/services/use-create-service";
-import { useUpdateService } from "@/hooks/api/services/use-update-service";
+import { useCreateService, useUpdateService } from "@/features/services";
 import {
 	type CreateServiceInput,
 	createServiceSchema,

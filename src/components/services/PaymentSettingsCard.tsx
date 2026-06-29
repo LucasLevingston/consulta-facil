@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreditCard } from "lucide-react";
@@ -21,7 +21,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
+import { useUpdatePaymentSettings } from "@/features/services";
 import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
 import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
 import type { PaymentTiming } from "@/lib/schemas/doctor/payment-timing.schema";

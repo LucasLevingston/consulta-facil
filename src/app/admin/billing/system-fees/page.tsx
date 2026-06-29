@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Sliders } from "lucide-react";
 import { useState } from "react";
@@ -15,10 +15,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import {
-	useSystemFees,
-	useUpdateSystemFee,
-} from "@/hooks/api/billing/use-system-fees";
+import { useSystemFees, useUpdateSystemFee } from "@/features/billing";
 import type { SystemFeeResponse } from "@/lib/schemas/billing/system-fee.schema";
 
 const PAYMENT_TYPE_LABELS: Record<string, string> = {

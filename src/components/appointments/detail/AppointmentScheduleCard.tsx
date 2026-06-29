@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -24,8 +24,8 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
-import { useCreateRoom } from "@/hooks/api/video/use-create-room";
+import { useGenerateMeetLink } from "@/features/appointments";
+import { useCreateRoom } from "@/features/video";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import type { VideoRoom } from "@/lib/schemas/video/video-room.schema";
 

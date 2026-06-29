@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { FileText } from "lucide-react";
 import { Suspense } from "react";
 import { InvoiceTable } from "@/components/billing/InvoiceTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyInvoices } from "@/hooks/api/billing/use-invoices";
+import { useMyInvoices } from "@/features/billing";
 
 function UserInvoicesContent() {
 	const { data: invoices = [], isLoading } = useMyInvoices();

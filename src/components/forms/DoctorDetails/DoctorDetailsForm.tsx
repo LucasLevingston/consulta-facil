@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -11,8 +11,10 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useCreateProfessional } from "@/hooks/api/professionals/use-create-professional";
-import { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
+import {
+	useCreateProfessional,
+	useUpdateProfessional,
+} from "@/features/professionals";
 import { GenderOptions } from "@/utils/constants/gender-options";
 import {
 	PROFESSION_SPECIALTIES,

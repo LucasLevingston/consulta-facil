@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FlaskConical } from "lucide-react";
@@ -12,7 +12,7 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useCreateExamRequest } from "@/hooks/api/exam-requests/use-create-exam-request";
+import { useCreateExamRequest } from "@/features/exams";
 import {
 	type CreateExamRequestInput,
 	createExamRequestSchema,

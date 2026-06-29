@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,9 +14,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
-import { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
+import { useProfessionalPatients } from "@/features/patients";
+import { useCreateProcedureRequest } from "@/features/procedure-requests";
+import { useGetProfessionalServices } from "@/features/services";
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,

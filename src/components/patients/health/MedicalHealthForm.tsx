@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
@@ -30,13 +30,16 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
-import { useUpdateMedicalRecords } from "@/hooks/api/patients/use-update-medical-records";
+import {
+	useMedicalRecords,
+	useUpdateMedicalRecords,
+} from "@/features/patients";
 import type { MedicalRecord } from "@/lib/schemas/patient/medical-record.schema";
 import {
 	type UpdateMedicalRecordInput,
 	updateMedicalRecordSchema,
 } from "@/lib/schemas/patient/update-medical-record.schema";
+import type { MedicalHealthFormProps } from "./MedicalHealthForm.types";
 
 const BLOOD_TYPE_LABELS: Record<string, string> = {
 	A_POSITIVE: "A+",
@@ -60,10 +63,6 @@ function toNumber(v: unknown): number | null {
 	if (v === null || v === undefined || v === "") return null;
 	const n = Number(v);
 	return Number.isNaN(n) ? null : n;
-}
-
-interface MedicalHealthFormProps {
-	userId: string;
 }
 
 export function MedicalHealthForm({ userId }: MedicalHealthFormProps) {

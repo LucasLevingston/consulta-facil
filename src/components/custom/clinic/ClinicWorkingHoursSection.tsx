@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useClinicWorkingHours } from "@/hooks/api/schedule/use-clinic-working-hours";
+import { useClinicWorkingHours } from "@/features/schedule";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ClinicHoursEditor } from "./ClinicHoursEditor";
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Star } from "lucide-react";
 import { useState } from "react";
@@ -14,8 +14,10 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
-import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
+import {
+	useCompleteAppointment,
+	useConfirmAppointment,
+} from "@/features/appointments";
 import { usePermission } from "@/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 import type { AppointmentActionsProps } from "./AppointmentActions.types";

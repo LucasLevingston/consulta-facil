@@ -1,14 +1,11 @@
-"use client";
+﻿"use client";
 
 import { Wallet } from "lucide-react";
 import { use } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { WalletCard } from "@/components/wallet/WalletCard";
 import { WalletHistoryTable } from "@/components/wallet/WalletHistoryTable";
-import {
-	useUserWallet,
-	useUserWalletTransactions,
-} from "@/hooks/api/billing/use-wallet";
+import { useUserWallet, useUserWalletTransactions } from "@/features/billing";
 
 interface Props {
 	params: Promise<{ userId: string }>;

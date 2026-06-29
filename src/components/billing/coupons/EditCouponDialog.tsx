@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -27,7 +27,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAdminUpdateCoupon } from "@/hooks/api/billing/use-coupons";
+import { useAdminUpdateCoupon } from "@/features/billing";
 import type { CouponResponse } from "@/lib/schemas/billing/coupon.schema";
 import {
 	type UpdateCouponData,

@@ -1,9 +1,8 @@
-"use client";
+﻿"use client";
 
 import { toast } from "sonner";
-import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
-import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
-import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
+import { useMyClinic } from "@/features/clinics";
+import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { BASE_PRICE } from "@/utils/constants/base-price";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";

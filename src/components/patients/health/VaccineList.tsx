@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Syringe, Trash2 } from "lucide-react";
@@ -29,9 +29,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useAddVaccine } from "@/hooks/api/patients/use-add-vaccine";
-import { useDeleteVaccine } from "@/hooks/api/patients/use-delete-vaccine";
-import { useVaccines } from "@/hooks/api/patients/use-vaccines";
+import {
+	useAddVaccine,
+	useDeleteVaccine,
+	useVaccines,
+} from "@/features/patients";
 import {
 	type PatientVaccineInput,
 	patientVaccineSchema,

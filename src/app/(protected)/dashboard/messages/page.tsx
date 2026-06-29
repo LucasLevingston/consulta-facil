@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -6,7 +6,7 @@ import { Suspense, useEffect, useState } from "react";
 import { ChatThread } from "@/components/messaging/ChatThread";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { Button } from "@/components/ui/button";
-import { useConversations } from "@/hooks/api/conversations/use-conversations";
+import { useConversations } from "@/features/messaging";
 import type { ConversationResponse } from "@/lib/schemas/messaging/message.schema";
 import { cn } from "@/lib/utils/cn";
 

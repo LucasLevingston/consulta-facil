@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import ResetPasswordForm from "@/components/forms/auth/ResetPasswordForm";
-import { useResetPassword } from "@/hooks/api/auth/use-reset-password";
+import { useResetPassword } from "@/features/auth";
 
 export function ResetPasswordContent() {
 	const searchParams = useSearchParams();

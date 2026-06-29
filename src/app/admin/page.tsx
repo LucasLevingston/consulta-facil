@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BadgeCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,7 @@ import { Suspense, useEffect } from "react";
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import { PendingApplications } from "@/components/admin/PendingApplications";
 import PageHeader from "@/components/custom/page-header";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useProfessionalAppointments } from "@/features/appointments";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useAuthStore } from "@/store/auth.store";

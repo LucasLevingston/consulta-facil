@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { CreditCard } from "lucide-react";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
+import { useCreatePayment } from "@/features/appointments";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 interface Props {

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Bell, Check, CheckCheck, X } from "lucide-react";
 import { useState } from "react";
@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { useAcceptInvite } from "@/hooks/api/notifications/use-accept-invite";
-import { useDeclineInvite } from "@/hooks/api/notifications/use-decline-invite";
-import { useMarkAllAsRead } from "@/hooks/api/notifications/use-mark-all-as-read";
-import { useNotifications } from "@/hooks/api/notifications/use-notifications";
-import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
+import {
+	useAcceptInvite,
+	useDeclineInvite,
+	useMarkAllAsRead,
+	useNotifications,
+	useUnreadCount,
+} from "@/features/notifications";
 import { cn } from "@/lib/utils/cn";
 import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
 import type { NotificationItemProps } from "./NotificationBell.types";

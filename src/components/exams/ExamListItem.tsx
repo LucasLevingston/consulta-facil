@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	CalendarClock,
@@ -18,9 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { useCancelExamScheduling } from "@/hooks/api/exam-labs/use-cancel-exam-scheduling";
-import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
-import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
+import {
+	useCancelExamScheduling,
+	useReviewExam,
+	useUploadExamResult,
+} from "@/features/exams";
 import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
 

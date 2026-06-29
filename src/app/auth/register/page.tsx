@@ -1,11 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { RegisterForm } from "@/components/forms/auth/registerForm";
-import { useLogin } from "@/hooks/api/auth/use-login";
-import { useRegister } from "@/hooks/api/auth/use-register";
+import { useLogin, useRegister } from "@/features/auth";
 import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
 
 export default function RegisterPage() {

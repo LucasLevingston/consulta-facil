@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useCreateDependent } from "@/hooks/api/dependents/use-create-dependent";
-import { useUpdateDependent } from "@/hooks/api/dependents/use-update-dependent";
+import { useCreateDependent, useUpdateDependent } from "@/features/dependents";
 import {
 	type CreateDependentInput,
 	createDependentSchema,

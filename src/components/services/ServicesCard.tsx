@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Briefcase, Plus } from "lucide-react";
 import { useState } from "react";
@@ -17,7 +17,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
+import { useGetProfessionalServices } from "@/features/services";
 import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 import { ServiceForm } from "./ServiceForm";
 import { ServiceRow } from "./ServiceRow";

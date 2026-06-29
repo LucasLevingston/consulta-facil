@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,8 +7,7 @@ import { toast } from "sonner";
 
 import LoginForm from "@/components/forms/auth/LoginForm";
 import SocialAuthButtons from "@/components/forms/auth/SocialAuthButtons";
-import { useGoogleLogin } from "@/hooks/api/auth/use-google-login";
-import { useLogin } from "@/hooks/api/auth/use-login";
+import { useGoogleLogin, useLogin } from "@/features/auth";
 import { useGoogleGIS } from "@/hooks/use-google-gis";
 import type { LoginInput } from "@/lib/schemas/auth/login.schema";
 

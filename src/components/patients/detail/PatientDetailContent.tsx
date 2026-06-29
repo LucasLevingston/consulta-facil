@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowLeft, CalendarDays, UserRound } from "lucide-react";
 import Link from "next/link";
@@ -14,9 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
-import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
+import { usePatientAppointments } from "@/features/appointments";
+import { useMedicalRecords, usePatientProfile } from "@/features/patients";
 
 const TABS = ["info", "prontuario", "consultas"] as const;
 type Tab = (typeof TABS)[number];

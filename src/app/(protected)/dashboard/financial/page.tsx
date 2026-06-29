@@ -1,11 +1,13 @@
-"use client";
+﻿"use client";
 
 import { TrendingUp } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
 import { FinancialContent } from "@/components/financial/FinancialContent";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import {
+	useAllAdminAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 

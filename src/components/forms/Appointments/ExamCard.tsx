@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	CheckCircle,
@@ -13,8 +13,7 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
-import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
+import { useReviewExam, useUploadExamResult } from "@/features/exams";
 import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
 import type { ExamCardProps } from "./ExamCard.types";

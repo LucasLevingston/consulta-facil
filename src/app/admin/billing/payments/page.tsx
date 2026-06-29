@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { CreditCard } from "lucide-react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminBillingPayments } from "@/hooks/api/billing/use-billing-payments";
+import { useAdminBillingPayments } from "@/features/billing";
 
 export default function AdminBillingPaymentsPage() {
 	const { data: payments = [], isLoading } = useAdminBillingPayments();

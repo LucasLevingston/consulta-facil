@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLink, Globe, Save } from "lucide-react";
@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
+import { useUpdateSocialLinks } from "@/features/professionals";
 import {
 	type UpdateSocialLinksInput,
 	updateSocialLinksSchema,

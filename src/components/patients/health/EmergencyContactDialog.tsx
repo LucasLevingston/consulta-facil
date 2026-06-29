@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAddEmergencyContact } from "@/hooks/api/patients/use-add-emergency-contact";
-import { useUpdateEmergencyContact } from "@/hooks/api/patients/use-update-emergency-contact";
+import {
+	useAddEmergencyContact,
+	useUpdateEmergencyContact,
+} from "@/features/patients";
 import {
 	type EmergencyContactInput,
 	emergencyContactSchema,

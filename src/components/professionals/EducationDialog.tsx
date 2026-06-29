@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAddEducation } from "@/hooks/api/professionals/use-add-education";
-import { useUpdateEducation } from "@/hooks/api/professionals/use-update-education";
+import { useAddEducation, useUpdateEducation } from "@/features/professionals";
 import {
 	degreeTypeOptions,
 	type ProfessionalEducationInput,

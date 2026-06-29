@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Clock, DollarSign, X } from "lucide-react";
 import { toast } from "sonner";
@@ -10,7 +10,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
+import { useCancelProcedureRequest } from "@/features/procedure-requests";
 import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { StatusBadge } from "./StatusBadge";
 

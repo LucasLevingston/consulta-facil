@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Tag } from "lucide-react";
 import { CouponsTable } from "@/components/billing/coupons/CouponsTable";
@@ -7,10 +7,7 @@ import { CreateCouponDialog } from "@/components/billing/coupons/CreateCouponDia
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-	useAdminCoupons,
-	useAdminCouponUsages,
-} from "@/hooks/api/billing/use-coupons";
+import { useAdminCoupons, useAdminCouponUsages } from "@/features/billing";
 
 export default function AdminCouponsPage() {
 	const { data: coupons = [], isLoading: loadingCoupons } = useAdminCoupons();

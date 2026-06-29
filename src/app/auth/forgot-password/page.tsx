@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import ForgotPasswordForm from "@/components/forms/auth/ForgotPasswordForm";
-import { useForgotPassword } from "@/hooks/api/auth/use-forgot-password";
+import { useForgotPassword } from "@/features/auth";
 
 export default function ForgotPasswordPage() {
 	const [sentTo, setSentTo] = useState<string | null>(null);

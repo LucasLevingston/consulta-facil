@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { Stethoscope } from "lucide-react";
 
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePendingApplications } from "@/hooks/api/professionals/use-pending-applications";
+import { usePendingApplications } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function PendingApplications() {

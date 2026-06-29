@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Stethoscope } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
-import { usePendingApplications } from "@/hooks/api/professionals/use-pending-applications";
+import { usePendingApplications } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 

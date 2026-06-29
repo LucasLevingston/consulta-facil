@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -20,8 +20,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAllAdminPatients } from "@/hooks/api/patients/use-all-admin-patients";
-import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
+import {
+	useAllAdminPatients,
+	useProfessionalPatients,
+} from "@/features/patients";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";

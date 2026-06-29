@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -17,9 +17,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import {
+	useAllAdminAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentPaymentStatus } from "@/lib/schemas/appointment/appointment-payment-status.schema";
 import { QueryBoundary } from "@/providers/query-boundary";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ProfileAppointmentStats } from "@/components/profile/ProfileAppointmentStats";
 import { ProfileHero } from "@/components/profile/ProfileHero";
@@ -7,10 +7,12 @@ import { ProfilePatientMedicalInfo } from "@/components/profile/ProfilePatientMe
 import { ProfilePersonalInfo } from "@/components/profile/ProfilePersonalInfo";
 import { ProfileStatsBanner } from "@/components/profile/ProfileStatsBanner";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import {
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { useMyProfile } from "@/features/patients";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 

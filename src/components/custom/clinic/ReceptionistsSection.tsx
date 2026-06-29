@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash2, UserPlus } from "lucide-react";
@@ -12,9 +12,11 @@ import { CustomSubmitButton } from "@/components/custom/forms-components/custom-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useClinicReceptionists } from "@/hooks/api/clinics/use-clinic-receptionists";
-import { useInviteReceptionist } from "@/hooks/api/clinics/use-invite-receptionist";
-import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
+import {
+	useClinicReceptionists,
+	useInviteReceptionist,
+	useRemoveReceptionist,
+} from "@/features/clinics";
 import {
 	type InviteReceptionistInput,
 	inviteReceptionistSchema,

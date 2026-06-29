@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { Receipt } from "lucide-react";
 import { Suspense } from "react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyBillingPayments } from "@/hooks/api/billing/use-billing-payments";
+import { useMyBillingPayments } from "@/features/billing";
 import { useUserStore } from "@/store/useUserStore";
 
 function PaymentHistoryContent() {

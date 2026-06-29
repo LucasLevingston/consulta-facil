@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Plus, Users } from "lucide-react";
 import { useState } from "react";
@@ -8,8 +8,7 @@ import { DependentCard } from "@/components/dependents/DependentCard";
 import { DependentFormDialog } from "@/components/dependents/DependentFormDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useDeleteDependent } from "@/hooks/api/dependents/use-delete-dependent";
-import { useMyDependents } from "@/hooks/api/dependents/use-my-dependents";
+import { useDeleteDependent, useMyDependents } from "@/features/dependents";
 import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
 
 export default function DependentsPage() {

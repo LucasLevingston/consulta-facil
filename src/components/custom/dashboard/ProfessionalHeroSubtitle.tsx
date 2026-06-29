@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function ProfessionalHeroSubtitle() {

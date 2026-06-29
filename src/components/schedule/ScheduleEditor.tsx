@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { useSaveMySchedule } from "@/hooks/api/schedule/use-save-my-schedule";
+import { useSaveMySchedule } from "@/features/schedule";
 import {
 	DAYS_OF_WEEK,
 	type DayOfWeek,

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Ban, Loader2, Users } from "lucide-react";
 import { toast } from "sonner";
@@ -18,7 +18,7 @@ import type { AdminSubscriptionResponse } from "@/features/subscriptions";
 import {
 	useAdminCancelSubscription,
 	useAdminSubscriptions,
-} from "@/hooks/api/subscriptions/use-admin-subscriptions";
+} from "@/features/subscriptions";
 
 const STATUS_CONFIG: Record<
 	string,

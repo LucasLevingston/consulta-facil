@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FileText } from "lucide-react";
 import { useState } from "react";
@@ -8,8 +8,7 @@ import { MedicalRecordField } from "@/components/appointments/detail/MedicalReco
 import { ProntuarioReadView } from "@/components/appointments/detail/ProntuarioReadView";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useProntuario } from "@/hooks/api/anamnesis/use-prontuario";
-import { useSaveProntuario } from "@/hooks/api/anamnesis/use-save-prontuario";
+import { useProntuario, useSaveProntuario } from "@/features/appointments";
 import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
 
 export function ProntuarioSection({

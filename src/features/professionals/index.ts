@@ -7,11 +7,13 @@ export { useCreateProfessional } from "@/hooks/api/professionals/use-create-prof
 export { useDeleteCertificate } from "@/hooks/api/professionals/use-delete-certificate";
 export { useDeleteEducation } from "@/hooks/api/professionals/use-delete-education";
 export { useDeleteExperience } from "@/hooks/api/professionals/use-delete-experience";
+export { useDeleteProfessional } from "@/hooks/api/professionals/use-delete-professional";
 export { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
 export { usePendingApplications } from "@/hooks/api/professionals/use-pending-applications";
 export { useProfessional } from "@/hooks/api/professionals/use-professional";
 export { useProfessionalRatings } from "@/hooks/api/professionals/use-professional-ratings";
 export { useProfessionals } from "@/hooks/api/professionals/use-professionals";
+export { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
 export { useRejectApplication } from "@/hooks/api/professionals/use-reject-application";
 export { useSearchProfessionals } from "@/hooks/api/professionals/use-search-professionals";
 export { useUpdateAddress } from "@/hooks/api/professionals/use-update-address";
@@ -20,6 +22,7 @@ export { useUpdateCertificate } from "@/hooks/api/professionals/use-update-certi
 export { useUpdateCouncil } from "@/hooks/api/professionals/use-update-council";
 export { useUpdateEducation } from "@/hooks/api/professionals/use-update-education";
 export { useUpdateExperience } from "@/hooks/api/professionals/use-update-experience";
+export { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 export { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
 export { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 export { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";

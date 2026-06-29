@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	Calendar,
@@ -18,9 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
-import { useProfessional } from "@/hooks/api/professionals/use-professional";
-import { useProfessionalRatings } from "@/hooks/api/professionals/use-professional-ratings";
+import { useStartConversation } from "@/features/messaging";
+import {
+	useProfessional,
+	useProfessionalRatings,
+} from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";

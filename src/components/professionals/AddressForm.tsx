@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateAddress } from "@/hooks/api/professionals/use-update-address";
+import { useUpdateAddress } from "@/features/professionals";
 import {
 	type UpdateAddressInput,
 	updateAddressSchema,

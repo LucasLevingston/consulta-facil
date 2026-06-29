@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CalendarClock, Clock, DollarSign, X } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +18,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
+import { useCancelProcedureRequest } from "@/features/procedure-requests";
 import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 import { StatusBadge } from "./StatusBadge";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -8,8 +8,7 @@ import { useMemo } from "react";
 
 import { CheckInQrSection } from "@/components/clinics/queue/CheckInQrSection";
 import { QueueCard } from "@/components/clinics/queue/QueueCard";
-import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
-import { useClinicQueue } from "@/hooks/api/clinics/use-clinic-queue";
+import { useClinicById, useClinicQueue } from "@/features/clinics";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 export default function ClinicQueuePage() {

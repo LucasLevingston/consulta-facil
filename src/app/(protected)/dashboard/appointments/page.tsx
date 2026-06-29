@@ -1,14 +1,16 @@
-"use client";
+﻿"use client";
 
 import { CalendarDays } from "lucide-react";
 import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import {
+	useAllAdminAppointments,
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useUserStore } from "@/store/useUserStore";

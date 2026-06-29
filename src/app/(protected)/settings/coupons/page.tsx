@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Tag } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
@@ -10,7 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useUserCouponHistory } from "@/hooks/api/billing/use-coupons";
+import { useUserCouponHistory } from "@/features/billing";
 import { useUserStore } from "@/store/useUserStore";
 
 const brl = (n: number) =>

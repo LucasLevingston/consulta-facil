@@ -1,11 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useLogin } from "@/hooks/api/auth/use-login";
-import { useRegister } from "@/hooks/api/auth/use-register";
+import { useLogin, useRegister } from "@/features/auth";
 import type { LoginInput } from "@/lib/schemas/auth/login.schema";
 import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
 

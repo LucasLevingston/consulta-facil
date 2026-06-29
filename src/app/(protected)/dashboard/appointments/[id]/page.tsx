@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { use } from "react";
 
 import { AppointmentDetail } from "@/components/appointments/detail/AppointmentDetail";
-import { useAppointment } from "@/hooks/api/appointments/use-appointment";
+import { useAppointment } from "@/features/appointments";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function AppointmentDetailPage({

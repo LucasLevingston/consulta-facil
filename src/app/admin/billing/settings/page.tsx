@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Settings } from "lucide-react";
@@ -20,7 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
 	useBillingSettings,
 	useUpdateBillingSettings,
-} from "@/hooks/api/billing/use-billing-settings";
+} from "@/features/billing";
 import {
 	type UpdateBillingSettingsValues,
 	updateBillingSettingsSchema,

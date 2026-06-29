@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
@@ -21,7 +21,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpdateBio } from "@/hooks/api/professionals/use-update-bio";
+import { useUpdateBio } from "@/features/professionals";
 import {
 	type UpdateBioInput,
 	updateBioSchema,

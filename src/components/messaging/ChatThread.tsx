@@ -1,11 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useConversationHistory } from "@/hooks/api/conversations/use-conversation-history";
-import { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
+import { useConversationHistory, useMarkAsRead } from "@/features/messaging";
 import { useChat } from "@/hooks/use-chat";
 import type {
 	ConversationResponse,

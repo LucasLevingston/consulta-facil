@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import type { z } from "zod";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
+import { useUpdateMyProfile } from "@/features/patients";
 import { PatientFormValidation } from "./FormValidation";
 import { PatientConsentSection } from "./PatientConsentSection";
 import type { PatientDetailsProps } from "./PatientDetailsForm.types";

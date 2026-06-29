@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Award, ExternalLink, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteCertificate } from "@/hooks/api/professionals/use-delete-certificate";
+import { useDeleteCertificate } from "@/features/professionals";
 import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { CertificateDialog } from "./CertificateDialog";
 

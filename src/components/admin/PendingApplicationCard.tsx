@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Check, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
@@ -6,8 +6,10 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useApproveApplication } from "@/hooks/api/professionals/use-approve-application";
-import { useRejectApplication } from "@/hooks/api/professionals/use-reject-application";
+import {
+	useApproveApplication,
+	useRejectApplication,
+} from "@/features/professionals";
 import type { DoctorResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 

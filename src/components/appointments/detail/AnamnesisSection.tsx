@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ClipboardList, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -16,8 +16,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
-import { useSaveAnamnesis } from "@/hooks/api/anamnesis/use-save-anamnesis";
+import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
 import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 
 export function AnamnesisSection({

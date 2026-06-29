@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { BadgePercent } from "lucide-react";
 import { CommissionTable } from "@/components/billing/CommissionTable";
 import PageHeader from "@/components/custom/page-header";
-import { useAdminCommissions } from "@/hooks/api/billing/use-commissions";
+import { useAdminCommissions } from "@/features/billing";
 
 export default function AdminCommissionsPage() {
 	const { data: commissions = [], isLoading } = useAdminCommissions();

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Calendar } from "lucide-react";
 import { AnalyticsBarChart } from "@/components/analytics/charts/AnalyticsBarChart";
@@ -7,7 +7,7 @@ import { AnalyticsLineChart } from "@/components/analytics/charts/AnalyticsLineC
 import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAppointmentAnalytics } from "@/hooks/api/analytics/use-analytics";
+import { useAppointmentAnalytics } from "@/features/analytics";
 
 export default function AppointmentAnalyticsPage() {
 	const { data, isLoading } = useAppointmentAnalytics();

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CreditCard } from "lucide-react";
 import { AnalyticsBarChart } from "@/components/analytics/charts/AnalyticsBarChart";
@@ -6,7 +6,7 @@ import { AnalyticsDonutChart } from "@/components/analytics/charts/AnalyticsDonu
 import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSubscriptionAnalytics } from "@/hooks/api/analytics/use-analytics";
+import { useSubscriptionAnalytics } from "@/features/analytics";
 
 export default function SubscriptionAnalyticsPage() {
 	const { data, isLoading } = useSubscriptionAnalytics();

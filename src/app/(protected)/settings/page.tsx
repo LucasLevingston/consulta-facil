@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Settings } from "lucide-react";
 
@@ -24,7 +24,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
+import { useApplicationStatus } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 

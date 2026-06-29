@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { XCircle } from "lucide-react";
 import { useState } from "react";
 import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRoomToken } from "@/hooks/api/video/use-room-token";
+import { useRoomToken } from "@/features/video";
 import { usePermission } from "@/hooks/use-permission";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { useUserStore } from "@/store/useUserStore";

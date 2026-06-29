@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowLeft, CreditCard, Info } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
+import { useMySubscription } from "@/features/subscriptions";
 
 export default function PaymentMethodPage() {
 	const { data: subscription } = useMySubscription();

@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { ScheduleEditor } from "@/components/schedule/ScheduleEditor";
-import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
+import { useMySchedule } from "@/features/schedule";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
