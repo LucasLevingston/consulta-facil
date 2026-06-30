@@ -1,6 +1,5 @@
-﻿"use client";
+"use client";
 
-import { Star } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -8,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useRateAppointment } from "@/features/appointments";
 import type { RateAppointmentFormProps } from "./RateAppointmentForm.types";
+import { StarRating } from "./StarRating";
 
 export function RateAppointmentForm({
 	appointment,
@@ -16,7 +16,6 @@ export function RateAppointmentForm({
 	const [stars, setStars] = useState(0);
 	const [hovered, setHovered] = useState(0);
 	const [comment, setComment] = useState("");
-
 	const rate = useRateAppointment();
 	const active = hovered || stars;
 
@@ -38,54 +37,22 @@ export function RateAppointmentForm({
 		}
 	};
 
-	const labels: Record<number, string> = {
-		1: "Ruim",
-		2: "Regular",
-		3: "Bom",
-		4: "Muito bom",
-		5: "Excelente",
-	};
-
 	return (
 		<form onSubmit={handleSubmit} className="space-y-5">
 			<p className="text-sm text-muted-foreground">
 				Como foi sua consulta com{" "}
 				<span className="font-semibold text-foreground">
-					{appointment.professionalName
-						? appointment.professionalName
-						: "o profissional"}
+					{appointment.professionalName ?? "o profissional"}
 				</span>
 				?
 			</p>
 
-			<div className="flex flex-col items-center gap-2">
-				<fieldset
-					className="flex gap-1 border-none p-0 m-0"
-					onMouseLeave={() => setHovered(0)}
-				>
-					{[1, 2, 3, 4, 5].map((star) => (
-						<button
-							key={star}
-							type="button"
-							onClick={() => setStars(star)}
-							onMouseEnter={() => setHovered(star)}
-							className="p-1 rounded transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-							aria-label={`${star} estrela${star > 1 ? "s" : ""}`}
-						>
-							<Star
-								className={`size-8 transition-colors ${
-									star <= active
-										? "fill-amber-400 text-amber-400"
-										: "text-muted-foreground/40"
-								}`}
-							/>
-						</button>
-					))}
-				</fieldset>
-				<span className="text-sm font-medium h-5 text-muted-foreground">
-					{active > 0 ? labels[active] : ""}
-				</span>
-			</div>
+			<StarRating
+				active={active}
+				onStarClick={setStars}
+				onStarHover={setHovered}
+				onMouseLeave={() => setHovered(0)}
+			/>
 
 			<div className="space-y-1.5">
 				<label htmlFor="rating-comment" className="text-sm font-medium">
