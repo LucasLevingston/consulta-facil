@@ -1,5 +1,5 @@
 #!/bin/sh
-MAX_LINES=300
+MAX_LINES=100
 FOUND=0
 
 staged=$(git diff --cached --name-only --diff-filter=ACM)
@@ -20,7 +20,21 @@ for file in $staged; do
       fi ;;
   esac
 
-  # 2. Constantes uppercase fora de constants/
+  # 2. Múltiplas funções exportadas por arquivo (SRP — 1 arquivo = 1 função)
+  case "$file" in
+    *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js)
+      ;;
+    *)
+      n=$(printf '%s\n' "$content" | grep -E "^export (default )?(async )?function [A-Za-z]|^export const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" | wc -l)
+      if [ "$n" -gt 1 ]; then
+        echo "BLOCKED [SRP-FN] $file — $n funções exportadas (máx 1 por arquivo)"
+        echo "  Divida: cada função em seu próprio arquivo"
+        FOUND=1
+      fi
+      ;;
+  esac
+
+  # 3. Constantes uppercase fora de constants/
   case "$file" in
     *constants*|*Constants*)
       ;;
@@ -34,7 +48,7 @@ for file in $staged; do
       ;;
   esac
 
-  # 3. Props/types inline em arquivo TSX
+  # 4. Props/types inline em arquivo TSX
   case "$file" in
     *.tsx)
       case "$file" in
@@ -52,7 +66,7 @@ for file in $staged; do
       ;;
   esac
 
-  # 4. Funções utilitárias exportadas dentro de componente TSX
+  # 5. Funções utilitárias exportadas dentro de componente TSX
   case "$file" in
     *.tsx)
       case "$file" in
@@ -70,7 +84,7 @@ for file in $staged; do
       ;;
   esac
 
-  # 5. Tipos/interfaces definidos diretamente em arquivos *.api.ts
+  # 6. Tipos/interfaces definidos diretamente em arquivos *.api.ts
   case "$file" in
     *.api.ts)
       case "$file" in
@@ -92,7 +106,7 @@ done
 
 if [ "$FOUND" -eq 1 ]; then
   echo ""
-  echo "Commit bloqueado. Mantenha separados: constants/ | *.types.ts | utils/ | componentes"
+  echo "Commit bloqueado. Mantenha separados: 1 função/arquivo ≤100 linhas | constants/ | *.types.ts | utils/ | componentes"
   exit 1
 fi
 
