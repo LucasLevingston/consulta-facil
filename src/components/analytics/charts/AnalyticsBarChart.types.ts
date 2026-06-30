@@ -1,4 +1,4 @@
-import type { Breakdown } from "@/lib/schemas/analytics/analytics.schema";
+﻿import type { Breakdown } from "@/features/analytics";
 
 export interface AnalyticsBarChartProps {
 	data: Breakdown[];

@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { Separator } from "@/components/ui/separator";
-import type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
+import type { AnamnesisResponse } from "@/features/appointments";
 
 export function AnamnesisReadView({
 	anamnesis,

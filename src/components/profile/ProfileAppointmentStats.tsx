@@ -1,10 +1,10 @@
-import { CalendarDays } from "lucide-react";
+﻿import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 
 export function ProfileAppointmentStats({
 	appointments,

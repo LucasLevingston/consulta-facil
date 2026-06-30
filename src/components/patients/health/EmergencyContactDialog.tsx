@@ -27,25 +27,21 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import {
-	useAddEmergencyContact,
-	useUpdateEmergencyContact,
-} from "@/features/patients";
-import {
 	type EmergencyContactInput,
 	emergencyContactSchema,
 	RELATIONSHIP_LABELS,
-} from "@/lib/schemas/patient/emergency-contact.schema";
-import type { ContactItem } from "./EmergencyContactDialog.types";
+	useAddEmergencyContact,
+	useUpdateEmergencyContact,
+} from "@/features/patients";
+import type { EmergencyContactDialogProps } from "./EmergencyContactDialog.types";
 
 export type { ContactItem } from "./EmergencyContactDialog.types";
 
-interface Props {
-	open: boolean;
-	onClose: () => void;
-	editing?: ContactItem;
-}
-
-export function EmergencyContactDialog({ open, onClose, editing }: Props) {
+export function EmergencyContactDialog({
+	open,
+	onClose,
+	editing,
+}: EmergencyContactDialogProps) {
 	const add = useAddEmergencyContact();
 	const update = useUpdateEmergencyContact();
 

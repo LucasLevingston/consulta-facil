@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BadgeCheck, Pencil, Settings, Shield } from "lucide-react";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
+import type { UserResponse } from "@/features/auth";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 interface ProfessionalData {

@@ -49,3 +49,37 @@ export {
 	useUserWallet,
 	useUserWalletTransactions,
 } from "@/hooks/api/billing/use-wallet";
+export {
+	type BillingSettingsResponse,
+	type UpdateBillingSettingsValues,
+	updateBillingSettingsSchema,
+} from "@/lib/schemas/billing/billing-settings.schema";
+export type {
+	CommissionStatus,
+	ReferralCommissionResponse,
+} from "@/lib/schemas/billing/commission.schema";
+export {
+	type CouponResponse,
+	type CouponUsageResponse,
+	type CouponValidationResult,
+	type CreateCouponData,
+	createCouponSchema,
+	type UpdateCouponData,
+	updateCouponSchema,
+} from "@/lib/schemas/billing/coupon.schema";
+export type { FeatureResponse } from "@/lib/schemas/billing/feature.schema";
+export type { InvoiceResponse } from "@/lib/schemas/billing/invoice.schema";
+export type {
+	BillingPaymentResponse,
+	BillingPaymentStatus,
+} from "@/lib/schemas/billing/payment.schema";
+export type {
+	ReferralStatsResponse,
+	ReferralStatus,
+} from "@/lib/schemas/billing/referral.schema";
+export type { SystemFeeResponse } from "@/lib/schemas/billing/system-fee.schema";
+export type {
+	WalletResponse,
+	WalletTransactionResponse,
+	WalletTransactionType,
+} from "@/lib/schemas/billing/wallet.schema";

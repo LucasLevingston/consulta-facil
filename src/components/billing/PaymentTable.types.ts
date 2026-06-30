@@ -1,4 +1,4 @@
-import type { BillingPaymentResponse } from "@/lib/schemas/billing/payment.schema";
+﻿import type { BillingPaymentResponse } from "@/features/billing";
 
 export interface PaymentTableProps {
 	payments: BillingPaymentResponse[];

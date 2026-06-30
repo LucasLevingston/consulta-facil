@@ -1,4 +1,4 @@
-import type { BillingPaymentStatus } from "@/lib/schemas/billing/payment.schema";
+﻿import type { BillingPaymentStatus } from "@/features/billing";
 
 export interface PaymentStatusBadgeProps {
 	status: BillingPaymentStatus;

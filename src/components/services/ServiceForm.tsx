@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateService, useUpdateService } from "@/features/services";
+import type { ProfessionalService } from "@/features/services";
 import {
 	type CreateServiceInput,
 	createServiceSchema,
-} from "@/lib/schemas/service/create-service.schema";
-import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
+	useCreateService,
+	useUpdateService,
+} from "@/features/services";
 
 export function ServiceForm({
 	existing,

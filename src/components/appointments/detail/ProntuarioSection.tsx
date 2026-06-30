@@ -8,8 +8,8 @@ import { MedicalRecordField } from "@/components/appointments/detail/MedicalReco
 import { ProntuarioReadView } from "@/components/appointments/detail/ProntuarioReadView";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ProntuarioInput } from "@/features/appointments";
 import { useProntuario, useSaveProntuario } from "@/features/appointments";
-import type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
 
 export function ProntuarioSection({
 	appointmentId,

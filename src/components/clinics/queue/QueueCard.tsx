@@ -1,10 +1,10 @@
-import { format } from "date-fns";
+﻿import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Clock, Stethoscope, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function QueueCard({

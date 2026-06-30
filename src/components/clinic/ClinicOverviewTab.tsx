@@ -1,16 +1,12 @@
-"use client";
+﻿"use client";
 
 import { Building2, MapPin, Phone, Star, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicOverviewTabProps } from "./ClinicOverviewTab.types";
 
-interface Props {
-	clinic: ClinicResponse;
-}
-
-export function ClinicOverviewTab({ clinic }: Props) {
+export function ClinicOverviewTab({ clinic }: ClinicOverviewTabProps) {
 	const memberCount = clinic.members?.length ?? 0;
 	const specialties = [
 		...new Set(clinic.members?.map((m) => m.specialty) ?? []),

@@ -8,14 +8,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useSaveClinicWorkingHours } from "@/features/schedule";
-import type { ClinicWorkingHoursItem } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
-import type { ClinicWorkingHoursResponse } from "@/lib/schemas/schedule/clinic-working-hours-response.schema";
+import type {
+	ClinicWorkingHoursItem,
+	ClinicWorkingHoursResponse,
+} from "@/features/schedule";
 import {
 	DAY_LABELS,
 	DAYS_OF_WEEK,
 	type DayOfWeek,
-} from "@/lib/schemas/schedule/days-of-week.schema";
+	useSaveClinicWorkingHours,
+} from "@/features/schedule";
 
 function buildDefaultHoursRow(
 	day: DayOfWeek,

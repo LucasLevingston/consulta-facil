@@ -30,15 +30,13 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	useMedicalRecords,
-	useUpdateMedicalRecords,
-} from "@/features/patients";
-import type { MedicalRecord } from "@/lib/schemas/patient/medical-record.schema";
+import type { MedicalRecord } from "@/features/patients";
 import {
 	type UpdateMedicalRecordInput,
 	updateMedicalRecordSchema,
-} from "@/lib/schemas/patient/update-medical-record.schema";
+	useMedicalRecords,
+	useUpdateMedicalRecords,
+} from "@/features/patients";
 import type { MedicalHealthFormProps } from "./MedicalHealthForm.types";
 
 const BLOOD_TYPE_LABELS: Record<string, string> = {

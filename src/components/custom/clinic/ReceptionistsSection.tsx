@@ -13,14 +13,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import {
+	type InviteReceptionistInput,
+	inviteReceptionistSchema,
 	useClinicReceptionists,
 	useInviteReceptionist,
 	useRemoveReceptionist,
 } from "@/features/clinics";
-import {
-	type InviteReceptionistInput,
-	inviteReceptionistSchema,
-} from "@/lib/schemas/clinic/invite-receptionist.schema";
 
 export function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 	const { data: receptionists = [], isLoading } =

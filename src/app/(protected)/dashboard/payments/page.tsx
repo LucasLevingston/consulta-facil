@@ -17,13 +17,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import type { AppointmentPaymentStatus } from "@/features/appointments";
 import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { useMyProfessionalProfile } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
-import type { AppointmentPaymentStatus } from "@/lib/schemas/appointment/appointment-payment-status.schema";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 

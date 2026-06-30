@@ -5,9 +5,9 @@ import { useState } from "react";
 import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { AppointmentResponse } from "@/features/appointments";
 import { useRoomToken } from "@/features/video";
 import { usePermission } from "@/hooks/use-permission";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { useUserStore } from "@/store/useUserStore";
 
 import { AnamnesisSection } from "./AnamnesisSection";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Bot, Send, ShieldAlert, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -8,12 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { useAnamnesisChat } from "@/hooks/use-anamnesis-chat";
-import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
-
-interface AnamnesisAIChatProps {
-	onSave: (data: AnamnesisInput) => Promise<void>;
-	onClose: () => void;
-}
+import type { AnamnesisAIChatProps } from "./AnamnesisAIChat.types";
 
 export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 	const { messages, isLoading, isSaving, sendMessage, saveAnamnesis } =

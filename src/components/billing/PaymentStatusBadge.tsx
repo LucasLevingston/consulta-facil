@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import type { BillingPaymentStatus } from "@/lib/schemas/billing/payment.schema";
+﻿import { Badge } from "@/components/ui/badge";
+import type { BillingPaymentStatus } from "@/features/billing";
 import type { PaymentStatusBadgeProps } from "./PaymentStatusBadge.types";
 
 const STATUS_CONFIG: Record<

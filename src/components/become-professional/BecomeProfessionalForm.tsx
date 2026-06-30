@@ -13,9 +13,11 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useCreateProfessional } from "@/features/professionals";
-import { professionalTypeSchema } from "@/lib/schemas/professional/professional-type.schema";
-import { specialtySchema } from "@/lib/schemas/professional/specialty.schema";
+import {
+	professionalTypeSchema,
+	specialtySchema,
+	useCreateProfessional,
+} from "@/features/professionals";
 import {
 	PROFESSION_SPECIALTIES,
 	SPECIALTY_LABELS,

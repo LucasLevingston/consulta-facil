@@ -16,8 +16,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import type { AnamnesisInput } from "@/features/appointments";
 import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
-import type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 
 export function AnamnesisSection({
 	appointmentId,

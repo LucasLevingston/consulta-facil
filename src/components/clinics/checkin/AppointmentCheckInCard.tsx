@@ -9,8 +9,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import type { AppointmentResponse } from "@/features/appointments";
 import { useCheckInByQr, useCheckInToken } from "@/features/appointments";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function AppointmentCheckInCard({

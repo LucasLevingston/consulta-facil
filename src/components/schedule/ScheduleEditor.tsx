@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { useSaveMySchedule } from "@/features/schedule";
+import type {
+	ProfessionalScheduleItem,
+	ProfessionalScheduleResponse,
+} from "@/features/schedule";
 import {
 	DAYS_OF_WEEK,
 	type DayOfWeek,
-} from "@/lib/schemas/schedule/days-of-week.schema";
-import type { ProfessionalScheduleItem } from "@/lib/schemas/schedule/professional-schedule-item.schema";
-import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
+	useSaveMySchedule,
+} from "@/features/schedule";
 import { DEFAULT_BREAK } from "@/utils/constants/default-break";
 import { DEFAULT_DURATION } from "@/utils/constants/default-duration";
 

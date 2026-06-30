@@ -28,11 +28,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAdminCreateCoupon } from "@/features/billing";
 import {
 	type CreateCouponData,
 	createCouponSchema,
-} from "@/lib/schemas/billing/coupon.schema";
+	useAdminCreateCoupon,
+} from "@/features/billing";
 
 export function CreateCouponDialog() {
 	const [open, setOpen] = useState(false);

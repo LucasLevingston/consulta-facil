@@ -1,4 +1,4 @@
-import type { InvoiceResponse } from "@/lib/schemas/billing/invoice.schema";
+﻿import type { InvoiceResponse } from "@/features/billing";
 
 export interface InvoiceTableProps {
 	invoices: InvoiceResponse[];

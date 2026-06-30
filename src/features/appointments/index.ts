@@ -25,3 +25,22 @@ export { useRateAppointment } from "@/hooks/api/appointments/use-rate-appointmen
 export { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
 export { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
 export { useSetModality } from "@/hooks/api/appointments/use-set-modality";
+export type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
+export type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
+export type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";
+export type { ProntuarioResponse } from "@/lib/schemas/anamnesis/prontuario-response.schema";
+export {
+	type AppointmentFormValues,
+	appointmentFormSchema,
+} from "@/lib/schemas/appointment/appointment-form.schema";
+export type { AppointmentPaymentStatus } from "@/lib/schemas/appointment/appointment-payment-status.schema";
+export type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+export type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
+export {
+	type CancelAppointmentInput,
+	cancelAppointmentSchema,
+} from "@/lib/schemas/appointment/cancel-appointment.schema";
+export {
+	type RescheduleAppointmentInput,
+	rescheduleAppointmentSchema,
+} from "@/lib/schemas/appointment/reschedule-appointment.schema";

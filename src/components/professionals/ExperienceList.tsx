@@ -12,16 +12,11 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useDeleteExperience } from "@/features/professionals";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { ExperienceDialog } from "./ExperienceDialog";
+import type { ExperienceItem } from "./ExperienceDialog.types";
+import type { ExperienceListProps } from "./ExperienceList.types";
 
-type ExperienceItem = NonNullable<ProfessionalResponse["experience"]>[number];
-
-interface Props {
-	professional: ProfessionalResponse;
-}
-
-export function ExperienceList({ professional }: Props) {
+export function ExperienceList({ professional }: ExperienceListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [editing, setEditing] = useState<ExperienceItem | undefined>();
 	const deleteExp = useDeleteExperience();

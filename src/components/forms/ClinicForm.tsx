@@ -10,12 +10,13 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { LocationPicker } from "@/components/custom/map/LocationPicker";
 import { Form } from "@/components/ui/form";
-import { useCreateClinic, useUpdateClinic } from "@/features/clinics";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicResponse } from "@/features/clinics";
 import {
 	type CreateClinicInput,
 	createClinicSchema,
-} from "@/lib/schemas/clinic/create-clinic.schema";
+	useCreateClinic,
+	useUpdateClinic,
+} from "@/features/clinics";
 
 export function ClinicForm({ clinic }: { clinic?: ClinicResponse }) {
 	const isEdit = !!clinic;

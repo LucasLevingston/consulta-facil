@@ -17,8 +17,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import type { ProfessionalService } from "@/features/services";
 import { useGetProfessionalServices } from "@/features/services";
-import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 import { ServiceForm } from "./ServiceForm";
 import { ServiceRow } from "./ServiceRow";
 

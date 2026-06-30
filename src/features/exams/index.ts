@@ -12,3 +12,10 @@ export { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
 export { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
 export { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
 export { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
+export type { ExamLabResponse } from "@/lib/schemas/examLab/exam-lab-response.schema";
+export {
+	type CreateExamRequestInput,
+	createExamRequestSchema,
+} from "@/lib/schemas/examRequest/create-exam-request.schema";
+export type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+export type { ExamRequestStatus } from "@/lib/schemas/examRequest/exam-request-status.schema";

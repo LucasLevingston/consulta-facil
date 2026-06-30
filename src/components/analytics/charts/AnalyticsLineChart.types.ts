@@ -1,4 +1,4 @@
-import type { TimeSeries } from "@/lib/schemas/analytics/analytics.schema";
+﻿import type { TimeSeries } from "@/features/analytics";
 
 export interface AnalyticsLineChartProps {
 	data: TimeSeries[];

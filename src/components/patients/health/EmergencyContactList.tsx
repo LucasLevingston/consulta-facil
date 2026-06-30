@@ -12,10 +12,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import {
+	RELATIONSHIP_LABELS,
 	useDeleteEmergencyContact,
 	useEmergencyContacts,
 } from "@/features/patients";
-import { RELATIONSHIP_LABELS } from "@/lib/schemas/patient/emergency-contact.schema";
 import {
 	type ContactItem,
 	EmergencyContactDialog,

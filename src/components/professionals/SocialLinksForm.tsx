@@ -22,11 +22,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateSocialLinks } from "@/features/professionals";
 import {
 	type UpdateSocialLinksInput,
 	updateSocialLinksSchema,
-} from "@/lib/schemas/doctor/update-social-links.schema";
+	useUpdateSocialLinks,
+} from "@/features/professionals";
 import type { SocialLinksFormProps } from "./SocialLinksForm.types";
 
 export function SocialLinksForm({ professional }: SocialLinksFormProps) {

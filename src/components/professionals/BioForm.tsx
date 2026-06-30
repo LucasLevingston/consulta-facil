@@ -21,11 +21,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpdateBio } from "@/features/professionals";
 import {
 	type UpdateBioInput,
 	updateBioSchema,
-} from "@/lib/schemas/doctor/update-bio.schema";
+	useUpdateBio,
+} from "@/features/professionals";
 import type { BioFormProps } from "./BioForm.types";
 
 export function BioForm({ professional }: BioFormProps) {

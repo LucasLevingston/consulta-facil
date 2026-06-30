@@ -18,13 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+	type UpdateBillingSettingsValues,
+	updateBillingSettingsSchema,
 	useBillingSettings,
 	useUpdateBillingSettings,
 } from "@/features/billing";
-import {
-	type UpdateBillingSettingsValues,
-	updateBillingSettingsSchema,
-} from "@/lib/schemas/billing/billing-settings.schema";
 
 export default function AdminBillingSettingsPage() {
 	const { data: settings, isLoading } = useBillingSettings();

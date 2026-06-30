@@ -13,23 +13,17 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useClinicAppointments } from "@/features/appointments";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
 import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";
 import { ALL } from "@/utils/constants/filter-sentinels";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-
-interface Props {
-	clinic: ClinicResponse;
-	isManager: boolean;
-	myProfessionalProfileId?: string;
-}
+import type { ClinicAppointmentsTabProps } from "./ClinicAppointmentsTab.types";
 
 export function ClinicAppointmentsTab({
 	clinic,
 	isManager,
 	myProfessionalProfileId,
-}: Props) {
+}: ClinicAppointmentsTabProps) {
 	const [filterProfessionalId, setFilterProfessionalId] = useState(ALL);
 	const [filterStatus, setFilterStatus] = useState(ALL);
 

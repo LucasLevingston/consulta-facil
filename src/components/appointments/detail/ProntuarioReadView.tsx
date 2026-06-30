@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { Separator } from "@/components/ui/separator";
-import type { ProntuarioResponse } from "@/lib/schemas/anamnesis/prontuario-response.schema";
+import type { ProntuarioResponse } from "@/features/appointments";
 
 export function ProntuarioReadView({
 	prontuario,

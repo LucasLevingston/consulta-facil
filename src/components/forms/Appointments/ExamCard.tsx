@@ -13,8 +13,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import type { ExamRequestResponse } from "@/features/exams";
 import { useReviewExam, useUploadExamResult } from "@/features/exams";
-import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
 import type { ExamCardProps } from "./ExamCard.types";
 

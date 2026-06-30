@@ -6,8 +6,8 @@ import { Suspense, useEffect, useState } from "react";
 import { ChatThread } from "@/components/messaging/ChatThread";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { Button } from "@/components/ui/button";
+import type { ConversationResponse } from "@/features/messaging";
 import { useConversations } from "@/features/messaging";
-import type { ConversationResponse } from "@/lib/schemas/messaging/message.schema";
 import { cn } from "@/lib/utils/cn";
 
 function MessagesContent() {

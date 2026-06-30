@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+﻿import { Badge } from "@/components/ui/badge";
 import {
 	Table,
 	TableBody,
@@ -7,7 +7,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { CommissionStatus } from "@/lib/schemas/billing/commission.schema";
+import type { CommissionStatus } from "@/features/billing";
 import type { CommissionTableProps } from "./CommissionTable.types";
 
 const STATUS_LABELS: Record<CommissionStatus, string> = {

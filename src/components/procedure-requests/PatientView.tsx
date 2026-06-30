@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
+import type { ProcedureRequest } from "@/features/procedure-requests";
 import { PatientRequestCard } from "./PatientRequestCard";
 
 export function PatientView({ requests }: { requests: ProcedureRequest[] }) {

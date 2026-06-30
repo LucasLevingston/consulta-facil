@@ -29,12 +29,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUpdateCouncil } from "@/features/professionals";
 import {
 	councilTypeOptions,
 	type UpdateCouncilInput,
 	updateCouncilSchema,
-} from "@/lib/schemas/doctor/update-council.schema";
+	useUpdateCouncil,
+} from "@/features/professionals";
 import type { CouncilFormProps } from "./CouncilForm.types";
 
 export function CouncilForm({ professional }: CouncilFormProps) {

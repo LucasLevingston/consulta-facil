@@ -1,6 +1,6 @@
-import type { Control } from "react-hook-form";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+﻿import type { Control } from "react-hook-form";
+import type { AppointmentFormValues } from "@/features/appointments";
+import type { ProfessionalResponse } from "@/features/professionals";
 
 export interface ProfessionalStepProps {
 	control: Control<AppointmentFormValues>;

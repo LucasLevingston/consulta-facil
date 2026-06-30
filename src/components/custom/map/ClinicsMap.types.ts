@@ -1,4 +1,4 @@
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+﻿import type { ClinicResponse } from "@/features/clinics";
 
 export interface ClinicsMapProps {
 	clinics: ClinicResponse[];

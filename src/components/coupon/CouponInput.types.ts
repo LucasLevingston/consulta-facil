@@ -1,4 +1,4 @@
-import type { CouponValidationResult } from "@/lib/schemas/billing/coupon.schema";
+﻿import type { CouponValidationResult } from "@/features/billing";
 
 export interface CouponInputProps {
 	amount: number;

@@ -12,11 +12,11 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useCreateExamRequest } from "@/features/exams";
 import {
 	type CreateExamRequestInput,
 	createExamRequestSchema,
-} from "@/lib/schemas/examRequest/create-exam-request.schema";
+	useCreateExamRequest,
+} from "@/features/exams";
 import { EXAM_TYPE_OPTIONS } from "@/utils/constants/exam-types";
 
 export function RequestExamForm({ appointmentId }: { appointmentId: string }) {

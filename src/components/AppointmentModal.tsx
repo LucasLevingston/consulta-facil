@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 
 import "react-datepicker/dist/react-datepicker.css";
 

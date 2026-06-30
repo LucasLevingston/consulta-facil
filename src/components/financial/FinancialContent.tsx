@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format, startOfMonth, subMonths } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -13,7 +13,7 @@ import { useMemo } from "react";
 import { FeeCalculator } from "@/components/custom/fees/FeeCalculator";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { formatBRL } from "@/utils/format-brl";
 import { MonthBar } from "./MonthBar";

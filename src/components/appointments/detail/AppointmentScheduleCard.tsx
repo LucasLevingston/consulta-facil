@@ -26,20 +26,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useGenerateMeetLink } from "@/features/appointments";
 import { useCreateRoom } from "@/features/video";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-import type { VideoRoom } from "@/lib/schemas/video/video-room.schema";
-
+import type { AppointmentScheduleCardProps } from "./AppointmentScheduleCard.types";
 import { QrCodeDialog } from "./QrCodeDialog";
-
-interface Props {
-	appointment: AppointmentResponse;
-	isPatient: boolean;
-	isProfessional: boolean;
-	userId: string | undefined;
-	canReschedule: boolean;
-	videoRoom: VideoRoom | undefined;
-	onVideoStart: (appointmentId: string) => void;
-}
 
 export function AppointmentScheduleCard({
 	appointment,
@@ -49,7 +37,7 @@ export function AppointmentScheduleCard({
 	canReschedule,
 	videoRoom,
 	onVideoStart,
-}: Props) {
+}: AppointmentScheduleCardProps) {
 	const [qrOpen, setQrOpen] = useState(false);
 	const [rescheduleOpen, setRescheduleOpen] = useState(false);
 	const { mutateAsync: generateMeetLink, isPending: generatingLink } =

@@ -6,11 +6,11 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { DoctorResponse } from "@/features/professionals";
 import {
 	useApproveApplication,
 	useRejectApplication,
 } from "@/features/professionals";
-import type { DoctorResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {

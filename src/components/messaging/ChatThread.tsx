@@ -4,20 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { MessageResponse } from "@/features/messaging";
 import { useConversationHistory, useMarkAsRead } from "@/features/messaging";
 import { useChat } from "@/hooks/use-chat";
-import type {
-	ConversationResponse,
-	MessageResponse,
-} from "@/lib/schemas/messaging/message.schema";
 import { cn } from "@/lib/utils/cn";
 import { useUserStore } from "@/store/useUserStore";
+import type { ChatThreadProps } from "./ChatThread.types";
 
-interface Props {
-	conversation: ConversationResponse;
-}
-
-export function ChatThread({ conversation }: Props) {
+export function ChatThread({ conversation }: ChatThreadProps) {
 	const user = useUserStore((s) => s.user);
 	const { data: historyPage } = useConversationHistory(conversation.id);
 	const markAsRead = useMarkAsRead();

@@ -22,8 +22,8 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import type { ExamLabResponse } from "@/features/exams";
 import { useAvailableSlots, useScheduleExam } from "@/features/exams";
-import type { ExamLabResponse } from "@/lib/schemas/examLab/exam-lab-response.schema";
 import { cn } from "@/lib/utils/cn";
 
 function formatTime(time: string) {

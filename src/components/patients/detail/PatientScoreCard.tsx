@@ -1,7 +1,7 @@
-import { CheckCircle2, CreditCard, TrendingUp, XCircle } from "lucide-react";
+﻿import { CheckCircle2, CreditCard, TrendingUp, XCircle } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 
 export function PatientScoreCard({
 	appointments,

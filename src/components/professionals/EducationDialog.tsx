@@ -26,23 +26,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAddEducation, useUpdateEducation } from "@/features/professionals";
 import {
 	degreeTypeOptions,
 	type ProfessionalEducationInput,
 	professionalEducationSchema,
-} from "@/lib/schemas/doctor/professional-education.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+	useAddEducation,
+	useUpdateEducation,
+} from "@/features/professionals";
+import type { EducationDialogProps } from "./EducationDialog.types";
 
-type EducationItem = NonNullable<ProfessionalResponse["education"]>[number];
-
-interface Props {
-	open: boolean;
-	onClose: () => void;
-	editing?: EducationItem;
-}
-
-export function EducationDialog({ open, onClose, editing }: Props) {
+export function EducationDialog({
+	open,
+	onClose,
+	editing,
+}: EducationDialogProps) {
 	const add = useAddEducation();
 	const update = useUpdateEducation();
 

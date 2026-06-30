@@ -2,8 +2,8 @@
 
 import { AlertTriangle, Stethoscope } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import type { ProfessionalService } from "@/features/services";
 import { useGetProfessionalServices } from "@/features/services";
-import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
 import type { ServiceSelectorProps } from "./ServiceSelector.types";
 
 function formatPrice(price: number): string {

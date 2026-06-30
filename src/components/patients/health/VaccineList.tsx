@@ -30,14 +30,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
+	type PatientVaccineInput,
+	patientVaccineSchema,
 	useAddVaccine,
 	useDeleteVaccine,
 	useVaccines,
 } from "@/features/patients";
-import {
-	type PatientVaccineInput,
-	patientVaccineSchema,
-} from "@/lib/schemas/patient/patient-vaccine.schema";
 
 function VaccineDialog({
 	open,

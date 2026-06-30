@@ -1,4 +1,4 @@
-import type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
+﻿import type { ProfessionalRating } from "@/features/professionals";
 
 export interface RatingDistributionCardProps {
 	ratings: ProfessionalRating;

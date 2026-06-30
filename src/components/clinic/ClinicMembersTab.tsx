@@ -20,16 +20,14 @@ import { Input } from "@/components/ui/input";
 import { useRemoveClinicMember } from "@/features/clinics";
 import { useSendClinicInvite } from "@/features/notifications";
 import { useProfessionals } from "@/features/professionals";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { ClinicMembersTabProps } from "./ClinicMembersTab.types";
 
-interface Props {
-	clinic: ClinicResponse;
-	isManager: boolean;
-	currentUserId?: string;
-}
-
-export function ClinicMembersTab({ clinic, isManager, currentUserId }: Props) {
+export function ClinicMembersTab({
+	clinic,
+	isManager,
+	currentUserId,
+}: ClinicMembersTabProps) {
 	const [addOpen, setAddOpen] = useState(false);
 	const [professionalSearch, setProfessionalSearch] = useState("");
 

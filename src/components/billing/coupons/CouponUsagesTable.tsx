@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	Table,
@@ -8,18 +8,14 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { CouponUsageResponse } from "@/lib/schemas/billing/coupon.schema";
+import type { CouponUsagesTableProps } from "./CouponUsagesTable.types";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
 		n,
 	);
 
-interface Props {
-	usages: CouponUsageResponse[];
-}
-
-export function CouponUsagesTable({ usages }: Props) {
+export function CouponUsagesTable({ usages }: CouponUsagesTableProps) {
 	return (
 		<Table>
 			<TableHeader>

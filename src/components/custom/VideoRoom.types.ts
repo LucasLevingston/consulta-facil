@@ -1,4 +1,4 @@
-import type { VideoRoom as VideoRoomData } from "@/lib/schemas/video/video-room.schema";
+﻿import type { VideoRoom as VideoRoomData } from "@/features/video";
 
 export interface VideoRoomProps {
 	room: VideoRoomData;

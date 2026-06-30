@@ -22,11 +22,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateAddress } from "@/features/professionals";
 import {
 	type UpdateAddressInput,
 	updateAddressSchema,
-} from "@/lib/schemas/doctor/update-address.schema";
+	useUpdateAddress,
+} from "@/features/professionals";
 import type { AddressFormProps } from "./AddressForm.types";
 
 export function AddressForm({ professional }: AddressFormProps) {

@@ -27,18 +27,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAdminUpdateCoupon } from "@/features/billing";
-import type { CouponResponse } from "@/lib/schemas/billing/coupon.schema";
 import {
 	type UpdateCouponData,
 	updateCouponSchema,
-} from "@/lib/schemas/billing/coupon.schema";
+	useAdminUpdateCoupon,
+} from "@/features/billing";
+import type { EditCouponDialogProps } from "./EditCouponDialog.types";
 
-interface Props {
-	coupon: CouponResponse;
-}
-
-export function EditCouponDialog({ coupon }: Props) {
+export function EditCouponDialog({ coupon }: EditCouponDialogProps) {
 	const [open, setOpen] = useState(false);
 	const update = useAdminUpdateCoupon();
 

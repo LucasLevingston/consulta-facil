@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -6,14 +6,10 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Badge } from "@/components/ui/badge";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { STATUS_CONFIG } from "@/utils/constants/appointment-status-config";
+import type { AppointmentHeaderProps } from "./AppointmentHeader.types";
 
-interface Props {
-	appointment: AppointmentResponse;
-}
-
-export function AppointmentHeader({ appointment }: Props) {
+export function AppointmentHeader({ appointment }: AppointmentHeaderProps) {
 	const statusConfig = STATUS_CONFIG[appointment.status];
 	const scheduledDate = new Date(appointment.scheduledAt);
 

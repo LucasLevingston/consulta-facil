@@ -14,16 +14,12 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { useClinicFinancialStats } from "@/features/appointments";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { ClinicFinancialTabProps } from "./ClinicFinancialTab.types";
 
-interface Props {
-	clinic: ClinicResponse;
-}
-
-export function ClinicFinancialTab({ clinic }: Props) {
+export function ClinicFinancialTab({ clinic }: ClinicFinancialTabProps) {
 	const members = clinic.members ?? [];
 
 	const {

@@ -12,16 +12,11 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useDeleteEducation } from "@/features/professionals";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { EducationDialog } from "./EducationDialog";
+import type { EducationItem } from "./EducationDialog.types";
+import type { EducationListProps } from "./EducationList.types";
 
-type EducationItem = NonNullable<ProfessionalResponse["education"]>[number];
-
-interface Props {
-	professional: ProfessionalResponse;
-}
-
-export function EducationList({ professional }: Props) {
+export function EducationList({ professional }: EducationListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [editing, setEditing] = useState<EducationItem | undefined>();
 	const deleteEdu = useDeleteEducation();

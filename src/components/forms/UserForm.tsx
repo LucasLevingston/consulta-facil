@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { LoginInput, RegisterInput } from "@/features/auth";
 import { useLogin, useRegister } from "@/features/auth";
-import type { LoginInput } from "@/lib/schemas/auth/login.schema";
-import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
 
 import LoginForm from "./auth/LoginForm";
 import { RegisterForm } from "./auth/registerForm";

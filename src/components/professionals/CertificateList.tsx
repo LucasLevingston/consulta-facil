@@ -12,18 +12,11 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useDeleteCertificate } from "@/features/professionals";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 import { CertificateDialog } from "./CertificateDialog";
+import type { CertificateItem } from "./CertificateDialog.types";
+import type { CertificateListProps } from "./CertificateList.types";
 
-type CertificateItem = NonNullable<
-	ProfessionalResponse["certificates"]
->[number];
-
-interface Props {
-	professional: ProfessionalResponse;
-}
-
-export function CertificateList({ professional }: Props) {
+export function CertificateList({ professional }: CertificateListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [editing, setEditing] = useState<CertificateItem | undefined>();
 	const deleteCert = useDeleteCertificate();

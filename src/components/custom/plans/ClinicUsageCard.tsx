@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+﻿import { Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -7,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicResponse } from "@/features/clinics";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 

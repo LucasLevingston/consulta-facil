@@ -1,4 +1,4 @@
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+﻿import type { ProfessionalResponse } from "@/features/professionals";
 
 export interface DoctorCardProps {
 	doctor: ProfessionalResponse;

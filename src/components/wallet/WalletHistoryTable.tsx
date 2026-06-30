@@ -1,4 +1,4 @@
-import {
+﻿import {
 	Table,
 	TableBody,
 	TableCell,
@@ -6,7 +6,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { WalletTransactionType } from "@/lib/schemas/billing/wallet.schema";
+import type { WalletTransactionType } from "@/features/billing";
 import type { WalletHistoryTableProps } from "./WalletHistoryTable.types";
 
 const TYPE_LABELS: Record<WalletTransactionType, string> = {

@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
+import type { DependentCardProps } from "./DependentCard.types";
 
 const RELATIONSHIP_LABELS: Record<string, string> = {
 	CHILD: "Filho(a)",
@@ -29,19 +29,12 @@ function calcAge(birthDate?: string | null) {
 	return m < 0 || (m === 0 && now.getDate() < birth.getDate()) ? age - 1 : age;
 }
 
-interface Props {
-	dependent: DependentResponse;
-	onEdit: (dep: DependentResponse) => void;
-	onDelete: (id: string) => void;
-	deleting: boolean;
-}
-
 export function DependentCard({
 	dependent: dep,
 	onEdit,
 	onDelete,
 	deleting,
-}: Props) {
+}: DependentCardProps) {
 	const age = calcAge(dep.birthDate);
 	return (
 		<Card>

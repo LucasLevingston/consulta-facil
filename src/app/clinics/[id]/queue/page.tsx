@@ -8,8 +8,8 @@ import { useMemo } from "react";
 
 import { CheckInQrSection } from "@/components/clinics/queue/CheckInQrSection";
 import { QueueCard } from "@/components/clinics/queue/QueueCard";
+import type { AppointmentResponse } from "@/features/appointments";
 import { useClinicById, useClinicQueue } from "@/features/clinics";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 export default function ClinicQueuePage() {
 	const { id } = useParams<{ id: string }>();

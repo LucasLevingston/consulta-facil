@@ -15,8 +15,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import type { SystemFeeResponse } from "@/features/billing";
 import { useSystemFees, useUpdateSystemFee } from "@/features/billing";
-import type { SystemFeeResponse } from "@/lib/schemas/billing/system-fee.schema";
 
 const PAYMENT_TYPE_LABELS: Record<string, string> = {
 	CONSULTATION: "Consulta",

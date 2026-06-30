@@ -20,14 +20,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { UseLabFiltersReturn } from "@/hooks/use-lab-filters";
 import { ALL } from "@/utils/constants/filter-sentinels";
+import type { LabFiltersProps } from "./LabFilters.types";
 
-interface Props {
-	hook: UseLabFiltersReturn;
-}
-
-export function LabFilters({ hook }: Props) {
+export function LabFilters({ hook }: LabFiltersProps) {
 	const { filterState: fs, location: loc, options, derived, actions } = hook;
 
 	return (

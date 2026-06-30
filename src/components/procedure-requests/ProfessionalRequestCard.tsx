@@ -10,8 +10,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import type { ProcedureRequest } from "@/features/procedure-requests";
 import { useCancelProcedureRequest } from "@/features/procedure-requests";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { StatusBadge } from "./StatusBadge";
 
 export function ProfessionalRequestCard({

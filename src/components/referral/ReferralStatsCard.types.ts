@@ -1,4 +1,4 @@
-import type { ReferralStatsResponse } from "@/lib/schemas/billing/referral.schema";
+﻿import type { ReferralStatsResponse } from "@/features/billing";
 
 export interface ReferralStatsCardProps {
 	stats: ReferralStatsResponse;

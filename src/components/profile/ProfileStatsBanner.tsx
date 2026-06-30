@@ -1,7 +1,7 @@
-import { BadgeCheck, CalendarDays, FileText } from "lucide-react";
+﻿import { BadgeCheck, CalendarDays, FileText } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { AppointmentResponse } from "@/features/appointments";
 
 export function ProfileStatsBanner({
 	appointments,

@@ -27,15 +27,13 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import {
+	DOCUMENT_TYPE_LABELS,
+	type DocumentType,
+	documentTypeSchema,
 	useDeleteDocument,
 	usePatientDocuments,
 	useUploadDocument,
 } from "@/features/patients";
-import {
-	DOCUMENT_TYPE_LABELS,
-	type DocumentType,
-	documentTypeSchema,
-} from "@/lib/schemas/patient/patient-document.schema";
 
 function UploadDialog({
 	open,

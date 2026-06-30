@@ -7,3 +7,8 @@ export { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-paymen
 export { useUpdateService } from "@/hooks/api/services/use-update-service";
 export { professionalSettingsApi } from "@/lib/api/professionals/professional-settings.api";
 export { professionalServicesApi } from "@/lib/api/services/professional-services.api";
+export {
+	type CreateServiceInput,
+	createServiceSchema,
+} from "@/lib/schemas/service/create-service.schema";
+export type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";

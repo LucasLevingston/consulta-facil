@@ -21,24 +21,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
+	type ProfessionalExperienceInput,
+	professionalExperienceSchema,
 	useAddExperience,
 	useUpdateExperience,
 } from "@/features/professionals";
-import {
-	type ProfessionalExperienceInput,
-	professionalExperienceSchema,
-} from "@/lib/schemas/doctor/professional-experience.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { ExperienceDialogProps } from "./ExperienceDialog.types";
 
-type ExperienceItem = NonNullable<ProfessionalResponse["experience"]>[number];
-
-interface Props {
-	open: boolean;
-	onClose: () => void;
-	editing?: ExperienceItem;
-}
-
-export function ExperienceDialog({ open, onClose, editing }: Props) {
+export function ExperienceDialog({
+	open,
+	onClose,
+	editing,
+}: ExperienceDialogProps) {
 	const add = useAddExperience();
 	const update = useUpdateExperience();
 

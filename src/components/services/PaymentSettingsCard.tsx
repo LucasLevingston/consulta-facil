@@ -21,14 +21,13 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { useUpdatePaymentSettings } from "@/features/services";
-import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
-import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
-import type { PaymentTiming } from "@/lib/schemas/doctor/payment-timing.schema";
+import type { PaymentMethod, PaymentTiming } from "@/features/professionals";
 import {
 	type UpdatePaymentSettingsInput,
 	updatePaymentSettingsSchema,
-} from "@/lib/schemas/doctor/update-payment-settings.schema";
+} from "@/features/professionals";
+import { useUpdatePaymentSettings } from "@/features/services";
+import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
 
 import { ALL_METHODS } from "@/utils/constants/payment-methods";
 

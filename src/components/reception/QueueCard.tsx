@@ -6,8 +6,8 @@ import { PhoneCall } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { AppointmentResponse } from "@/features/appointments";
 import { useCallPatient } from "@/features/appointments";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 
 export function QueueCard({
 	appointment,

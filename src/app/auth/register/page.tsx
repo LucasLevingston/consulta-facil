@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { RegisterForm } from "@/components/forms/auth/registerForm";
+import type { RegisterInput } from "@/features/auth";
 import { useLogin, useRegister } from "@/features/auth";
-import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
 
 export default function RegisterPage() {
 	const router = useRouter();

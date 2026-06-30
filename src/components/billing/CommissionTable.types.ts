@@ -1,4 +1,4 @@
-import type { ReferralCommissionResponse } from "@/lib/schemas/billing/commission.schema";
+﻿import type { ReferralCommissionResponse } from "@/features/billing";
 
 export interface CommissionTableProps {
 	commissions: ReferralCommissionResponse[];

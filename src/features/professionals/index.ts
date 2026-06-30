@@ -29,3 +29,52 @@ export { professionalApplicationsApi } from "@/lib/api/professionals/professiona
 export { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 export { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 export { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
+export type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
+export type { PaymentTiming } from "@/lib/schemas/doctor/payment-timing.schema";
+export {
+	type ProfessionalCertificateInput,
+	professionalCertificateSchema,
+} from "@/lib/schemas/doctor/professional-certificate.schema";
+export {
+	degreeTypeOptions,
+	type ProfessionalEducationInput,
+	professionalEducationSchema,
+} from "@/lib/schemas/doctor/professional-education.schema";
+export {
+	type ProfessionalExperienceInput,
+	professionalExperienceSchema,
+} from "@/lib/schemas/doctor/professional-experience.schema";
+export type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
+export type {
+	DoctorResponse,
+	ProfessionalResponse,
+} from "@/lib/schemas/doctor/professional-response.schema";
+export {
+	type UpdateAddressInput,
+	updateAddressSchema,
+} from "@/lib/schemas/doctor/update-address.schema";
+export {
+	type UpdateBioInput,
+	updateBioSchema,
+} from "@/lib/schemas/doctor/update-bio.schema";
+export {
+	councilTypeOptions,
+	type UpdateCouncilInput,
+	updateCouncilSchema,
+} from "@/lib/schemas/doctor/update-council.schema";
+export {
+	type UpdatePaymentSettingsInput,
+	updatePaymentSettingsSchema,
+} from "@/lib/schemas/doctor/update-payment-settings.schema";
+export {
+	type UpdateSocialLinksInput,
+	updateSocialLinksSchema,
+} from "@/lib/schemas/doctor/update-social-links.schema";
+export {
+	type ProfessionalType,
+	professionalTypeSchema,
+} from "@/lib/schemas/professional/professional-type.schema";
+export {
+	type Specialty,
+	specialtySchema,
+} from "@/lib/schemas/professional/specialty.schema";

@@ -18,13 +18,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import type { ExamRequestResponse } from "@/features/exams";
 import {
 	useCancelExamScheduling,
 	useReviewExam,
 	useUploadExamResult,
 } from "@/features/exams";
-import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
+import type { ExamListItemProps } from "./ExamListItem.types";
 
 const STATUS_CONFIG: Record<
 	ExamRequestResponse["status"],
@@ -36,13 +37,11 @@ const STATUS_CONFIG: Record<
 	REVIEWED: { label: "Analisado", variant: "outline" },
 };
 
-interface Props {
-	exam: ExamRequestResponse;
-	isPatient: boolean;
-	isProfessional: boolean;
-}
-
-export function ExamListItem({ exam, isPatient, isProfessional }: Props) {
+export function ExamListItem({
+	exam,
+	isPatient,
+	isProfessional,
+}: ExamListItemProps) {
 	const { mutateAsync: upload } = useUploadExamResult();
 	const { mutateAsync: review } = useReviewExam();
 	const { mutateAsync: cancelScheduling, isPending: cancelling } =

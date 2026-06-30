@@ -1,9 +1,9 @@
-import { Building2, MapPin, Monitor, Phone } from "lucide-react";
+﻿import { Building2, MapPin, Monitor, Phone } from "lucide-react";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+import type { ClinicResponse } from "@/features/clinics";
 
 export function ClinicDetailHeader({
 	clinic,

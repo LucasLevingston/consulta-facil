@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { Banknote, CreditCard, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
+import type { PaymentMethod } from "@/features/professionals";
 import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
-import type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
 import type { PaymentStepProps } from "./PaymentStep.types";
 
 export function PaymentStep({

@@ -1,4 +1,4 @@
-import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+﻿import type { ExamRequestResponse } from "@/features/exams";
 
 export interface ExamCardProps {
 	exam: ExamRequestResponse;

@@ -1,4 +1,4 @@
-import type { WalletResponse } from "@/lib/schemas/billing/wallet.schema";
+﻿import type { WalletResponse } from "@/features/billing";
 
 export interface WalletCardProps {
 	wallet?: WalletResponse;

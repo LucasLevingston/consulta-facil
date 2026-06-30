@@ -6,3 +6,4 @@ export { useMarkAsRead } from "@/hooks/api/notifications/use-mark-as-read";
 export { useNotifications } from "@/hooks/api/notifications/use-notifications";
 export { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
 export { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
+export type { NotificationResponse } from "@/lib/schemas/notification/notification.schema";

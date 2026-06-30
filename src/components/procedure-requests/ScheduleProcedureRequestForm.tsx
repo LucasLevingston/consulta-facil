@@ -13,11 +13,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useScheduleProcedureRequest } from "@/features/procedure-requests";
 import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
+	useScheduleProcedureRequest,
+} from "@/features/procedure-requests";
 
 export function ScheduleProcedureRequestForm({
 	requestId,

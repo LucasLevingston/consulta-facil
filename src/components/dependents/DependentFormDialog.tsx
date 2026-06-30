@@ -26,12 +26,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useCreateDependent, useUpdateDependent } from "@/features/dependents";
 import {
 	type CreateDependentInput,
 	createDependentSchema,
-} from "@/lib/schemas/dependent/create-dependent.schema";
-import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
+	useCreateDependent,
+	useUpdateDependent,
+} from "@/features/dependents";
+import type { DependentFormDialogProps } from "./DependentFormDialog.types";
 
 const RELATIONSHIP_LABELS: Record<string, string> = {
 	CHILD: "Filho(a)",
@@ -47,13 +48,11 @@ const GENDER_LABELS: Record<string, string> = {
 	OTHER: "Outro",
 };
 
-interface Props {
-	open: boolean;
-	onClose: () => void;
-	editing?: DependentResponse | null;
-}
-
-export function DependentFormDialog({ open, onClose, editing }: Props) {
+export function DependentFormDialog({
+	open,
+	onClose,
+	editing,
+}: DependentFormDialogProps) {
 	const create = useCreateDependent();
 	const update = useUpdateDependent();
 

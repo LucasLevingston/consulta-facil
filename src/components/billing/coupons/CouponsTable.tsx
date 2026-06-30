@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,7 +9,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { CouponResponse } from "@/lib/schemas/billing/coupon.schema";
+import type { CouponsTableProps } from "./CouponsTable.types";
 import { EditCouponDialog } from "./EditCouponDialog";
 
 const brl = (n: number) =>
@@ -32,11 +32,7 @@ const STATUS_VARIANTS: Record<
 	EXPIRED: "destructive",
 };
 
-interface Props {
-	coupons: CouponResponse[];
-}
-
-export function CouponsTable({ coupons }: Props) {
+export function CouponsTable({ coupons }: CouponsTableProps) {
 	return (
 		<Table>
 			<TableHeader>

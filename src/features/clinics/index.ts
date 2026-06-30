@@ -14,3 +14,12 @@ export { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
 export { clinicQueueApi } from "@/lib/api/clinics/clinic-queue.api";
 export { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
 export { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+export type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
+export {
+	type CreateClinicInput,
+	createClinicSchema,
+} from "@/lib/schemas/clinic/create-clinic.schema";
+export {
+	type InviteReceptionistInput,
+	inviteReceptionistSchema,
+} from "@/lib/schemas/clinic/invite-receptionist.schema";

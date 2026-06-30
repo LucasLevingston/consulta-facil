@@ -15,12 +15,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useProfessionalPatients } from "@/features/patients";
-import { useCreateProcedureRequest } from "@/features/procedure-requests";
-import { useGetProfessionalServices } from "@/features/services";
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request/create-procedure-request.schema";
+	useCreateProcedureRequest,
+} from "@/features/procedure-requests";
+import { useGetProfessionalServices } from "@/features/services";
 
 export function CreateProcedureRequestForm({
 	professionalId,

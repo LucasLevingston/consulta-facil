@@ -20,26 +20,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+	type ProfessionalCertificateInput,
+	professionalCertificateSchema,
 	useAddCertificate,
 	useUpdateCertificate,
 } from "@/features/professionals";
-import {
-	type ProfessionalCertificateInput,
-	professionalCertificateSchema,
-} from "@/lib/schemas/doctor/professional-certificate.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { CertificateDialogProps } from "./CertificateDialog.types";
 
-type CertificateItem = NonNullable<
-	ProfessionalResponse["certificates"]
->[number];
-
-interface Props {
-	open: boolean;
-	onClose: () => void;
-	editing?: CertificateItem;
-}
-
-export function CertificateDialog({ open, onClose, editing }: Props) {
+export function CertificateDialog({
+	open,
+	onClose,
+	editing,
+}: CertificateDialogProps) {
 	const add = useAddCertificate();
 	const update = useUpdateCertificate();
 

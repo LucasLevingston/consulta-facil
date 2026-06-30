@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	Calendar,
@@ -14,7 +14,7 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ExamLabResponse } from "@/lib/schemas/examLab/exam-lab-response.schema";
+import type { ExamLabResponse } from "@/features/exams";
 import { cn } from "@/lib/utils/cn";
 
 import { SlotPickerDialog } from "./SlotPickerDialog";

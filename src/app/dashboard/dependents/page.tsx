@@ -8,8 +8,8 @@ import { DependentCard } from "@/components/dependents/DependentCard";
 import { DependentFormDialog } from "@/components/dependents/DependentFormDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import type { DependentResponse } from "@/features/dependents";
 import { useDeleteDependent, useMyDependents } from "@/features/dependents";
-import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
 
 export default function DependentsPage() {
 	const { data: dependents = [], isLoading } = useMyDependents();
