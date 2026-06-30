@@ -22,7 +22,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuthStore } from "@/store/auth.store";
+import { useAuthStore } from "@/features/auth";
 import type { HeaderDropdownProps } from "./header-dropdown.types";
 
 export function HeaderDropdown({ user }: HeaderDropdownProps) {

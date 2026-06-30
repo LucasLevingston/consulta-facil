@@ -38,10 +38,9 @@ import {
 	SidebarSeparator,
 } from "@/components/ui/sidebar";
 import "@/lib/nav/load-nav";
+import { useAuthStore, useUserStore } from "@/features/auth";
 import type { UserRole } from "@/lib/nav/nav-registry";
 import { getNavGroupsForRole } from "@/lib/nav/nav-registry";
-import { useAuthStore } from "@/store/auth.store";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function AppSidebar() {
 	const [mounted, setMounted] = React.useState(false);

@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useUserStore } from "@/features/auth";
 import type { MessageResponse } from "@/features/messaging";
 import { useConversationHistory, useMarkAsRead } from "@/features/messaging";
 import { useChat } from "@/hooks/use-chat";
 import { cn } from "@/lib/utils/cn";
-import { useUserStore } from "@/store/useUserStore";
 import type { ChatThreadProps } from "./ChatThread.types";
 
 export function ChatThread({ conversation }: ChatThreadProps) {

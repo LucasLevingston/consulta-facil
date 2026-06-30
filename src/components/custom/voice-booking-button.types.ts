@@ -1,4 +1,4 @@
-import type { VoiceBookingResult } from "@/lib/types/ai";
+import type { VoiceBookingResult } from "@/features/appointments";
 
 export interface VoiceBookingButtonProps {
 	onResult: (result: VoiceBookingResult) => void;

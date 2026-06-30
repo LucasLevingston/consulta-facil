@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { ProfileAppointmentStats } from "@/components/profile/ProfileAppointmentStats";
 import { ProfileHero } from "@/components/profile/ProfileHero";
@@ -11,10 +11,10 @@ import {
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
 import { useMyProfile } from "@/features/patients";
 import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function ProfilePage() {
 	const { user } = useUserStore();

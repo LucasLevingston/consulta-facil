@@ -4,8 +4,8 @@ import { Camera, Loader2 } from "lucide-react";
 import { useRef } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserStore } from "@/features/auth";
 import { useAvatarUpload } from "@/hooks/use-avatar-upload";
-import { useUserStore } from "@/store/useUserStore";
 import type { AvatarUploadProps } from "./avatar-upload.types";
 
 const sizeMap = {

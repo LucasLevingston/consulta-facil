@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Calculator, Trophy } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -6,9 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useFeeConfig } from "@/features/billing";
-import { PAYMENT_METHOD_LABELS } from "@/lib/constants/fee-payment-method-labels";
-import type { FeePaymentMethod } from "@/lib/types/fee-payment-method";
+import type { FeePaymentMethod } from "@/features/billing";
+import { FEE_PAYMENT_METHOD_LABELS, useFeeConfig } from "@/features/billing";
 import { calculateFees } from "@/lib/utils/calculate-fees";
 import { formatBRL } from "@/utils/format-brl";
 
@@ -101,7 +100,7 @@ export function FeeCalculator() {
 												{isBest && (
 													<Trophy className="h-3.5 w-3.5 text-green-500 shrink-0" />
 												)}
-												{PAYMENT_METHOD_LABELS[
+												{FEE_PAYMENT_METHOD_LABELS[
 													row.paymentMethod as FeePaymentMethod
 												] ?? row.paymentMethod}
 											</td>

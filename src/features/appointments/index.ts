@@ -44,3 +44,7 @@ export {
 	type RescheduleAppointmentInput,
 	rescheduleAppointmentSchema,
 } from "@/lib/schemas/appointment/reschedule-appointment.schema";
+export type {
+	AnamnesisMessage,
+	VoiceBookingResult,
+} from "@/lib/types/ai";

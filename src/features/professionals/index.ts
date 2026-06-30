@@ -29,6 +29,7 @@ export { professionalApplicationsApi } from "@/lib/api/professionals/professiona
 export { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 export { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 export { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
+export { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
 export type { PaymentMethod } from "@/lib/schemas/doctor/payment-method.schema";
 export type { PaymentTiming } from "@/lib/schemas/doctor/payment-timing.schema";
 export {

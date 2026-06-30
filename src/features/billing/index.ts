@@ -49,6 +49,7 @@ export {
 	useUserWallet,
 	useUserWalletTransactions,
 } from "@/hooks/api/billing/use-wallet";
+export { PAYMENT_METHOD_LABELS as FEE_PAYMENT_METHOD_LABELS } from "@/lib/constants/fee-payment-method-labels";
 export {
 	type BillingSettingsResponse,
 	type UpdateBillingSettingsValues,
@@ -83,3 +84,4 @@ export type {
 	WalletTransactionResponse,
 	WalletTransactionType,
 } from "@/lib/schemas/billing/wallet.schema";
+export type { FeePaymentMethod } from "@/lib/types/fee-payment-method";

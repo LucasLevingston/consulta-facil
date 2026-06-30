@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Settings } from "lucide-react";
 
@@ -24,9 +24,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { useUserStore } from "@/features/auth";
 import { useApplicationStatus } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function SettingsPage() {
 	const { user } = useUserStore();

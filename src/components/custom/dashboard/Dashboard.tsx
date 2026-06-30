@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
 	ArrowRight,
@@ -17,8 +17,8 @@ import {
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
 import { useMyProfessionalProfile } from "@/features/professionals";
-import { useUserStore } from "@/store/useUserStore";
 import { adminCards } from "./admin-cards";
 import { AppointmentsList } from "./appointments-list";
 import type { DashboardProps } from "./Dashboard.types";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Dashboard } from "@/components/custom/dashboard/Dashboard";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/features/auth";
 
 export default function DashboardPage() {
 	const { user } = useUserStore();

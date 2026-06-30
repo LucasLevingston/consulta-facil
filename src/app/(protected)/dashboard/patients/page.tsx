@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -20,13 +20,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useUserStore } from "@/features/auth";
 import {
 	useAllAdminPatients,
 	useProfessionalPatients,
 } from "@/features/patients";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 

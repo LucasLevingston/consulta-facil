@@ -9,7 +9,7 @@ import { AppointmentCheckInCard } from "@/components/clinics/checkin/Appointment
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePatientAppointments } from "@/features/appointments";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/features/auth";
 
 export default function ClinicCheckInPage() {
 	const { id } = useParams<{ id: string }>();

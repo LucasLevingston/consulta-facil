@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/form";
 import type { PaymentMethod, PaymentTiming } from "@/features/professionals";
 import {
+	PAYMENT_METHOD_LABELS,
 	type UpdatePaymentSettingsInput,
 	updatePaymentSettingsSchema,
 } from "@/features/professionals";
 import { useUpdatePaymentSettings } from "@/features/services";
-import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
 
 import { ALL_METHODS } from "@/utils/constants/payment-methods";
 

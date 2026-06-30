@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { PermissionKey } from "@/lib/permission-key";
+import type { PermissionKey } from "@/features/auth";
 
 export interface AbacGuardProps {
 	permission: PermissionKey;

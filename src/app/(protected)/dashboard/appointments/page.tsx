@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { CalendarDays } from "lucide-react";
 import { Suspense } from "react";
@@ -10,10 +10,10 @@ import {
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
 import { useMyProfessionalProfile } from "@/features/professionals";
 import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function AppointmentsPage() {
 	const { user } = useUserStore();

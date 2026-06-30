@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Star } from "lucide-react";
 import { useState } from "react";
@@ -18,8 +18,8 @@ import {
 	useCompleteAppointment,
 	useConfirmAppointment,
 } from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
 import { usePermission } from "@/hooks/use-permission";
-import { useUserStore } from "@/store/useUserStore";
 import type { AppointmentActionsProps } from "./AppointmentActions.types";
 
 export function AppointmentActions({ appointment }: AppointmentActionsProps) {

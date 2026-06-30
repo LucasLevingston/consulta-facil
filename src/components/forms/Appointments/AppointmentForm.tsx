@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Stethoscope } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
@@ -12,9 +12,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import type { AppointmentResponse } from "@/features/appointments";
+import type {
+	AppointmentResponse,
+	VoiceBookingResult,
+} from "@/features/appointments";
 import { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
-import type { VoiceBookingResult } from "@/lib/types/ai";
 import { ServiceSelector } from "./ServiceSelector";
 import { DateTimeStep } from "./steps/DateTimeStep";
 import { DetailsStep } from "./steps/DetailsStep";

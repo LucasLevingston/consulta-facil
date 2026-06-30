@@ -4,7 +4,7 @@ import { Banknote, CreditCard, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import type { PaymentMethod } from "@/features/professionals";
-import { PAYMENT_METHOD_LABELS } from "@/lib/constants/payment-method-labels";
+import { PAYMENT_METHOD_LABELS } from "@/features/professionals";
 import type { PaymentStepProps } from "./PaymentStep.types";
 
 export function PaymentStep({

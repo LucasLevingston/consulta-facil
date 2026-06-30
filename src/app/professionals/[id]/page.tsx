@@ -18,13 +18,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useUserStore } from "@/features/auth";
 import { useStartConversation } from "@/features/messaging";
 import {
 	useProfessional,
 	useProfessionalRatings,
 } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 export default function DoctorProfilePage() {
