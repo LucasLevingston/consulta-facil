@@ -7,8 +7,8 @@ import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
+import { usePermission } from "@/features/auth";
 import { useMyProfessionalProfile } from "@/features/professionals";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function FinancialPage() {

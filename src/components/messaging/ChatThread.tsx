@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUserStore } from "@/features/auth";
 import type { MessageResponse } from "@/features/messaging";
-import { useConversationHistory, useMarkAsRead } from "@/features/messaging";
-import { useChat } from "@/hooks/use-chat";
+import {
+	useChat,
+	useConversationHistory,
+	useMarkAsRead,
+} from "@/features/messaging";
 import { cn } from "@/lib/utils/cn";
 import type { ChatThreadProps } from "./ChatThread.types";
 

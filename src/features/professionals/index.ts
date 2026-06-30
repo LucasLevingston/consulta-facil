@@ -24,6 +24,8 @@ export { useUpdateEducation } from "@/hooks/api/professionals/use-update-educati
 export { useUpdateExperience } from "@/hooks/api/professionals/use-update-experience";
 export { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 export { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
+export type { UseProfessionalsFiltersReturn } from "@/hooks/use-professionals-filters";
+export { useProfessionalsFilters } from "@/hooks/use-professionals-filters";
 export { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 export { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 export { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";

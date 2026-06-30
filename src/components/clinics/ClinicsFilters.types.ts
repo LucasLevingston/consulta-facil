@@ -1,4 +1,4 @@
-import type { UseClinicsFiltersReturn } from "@/hooks/use-clinics-filters";
+import type { UseClinicsFiltersReturn } from "@/features/clinics";
 
 export interface ClinicsFiltersProps {
 	hook: UseClinicsFiltersReturn;

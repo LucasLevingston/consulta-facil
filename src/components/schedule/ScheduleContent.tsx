@@ -1,8 +1,8 @@
 ﻿"use client";
 
 import { ScheduleEditor } from "@/components/schedule/ScheduleEditor";
+import { usePermission } from "@/features/auth";
 import { useMySchedule } from "@/features/schedule";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function ScheduleContent() {

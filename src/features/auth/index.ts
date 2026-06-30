@@ -6,6 +6,8 @@ export { useMagicLinkRequest } from "@/hooks/api/auth/use-magic-link-request";
 export { useMagicLinkVerify } from "@/hooks/api/auth/use-magic-link-verify";
 export { useRegister } from "@/hooks/api/auth/use-register";
 export { useResetPassword } from "@/hooks/api/auth/use-reset-password";
+export { useGoogleGIS } from "@/hooks/use-google-gis";
+export { usePermission } from "@/hooks/use-permission";
 export type { PermissionKey } from "@/lib/permission-key";
 export {
 	type EmailInput,

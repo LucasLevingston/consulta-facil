@@ -8,8 +8,7 @@ import { toast } from "sonner";
 import LoginForm from "@/components/forms/auth/LoginForm";
 import SocialAuthButtons from "@/components/forms/auth/SocialAuthButtons";
 import type { LoginInput } from "@/features/auth";
-import { useGoogleLogin, useLogin } from "@/features/auth";
-import { useGoogleGIS } from "@/hooks/use-google-gis";
+import { useGoogleGIS, useGoogleLogin, useLogin } from "@/features/auth";
 
 export default function LoginPage() {
 	const router = useRouter();

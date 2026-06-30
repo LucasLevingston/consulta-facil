@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
+import { usePermission } from "@/features/auth";
 import { usePendingApplications } from "@/features/professionals";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function AdminRequestsPage() {

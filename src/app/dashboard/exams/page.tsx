@@ -5,9 +5,9 @@ import { useDeferredValue, useState } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { ExamListItem } from "@/components/exams/ExamListItem";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePermission } from "@/features/auth";
 import type { ExamRequestStatus } from "@/features/exams";
 import { useMyExams } from "@/features/exams";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 const TABS = [

@@ -3,7 +3,7 @@
 import { Loader2, Mic, MicOff, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useVoiceBooking } from "@/hooks/use-voice-booking";
+import { useVoiceBooking } from "@/features/appointments";
 import { cn } from "@/lib/utils/cn";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { VoiceBookingButtonProps } from "./voice-booking-button.types";

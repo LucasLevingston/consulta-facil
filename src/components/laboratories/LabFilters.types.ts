@@ -1,4 +1,4 @@
-import type { UseLabFiltersReturn } from "@/hooks/use-lab-filters";
+import type { UseLabFiltersReturn } from "@/features/exams";
 
 export interface LabFiltersProps {
 	hook: UseLabFiltersReturn;

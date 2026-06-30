@@ -11,7 +11,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
+import { useAppointmentFormSetup } from "@/features/appointments";
 import type { AppointmentFormProps } from "./AppointmentForm.types";
 import { ServiceSelector } from "./ServiceSelector";
 import { DateTimeStep } from "./steps/DateTimeStep";

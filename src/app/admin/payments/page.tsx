@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import type { AppointmentPaymentStatus } from "@/features/appointments";
 import { useAllAdminAppointments } from "@/features/appointments";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 

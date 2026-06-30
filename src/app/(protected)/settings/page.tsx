@@ -24,9 +24,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useUserStore } from "@/features/auth";
+import { usePermission, useUserStore } from "@/features/auth";
 import { useApplicationStatus } from "@/features/professionals";
-import { usePermission } from "@/hooks/use-permission";
 
 export default function SettingsPage() {
 	const { user } = useUserStore();

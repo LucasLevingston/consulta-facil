@@ -23,7 +23,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useProfessionalsFilters } from "@/hooks/use-professionals-filters";
+import { useProfessionalsFilters } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function ProfessionalsContent() {

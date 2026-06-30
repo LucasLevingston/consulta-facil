@@ -10,9 +10,8 @@ import {
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
-import { useUserStore } from "@/features/auth";
+import { usePermission, useUserStore } from "@/features/auth";
 import { useMyProfessionalProfile } from "@/features/professionals";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function AppointmentsPage() {

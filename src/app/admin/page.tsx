@@ -8,8 +8,7 @@ import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import { PendingApplications } from "@/components/admin/PendingApplications";
 import PageHeader from "@/components/custom/page-header";
 import { useProfessionalAppointments } from "@/features/appointments";
-import { useAuthStore, useUserStore } from "@/features/auth";
-import { usePermission } from "@/hooks/use-permission";
+import { useAuthStore, usePermission, useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function AdminPage() {

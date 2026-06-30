@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { useAnamnesisChat } from "@/hooks/use-anamnesis-chat";
+import { useAnamnesisChat } from "@/features/appointments";
 import type { AnamnesisAIChatProps } from "./AnamnesisAIChat.types";
 
 export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {

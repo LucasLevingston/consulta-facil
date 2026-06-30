@@ -18,8 +18,7 @@ import {
 	useCompleteAppointment,
 	useConfirmAppointment,
 } from "@/features/appointments";
-import { useUserStore } from "@/features/auth";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission, useUserStore } from "@/features/auth";
 import type { AppointmentActionsProps } from "./AppointmentActions.types";
 
 export function AppointmentActions({ appointment }: AppointmentActionsProps) {

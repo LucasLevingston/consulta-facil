@@ -7,7 +7,7 @@ import PageHeader from "@/components/custom/page-header";
 import { LabCard } from "@/components/laboratories/LabCard";
 import { LabFilters } from "@/components/laboratories/LabFilters";
 import { Button } from "@/components/ui/button";
-import { useLabFilters } from "@/hooks/use-lab-filters";
+import { useLabFilters } from "@/features/exams";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 function LaboratoriesPageContent() {

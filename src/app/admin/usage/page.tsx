@@ -12,8 +12,8 @@ import { useEffect, useMemo } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAllAdminAppointments } from "@/features/appointments";
+import { usePermission } from "@/features/auth";
 import { useAllUsers } from "@/features/users";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 function StatCard({

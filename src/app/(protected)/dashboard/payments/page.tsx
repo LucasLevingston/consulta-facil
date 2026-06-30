@@ -22,8 +22,8 @@ import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
+import { usePermission } from "@/features/auth";
 import { useMyProfessionalProfile } from "@/features/professionals";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 

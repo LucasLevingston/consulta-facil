@@ -20,12 +20,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUserStore } from "@/features/auth";
+import { usePermission, useUserStore } from "@/features/auth";
 import {
 	useAllAdminPatients,
 	useProfessionalPatients,
 } from "@/features/patients";
-import { usePermission } from "@/hooks/use-permission";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
