@@ -10,15 +10,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ProcedureRequest } from "@/features/procedure-requests";
 import { useCancelProcedureRequest } from "@/features/procedure-requests";
+import type { ProfessionalRequestCardProps } from "./ProfessionalRequestCard.types";
 import { StatusBadge } from "./StatusBadge";
 
 export function ProfessionalRequestCard({
 	request,
-}: {
-	request: ProcedureRequest;
-}) {
+}: ProfessionalRequestCardProps) {
 	const { mutateAsync: cancel, isPending } = useCancelProcedureRequest();
 
 	async function handleCancel() {

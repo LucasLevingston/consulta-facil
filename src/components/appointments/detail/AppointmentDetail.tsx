@@ -2,15 +2,15 @@
 
 import { XCircle } from "lucide-react";
 import { useState } from "react";
+
 import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
 import { useRoomToken } from "@/features/video";
 import { usePermission } from "@/hooks/use-permission";
-
 import { AnamnesisSection } from "./AnamnesisSection";
+import type { AppointmentDetailProps } from "./AppointmentDetail.types";
 import { AppointmentHeader } from "./AppointmentHeader";
 import { AppointmentPaymentSection } from "./AppointmentPaymentSection";
 import { AppointmentProfessionalCard } from "./AppointmentProfessionalCard";
@@ -18,11 +18,7 @@ import { AppointmentRatingSection } from "./AppointmentRatingSection";
 import { AppointmentScheduleCard } from "./AppointmentScheduleCard";
 import { ProntuarioSection } from "./ProntuarioSection";
 
-export function AppointmentDetail({
-	appointment,
-}: {
-	appointment: AppointmentResponse;
-}) {
+export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 	const { user } = useUserStore();
 	const { can } = usePermission();
 	const [videoActive, setVideoActive] = useState(false);

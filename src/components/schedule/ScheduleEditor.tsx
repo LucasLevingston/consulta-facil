@@ -4,19 +4,18 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import type {
-	ProfessionalScheduleItem,
-	ProfessionalScheduleResponse,
-} from "@/features/schedule";
 import {
 	DAYS_OF_WEEK,
 	type DayOfWeek,
+	type ProfessionalScheduleItem,
+	type ProfessionalScheduleResponse,
 	useSaveMySchedule,
 } from "@/features/schedule";
 import { DEFAULT_BREAK } from "@/utils/constants/default-break";
 import { DEFAULT_DURATION } from "@/utils/constants/default-duration";
 
 import { ScheduleDayRow } from "./ScheduleDayRow";
+import type { ScheduleEditorProps } from "./ScheduleEditor.types";
 import { ScheduleGlobalSettings } from "./ScheduleGlobalSettings";
 
 function buildDefaultRow(
@@ -44,11 +43,7 @@ function buildDefaultRow(
 	};
 }
 
-export function ScheduleEditor({
-	savedSchedule,
-}: {
-	savedSchedule: ProfessionalScheduleResponse[];
-}) {
+export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 	const [rows, setRows] = useState<ProfessionalScheduleItem[]>(() =>
 		DAYS_OF_WEEK.map((day) => {
 			const saved = savedSchedule.find((s) => s.dayOfWeek === day);

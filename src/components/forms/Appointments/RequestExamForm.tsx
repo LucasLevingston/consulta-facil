@@ -19,7 +19,9 @@ import {
 } from "@/features/exams";
 import { EXAM_TYPE_OPTIONS } from "@/utils/constants/exam-types";
 
-export function RequestExamForm({ appointmentId }: { appointmentId: string }) {
+import type { RequestExamFormProps } from "./RequestExamForm.types";
+
+export function RequestExamForm({ appointmentId }: RequestExamFormProps) {
 	const { mutateAsync: create } = useCreateExamRequest(appointmentId);
 	const [open, setOpen] = useState(false);
 

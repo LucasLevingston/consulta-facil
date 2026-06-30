@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { ClinicResponse } from "@/features/clinics";
+import type { ClinicDetailHeaderProps } from "./ClinicDetailHeader.types";
 
 export function ClinicDetailHeader({
 	clinic,
@@ -11,13 +11,7 @@ export function ClinicDetailHeader({
 	isOwner,
 	isAdmin,
 	hasMembership,
-}: {
-	clinic: ClinicResponse;
-	clinicId: string;
-	isOwner: boolean;
-	isAdmin: boolean;
-	hasMembership: boolean;
-}) {
+}: ClinicDetailHeaderProps) {
 	return (
 		<div className="space-y-4">
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

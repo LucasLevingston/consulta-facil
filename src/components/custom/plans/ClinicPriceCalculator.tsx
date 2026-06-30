@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { BASE_PRICE } from "@/utils/constants/base-price";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import type { ClinicPriceCalculatorProps } from "./ClinicPriceCalculator.types";
 
 function calcMonthlyPrice(totalProfessionals: number): number {
 	const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);
@@ -30,9 +31,7 @@ function fmtBRL(value: number) {
 
 export function ClinicPriceCalculator({
 	initialProfessionals,
-}: {
-	initialProfessionals: number;
-}) {
+}: ClinicPriceCalculatorProps) {
 	const [calcProfessionals, setCalcProfessionals] = useState(
 		Math.max(initialProfessionals, 1),
 	);

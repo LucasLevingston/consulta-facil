@@ -18,16 +18,13 @@ import {
 } from "@/components/ui/dialog";
 import type { AnamnesisInput } from "@/features/appointments";
 import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
+import type { AnamnesisSectionProps } from "./AnamnesisSection.types";
 
 export function AnamnesisSection({
 	appointmentId,
 	canEdit,
 	showAiHelper,
-}: {
-	appointmentId: string;
-	canEdit: boolean;
-	showAiHelper?: boolean;
-}) {
+}: AnamnesisSectionProps) {
 	const { data: anamnesis, isLoading } = useAnamnesis(appointmentId);
 	const { mutateAsync: save, isPending } = useSaveAnamnesis(appointmentId);
 

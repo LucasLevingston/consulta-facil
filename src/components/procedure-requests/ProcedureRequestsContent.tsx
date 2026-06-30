@@ -4,13 +4,12 @@ import { useGetMyProcedureRequests } from "@/features/procedure-requests";
 import { useApplicationStatus } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { PatientView } from "./PatientView";
+import type { ProcedureRequestsContentProps } from "./ProcedureRequestsContent.types";
 import { ProfessionalView } from "./ProfessionalView";
 
 export function ProcedureRequestsContent({
 	isProfessional,
-}: {
-	isProfessional: boolean;
-}) {
+}: ProcedureRequestsContentProps) {
 	const { data: requests = [], isLoading, error } = useGetMyProcedureRequests();
 	const profileQuery = useApplicationStatus();
 

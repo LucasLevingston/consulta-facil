@@ -6,14 +6,16 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { DoctorResponse } from "@/features/professionals";
 import {
 	useApproveApplication,
 	useRejectApplication,
 } from "@/features/professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { PendingApplicationCardProps } from "./PendingApplicationCard.types";
 
-export function PendingApplicationCard({ doctor }: { doctor: DoctorResponse }) {
+export function PendingApplicationCard({
+	doctor,
+}: PendingApplicationCardProps) {
 	const { mutateAsync: approve, isPending: isApproving } =
 		useApproveApplication();
 	const { mutateAsync: reject, isPending: isRejecting } =

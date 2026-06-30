@@ -1,13 +1,9 @@
 ﻿import { CheckCircle2, CreditCard, TrendingUp, XCircle } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/features/appointments";
+import type { PatientScoreCardProps } from "./PatientScoreCard.types";
 
-export function PatientScoreCard({
-	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+export function PatientScoreCard({ appointments }: PatientScoreCardProps) {
 	const completed = appointments.filter((a) => a.status === "COMPLETED").length;
 	const canceled = appointments.filter((a) => a.status === "CANCELED").length;
 	const total = appointments.length;

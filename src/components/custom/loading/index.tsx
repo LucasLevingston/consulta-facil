@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils/cn";
+import type { LoadingProps } from "./loading.types";
 
-const Loading = ({ className }: { className?: string }) => {
+const Loading = ({ className }: LoadingProps) => {
 	return (
 		<div
 			className={cn(

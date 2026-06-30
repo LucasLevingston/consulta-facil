@@ -30,6 +30,7 @@ import {
 import { useUpdatePaymentSettings } from "@/features/services";
 
 import { ALL_METHODS } from "@/utils/constants/payment-methods";
+import type { PaymentSettingsCardProps } from "./PaymentSettingsCard.types";
 
 const TIMING_OPTIONS: { value: PaymentTiming; label: string; desc: string }[] =
 	[
@@ -48,10 +49,7 @@ const TIMING_OPTIONS: { value: PaymentTiming; label: string; desc: string }[] =
 export function PaymentSettingsCard({
 	acceptedPaymentMethods,
 	paymentTiming,
-}: {
-	acceptedPaymentMethods: PaymentMethod[];
-	paymentTiming: PaymentTiming | null | undefined;
-}) {
+}: PaymentSettingsCardProps) {
 	const { mutateAsync: updateSettings, isPending } = useUpdatePaymentSettings();
 
 	const form = useForm<UpdatePaymentSettingsInput>({

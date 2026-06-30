@@ -36,14 +36,9 @@ import {
 	useDeleteVaccine,
 	useVaccines,
 } from "@/features/patients";
+import type { VaccineDialogProps } from "./VaccineList.types";
 
-function VaccineDialog({
-	open,
-	onClose,
-}: {
-	open: boolean;
-	onClose: () => void;
-}) {
+function VaccineDialog({ open, onClose }: VaccineDialogProps) {
 	const add = useAddVaccine();
 
 	const form = useForm<PatientVaccineInput>({

@@ -9,10 +9,10 @@ import { ProfileInfoRow } from "@/components/profile/ProfileInfoRow";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { UserResponse } from "@/features/auth";
 import { GENDER_LABELS } from "@/utils/constants/gender-labels";
+import type { ProfilePersonalInfoProps } from "./ProfilePersonalInfo.types";
 
-export function ProfilePersonalInfo({ user }: { user: UserResponse }) {
+export function ProfilePersonalInfo({ user }: ProfilePersonalInfoProps) {
 	return (
 		<Card>
 			<CardHeader className="pb-3">

@@ -21,14 +21,12 @@ import {
 	useCreateProcedureRequest,
 } from "@/features/procedure-requests";
 import { useGetProfessionalServices } from "@/features/services";
+import type { CreateProcedureRequestFormProps } from "./CreateProcedureRequestForm.types";
 
 export function CreateProcedureRequestForm({
 	professionalId,
 	onClose,
-}: {
-	professionalId: string;
-	onClose: () => void;
-}) {
+}: CreateProcedureRequestFormProps) {
 	const { data: services = [] } = useGetProfessionalServices(professionalId);
 	const { data: patientsPage } = useProfessionalPatients(professionalId, {
 		size: 100,

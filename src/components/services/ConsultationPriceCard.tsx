@@ -14,12 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSetConsultationPrice } from "@/features/services";
+import type { ConsultationPriceCardProps } from "./ConsultationPriceCard.types";
 
 export function ConsultationPriceCard({
 	consultationPrice,
-}: {
-	consultationPrice: number | null | undefined;
-}) {
+}: ConsultationPriceCardProps) {
 	const [price, setPrice] = useState(consultationPrice?.toString() ?? "");
 	const { mutateAsync: setPrice_, isPending } = useSetConsultationPrice();
 

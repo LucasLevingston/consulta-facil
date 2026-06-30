@@ -1,13 +1,9 @@
 ﻿"use client";
 
-import type { ProfessionalResponse } from "@/features/professionals";
+import type { DoctorsListProps } from "./DoctorsClientList.types";
 import DoctorCard from "./doctorCard";
 
-export default function DoctorsList({
-	doctors,
-}: {
-	doctors: ProfessionalResponse[];
-}) {
+export default function DoctorsList({ doctors }: DoctorsListProps) {
 	if (doctors.length === 0) {
 		return (
 			<p className="text-center text-muted-foreground py-12">

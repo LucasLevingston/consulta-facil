@@ -34,16 +34,9 @@ import {
 	usePatientDocuments,
 	useUploadDocument,
 } from "@/features/patients";
+import type { UploadDialogProps } from "./DocumentPhotoGrid.types";
 
-function UploadDialog({
-	open,
-	onClose,
-	file,
-}: {
-	open: boolean;
-	onClose: () => void;
-	file: File | null;
-}) {
+function UploadDialog({ open, onClose, file }: UploadDialogProps) {
 	const upload = useUploadDocument();
 	const [docType, setDocType] = useState<DocumentType>("OTHER");
 	const [label, setLabel] = useState("");

@@ -1,16 +1,9 @@
 "use client";
 
 import { formatBRL } from "@/utils/format-brl";
+import type { MonthBarProps } from "./MonthBar.types";
 
-export function MonthBar({
-	label,
-	value,
-	max,
-}: {
-	label: string;
-	value: number;
-	max: number;
-}) {
+export function MonthBar({ label, value, max }: MonthBarProps) {
 	const pct = max > 0 ? Math.max(4, Math.round((value / max) * 100)) : 4;
 	return (
 		<div className="flex flex-col items-center gap-1">

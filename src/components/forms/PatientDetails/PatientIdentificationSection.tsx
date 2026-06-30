@@ -1,5 +1,3 @@
-import type { UseFormReturn } from "react-hook-form";
-import type { z } from "zod";
 import CustomFormField, {
 	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
@@ -11,15 +9,11 @@ import {
 	FormLabel,
 } from "@/components/ui/form";
 import { IdentificationTypes } from "@/utils/constants/identification-types";
-import type { PatientFormValidation } from "./FormValidation";
-
-type FormValues = z.infer<typeof PatientFormValidation>;
+import type { PatientIdentificationSectionProps } from "./PatientIdentificationSection.types";
 
 export function PatientIdentificationSection({
 	form,
-}: {
-	form: UseFormReturn<FormValues>;
-}) {
+}: PatientIdentificationSectionProps) {
 	return (
 		<section className="space-y-6">
 			<div className="mb-9 space-y-1">

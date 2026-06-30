@@ -6,14 +6,10 @@ import { PhoneCall } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { AppointmentResponse } from "@/features/appointments";
 import { useCallPatient } from "@/features/appointments";
+import type { QueueCardProps } from "./QueueCard.types";
 
-export function QueueCard({
-	appointment,
-}: {
-	appointment: AppointmentResponse;
-}) {
+export function QueueCard({ appointment }: QueueCardProps) {
 	const { mutateAsync: call, isPending } = useCallPatient();
 
 	async function handleCall() {

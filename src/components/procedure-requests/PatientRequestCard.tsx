@@ -18,12 +18,12 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { ProcedureRequest } from "@/features/procedure-requests";
 import { useCancelProcedureRequest } from "@/features/procedure-requests";
+import type { PatientRequestCardProps } from "./PatientRequestCard.types";
 import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 import { StatusBadge } from "./StatusBadge";
 
-export function PatientRequestCard({ request }: { request: ProcedureRequest }) {
+export function PatientRequestCard({ request }: PatientRequestCardProps) {
 	const { mutateAsync: cancel, isPending: canceling } =
 		useCancelProcedureRequest();
 	const [scheduleOpen, setScheduleOpen] = useState(false);

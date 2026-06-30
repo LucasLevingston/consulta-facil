@@ -18,6 +18,7 @@ import {
 	type DayOfWeek,
 	useSaveClinicWorkingHours,
 } from "@/features/schedule";
+import type { ClinicHoursEditorProps } from "./ClinicHoursEditor.types";
 
 function buildDefaultHoursRow(
 	day: DayOfWeek,
@@ -43,10 +44,7 @@ function buildDefaultHoursRow(
 export function ClinicHoursEditor({
 	clinicId,
 	savedHours,
-}: {
-	clinicId: string;
-	savedHours: ClinicWorkingHoursResponse[];
-}) {
+}: ClinicHoursEditorProps) {
 	const [rows, setRows] = useState<ClinicWorkingHoursItem[]>(() =>
 		DAYS_OF_WEEK.map((day) => {
 			const saved = savedHours.find((h) => h.dayOfWeek === day);

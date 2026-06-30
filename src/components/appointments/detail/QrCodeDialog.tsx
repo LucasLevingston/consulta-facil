@@ -1,8 +1,9 @@
 ﻿"use client";
 
 import { useCheckInToken } from "@/features/appointments";
+import type { QrCodeDialogProps } from "./QrCodeDialog.types";
 
-export function QrCodeDialog({ appointmentId }: { appointmentId: string }) {
+export function QrCodeDialog({ appointmentId }: QrCodeDialogProps) {
 	const { data, isLoading } = useCheckInToken(appointmentId);
 
 	if (isLoading)

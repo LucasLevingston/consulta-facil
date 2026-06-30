@@ -1,7 +1,7 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import type { PaymentResultProps } from "./PaymentResult.types";
 
 export function PaymentResult({
 	icon,
@@ -10,14 +10,7 @@ export function PaymentResult({
 	buttonLabel,
 	buttonHref,
 	buttonVariant = "default",
-}: {
-	icon: ReactNode;
-	title: string;
-	description: ReactNode;
-	buttonLabel: string;
-	buttonHref: string;
-	buttonVariant?: "default" | "outline";
-}) {
+}: PaymentResultProps) {
 	return (
 		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-6 text-center">
 			{icon}

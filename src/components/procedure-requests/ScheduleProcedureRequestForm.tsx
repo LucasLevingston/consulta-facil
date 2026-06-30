@@ -18,16 +18,13 @@ import {
 	scheduleProcedureRequestSchema,
 	useScheduleProcedureRequest,
 } from "@/features/procedure-requests";
+import type { ScheduleProcedureRequestFormProps } from "./ScheduleProcedureRequestForm.types";
 
 export function ScheduleProcedureRequestForm({
 	requestId,
 	serviceName,
 	onClose,
-}: {
-	requestId: string;
-	serviceName: string;
-	onClose: () => void;
-}) {
+}: ScheduleProcedureRequestFormProps) {
 	const { mutateAsync: schedule, isPending } = useScheduleProcedureRequest();
 
 	const form = useForm<ScheduleProcedureRequestInput>({

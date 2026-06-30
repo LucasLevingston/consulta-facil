@@ -3,13 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { MedicalRecord } from "@/features/patients";
+import type { PatientMedicalRecordProps } from "./PatientMedicalRecord.types";
 
 export function PatientMedicalRecord({
 	medicalRecord,
-}: {
-	medicalRecord: MedicalRecord;
-}) {
+}: PatientMedicalRecordProps) {
 	const consentCount = [
 		medicalRecord.privacyConsent,
 		medicalRecord.treatmentConsent,

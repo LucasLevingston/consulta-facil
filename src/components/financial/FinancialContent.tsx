@@ -13,17 +13,13 @@ import { useMemo } from "react";
 import { FeeCalculator } from "@/components/custom/fees/FeeCalculator";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/features/appointments";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { formatBRL } from "@/utils/format-brl";
+import type { FinancialContentProps } from "./FinancialContent.types";
 import { MonthBar } from "./MonthBar";
 import { SummaryCard } from "./SummaryCard";
 
-export function FinancialContent({
-	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+export function FinancialContent({ appointments }: FinancialContentProps) {
 	const stats = useMemo(() => {
 		const paid = appointments.filter((a) => a.paymentStatus === "PAID");
 		const pending = appointments.filter(

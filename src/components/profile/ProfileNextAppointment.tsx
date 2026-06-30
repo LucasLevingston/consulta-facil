@@ -4,15 +4,12 @@ import { CalendarDays } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/features/appointments";
+import type { ProfileNextAppointmentProps } from "./ProfileNextAppointment.types";
 
 export function ProfileNextAppointment({
 	appointment,
 	isProfessional,
-}: {
-	appointment: AppointmentResponse;
-	isProfessional: boolean;
-}) {
+}: ProfileNextAppointmentProps) {
 	return (
 		<Card className="border-primary/20 bg-primary/5">
 			<CardContent className="flex items-center gap-4 py-4 px-6">

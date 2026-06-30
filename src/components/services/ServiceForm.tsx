@@ -7,21 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { ProfessionalService } from "@/features/services";
 import {
 	type CreateServiceInput,
 	createServiceSchema,
 	useCreateService,
 	useUpdateService,
 } from "@/features/services";
+import type { ServiceFormProps } from "./ServiceForm.types";
 
-export function ServiceForm({
-	existing,
-	onClose,
-}: {
-	existing?: ProfessionalService;
-	onClose: () => void;
-}) {
+export function ServiceForm({ existing, onClose }: ServiceFormProps) {
 	const { mutateAsync: create, isPending: creating } = useCreateService();
 	const { mutateAsync: update, isPending: updating } = useUpdateService();
 

@@ -19,8 +19,9 @@ import {
 	useInviteReceptionist,
 	useRemoveReceptionist,
 } from "@/features/clinics";
+import type { ReceptionistsSectionProps } from "./ReceptionistsSection.types";
 
-export function ReceptionistsSection({ clinicId }: { clinicId: string }) {
+export function ReceptionistsSection({ clinicId }: ReceptionistsSectionProps) {
 	const { data: receptionists = [], isLoading } =
 		useClinicReceptionists(clinicId);
 	const { mutateAsync: invite } = useInviteReceptionist(clinicId);

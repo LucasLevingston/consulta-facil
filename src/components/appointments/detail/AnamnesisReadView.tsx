@@ -1,13 +1,9 @@
 ﻿"use client";
 
 import { Separator } from "@/components/ui/separator";
-import type { AnamnesisResponse } from "@/features/appointments";
+import type { AnamnesisReadViewProps } from "./AnamnesisReadView.types";
 
-export function AnamnesisReadView({
-	anamnesis,
-}: {
-	anamnesis: AnamnesisResponse;
-}) {
+export function AnamnesisReadView({ anamnesis }: AnamnesisReadViewProps) {
 	const fields: [string, string | undefined][] = [
 		["Queixa principal", anamnesis.chiefComplaint],
 		["Medicamentos em uso", anamnesis.currentMedications],

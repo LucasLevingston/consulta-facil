@@ -10,15 +10,15 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { LocationPicker } from "@/components/custom/map/LocationPicker";
 import { Form } from "@/components/ui/form";
-import type { ClinicResponse } from "@/features/clinics";
 import {
 	type CreateClinicInput,
 	createClinicSchema,
 	useCreateClinic,
 	useUpdateClinic,
 } from "@/features/clinics";
+import type { ClinicFormProps } from "./ClinicForm.types";
 
-export function ClinicForm({ clinic }: { clinic?: ClinicResponse }) {
+export function ClinicForm({ clinic }: ClinicFormProps) {
 	const isEdit = !!clinic;
 	const [lat, setLat] = useState<number | null>(clinic?.latitude ?? null);
 	const [lng, setLng] = useState<number | null>(clinic?.longitude ?? null);

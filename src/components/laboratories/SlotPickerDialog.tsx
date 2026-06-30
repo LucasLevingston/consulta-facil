@@ -22,9 +22,9 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import type { ExamLabResponse } from "@/features/exams";
 import { useAvailableSlots, useScheduleExam } from "@/features/exams";
 import { cn } from "@/lib/utils/cn";
+import type { SlotPickerDialogProps } from "./SlotPickerDialog.types";
 
 function formatTime(time: string) {
 	return time.slice(0, 5);
@@ -35,12 +35,7 @@ export function SlotPickerDialog({
 	examRequestId,
 	open,
 	onClose,
-}: {
-	lab: ExamLabResponse;
-	examRequestId: string | null;
-	open: boolean;
-	onClose: () => void;
-}) {
+}: SlotPickerDialogProps) {
 	const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 	const [selectedTime, setSelectedTime] = useState<string | null>(null);
 	const { mutateAsync: scheduleExam, isPending } = useScheduleExam();

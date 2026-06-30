@@ -14,9 +14,8 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ExamLabResponse } from "@/features/exams";
 import { cn } from "@/lib/utils/cn";
-
+import type { LabCardProps } from "./LabCard.types";
 import { SlotPickerDialog } from "./SlotPickerDialog";
 
 const DAY_LABELS: Record<string, string> = {
@@ -43,13 +42,7 @@ function formatTime(time: string) {
 	return time.slice(0, 5);
 }
 
-export function LabCard({
-	lab,
-	examRequestId,
-}: {
-	lab: ExamLabResponse;
-	examRequestId: string | null;
-}) {
+export function LabCard({ lab, examRequestId }: LabCardProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [showHours, setShowHours] = useState(false);
 

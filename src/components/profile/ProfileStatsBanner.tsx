@@ -1,13 +1,9 @@
 ﻿import { BadgeCheck, CalendarDays, FileText } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/features/appointments";
+import type { ProfileStatsBannerProps } from "./ProfileStatsBanner.types";
 
-export function ProfileStatsBanner({
-	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+export function ProfileStatsBanner({ appointments }: ProfileStatsBannerProps) {
 	const items = [
 		{
 			label: "Consultas",

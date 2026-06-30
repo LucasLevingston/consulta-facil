@@ -1,8 +1,9 @@
 "use client";
 
 import { QrCode } from "lucide-react";
+import type { CheckInQrSectionProps } from "./CheckInQrSection.types";
 
-export function CheckInQrSection({ clinicId }: { clinicId: string }) {
+export function CheckInQrSection({ clinicId }: CheckInQrSectionProps) {
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
 	const url =

@@ -4,16 +4,10 @@ import { Clock, DollarSign, Edit2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { ProfessionalService } from "@/features/services";
 import { useDeactivateService } from "@/features/services";
+import type { ServiceRowProps } from "./ServiceRow.types";
 
-export function ServiceRow({
-	service,
-	onEdit,
-}: {
-	service: ProfessionalService;
-	onEdit: () => void;
-}) {
+export function ServiceRow({ service, onEdit }: ServiceRowProps) {
 	const { mutateAsync: deactivate, isPending } = useDeactivateService();
 
 	async function handleDeactivate() {

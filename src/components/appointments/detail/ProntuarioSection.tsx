@@ -10,14 +10,12 @@ import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProntuarioInput } from "@/features/appointments";
 import { useProntuario, useSaveProntuario } from "@/features/appointments";
+import type { ProntuarioSectionProps } from "./ProntuarioSection.types";
 
 export function ProntuarioSection({
 	appointmentId,
 	canEdit,
-}: {
-	appointmentId: string;
-	canEdit: boolean;
-}) {
+}: ProntuarioSectionProps) {
 	const { data: prontuario, isLoading } = useProntuario(appointmentId);
 	const { mutateAsync: save, isPending } = useSaveProntuario(appointmentId);
 

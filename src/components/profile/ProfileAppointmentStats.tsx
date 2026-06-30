@@ -4,13 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { AppointmentResponse } from "@/features/appointments";
+import type { ProfileAppointmentStatsProps } from "./ProfileAppointmentStats.types";
 
 export function ProfileAppointmentStats({
 	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+}: ProfileAppointmentStatsProps) {
 	const stats = [
 		{
 			label: "Total",

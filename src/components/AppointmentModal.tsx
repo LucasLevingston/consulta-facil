@@ -11,10 +11,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { AppointmentResponse } from "@/features/appointments";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+import type { AppointmentModalProps } from "./AppointmentModal.types";
 import { AppointmentForm } from "./forms/Appointments/AppointmentForm";
 import { CancelAppointmentForm } from "./forms/Appointments/CancelAppointmentForm";
 
@@ -23,12 +23,7 @@ export const AppointmentModal = ({
 	type,
 	title,
 	description,
-}: {
-	appointment?: AppointmentResponse;
-	type: "schedule" | "cancel";
-	title: string;
-	description: string;
-}) => {
+}: AppointmentModalProps) => {
 	const [open, setOpen] = useState(false);
 
 	return (

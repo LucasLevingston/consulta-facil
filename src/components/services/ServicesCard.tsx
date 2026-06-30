@@ -21,8 +21,9 @@ import type { ProfessionalService } from "@/features/services";
 import { useGetProfessionalServices } from "@/features/services";
 import { ServiceForm } from "./ServiceForm";
 import { ServiceRow } from "./ServiceRow";
+import type { ServicesCardProps } from "./ServicesCard.types";
 
-export function ServicesCard({ professionalId }: { professionalId: string }) {
+export function ServicesCard({ professionalId }: ServicesCardProps) {
 	const { data: services = [], isLoading } =
 		useGetProfessionalServices(professionalId);
 	const [open, setOpen] = useState(false);

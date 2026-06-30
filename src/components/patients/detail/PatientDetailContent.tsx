@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePatientAppointments } from "@/features/appointments";
 import { useMedicalRecords, usePatientProfile } from "@/features/patients";
+import type { PatientDetailContentProps } from "./PatientDetailContent.types";
 
 const TABS = ["info", "prontuario", "consultas"] as const;
 type Tab = (typeof TABS)[number];
@@ -24,7 +25,7 @@ function isValidTab(v: string | null): v is Tab {
 	return TABS.includes(v as Tab);
 }
 
-export function PatientDetailContent({ id }: { id: string }) {
+export function PatientDetailContent({ id }: PatientDetailContentProps) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const activeTab: Tab = isValidTab(searchParams.get("tab"))

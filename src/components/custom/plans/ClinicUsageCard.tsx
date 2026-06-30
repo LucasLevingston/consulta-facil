@@ -7,11 +7,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ClinicResponse } from "@/features/clinics";
 import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import type { ClinicUsageCardProps } from "./ClinicUsageCard.types";
 
-export function ClinicUsageCard({ clinic }: { clinic: ClinicResponse }) {
+export function ClinicUsageCard({ clinic }: ClinicUsageCardProps) {
 	const currentProfessionals = clinic.members?.length ?? 1;
 
 	return (

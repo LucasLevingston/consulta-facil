@@ -3,8 +3,11 @@
 import { useClinicWorkingHours } from "@/features/schedule";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ClinicHoursEditor } from "./ClinicHoursEditor";
+import type { ClinicWorkingHoursSectionProps } from "./ClinicWorkingHoursSection.types";
 
-export function ClinicWorkingHoursSection({ clinicId }: { clinicId: string }) {
+export function ClinicWorkingHoursSection({
+	clinicId,
+}: ClinicWorkingHoursSectionProps) {
 	const {
 		data: savedHours = [],
 		isLoading,
