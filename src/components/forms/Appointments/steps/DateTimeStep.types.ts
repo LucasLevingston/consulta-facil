@@ -1,8 +1,9 @@
 ﻿import type { Control } from "react-hook-form";
 import type { AppointmentFormValues } from "@/features/appointments";
 import type { ProfessionalResponse } from "@/features/professionals";
+import type { TimeSlot } from "@/lib/types/time-slot";
 
-export type TimeSlot = { label: string; hours: number; minutes: number };
+export type { TimeSlot };
 
 export interface DateTimeStepProps {
 	control: Control<AppointmentFormValues>;

@@ -1,5 +1,5 @@
-import type { TimeSlot } from "@/components/forms/Appointments/steps/DateTimeStep";
 import type { ProfessionalScheduleResponse } from "@/lib/schemas/schedule/professional-schedule-response.schema";
+import type { TimeSlot } from "@/lib/types/time-slot";
 
 export function computeSlots(
 	schedule: ProfessionalScheduleResponse,

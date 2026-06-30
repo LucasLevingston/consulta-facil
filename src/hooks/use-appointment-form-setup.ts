@@ -7,7 +7,6 @@ import type { Dispatch, SetStateAction } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import type { TimeSlot } from "@/components/forms/Appointments/steps/DateTimeStep";
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
@@ -21,6 +20,7 @@ import {
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import type { DayOfWeek } from "@/lib/schemas/schedule/days-of-week.schema";
 import type { VoiceBookingResult } from "@/lib/types/ai";
+import type { TimeSlot } from "@/lib/types/time-slot";
 import { computeSlots } from "@/lib/utils/compute-slots";
 import { useUserStore } from "@/store/useUserStore";
 import { JS_DAY_TO_DOW } from "@/utils/constants/day-to-dow";
