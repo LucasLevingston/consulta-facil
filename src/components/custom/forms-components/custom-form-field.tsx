@@ -1,11 +1,8 @@
 "use client";
 
-import { format } from "date-fns";
-import { CalendarIcon, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { CustomInput } from "@/components/custom/custom-input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
 	FormControl,
 	FormField,
@@ -13,24 +10,12 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils/cn";
 import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
 import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
 import type { CustomFormFieldProps } from "./custom-form-field.types";
+import { FormFieldDatePicker } from "./FormFieldDatePicker";
+import { FormFieldSelect } from "./FormFieldSelect";
+import { FormFieldTextarea } from "./FormFieldTextarea";
 import { FormFieldType } from "./form-field-type";
 
 export { FormFieldType } from "./form-field-type";
@@ -47,15 +32,14 @@ export default function CustomFormField({
 	selectOptions,
 }: CustomFormFieldProps) {
 	const [showPassword, setShowPassword] = useState(false);
-
-	const getInputType = (): string => {
-		if (fieldType === FormFieldType.PASSWORD) {
-			return showPassword ? "text" : "password";
-		}
-		if (fieldType === FormFieldType.EMAIL) return "email";
-		return type ?? "text";
-	};
-
+	const inputType =
+		fieldType === FormFieldType.PASSWORD
+			? showPassword
+				? "text"
+				: "password"
+			: fieldType === FormFieldType.EMAIL
+				? "email"
+				: (type ?? "text");
 	const finalLabel = label === "" ? "" : (label ?? getLabelByFormName(name));
 	const finalPlaceholder = placeholder ?? getPlaceholderByFormName(name);
 
@@ -70,24 +54,22 @@ export default function CustomFormField({
 							{finalLabel}
 						</FormLabel>
 					)}
-
 					{(fieldType === FormFieldType.INPUT ||
 						fieldType === FormFieldType.EMAIL) && (
 						<FormControl>
 							<CustomInput
-								type={getInputType()}
+								type={inputType}
 								placeholder={finalPlaceholder}
 								disabled={disabled}
 								{...field}
 							/>
 						</FormControl>
 					)}
-
 					{fieldType === FormFieldType.PASSWORD && (
 						<FormControl>
 							<div className="relative">
 								<CustomInput
-									type={getInputType()}
+									type={inputType}
 									placeholder={finalPlaceholder}
 									disabled={disabled}
 									{...field}
@@ -102,92 +84,28 @@ export default function CustomFormField({
 							</div>
 						</FormControl>
 					)}
-
 					{fieldType === FormFieldType.TEXTAREA && (
-						<FormControl>
-							<div
-								className={cn(
-									"group relative flex min-h-[140px] w-full overflow-hidden rounded-2xl border transition-all duration-200",
-									"border-border bg-bg-input",
-									"focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/20",
-								)}
-							>
-								<Textarea
-									placeholder={finalPlaceholder}
-									disabled={disabled}
-									{...field}
-									className={cn(
-										"min-h-[140px] w-full resize-none border-0 bg-transparent px-4 py-4 text-sm shadow-none outline-none ring-0",
-										"text-foreground placeholder:text-muted-foreground",
-										"focus-visible:ring-0 focus-visible:ring-offset-0",
-										className,
-									)}
-								/>
-							</div>
-						</FormControl>
-					)}
-
-					{fieldType === FormFieldType.SELECT && (
-						<Select
+						<FormFieldTextarea
+							field={field}
+							placeholder={finalPlaceholder}
 							disabled={disabled}
-							value={field.value ?? ""}
-							onValueChange={field.onChange}
-						>
-							<FormControl>
-								<SelectTrigger className="h-12 w-full rounded-xl border-border bg-bg-input">
-									<SelectValue placeholder={finalPlaceholder} />
-								</SelectTrigger>
-							</FormControl>
-
-							<SelectContent className="rounded-xl border-border ">
-								<SelectGroup>
-									{selectOptions?.map((option) => (
-										<SelectItem key={option.value} value={option.value}>
-											{option.label}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+							className={className}
+						/>
 					)}
-
+					{fieldType === FormFieldType.SELECT && (
+						<FormFieldSelect
+							field={field}
+							placeholder={finalPlaceholder}
+							disabled={disabled}
+							selectOptions={selectOptions}
+						/>
+					)}
 					{fieldType === FormFieldType.DATE_PICKER && (
-						<FormControl>
-							<Popover>
-								<PopoverTrigger asChild>
-									<Button
-										type="button"
-										variant="outline"
-										disabled={disabled}
-										className={cn(
-											"h-12 w-full justify-start rounded-xl border border-border bg-bg-input px-4 text-left font-normal",
-											"hover:bg-bg-input",
-											"focus:border-primary/60 focus:ring-2 focus:ring-primary/20",
-											!field.value && "text-muted-foreground",
-										)}
-									>
-										<CalendarIcon className="mr-2 h-4 w-4" />
-
-										{field.value ? (
-											format(new Date(field.value), "dd/MM/yyyy")
-										) : (
-											<span>{finalPlaceholder}</span>
-										)}
-									</Button>
-								</PopoverTrigger>
-
-								<PopoverContent
-									className="w-auto rounded-2xl border-border bg-card p-0"
-									align="start"
-								>
-									<Calendar
-										mode="single"
-										selected={field.value ? new Date(field.value) : undefined}
-										onSelect={field.onChange}
-									/>
-								</PopoverContent>
-							</Popover>
-						</FormControl>
+						<FormFieldDatePicker
+							field={field}
+							placeholder={finalPlaceholder}
+							disabled={disabled}
+						/>
 					)}
 					<FormMessage className="text-xs text-destructive" />
 				</FormItem>
