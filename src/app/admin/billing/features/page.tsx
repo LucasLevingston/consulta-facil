@@ -1,46 +1,26 @@
-﻿"use client";
+"use client";
 
-import { Plus, Tag, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Plus, Tag } from "lucide-react";
+import { FeaturesTable } from "@/components/admin/billing/FeaturesTable";
 import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
-import type { FeatureResponse } from "@/features/billing";
-import {
-	useCreateFeature,
-	useDeleteFeature,
-	useFeatures,
-} from "@/features/billing";
+import { useBillingFeaturesPage } from "@/hooks/use-billing-features-page";
 
 export default function AdminFeaturesPage() {
-	const { data: features = [], isLoading } = useFeatures();
-	const createFeature = useCreateFeature();
-	const deleteFeature = useDeleteFeature();
-
-	const [newKey, setNewKey] = useState("");
-	const [newName, setNewName] = useState("");
-
-	function handleCreate() {
-		if (!newKey || !newName) return;
-		createFeature.mutate(
-			{ key: newKey, name: newName },
-			{
-				onSuccess: () => {
-					setNewKey("");
-					setNewName("");
-				},
-			},
-		);
-	}
+	const {
+		features,
+		isLoading,
+		newKey,
+		setNewKey,
+		newName,
+		setNewName,
+		handleCreate,
+		handleDelete,
+		creating,
+		deleting,
+	} = useBillingFeaturesPage();
 
 	return (
 		<div className="space-y-6 p-6">
@@ -85,7 +65,7 @@ export default function AdminFeaturesPage() {
 				</div>
 				<Button
 					onClick={handleCreate}
-					disabled={createFeature.isPending || !newKey || !newName}
+					disabled={creating || !newKey || !newName}
 				>
 					<Plus className="h-4 w-4 mr-1" />
 					Adicionar
@@ -95,37 +75,11 @@ export default function AdminFeaturesPage() {
 			{isLoading ? (
 				<Skeleton className="h-64 w-full" />
 			) : (
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Chave</TableHead>
-							<TableHead>Nome</TableHead>
-							<TableHead>Descrição</TableHead>
-							<TableHead>Ações</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{features.map((f: FeatureResponse) => (
-							<TableRow key={f.id}>
-								<TableCell className="font-mono text-sm">{f.key}</TableCell>
-								<TableCell>{f.name}</TableCell>
-								<TableCell className="text-muted-foreground text-sm">
-									{f.description ?? "—"}
-								</TableCell>
-								<TableCell>
-									<Button
-										size="icon"
-										variant="ghost"
-										onClick={() => deleteFeature.mutate(f.id)}
-										disabled={deleteFeature.isPending}
-									>
-										<Trash2 className="h-4 w-4 text-destructive" />
-									</Button>
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+				<FeaturesTable
+					features={features}
+					handleDelete={handleDelete}
+					deleting={deleting}
+				/>
 			)}
 		</div>
 	);

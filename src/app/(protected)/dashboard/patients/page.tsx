@@ -1,17 +1,10 @@
 "use client";
 
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { CalendarDays, Search, User, UserRound } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useDeferredValue } from "react";
-import { CustomButton } from "@/components/custom/custom-button";
-
+import { Search, UserRound } from "lucide-react";
+import { Suspense } from "react";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { PatientsGrid } from "@/components/patients/PatientsGrid";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -20,59 +13,22 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { usePermission, useUserStore } from "@/features/auth";
-import {
-	useAllAdminPatients,
-	useProfessionalPatients,
-} from "@/features/patients";
+import { usePatientsPage } from "@/hooks/use-patients-page";
 import { QueryBoundary } from "@/providers/query-boundary";
 
-import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
-
-type SortOption = "name" | "recent";
-
 function PatientsContent() {
-	const { user } = useUserStore();
-	const { role } = usePermission();
-	const isAdmin = role === "ADMIN";
-	const professionalId = role === "PROFESSIONAL" ? (user?.id ?? "") : "";
-
-	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
-	const search = searchParams.get("q") ?? "";
-	const sort = (searchParams.get("sort") as SortOption) ?? "recent";
-	const page = Number(searchParams.get("page") ?? "0");
-
-	const debouncedSearch = useDeferredValue(search);
-
-	function updateParams(
-		updates: Record<string, string | null>,
-		resetPage = true,
-	) {
-		const params = new URLSearchParams(searchParams.toString());
-		for (const [key, value] of Object.entries(updates)) {
-			if (value === null) params.delete(key);
-			else params.set(key, value);
-		}
-		if (resetPage) params.delete("page");
-		router.push(`${pathname}?${params.toString()}`, { scroll: false });
-	}
-
-	const queryParams = { page, size: PAGE_SIZE, search: debouncedSearch, sort };
-
-	const adminQuery = useAllAdminPatients(queryParams);
-	const professionalQuery = useProfessionalPatients(
-		professionalId,
-		queryParams,
-	);
-
-	const { data, isLoading, error } = isAdmin ? adminQuery : professionalQuery;
-
-	const patients = data?.content ?? [];
-	const totalPages = data?.totalPages ?? 0;
-	const totalElements = data?.totalElements ?? 0;
+	const {
+		patients,
+		totalPages,
+		totalElements,
+		page,
+		search,
+		sort,
+		isLoading,
+		error,
+		isAdmin,
+		updateParams,
+	} = usePatientsPage();
 
 	return (
 		<div className="space-y-6">
@@ -111,60 +67,7 @@ function PatientsContent() {
 					</Select>
 				</div>
 
-				{patients.length === 0 ? (
-					<div className="flex h-48 items-center justify-center rounded-2xl border border-dashed border-border">
-						<p className="text-sm text-muted-foreground">
-							Nenhum paciente encontrado.
-						</p>
-					</div>
-				) : (
-					<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-						{patients.map((p) => (
-							<Card
-								key={p.id}
-								className="border-border transition-shadow hover:shadow-md"
-							>
-								<CardContent className="p-5">
-									<div className="flex items-start gap-4">
-										<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-											<User className="h-5 w-5 text-primary" />
-										</div>
-
-										<div className="min-w-0 flex-1">
-											<p className="truncate font-semibold text-foreground">
-												{p.name}
-											</p>
-
-											<div className="mt-1.5 flex flex-wrap gap-2">
-												<Badge variant="secondary" className="gap-1 text-xs">
-													<CalendarDays className="h-3 w-3" />
-													{p.totalAppointments}{" "}
-													{p.totalAppointments === 1 ? "consulta" : "consultas"}
-												</Badge>
-											</div>
-
-											<p className="mt-2 text-xs text-muted-foreground">
-												Última:{" "}
-												{format(new Date(p.lastAppointment), "dd/MM/yyyy", {
-													locale: ptBR,
-												})}
-											</p>
-										</div>
-									</div>
-
-									<div className="mt-4 flex gap-2">
-										<CustomButton asChild>
-											<Link href={`/dashboard/patients/${p.id}`}>
-												<User />
-												Ver perfil
-											</Link>
-										</CustomButton>
-									</div>
-								</CardContent>
-							</Card>
-						))}
-					</div>
-				)}
+				<PatientsGrid patients={patients} />
 
 				<CustomPagination
 					currentPage={page}

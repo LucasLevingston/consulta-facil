@@ -26,6 +26,7 @@ export { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedul
 export { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
 export { useSetModality } from "@/hooks/api/appointments/use-set-modality";
 export { useAnamnesisChat } from "@/hooks/use-anamnesis-chat";
+export type { UseAppointmentFormSetupReturn } from "@/hooks/use-appointment-form-setup";
 export { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
 export { useVoiceBooking } from "@/hooks/use-voice-booking";
 export type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";

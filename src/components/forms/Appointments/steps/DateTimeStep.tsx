@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Check, Users } from "lucide-react";
-
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { DatePickerField } from "./DatePickerField";
 import type { DateTimeStepProps } from "./DateTimeStep.types";
@@ -11,19 +10,21 @@ import { TimeSlotPicker } from "./TimeSlotPicker";
 
 export type { TimeSlot } from "./DateTimeStep.types";
 
-export function DateTimeStep({
-	control,
-	selectedProfessional,
-	scheduleLoading,
-	availableSlots,
-	bookedTimesForDate,
-	isQueueMode,
-	isDayDisabled,
-	selectedDate,
-	selectedTime,
-	onTimeSelect,
-	onDateChange,
-}: DateTimeStepProps) {
+export function DateTimeStep({ hook }: DateTimeStepProps) {
+	const {
+		form,
+		selectedProfessional,
+		scheduleLoading,
+		availableSlots,
+		bookedTimesForDate,
+		isQueueMode,
+		isDayDisabled,
+		selectedDate,
+		selectedTime,
+		handleTimeSelect,
+		setSelectedTime,
+	} = hook;
+
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center gap-2">
@@ -34,10 +35,10 @@ export function DateTimeStep({
 			</div>
 
 			<DatePickerField
-				control={control}
+				control={form.control}
 				isQueueMode={isQueueMode}
 				isDayDisabled={isDayDisabled}
-				onDateChange={onDateChange}
+				onDateChange={() => setSelectedTime("")}
 			/>
 
 			{isQueueMode ? (
@@ -67,7 +68,7 @@ export function DateTimeStep({
 					bookedTimesForDate={bookedTimesForDate}
 					selectedDate={selectedDate}
 					selectedTime={selectedTime}
-					onTimeSelect={onTimeSelect}
+					onTimeSelect={handleTimeSelect}
 				/>
 			)}
 		</div>

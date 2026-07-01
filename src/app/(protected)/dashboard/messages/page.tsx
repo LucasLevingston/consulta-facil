@@ -1,39 +1,22 @@
-﻿"use client";
+"use client";
 
 import { ArrowLeft } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { ChatThread } from "@/components/messaging/ChatThread";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { Button } from "@/components/ui/button";
-import type { ConversationResponse } from "@/features/messaging";
-import { useConversations } from "@/features/messaging";
+import { useMessagesPage } from "@/hooks/use-messages-page";
 import { cn } from "@/lib/utils/cn";
 
 function MessagesContent() {
-	const searchParams = useSearchParams();
-	const { data: conversations = [] } = useConversations();
-	const [selectedId, setSelectedId] = useState<string | null>(
-		searchParams.get("c"),
-	);
-	const [mobileShowThread, setMobileShowThread] = useState(false);
-
-	const selected: ConversationResponse | undefined = conversations.find(
-		(c) => c.id === selectedId,
-	);
-
-	useEffect(() => {
-		const c = searchParams.get("c");
-		if (c) {
-			setSelectedId(c);
-			setMobileShowThread(true);
-		}
-	}, [searchParams]);
-
-	function handleSelect(id: string) {
-		setSelectedId(id);
-		setMobileShowThread(true);
-	}
+	const {
+		conversations,
+		selected,
+		selectedId,
+		mobileShowThread,
+		setMobileShowThread,
+		handleSelect,
+	} = useMessagesPage();
 
 	return (
 		<div className="flex h-[calc(100vh-4rem)] overflow-hidden border rounded-lg">

@@ -6,15 +6,19 @@ import type { ProfessionalStepProps } from "./ProfessionalStep.types";
 import { SelectedProfessionalCard } from "./SelectedProfessionalCard";
 
 export function ProfessionalStep({
-	control,
-	professionals,
-	professionalsLoading,
-	professionalIdParam,
-	selectedProfessional,
+	hook,
 	initialSpecialtyFilter = "",
-	onDoctorSelect,
-	onDoctorClear,
 }: ProfessionalStepProps) {
+	const {
+		form,
+		professionals,
+		professionalsLoading,
+		professionalIdParam,
+		selectedProfessional,
+		setSelectedTime,
+		setSelectedServiceId,
+	} = hook;
+
 	const [specialtyFilter] = useState(initialSpecialtyFilter);
 
 	const filteredProfessionals = specialtyFilter
@@ -22,6 +26,16 @@ export function ProfessionalStep({
 				d.specialty?.toLowerCase().includes(specialtyFilter.toLowerCase()),
 			)
 		: professionals;
+
+	function onDoctorSelect() {
+		setSelectedTime("");
+		setSelectedServiceId(null);
+	}
+
+	function onDoctorClear() {
+		form.setValue("professionalId", "");
+		setSelectedTime("");
+	}
 
 	return (
 		<div className="space-y-3">
@@ -35,7 +49,7 @@ export function ProfessionalStep({
 			</div>
 
 			<DoctorFormField
-				control={control}
+				control={form.control}
 				professionals={filteredProfessionals}
 				professionalsLoading={professionalsLoading}
 				professionalIdParam={professionalIdParam}
