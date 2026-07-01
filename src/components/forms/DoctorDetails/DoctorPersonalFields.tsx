@@ -1,17 +1,12 @@
 "use client";
 
-import type { UseFormReturn } from "react-hook-form";
 import CustomFormField, {
 	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
 import { GenderOptions } from "@/utils/constants/gender-options";
+import type { DoctorPersonalFieldsProps } from "./DoctorPersonalFields.types";
 
-interface Props {
-	// biome-ignore lint/suspicious/noExplicitAny: shared with DoctorDetailsForm schema
-	form: UseFormReturn<any>;
-}
-
-export function DoctorPersonalFields({ form }: Props) {
+export function DoctorPersonalFields({ form }: DoctorPersonalFieldsProps) {
 	return (
 		<section className="space-y-6">
 			<div className="mb-9 space-y-1">

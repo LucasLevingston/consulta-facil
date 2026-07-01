@@ -1,6 +1,5 @@
 "use client";
 
-import type { Control } from "react-hook-form";
 import {
 	FormControl,
 	FormField,
@@ -9,13 +8,9 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { UpdateAddressInput } from "@/features/professionals";
+import type { AddressCityFieldsProps } from "./AddressCityFields.types";
 
-interface Props {
-	control: Control<UpdateAddressInput>;
-}
-
-export function AddressCityFields({ control }: Props) {
+export function AddressCityFields({ control }: AddressCityFieldsProps) {
 	return (
 		<>
 			<div className="flex gap-4">

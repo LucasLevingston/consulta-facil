@@ -10,14 +10,10 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import type { UseAppointmentFormSetupReturn } from "@/features/appointments";
+import type { AppointmentCancelStepProps } from "./AppointmentCancelStep.types";
 import { PaymentStep } from "./steps/PaymentStep";
 
-interface Props {
-	hook: UseAppointmentFormSetupReturn;
-}
-
-export function AppointmentCancelStep({ hook }: Props) {
+export function AppointmentCancelStep({ hook }: AppointmentCancelStepProps) {
 	const { form, onSubmit, isPending, selectedProfessional } = hook;
 
 	return (

@@ -10,15 +10,13 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { FeatureResponse } from "@/features/billing";
+import type { FeaturesTableProps } from "./FeaturesTable.types";
 
-interface Props {
-	features: FeatureResponse[];
-	handleDelete: (id: string) => void;
-	deleting: boolean;
-}
-
-export function FeaturesTable({ features, handleDelete, deleting }: Props) {
+export function FeaturesTable({
+	features,
+	handleDelete,
+	deleting,
+}: FeaturesTableProps) {
 	return (
 		<Table>
 			<TableHeader>
@@ -30,7 +28,7 @@ export function FeaturesTable({ features, handleDelete, deleting }: Props) {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{features.map((f: FeatureResponse) => (
+				{features.map((f) => (
 					<TableRow key={f.id}>
 						<TableCell className="font-mono text-sm">{f.key}</TableCell>
 						<TableCell>{f.name}</TableCell>

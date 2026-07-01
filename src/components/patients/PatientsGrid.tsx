@@ -7,13 +7,9 @@ import Link from "next/link";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import type { PatientSummary } from "@/lib/api/patients/patient-profile.api.types";
+import type { PatientsGridProps } from "./PatientsGrid.types";
 
-interface Props {
-	patients: PatientSummary[];
-}
-
-export function PatientsGrid({ patients }: Props) {
+export function PatientsGrid({ patients }: PatientsGridProps) {
 	if (patients.length === 0) {
 		return (
 			<div className="flex h-48 items-center justify-center rounded-2xl border border-dashed border-border">

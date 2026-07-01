@@ -1,13 +1,7 @@
 import { cn } from "@/lib/utils/cn";
 import { LoadingPage } from "../components/custom/loading/loading-page";
 import { PageLayout } from "../components/custom/page-layout";
-
-interface QueryBoundaryProps {
-	isLoading: boolean;
-	error: unknown;
-	children: React.ReactNode;
-	className?: string;
-}
+import type { QueryBoundaryProps } from "./query-boundary.types";
 
 export function QueryBoundary({
 	isLoading,

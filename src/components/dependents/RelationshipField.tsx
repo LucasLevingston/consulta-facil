@@ -1,6 +1,5 @@
 "use client";
 
-import type { Control } from "react-hook-form";
 import {
 	FormControl,
 	FormField,
@@ -15,14 +14,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { CreateDependentInput } from "@/features/dependents";
 import { RELATIONSHIP_LABELS } from "@/utils/constants/relationship-labels";
+import type { RelationshipFieldProps } from "./RelationshipField.types";
 
-interface Props {
-	control: Control<CreateDependentInput>;
-}
-
-export function RelationshipField({ control }: Props) {
+export function RelationshipField({ control }: RelationshipFieldProps) {
 	return (
 		<FormField
 			control={control}

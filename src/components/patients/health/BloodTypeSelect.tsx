@@ -1,6 +1,5 @@
 "use client";
 
-import type { Control } from "react-hook-form";
 import {
 	FormControl,
 	FormField,
@@ -15,14 +14,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { UpdateMedicalRecordInput } from "@/features/patients";
 import { BLOOD_TYPE_LABELS } from "@/utils/constants/blood-type-labels";
+import type { BloodTypeSelectProps } from "./BloodTypeSelect.types";
 
-interface Props {
-	control: Control<UpdateMedicalRecordInput>;
-}
-
-export function BloodTypeSelect({ control }: Props) {
+export function BloodTypeSelect({ control }: BloodTypeSelectProps) {
 	return (
 		<FormField
 			control={control}

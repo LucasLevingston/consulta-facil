@@ -4,23 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TableCell, TableRow } from "@/components/ui/table";
-import type { SystemFeeResponse } from "@/features/billing";
 import { PAYMENT_TYPE_LABELS } from "@/utils/constants/payment-type-labels";
 import { formatCurrency } from "@/utils/format-currency";
 import { formatPercent } from "@/utils/format-percent";
-
-interface Props {
-	fee: SystemFeeResponse;
-	isEditing: boolean;
-	fixedFee: string;
-	setFixedFee: (v: string) => void;
-	percentageFee: string;
-	setPercentageFee: (v: string) => void;
-	onSave: () => void;
-	onEdit: () => void;
-	onCancel: () => void;
-	saving: boolean;
-}
+import type { SystemFeeRowProps } from "./SystemFeeRow.types";
 
 export function SystemFeeRow({
 	fee,
@@ -33,7 +20,7 @@ export function SystemFeeRow({
 	onEdit,
 	onCancel,
 	saving,
-}: Props) {
+}: SystemFeeRowProps) {
 	return (
 		<TableRow>
 			<TableCell>
