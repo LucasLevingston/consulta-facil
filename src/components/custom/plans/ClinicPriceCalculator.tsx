@@ -1,8 +1,7 @@
 "use client";
 
-import { CheckCircle2, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -13,20 +12,14 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BASE_PRICE } from "@/utils/constants/base-price";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import { ClinicPriceBreakdown } from "./ClinicPriceBreakdown";
 import type { ClinicPriceCalculatorProps } from "./ClinicPriceCalculator.types";
+import { ClinicPriceDisplay } from "./ClinicPriceDisplay";
 
 function calcMonthlyPrice(totalProfessionals: number): number {
 	const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);
 	return BASE_PRICE * (1 + extra * 0.2);
-}
-
-function fmtBRL(value: number) {
-	return value.toLocaleString("pt-BR", {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	});
 }
 
 export function ClinicPriceCalculator({
@@ -78,70 +71,18 @@ export function ClinicPriceCalculator({
 						</Button>
 					</div>
 				</div>
-
 				<Separator />
-
-				<div className="flex items-end justify-between gap-4">
-					<div>
-						{isFree ? (
-							<>
-								<p className="text-3xl font-bold text-emerald-600">Grátis</p>
-								<p className="mt-0.5 text-xs text-muted-foreground">
-									{calcProfessionals * FREE_CONSULTS_PER_DOCTOR} consultas
-									gratuitas incluídas
-								</p>
-							</>
-						) : (
-							<>
-								<p className="text-3xl font-bold text-foreground">
-									R$ {fmtBRL(calcPrice)}
-									<span className="text-base font-normal text-muted-foreground">
-										/mês
-									</span>
-								</p>
-								<p className="mt-0.5 text-xs text-muted-foreground">
-									Base R$ {fmtBRL(BASE_PRICE)} + {extraProfessionals}{" "}
-									profissional
-									{extraProfessionals !== 1 ? "is" : ""} extra (
-									{extraProfessionals * 20}% adicional)
-								</p>
-							</>
-						)}
-					</div>
-					<div className="shrink-0 text-right">
-						{isFree ? (
-							<Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400">
-								<CheckCircle2 className="mr-1 h-3 w-3" />
-								Plano grátis
-							</Badge>
-						) : (
-							<Badge variant="secondary">
-								{extraProfessionals} além do limite
-							</Badge>
-						)}
-					</div>
-				</div>
-
-				{calcProfessionals > FREE_PROFESSIONALS && (
-					<div className="rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
-						<p className="font-medium text-foreground">Composição do preço:</p>
-						<p>
-							Base ({FREE_PROFESSIONALS} profissionais): R$ {fmtBRL(BASE_PRICE)}
-						</p>
-						{Array.from({ length: extraProfessionals }, (_, i) => {
-							const doctorNumber = FREE_PROFESSIONALS + i + 1;
-							return (
-								<p key={doctorNumber}>
-									{doctorNumber}º profissional (+20%): R${" "}
-									{fmtBRL(BASE_PRICE * 0.2)}
-								</p>
-							);
-						})}
-						<Separator className="my-1" />
-						<p className="font-semibold text-foreground">
-							Total: R$ {fmtBRL(calcPrice)}/mês
-						</p>
-					</div>
+				<ClinicPriceDisplay
+					isFree={isFree}
+					calcPrice={calcPrice}
+					extraProfessionals={extraProfessionals}
+					calcProfessionals={calcProfessionals}
+				/>
+				{!isFree && (
+					<ClinicPriceBreakdown
+						extraProfessionals={extraProfessionals}
+						calcPrice={calcPrice}
+					/>
 				)}
 			</CardContent>
 		</Card>
