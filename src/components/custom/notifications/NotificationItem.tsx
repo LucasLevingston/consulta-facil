@@ -1,0 +1,105 @@
+"use client";
+
+import { Check, X } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useAcceptInvite, useDeclineInvite } from "@/features/notifications";
+import { cn } from "@/lib/utils/cn";
+import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
+import type { NotificationItemProps } from "./NotificationBell.types";
+
+function timeAgo(dateStr: string) {
+	const diff = Date.now() - new Date(dateStr).getTime();
+	const mins = Math.floor(diff / 60_000);
+	if (mins < 1) return "agora";
+	if (mins < 60) return `${mins}m atrás`;
+	const hrs = Math.floor(mins / 60);
+	if (hrs < 24) return `${hrs}h atrás`;
+	return `${Math.floor(hrs / 24)}d atrás`;
+}
+
+export function NotificationItem({ notification }: NotificationItemProps) {
+	const accept = useAcceptInvite();
+	const decline = useDeclineInvite();
+	const isPending = notification.status === "PENDING";
+	const {
+		icon: Icon,
+		color,
+		bg,
+	} = NOTIFICATION_ICON[notification.type] ?? NOTIFICATION_ICON.GENERAL;
+
+	return (
+		<div
+			className={cn(
+				"flex flex-col gap-2 rounded-lg p-3 transition-colors",
+				isPending ? "bg-primary/5" : "bg-transparent",
+			)}
+		>
+			<div className="flex items-start gap-2">
+				<div
+					className={cn(
+						"mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full",
+						bg,
+					)}
+				>
+					<Icon className={cn("h-3.5 w-3.5", color)} />
+				</div>
+				<div className="min-w-0 flex-1">
+					<p className="text-sm font-medium leading-tight text-foreground">
+						{notification.title}
+					</p>
+					<p className="mt-0.5 text-xs text-muted-foreground leading-snug">
+						{notification.message}
+					</p>
+					<p className="mt-1 text-xs text-muted-foreground/60">
+						{timeAgo(notification.createdAt)}
+					</p>
+				</div>
+				{isPending && (
+					<div className="h-2 w-2 shrink-0 rounded-full bg-primary mt-1" />
+				)}
+			</div>
+			{notification.type === "CLINIC_INVITE" && isPending && (
+				<div className="flex gap-2 pl-9">
+					<Button
+						size="sm"
+						className="h-7 rounded-lg px-3 text-xs"
+						disabled={accept.isPending || decline.isPending}
+						onClick={() =>
+							accept.mutate(notification.id, {
+								onSuccess: () => toast.success("Você entrou na clínica!"),
+								onError: () => toast.error("Erro ao aceitar convite."),
+							})
+						}
+					>
+						<Check className="mr-1 h-3 w-3" />
+						Aceitar
+					</Button>
+					<Button
+						size="sm"
+						variant="outline"
+						className="h-7 rounded-lg px-3 text-xs"
+						disabled={accept.isPending || decline.isPending}
+						onClick={() =>
+							decline.mutate(notification.id, {
+								onSuccess: () => toast.info("Convite recusado."),
+								onError: () => toast.error("Erro ao recusar convite."),
+							})
+						}
+					>
+						<X className="mr-1 h-3 w-3" />
+						Recusar
+					</Button>
+				</div>
+			)}
+			{notification.status === "ACCEPTED" && (
+				<p className="pl-9 text-xs text-emerald-600 dark:text-emerald-400">
+					Convite aceito
+				</p>
+			)}
+			{notification.status === "DECLINED" && (
+				<p className="pl-9 text-xs text-muted-foreground">Convite recusado</p>
+			)}
+		</div>
+	);
+}
