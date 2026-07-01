@@ -2,14 +2,11 @@
 
 import { differenceInDays, parseISO } from "date-fns";
 import { AlertTriangle, CheckCircle2, Clock, XCircle } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils/cn";
 import { PLAN_LABELS } from "@/utils/constants/plan-labels";
-import {
-	SUBSCRIPTION_STATUS_COLOR,
-	SUBSCRIPTION_STATUS_LABEL,
-} from "@/utils/constants/subscription-status";
+import { SubscriptionBannerInfo } from "./SubscriptionBannerInfo";
+import { SubscriptionProgressBar } from "./SubscriptionProgressBar";
+import { SubscriptionStatusBadges } from "./SubscriptionStatusBadges";
 import type { SubscriptionBannerProps } from "./subscription-banner.types";
 
 function getDaysRemaining(expiresAt: string | null): number | null {
@@ -20,6 +17,7 @@ function getDaysRemaining(expiresAt: string | null): number | null {
 export function SubscriptionBanner({ subscription }: SubscriptionBannerProps) {
 	const label = PLAN_LABELS[subscription.planId] ?? subscription.planId;
 	const daysRemaining = getDaysRemaining(subscription.expiresAt);
+	const isActive = subscription.status === "ACTIVE";
 	const isExpiringSoon =
 		daysRemaining !== null && daysRemaining <= 7 && daysRemaining >= 0;
 
@@ -27,17 +25,16 @@ export function SubscriptionBanner({ subscription }: SubscriptionBannerProps) {
 		? new Date(subscription.expiresAt).toLocaleDateString("pt-BR")
 		: null;
 
-	const StatusIcon =
-		subscription.status === "ACTIVE"
-			? isExpiringSoon
-				? AlertTriangle
-				: CheckCircle2
-			: subscription.status === "PENDING"
-				? Clock
-				: XCircle;
+	const StatusIcon = isActive
+		? isExpiringSoon
+			? AlertTriangle
+			: CheckCircle2
+		: subscription.status === "PENDING"
+			? Clock
+			: XCircle;
 
 	const progressPercent =
-		subscription.status === "ACTIVE" && daysRemaining !== null
+		isActive && daysRemaining !== null
 			? Math.max(0, Math.min(100, (daysRemaining / 365) * 100))
 			: null;
 
@@ -56,85 +53,25 @@ export function SubscriptionBanner({ subscription }: SubscriptionBannerProps) {
 			)}
 		>
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-				<div className="flex items-start gap-3">
-					<div
-						className={cn(
-							"mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
-							subscription.status === "ACTIVE"
-								? isExpiringSoon
-									? "bg-yellow-500/10"
-									: "bg-green-500/10"
-								: "bg-muted",
-						)}
-					>
-						<StatusIcon
-							className={cn(
-								"h-4 w-4",
-								subscription.status === "ACTIVE"
-									? isExpiringSoon
-										? "text-yellow-500"
-										: "text-green-500"
-									: "text-muted-foreground",
-							)}
-						/>
-					</div>
-					<div>
-						<p className="text-xs text-muted-foreground">Plano atual</p>
-						<p className="font-semibold text-foreground">{label}</p>
-						{expiresAtFormatted && (
-							<p className="mt-0.5 text-xs text-muted-foreground">
-								{subscription.status === "ACTIVE" ? "Válido até" : "Expirou em"}{" "}
-								{expiresAtFormatted}
-							</p>
-						)}
-					</div>
-				</div>
-
-				<div className="flex flex-wrap gap-2">
-					<Badge
-						variant="outline"
-						className={cn(
-							"text-xs font-semibold",
-							SUBSCRIPTION_STATUS_COLOR[subscription.status] ??
-								SUBSCRIPTION_STATUS_COLOR.EXPIRED,
-						)}
-					>
-						{SUBSCRIPTION_STATUS_LABEL[subscription.status] ??
-							subscription.status}
-					</Badge>
-
-					{isExpiringSoon && daysRemaining !== null && (
-						<Badge
-							variant="outline"
-							className="text-xs font-semibold border-yellow-500/30 bg-yellow-500/10 text-yellow-600"
-						>
-							Expira em{" "}
-							{daysRemaining === 0
-								? "hoje"
-								: `${daysRemaining} dia${daysRemaining !== 1 ? "s" : ""}`}
-						</Badge>
-					)}
-				</div>
+				<SubscriptionBannerInfo
+					label={label}
+					expiresAtFormatted={expiresAtFormatted}
+					isActive={isActive}
+					isExpiringSoon={isExpiringSoon}
+					StatusIcon={StatusIcon}
+				/>
+				<SubscriptionStatusBadges
+					status={subscription.status}
+					isExpiringSoon={isExpiringSoon}
+					daysRemaining={daysRemaining}
+				/>
 			</div>
-
-			{subscription.status === "ACTIVE" && progressPercent !== null && (
-				<div className="space-y-1.5">
-					<div className="h-1.5 overflow-hidden rounded-full bg-muted">
-						<div
-							className={cn(
-								"h-full rounded-full transition-all",
-								progressColor,
-							)}
-							style={{ width: `${progressPercent}%` }}
-						/>
-					</div>
-					{daysRemaining !== null && (
-						<p className="text-xs text-muted-foreground text-right">
-							{daysRemaining} dia{daysRemaining !== 1 ? "s" : ""} restante
-							{daysRemaining !== 1 ? "s" : ""}
-						</p>
-					)}
-				</div>
+			{isActive && progressPercent !== null && (
+				<SubscriptionProgressBar
+					progressPercent={progressPercent}
+					progressColor={progressColor}
+					daysRemaining={daysRemaining}
+				/>
 			)}
 		</div>
 	);
