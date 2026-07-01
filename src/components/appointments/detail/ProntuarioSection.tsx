@@ -1,15 +1,14 @@
-﻿"use client";
+"use client";
 
 import { FileText } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
-import { MedicalRecordField } from "@/components/appointments/detail/MedicalRecordField";
 import { ProntuarioReadView } from "@/components/appointments/detail/ProntuarioReadView";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProntuarioInput } from "@/features/appointments";
 import { useProntuario, useSaveProntuario } from "@/features/appointments";
+import { ProntuarioEditForm } from "./ProntuarioEditForm";
 import type { ProntuarioSectionProps } from "./ProntuarioSection.types";
 
 export function ProntuarioSection({
@@ -72,57 +71,15 @@ export function ProntuarioSection({
 			</CardHeader>
 			<CardContent className="-mt-2">
 				{editing ? (
-					<div className="space-y-4">
-						<MedicalRecordField
-							label="Anotações clínicas / Exame físico"
-							value={form.clinicalNotes ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, clinicalNotes: v }))}
-						/>
-						<MedicalRecordField
-							label="Diagnóstico"
-							value={form.diagnosis ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, diagnosis: v }))}
-						/>
-						<MedicalRecordField
-							label="CID-10"
-							value={form.diagnosisCid ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, diagnosisCid: v }))}
-						/>
-						<MedicalRecordField
-							label="Prescrição"
-							value={form.prescription ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, prescription: v }))}
-						/>
-						<MedicalRecordField
-							label="Solicitações de exame"
-							value={form.examRequests ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, examRequests: v }))}
-						/>
-						<MedicalRecordField
-							label="Plano terapêutico"
-							value={form.treatmentPlan ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, treatmentPlan: v }))}
-						/>
-						<MedicalRecordField
-							label="Orientações e retorno"
-							value={form.followUpInstructions ?? ""}
-							onChange={(v) =>
-								setForm((f) => ({ ...f, followUpInstructions: v }))
-							}
-						/>
-						<div className="flex gap-2 pt-1">
-							<CustomButton size="sm" onClick={handleSave} disabled={isPending}>
-								{isPending ? "Salvando..." : "Salvar"}
-							</CustomButton>
-							<CustomButton
-								variant="ghost"
-								size="sm"
-								onClick={() => setEditing(false)}
-							>
-								Cancelar
-							</CustomButton>
-						</div>
-					</div>
+					<ProntuarioEditForm
+						form={form}
+						isPending={isPending}
+						onSave={handleSave}
+						onCancel={() => setEditing(false)}
+						onChange={(field, value) =>
+							setForm((f) => ({ ...f, [field]: value }))
+						}
+					/>
 				) : prontuario ? (
 					<ProntuarioReadView prontuario={prontuario} />
 				) : (
