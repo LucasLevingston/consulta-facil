@@ -1,15 +1,8 @@
 import CustomFormField, {
 	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
-import { FileUploader } from "@/components/FileUploader";
-import {
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-} from "@/components/ui/form";
-import { GenderOptions } from "@/utils/constants/gender-options";
 import type { PatientPersonalSectionProps } from "./PatientPersonalSection.types";
+import { PatientPersonalTopColumns } from "./PatientPersonalTopColumns";
 
 export function PatientPersonalSection({ form }: PatientPersonalSectionProps) {
 	return (
@@ -17,67 +10,7 @@ export function PatientPersonalSection({ form }: PatientPersonalSectionProps) {
 			<div className="mb-9 space-y-1">
 				<h2 className="sub-header">Informações Pessoais</h2>
 			</div>
-
-			<div className="flex w-full items-start gap-6">
-				<div className="flex min-w-[50%] flex-col gap-6">
-					<CustomFormField
-						form={form}
-						fieldType={FormFieldType.INPUT}
-						name="name"
-						label="Nome completo"
-						placeholder="João da Silva"
-					/>
-					<CustomFormField
-						form={form}
-						fieldType={FormFieldType.EMAIL}
-						name="email"
-						label="Endereço de E-mail"
-					/>
-					<CustomFormField
-						form={form}
-						fieldType={FormFieldType.INPUT}
-						name="phone"
-						label="Número de Telefone"
-						placeholder="(11) 91234-5678"
-						type="tel"
-					/>
-				</div>
-
-				<div className="flex min-w-[50%] flex-col gap-6">
-					<FormField
-						control={form.control}
-						name="imageProfile"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className="text-sm font-semibold text-primary">
-									Foto de perfil
-								</FormLabel>
-								<FormControl>
-									<FileUploader
-										files={field.value}
-										onChange={field.onChange}
-										imageProfile
-									/>
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-
-					<CustomFormField
-						form={form}
-						name="gender"
-						fieldType={FormFieldType.SELECT}
-						label="Gênero"
-					>
-						{GenderOptions.map((option) => (
-							<option key={option.value} value={option.value}>
-								{option.label}
-							</option>
-						))}
-					</CustomFormField>
-				</div>
-			</div>
-
+			<PatientPersonalTopColumns form={form} />
 			<CustomFormField
 				form={form}
 				fieldType={FormFieldType.INPUT}
@@ -85,7 +18,6 @@ export function PatientPersonalSection({ form }: PatientPersonalSectionProps) {
 				label="CPF"
 				placeholder="12345678900"
 			/>
-
 			<div className="flex flex-col gap-6 xl:flex-row">
 				<CustomFormField
 					form={form}
@@ -102,7 +34,6 @@ export function PatientPersonalSection({ form }: PatientPersonalSectionProps) {
 					placeholder="Engenheiro de Software"
 				/>
 			</div>
-
 			<div className="flex flex-col gap-6 xl:flex-row">
 				<CustomFormField
 					form={form}
