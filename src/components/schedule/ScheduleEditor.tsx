@@ -1,63 +1,40 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
 import {
 	DAYS_OF_WEEK,
 	type DayOfWeek,
 	type ProfessionalScheduleItem,
-	type ProfessionalScheduleResponse,
 	useSaveMySchedule,
 } from "@/features/schedule";
 import { DEFAULT_BREAK } from "@/utils/constants/default-break";
 import { DEFAULT_DURATION } from "@/utils/constants/default-duration";
-
-import { ScheduleDayRow } from "./ScheduleDayRow";
+import { ScheduleDaysList } from "./ScheduleDaysList";
 import type { ScheduleEditorProps } from "./ScheduleEditor.types";
+import { buildDefaultRow } from "./ScheduleEditor.utils";
 import { ScheduleGlobalSettings } from "./ScheduleGlobalSettings";
-
-function buildDefaultRow(
-	day: DayOfWeek,
-	saved?: ProfessionalScheduleResponse,
-): ProfessionalScheduleItem {
-	if (saved) {
-		return {
-			dayOfWeek: day,
-			startTime: saved.startTime,
-			endTime: saved.endTime,
-			consultationDurationMinutes: saved.consultationDurationMinutes,
-			breakBetweenConsultationsMinutes: saved.breakBetweenConsultationsMinutes,
-			isActive: saved.isActive,
-		};
-	}
-	const isWeekend = day === "SATURDAY" || day === "SUNDAY";
-	return {
-		dayOfWeek: day,
-		startTime: "08:00",
-		endTime: "18:00",
-		consultationDurationMinutes: DEFAULT_DURATION,
-		breakBetweenConsultationsMinutes: DEFAULT_BREAK,
-		isActive: !isWeekend,
-	};
-}
 
 export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 	const [rows, setRows] = useState<ProfessionalScheduleItem[]>(() =>
-		DAYS_OF_WEEK.map((day) => {
-			const saved = savedSchedule.find((s) => s.dayOfWeek === day);
-			return buildDefaultRow(day, saved);
-		}),
+		DAYS_OF_WEEK.map((day) =>
+			buildDefaultRow(
+				day,
+				savedSchedule.find((s) => s.dayOfWeek === day),
+			),
+		),
 	);
 
 	useEffect(() => {
 		if (savedSchedule.length > 0) {
 			setRows(
-				DAYS_OF_WEEK.map((day) => {
-					const saved = savedSchedule.find((s) => s.dayOfWeek === day);
-					return buildDefaultRow(day, saved);
-				}),
+				DAYS_OF_WEEK.map((day) =>
+					buildDefaultRow(
+						day,
+						savedSchedule.find((s) => s.dayOfWeek === day),
+					),
+				),
 			);
 		}
 	}, [savedSchedule]);
@@ -79,9 +56,6 @@ export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 		}
 	}
 
-	const activeRows = rows.filter((r) => r.isActive);
-	const firstActive = activeRows[0];
-
 	function applyGlobalSettings(duration: number, breakTime: number) {
 		setRows((prev) =>
 			prev.map((r) => ({
@@ -91,6 +65,8 @@ export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 			})),
 		);
 	}
+
+	const firstActive = rows.find((r) => r.isActive);
 
 	return (
 		<div className="max-w-3xl space-y-6">
@@ -103,20 +79,7 @@ export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 				}
 				onApply={applyGlobalSettings}
 			/>
-
-			<div className="space-y-3">
-				<h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-					Dias da semana
-				</h3>
-				{rows.map((row) => (
-					<ScheduleDayRow
-						key={row.dayOfWeek}
-						row={row}
-						onChange={(patch) => updateRow(row.dayOfWeek, patch)}
-					/>
-				))}
-			</div>
-
+			<ScheduleDaysList rows={rows} onUpdate={updateRow} />
 			<Button
 				onClick={handleSave}
 				disabled={isPending}
