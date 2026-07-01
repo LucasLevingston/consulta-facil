@@ -1,22 +1,11 @@
-﻿"use client";
+"use client";
 
 import { CalendarDays, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
-
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { useClinicAppointments } from "@/features/appointments";
-import { STATUS_CLASS } from "@/utils/constants/appointment-status-class";
-import { STATUS_LABEL } from "@/utils/constants/appointment-status-label";
 import { ALL } from "@/utils/constants/filter-sentinels";
-import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import { ClinicAppointmentCard } from "./ClinicAppointmentCard";
+import { ClinicAppointmentsFilterBar } from "./ClinicAppointmentsFilterBar";
 import type { ClinicAppointmentsTabProps } from "./ClinicAppointmentsTab.types";
 
 export function ClinicAppointmentsTab({
@@ -57,50 +46,15 @@ export function ClinicAppointmentsTab({
 
 	return (
 		<div className="space-y-4">
-			<div className="flex flex-wrap items-center gap-2">
-				{isManager && (
-					<Select
-						value={filterProfessionalId}
-						onValueChange={setFilterProfessionalId}
-					>
-						<SelectTrigger className="w-[200px]">
-							<SelectValue placeholder="Todos os profissionais" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value={ALL}>Todos os profissionais</SelectItem>
-							{(clinic.members ?? []).map((m) => (
-								<SelectItem
-									key={m.professionalProfileId}
-									value={m.professionalProfileId}
-								>
-									{m.professionalName ??
-										SPECIALTY_LABELS[m.specialty] ??
-										m.specialty}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				)}
-
-				<Select value={filterStatus} onValueChange={setFilterStatus}>
-					<SelectTrigger className="w-[160px]">
-						<SelectValue placeholder="Todos os status" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value={ALL}>Todos os status</SelectItem>
-						{Object.entries(STATUS_LABEL).map(([key, label]) => (
-							<SelectItem key={key} value={key}>
-								{label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-
-				<p className="ml-auto text-sm text-muted-foreground">
-					{filtered.length} consulta{filtered.length !== 1 ? "s" : ""}
-				</p>
-			</div>
-
+			<ClinicAppointmentsFilterBar
+				isManager={isManager}
+				members={clinic.members ?? []}
+				filterProfessionalId={filterProfessionalId}
+				filterStatus={filterStatus}
+				filteredCount={filtered.length}
+				onProfessionalChange={setFilterProfessionalId}
+				onStatusChange={setFilterStatus}
+			/>
 			{filtered.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
 					<div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
@@ -116,41 +70,7 @@ export function ClinicAppointmentsTab({
 			) : (
 				<div className="space-y-2">
 					{filtered.map((appt) => (
-						<Card key={appt.id} className="transition-shadow hover:shadow-sm">
-							<CardContent className="flex flex-wrap items-center gap-3 p-4">
-								<div className="flex-1 min-w-0">
-									<div className="flex items-center gap-2 flex-wrap">
-										<p className="text-sm font-semibold truncate">
-											{appt.patientName ?? "Paciente"}
-										</p>
-										<Badge
-											variant="outline"
-											className={STATUS_CLASS[appt.status]}
-										>
-											{STATUS_LABEL[appt.status]}
-										</Badge>
-									</div>
-									<p className="mt-0.5 text-xs text-muted-foreground">
-										{appt.professionalName ?? "—"} ·{" "}
-										{appt.specialty
-											? (SPECIALTY_LABELS[appt.specialty] ?? appt.specialty)
-											: "—"}
-									</p>
-								</div>
-								<div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
-									<CalendarDays className="h-3.5 w-3.5" />
-									<span>
-										{new Date(appt.scheduledAt).toLocaleDateString("pt-BR", {
-											day: "2-digit",
-											month: "short",
-											year: "numeric",
-											hour: "2-digit",
-											minute: "2-digit",
-										})}
-									</span>
-								</div>
-							</CardContent>
-						</Card>
+						<ClinicAppointmentCard key={appt.id} appt={appt} />
 					))}
 				</div>
 			)}
