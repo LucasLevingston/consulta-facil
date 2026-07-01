@@ -1,31 +1,26 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
 import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
-import type {
-	ProfessionalsFiltersActions,
-	ProfessionalsLocationState,
-	ProfessionalsViewMode,
-} from "./use-professionals-filters.types";
+import type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
+import type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";
+import type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
+import { useProfessionalsLocation } from "./use-professionals-location";
 
-export type {
-	ProfessionalsFiltersActions,
-	ProfessionalsLocationState,
-	ProfessionalsViewMode,
-} from "./use-professionals-filters.types";
+export type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
+export type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";
+export type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
 
 export interface UseProfessionalsFiltersReturn {
 	viewMode: ProfessionalsViewMode;
 	location: ProfessionalsLocationState;
 	actions: ProfessionalsFiltersActions;
-	displayed: ReturnType<typeof useProfessionals>["data"] extends infer T
-		? T extends { content: infer C }
-			? C
-			: never[]
+	displayed: NonNullable<ReturnType<typeof useProfessionals>["data"]> extends { content: infer C }
+		? C
 		: never[];
 	professionalsWithLocation: UseProfessionalsFiltersReturn["displayed"];
 	totalElements: number;
@@ -40,7 +35,6 @@ export interface UseProfessionalsFiltersReturn {
 export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-
 	const name = searchParams.get("name") ?? "";
 	const profession = searchParams.get("profession") ?? "";
 	const specialty = searchParams.get("specialty") ?? "";
@@ -48,37 +42,22 @@ export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 	const state = searchParams.get("state") ?? "";
 	const page = Number(searchParams.get("page") ?? "0");
 
-	const [viewMode, setViewMode] = useState<ProfessionalsViewMode>("list");
-	const [userLocation, setUserLocation] = useState<{
-		lat: number;
-		lng: number;
-	} | null>(null);
-	const [locationLoading, setLocationLoading] = useState(false);
-	const [radiusKm, setRadiusKm] = useState(50);
-
-	const isNearbyMode = userLocation !== null;
+	const loc = useProfessionalsLocation();
+	const isNearbyMode = loc.userLocation !== null;
 
 	const {
 		data: pageData,
 		isLoading: listLoading,
 		error: listError,
-	} = useProfessionals(
-		page,
-		ITEMS_PER_PAGE,
-		profession,
-		specialty,
-		name,
-		serviceTitle,
-	);
-
+	} = useProfessionals(page, ITEMS_PER_PAGE, profession, specialty, name, serviceTitle);
 	const {
 		data: nearbyRaw = [],
 		isLoading: nearbyLoading,
 		error: nearbyError,
 	} = useProfessionalsNearby(
-		userLocation?.lat ?? null,
-		userLocation?.lng ?? null,
-		radiusKm,
+		loc.userLocation?.lat ?? null,
+		loc.userLocation?.lng ?? null,
+		loc.radiusKm,
 		specialty || undefined,
 		profession || undefined,
 	);
@@ -98,26 +77,9 @@ export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 		: state
 			? displayed.length
 			: (pageData?.totalElements ?? 0);
-
 	const professionalsWithLocation = displayed.filter(
 		(d) => d.latitude != null && d.longitude != null,
 	);
-
-	function requestLocation() {
-		if (!navigator.geolocation) return;
-		setLocationLoading(true);
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				setUserLocation({
-					lat: pos.coords.latitude,
-					lng: pos.coords.longitude,
-				});
-				setViewMode("map");
-				setLocationLoading(false);
-			},
-			() => setLocationLoading(false),
-		);
-	}
 
 	function goToPage(p: number) {
 		const params = new URLSearchParams(searchParams.toString());
@@ -126,13 +88,13 @@ export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 	}
 
 	return {
-		viewMode,
-		location: { userLocation, locationLoading, radiusKm },
+		viewMode: loc.viewMode,
+		location: loc,
 		actions: {
-			setViewMode,
-			setRadiusKm,
-			requestLocation,
-			clearLocation: () => setUserLocation(null),
+			setViewMode: loc.setViewMode,
+			setRadiusKm: loc.setRadiusKm,
+			requestLocation: loc.requestLocation,
+			clearLocation: loc.clearLocation,
 			goToPage,
 		},
 		displayed: displayed as UseProfessionalsFiltersReturn["displayed"],

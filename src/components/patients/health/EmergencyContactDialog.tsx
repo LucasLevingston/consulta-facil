@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -11,29 +10,13 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import {
 	type EmergencyContactInput,
 	emergencyContactSchema,
-	RELATIONSHIP_LABELS,
 	useAddEmergencyContact,
 	useUpdateEmergencyContact,
 } from "@/features/patients";
 import type { EmergencyContactDialogProps } from "./EmergencyContactDialog.types";
+import { EmergencyContactDialogForm } from "./EmergencyContactDialogForm";
 
 export type { ContactItem } from "./EmergencyContactDialog.types";
 
@@ -78,8 +61,6 @@ export function EmergencyContactDialog({
 		}
 	}
 
-	const isPending = add.isPending || update.isPending;
-
 	return (
 		<Dialog open={open} onOpenChange={(o) => !o && onClose()}>
 			<DialogContent>
@@ -88,90 +69,12 @@ export function EmergencyContactDialog({
 						{editing ? "Editar contato" : "Novo contato de emergência"}
 					</DialogTitle>
 				</DialogHeader>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-						<FormField
-							control={form.control}
-							name="name"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Nome</FormLabel>
-									<FormControl>
-										<Input placeholder="Maria Silva" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<div className="flex gap-4">
-							<FormField
-								control={form.control}
-								name="relationship"
-								render={({ field }) => (
-									<FormItem className="flex-1">
-										<FormLabel>Parentesco</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											value={field.value ?? ""}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Selecione" />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{Object.entries(RELATIONSHIP_LABELS).map(([k, v]) => (
-													<SelectItem key={k} value={k}>
-														{v}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="phone"
-								render={({ field }) => (
-									<FormItem className="flex-1">
-										<FormLabel>Telefone</FormLabel>
-										<FormControl>
-											<Input placeholder="(11) 99999-0000" {...field} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-						<FormField
-							control={form.control}
-							name="email"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>E-mail (opcional)</FormLabel>
-									<FormControl>
-										<Input
-											placeholder="contato@email.com"
-											{...field}
-											value={field.value ?? ""}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<div className="flex justify-end gap-2">
-							<Button type="button" variant="outline" onClick={onClose}>
-								Cancelar
-							</Button>
-							<Button type="submit" disabled={isPending}>
-								{isPending ? "Salvando..." : "Salvar"}
-							</Button>
-						</div>
-					</form>
-				</Form>
+				<EmergencyContactDialogForm
+					form={form}
+					onSubmit={onSubmit}
+					isPending={add.isPending || update.isPending}
+					onClose={onClose}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

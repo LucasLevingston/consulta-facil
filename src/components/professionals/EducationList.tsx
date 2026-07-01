@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { GraduationCap, Pencil, Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -15,25 +15,13 @@ import { useDeleteEducation } from "@/features/professionals";
 import { EducationDialog } from "./EducationDialog";
 import type { EducationItem } from "./EducationDialog.types";
 import type { EducationListProps } from "./EducationList.types";
+import { EducationListItem } from "./EducationListItem";
 
 export function EducationList({ professional }: EducationListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [editing, setEditing] = useState<EducationItem | undefined>();
 	const deleteEdu = useDeleteEducation();
-
 	const education = professional.education ?? [];
-
-	function openEdit(item: EducationItem) {
-		setEditing(item);
-		setDialogOpen(true);
-	}
-
-	function handleDelete(id: string) {
-		deleteEdu.mutate(id, {
-			onSuccess: () => toast.success("Formação removida."),
-			onError: () => toast.error("Erro ao remover."),
-		});
-	}
 
 	return (
 		<>
@@ -66,47 +54,26 @@ export function EducationList({ professional }: EducationListProps) {
 					) : (
 						<ul className="space-y-3">
 							{education.map((edu) => (
-								<li
+								<EducationListItem
 									key={edu.id}
-									className="flex items-start justify-between gap-4 rounded-lg border p-3"
-								>
-									<div className="flex items-start gap-3">
-										<GraduationCap className="mt-0.5 h-4 w-4 text-muted-foreground shrink-0" />
-										<div>
-											<p className="text-sm font-medium">{edu.institution}</p>
-											<p className="text-xs text-muted-foreground">
-												{edu.degree}
-												{edu.fieldOfStudy ? ` — ${edu.fieldOfStudy}` : ""}
-												{edu.graduationYear ? ` (${edu.graduationYear})` : ""}
-											</p>
-										</div>
-									</div>
-									<div className="flex gap-1 shrink-0">
-										<Button
-											size="icon"
-											variant="ghost"
-											className="h-7 w-7"
-											onClick={() => openEdit(edu)}
-										>
-											<Pencil className="h-3.5 w-3.5" />
-										</Button>
-										<Button
-											size="icon"
-											variant="ghost"
-											className="h-7 w-7 text-destructive hover:text-destructive"
-											onClick={() => edu.id && handleDelete(edu.id)}
-											disabled={deleteEdu.isPending}
-										>
-											<Trash2 className="h-3.5 w-3.5" />
-										</Button>
-									</div>
-								</li>
+									edu={edu}
+									onEdit={(item) => {
+										setEditing(item);
+										setDialogOpen(true);
+									}}
+									onDelete={(id) =>
+										deleteEdu.mutate(id, {
+											onSuccess: () => toast.success("Formação removida."),
+											onError: () => toast.error("Erro ao remover."),
+										})
+									}
+									deleting={deleteEdu.isPending}
+								/>
 							))}
 						</ul>
 					)}
 				</CardContent>
 			</Card>
-
 			<EducationDialog
 				open={dialogOpen}
 				onClose={() => setDialogOpen(false)}
