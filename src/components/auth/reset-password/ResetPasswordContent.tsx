@@ -1,11 +1,12 @@
-﻿"use client";
+"use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import ResetPasswordForm from "@/components/forms/auth/ResetPasswordForm";
 import { useResetPassword } from "@/features/auth";
+import { ResetPasswordInvalidLink } from "./ResetPasswordInvalidLink";
+import { ResetPasswordSuccessView } from "./ResetPasswordSuccessView";
 
 export function ResetPasswordContent() {
 	const searchParams = useSearchParams();
@@ -26,24 +27,7 @@ export function ResetPasswordContent() {
 		}
 	}
 
-	if (!token) {
-		return (
-			<div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-				<div className="w-full max-w-sm space-y-6 text-center">
-					<h2 className="text-2xl font-bold text-foreground">Link inválido</h2>
-					<p className="text-sm text-muted-foreground">
-						Este link de redefinição é inválido ou expirou.
-					</p>
-					<Link
-						href="/auth/forgot-password"
-						className="text-primary font-medium hover:underline text-sm"
-					>
-						Solicitar novo link
-					</Link>
-				</div>
-			</div>
-		);
-	}
+	if (!token) return <ResetPasswordInvalidLink />;
 
 	return (
 		<div className="flex flex-1 flex-col items-center justify-center px-6 py-12 lg:px-12">
@@ -68,42 +52,11 @@ export function ResetPasswordContent() {
 					Consulta Fácil
 				</span>
 			</div>
-
 			<div className="w-full max-w-sm space-y-8">
 				{done ? (
-					<div className="text-center space-y-6">
-						<div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
-							<svg
-								className="w-8 h-8 text-primary"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-								/>
-							</svg>
-						</div>
-						<div className="space-y-2">
-							<h2 className="text-2xl font-bold text-foreground">
-								Senha redefinida!
-							</h2>
-							<p className="text-sm text-muted-foreground">
-								Sua senha foi alterada com sucesso.
-							</p>
-						</div>
-						<button
-							type="button"
-							onClick={() => router.push("/auth/login")}
-							className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
-						>
-							Ir para o login
-						</button>
-					</div>
+					<ResetPasswordSuccessView
+						onGoToLogin={() => router.push("/auth/login")}
+					/>
 				) : (
 					<>
 						<div className="space-y-2">
@@ -120,9 +73,8 @@ export function ResetPasswordContent() {
 						/>
 					</>
 				)}
-
 				<div className="text-center">
-					<Link
+					<a
 						href="/auth/login"
 						className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
 					>
@@ -141,7 +93,7 @@ export function ResetPasswordContent() {
 							/>
 						</svg>
 						Voltar para o login
-					</Link>
+					</a>
 				</div>
 			</div>
 		</div>
