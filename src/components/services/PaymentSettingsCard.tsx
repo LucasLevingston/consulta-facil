@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreditCard } from "lucide-react";
@@ -12,39 +12,15 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Form } from "@/components/ui/form";
 import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import type { PaymentMethod, PaymentTiming } from "@/features/professionals";
-import {
-	PAYMENT_METHOD_LABELS,
 	type UpdatePaymentSettingsInput,
 	updatePaymentSettingsSchema,
 } from "@/features/professionals";
 import { useUpdatePaymentSettings } from "@/features/services";
-
-import { ALL_METHODS } from "@/utils/constants/payment-methods";
+import { PaymentMethodsField } from "./PaymentMethodsField";
 import type { PaymentSettingsCardProps } from "./PaymentSettingsCard.types";
-
-const TIMING_OPTIONS: { value: PaymentTiming; label: string; desc: string }[] =
-	[
-		{
-			value: "AT_SCHEDULING",
-			label: "No agendamento",
-			desc: "Paciente paga ao marcar a consulta",
-		},
-		{
-			value: "AT_CONSULTATION",
-			label: "Na consulta",
-			desc: "Paciente paga presencialmente no dia",
-		},
-	];
+import { PaymentTimingField } from "./PaymentTimingField";
 
 export function PaymentSettingsCard({
 	acceptedPaymentMethods,
@@ -84,86 +60,8 @@ export function PaymentSettingsCard({
 			<CardContent>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-						<FormField
-							control={form.control}
-							name="paymentTiming"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className="text-sm font-medium">
-										Momento do pagamento
-									</FormLabel>
-									<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-										{TIMING_OPTIONS.map((opt) => (
-											<button
-												key={opt.value}
-												type="button"
-												onClick={() => field.onChange(opt.value)}
-												className={`flex flex-col items-start gap-1 rounded-xl border p-3 text-left transition-colors ${
-													field.value === opt.value
-														? "border-primary bg-primary/5 text-primary"
-														: "border-border hover:border-primary/40"
-												}`}
-											>
-												<span className="text-sm font-semibold">
-													{opt.label}
-												</span>
-												<span className="text-xs text-muted-foreground">
-													{opt.desc}
-												</span>
-											</button>
-										))}
-									</div>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-
-						<FormField
-							control={form.control}
-							name="acceptedPaymentMethods"
-							render={() => (
-								<FormItem>
-									<FormLabel className="text-sm font-medium">
-										Métodos aceitos
-									</FormLabel>
-									<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-										{ALL_METHODS.map((method) => (
-											<FormField
-												key={method}
-												control={form.control}
-												name="acceptedPaymentMethods"
-												render={({ field }) => {
-													const checked = field.value.includes(method);
-													return (
-														<FormItem className="flex items-center gap-2 space-y-0 rounded-lg border border-border p-3">
-															<FormControl>
-																<Checkbox
-																	checked={checked}
-																	onCheckedChange={(val) => {
-																		const current =
-																			field.value as PaymentMethod[];
-																		field.onChange(
-																			val
-																				? [...current, method]
-																				: current.filter((m) => m !== method),
-																		);
-																	}}
-																/>
-															</FormControl>
-															<FormLabel className="cursor-pointer text-sm font-normal">
-																{PAYMENT_METHOD_LABELS[method]}
-															</FormLabel>
-														</FormItem>
-													);
-												}}
-											/>
-										))}
-									</div>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-
+						<PaymentTimingField control={form.control} />
+						<PaymentMethodsField control={form.control} />
 						<Button
 							type="submit"
 							disabled={isPending || !form.formState.isDirty}
