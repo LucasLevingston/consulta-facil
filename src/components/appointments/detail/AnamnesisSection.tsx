@@ -1,24 +1,15 @@
-﻿"use client";
+"use client";
 
-import { ClipboardList, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
-import { AnamnesisAIChat } from "@/components/anamnesis/AnamnesisAIChat";
 import { AnamnesisReadView } from "@/components/appointments/detail/AnamnesisReadView";
-import { MedicalRecordField } from "@/components/appointments/detail/MedicalRecordField";
-import { CustomButton } from "@/components/custom/custom-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
+import { Card, CardContent } from "@/components/ui/card";
 import type { AnamnesisInput } from "@/features/appointments";
 import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
+import { AnamnesisAIChatDialog } from "./AnamnesisAIChatDialog";
+import { AnamnesisEditForm } from "./AnamnesisEditForm";
 import type { AnamnesisSectionProps } from "./AnamnesisSection.types";
+import { AnamnesisSectionHeader } from "./AnamnesisSectionHeader";
 
 export function AnamnesisSection({
 	appointmentId,
@@ -65,80 +56,25 @@ export function AnamnesisSection({
 
 	return (
 		<Card>
-			<CardHeader>
-				<div className="flex items-center justify-between">
-					<CardTitle className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-						<ClipboardList className="h-4 w-4" />
-						Anamnese
-					</CardTitle>
-					{canEdit && !editing && (
-						<div className="flex gap-2">
-							{showAiHelper && (
-								<CustomButton
-									variant="outline"
-									size="sm"
-									className="gap-1.5"
-									onClick={() => setAiOpen(true)}
-								>
-									<Sparkles className="h-3.5 w-3.5 text-primary" />
-									Preencher com IA
-								</CustomButton>
-							)}
-							<CustomButton variant="outline" onClick={startEdit}>
-								{anamnesis ? "Editar" : "Preencher"}
-							</CustomButton>
-						</div>
-					)}
-				</div>
-			</CardHeader>
+			<AnamnesisSectionHeader
+				canEdit={canEdit}
+				editing={editing}
+				showAiHelper={!!showAiHelper}
+				hasAnamnesis={!!anamnesis}
+				onStartEdit={startEdit}
+				onOpenAi={() => setAiOpen(true)}
+			/>
 			<CardContent className="-mt-2">
 				{editing ? (
-					<div className="space-y-4">
-						<MedicalRecordField
-							label="Queixa principal"
-							value={form.chiefComplaint ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, chiefComplaint: v }))}
-						/>
-						<MedicalRecordField
-							label="Medicamentos em uso"
-							value={form.currentMedications ?? ""}
-							onChange={(v) =>
-								setForm((f) => ({ ...f, currentMedications: v }))
-							}
-						/>
-						<MedicalRecordField
-							label="Alergias"
-							value={form.allergies ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, allergies: v }))}
-						/>
-						<MedicalRecordField
-							label="Histórico médico"
-							value={form.medicalHistory ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, medicalHistory: v }))}
-						/>
-						<MedicalRecordField
-							label="Histórico familiar"
-							value={form.familyHistory ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, familyHistory: v }))}
-						/>
-						<MedicalRecordField
-							label="Observações"
-							value={form.observations ?? ""}
-							onChange={(v) => setForm((f) => ({ ...f, observations: v }))}
-						/>
-						<div className="flex gap-2 pt-1">
-							<CustomButton size="sm" onClick={handleSave} disabled={isPending}>
-								{isPending ? "Salvando..." : "Salvar"}
-							</CustomButton>
-							<CustomButton
-								variant="secondary"
-								size="sm"
-								onClick={() => setEditing(false)}
-							>
-								Cancelar
-							</CustomButton>
-						</div>
-					</div>
+					<AnamnesisEditForm
+						form={form}
+						isPending={isPending}
+						onSave={handleSave}
+						onCancel={() => setEditing(false)}
+						onChange={(field, value) =>
+							setForm((f) => ({ ...f, [field]: value }))
+						}
+					/>
 				) : anamnesis ? (
 					<AnamnesisReadView anamnesis={anamnesis} />
 				) : (
@@ -149,28 +85,14 @@ export function AnamnesisSection({
 					</p>
 				)}
 			</CardContent>
-
-			<Dialog open={aiOpen} onOpenChange={setAiOpen}>
-				<DialogContent className="sm:max-w-lg">
-					<DialogHeader className="mb-2 space-y-1">
-						<DialogTitle className="flex items-center gap-2">
-							<Sparkles className="h-4 w-4 text-primary" />
-							Preencher anamnese com IA
-						</DialogTitle>
-						<DialogDescription>
-							Responda às perguntas do assistente. Ao terminar, clique em
-							&ldquo;Salvar na anamnese&rdquo;.
-						</DialogDescription>
-					</DialogHeader>
-					<AnamnesisAIChat
-						onSave={async (data) => {
-							await save(data);
-							toast.success("Anamnese salva com sucesso!");
-						}}
-						onClose={() => setAiOpen(false)}
-					/>
-				</DialogContent>
-			</Dialog>
+			<AnamnesisAIChatDialog
+				open={aiOpen}
+				onOpenChange={setAiOpen}
+				onSave={async (data) => {
+					await save(data);
+					toast.success("Anamnese salva com sucesso!");
+				}}
+			/>
 		</Card>
 	);
 }
