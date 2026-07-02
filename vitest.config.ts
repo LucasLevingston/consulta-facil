@@ -7,6 +7,7 @@ export default defineConfig({
 		globals: true,
 		setupFiles: "./src/__tests__/setup.ts",
 		passWithNoTests: true,
+		exclude: ["node_modules/**", ".claude/**", "dist/**"],
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "html", "lcov"],
