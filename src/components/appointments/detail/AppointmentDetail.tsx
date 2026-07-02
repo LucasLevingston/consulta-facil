@@ -1,14 +1,12 @@
 "use client";
 
-import { XCircle } from "lucide-react";
 import { useState } from "react";
-
 import { VideoRoom } from "@/components/custom/VideoRoom";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePermission, useUserStore } from "@/features/auth";
 import { useRoomToken } from "@/features/video";
 import { AnamnesisSection } from "./AnamnesisSection";
+import { AppointmentCancellationCard } from "./AppointmentCancellationCard";
 import type { AppointmentDetailProps } from "./AppointmentDetail.types";
 import { AppointmentHeader } from "./AppointmentHeader";
 import { AppointmentPaymentSection } from "./AppointmentPaymentSection";
@@ -44,9 +42,7 @@ export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 	return (
 		<div className="mx-auto max-w-2xl space-y-6">
 			<AppointmentHeader appointment={appointment} />
-
 			<AppointmentProfessionalCard appointment={appointment} />
-
 			<AppointmentScheduleCard
 				appointment={appointment}
 				isPatient={isPatient}
@@ -56,7 +52,6 @@ export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 				videoRoom={videoRoom}
 				onVideoStart={handleVideoStart}
 			/>
-
 			{videoActive && videoRoom && (
 				<VideoRoom
 					room={videoRoom}
@@ -64,19 +59,16 @@ export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 					onEnd={() => setVideoActive(false)}
 				/>
 			)}
-
 			<ExamsSection
 				appointmentId={appointment.id}
 				isPatient={can("exam:review:patient")}
 				isProfessional={can("exam:manage")}
 			/>
-
 			<AnamnesisSection
 				appointmentId={appointment.id}
 				canEdit={can("appointment:anamnesis:save")}
 				showAiHelper={can("exam:review:patient")}
 			/>
-
 			<ProntuarioSection
 				appointmentId={appointment.id}
 				canEdit={can("clinical-note:edit:own", {
@@ -84,23 +76,10 @@ export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 					ownerId: appointment.professionalId,
 				})}
 			/>
-
 			{appointment.status === "CANCELED" && appointment.cancellationReason && (
-				<Card className="border-destructive/30 bg-destructive/5">
-					<CardHeader>
-						<CardTitle className="flex items-center gap-2 text-sm text-destructive/80 font-medium">
-							<XCircle className="h-4 w-4" />
-							Motivo do cancelamento
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="-mt-2">
-						<p className="text-sm">{appointment.cancellationReason}</p>
-					</CardContent>
-				</Card>
+				<AppointmentCancellationCard reason={appointment.cancellationReason} />
 			)}
-
 			{isPatient && <AppointmentPaymentSection appointment={appointment} />}
-
 			<AppointmentRatingSection appointment={appointment} canRate={canRate} />
 		</div>
 	);
