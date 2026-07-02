@@ -1,19 +1,13 @@
-﻿import { AlertCircle, FileText, Pill, Shield } from "lucide-react";
+import { AlertCircle, FileText, Pill } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { MedicalConsentBadges } from "./MedicalConsentBadges";
 import type { PatientMedicalRecordProps } from "./PatientMedicalRecord.types";
 
 export function PatientMedicalRecord({
 	medicalRecord,
 }: PatientMedicalRecordProps) {
-	const consentCount = [
-		medicalRecord.privacyConsent,
-		medicalRecord.treatmentConsent,
-		medicalRecord.disclosureConsent,
-	].filter(Boolean).length;
-
 	return (
 		<Card>
 			<CardHeader>
@@ -75,28 +69,11 @@ export function PatientMedicalRecord({
 					</>
 				)}
 
-				{consentCount > 0 && (
-					<>
-						<Separator />
-						<div className="flex flex-wrap gap-2">
-							{medicalRecord.privacyConsent && (
-								<Badge variant="outline" className="text-xs gap-1">
-									<Shield className="h-3 w-3" /> Privacidade
-								</Badge>
-							)}
-							{medicalRecord.treatmentConsent && (
-								<Badge variant="outline" className="text-xs gap-1">
-									<Shield className="h-3 w-3" /> Tratamento
-								</Badge>
-							)}
-							{medicalRecord.disclosureConsent && (
-								<Badge variant="outline" className="text-xs gap-1">
-									<Shield className="h-3 w-3" /> Divulgação
-								</Badge>
-							)}
-						</div>
-					</>
-				)}
+				<MedicalConsentBadges
+					privacyConsent={medicalRecord.privacyConsent}
+					treatmentConsent={medicalRecord.treatmentConsent}
+					disclosureConsent={medicalRecord.disclosureConsent}
+				/>
 			</CardContent>
 		</Card>
 	);

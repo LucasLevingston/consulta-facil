@@ -11,20 +11,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import {
-	DOCUMENT_TYPE_LABELS,
-	type DocumentType,
-	documentTypeSchema,
-	useUploadDocument,
-} from "@/features/patients";
+import { type DocumentType, useUploadDocument } from "@/features/patients";
 import type { UploadDialogProps } from "./DocumentPhotoGrid.types";
+import { DocumentTypeSelect } from "./DocumentTypeSelect";
 
 export function DocumentUploadDialog({
 	open,
@@ -65,21 +54,7 @@ export function DocumentUploadDialog({
 					)}
 					<div className="space-y-2">
 						<Label>Tipo de documento</Label>
-						<Select
-							value={docType}
-							onValueChange={(v) => setDocType(documentTypeSchema.parse(v))}
-						>
-							<SelectTrigger>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								{Object.entries(DOCUMENT_TYPE_LABELS).map(([k, v]) => (
-									<SelectItem key={k} value={k}>
-										{v}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
+						<DocumentTypeSelect value={docType} onChange={setDocType} />
 					</div>
 					<div className="space-y-2">
 						<Label>Descrição (opcional)</Label>
