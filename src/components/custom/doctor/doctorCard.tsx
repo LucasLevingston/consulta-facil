@@ -1,20 +1,14 @@
 "use client";
 
-import { FileCheck, Mail, Phone, Star, Stethoscope } from "lucide-react";
+import { Stethoscope } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
+import { DoctorCardInfo } from "./DoctorCardInfo";
 import type { DoctorCardProps } from "./doctorCard.types";
 
 export default function DoctorCard({
@@ -22,7 +16,6 @@ export default function DoctorCard({
 	isActiveAppointmentButton = true,
 }: DoctorCardProps) {
 	const router = useRouter();
-
 	const initials = doctor.name
 		? doctor.name
 				.split(" ")
@@ -31,25 +24,21 @@ export default function DoctorCard({
 				.slice(0, 2)
 				.toUpperCase()
 		: "?";
-
-	const rating = doctor.rating ?? null;
-	const consultationCount = doctor.consultationCount ?? 0;
-
 	return (
-		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200">
+		<Card className="flex w-full flex-col transition-shadow duration-200 hover:shadow-md">
 			<CardHeader className="flex flex-row items-center gap-4 pb-3">
 				<Avatar className="size-14 rounded-xl border border-border">
 					<AvatarImage
 						src={doctor.imageUrl ?? undefined}
 						alt={doctor.name ?? "Profissional"}
 					/>
-					<AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-sm">
+					<AvatarFallback className="rounded-xl bg-primary/10 text-sm font-bold text-primary">
 						{initials}
 					</AvatarFallback>
 				</Avatar>
 				<div className="min-w-0 flex-1">
 					<Link href={`/professionals/${doctor.id}`}>
-						<CardTitle className="text-base leading-tight hover:text-primary transition-colors truncate">
+						<CardTitle className="truncate text-base leading-tight transition-colors hover:text-primary">
 							{doctor.name ?? "Nome não informado"}
 						</CardTitle>
 					</Link>
@@ -60,39 +49,7 @@ export default function DoctorCard({
 					</Badge>
 				</div>
 			</CardHeader>
-
-			<CardContent className="grid gap-2 flex-1 pb-3">
-				{rating !== null && (
-					<div className="flex items-center gap-2 text-sm">
-						<Star className="size-3.5 shrink-0 fill-amber-400 text-amber-400" />
-						<span className="font-medium text-foreground">
-							{rating.toFixed(1)}
-						</span>
-						<span className="text-muted-foreground">
-							· {consultationCount} consulta{consultationCount !== 1 ? "s" : ""}
-						</span>
-					</div>
-				)}
-				{doctor.phone && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Phone className="size-3.5 shrink-0" />
-						<span className="truncate">{doctor.phone}</span>
-					</div>
-				)}
-				{doctor.email && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Mail className="size-3.5 shrink-0" />
-						<span className="truncate">{doctor.email}</span>
-					</div>
-				)}
-				{doctor.licenseNumber && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<FileCheck className="size-3.5 shrink-0" />
-						<span>CRM: {doctor.licenseNumber}</span>
-					</div>
-				)}
-			</CardContent>
-
+			<DoctorCardInfo doctor={doctor} />
 			{isActiveAppointmentButton && (
 				<CardFooter className="pt-0">
 					<CustomButton
