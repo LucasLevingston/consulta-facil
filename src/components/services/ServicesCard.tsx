@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Briefcase, Plus } from "lucide-react";
 import { useState } from "react";
@@ -22,12 +22,18 @@ import { useGetProfessionalServices } from "@/features/services";
 import { ServiceForm } from "./ServiceForm";
 import { ServiceRow } from "./ServiceRow";
 import type { ServicesCardProps } from "./ServicesCard.types";
+import { ServicesEditDialog } from "./ServicesEditDialog";
 
 export function ServicesCard({ professionalId }: ServicesCardProps) {
 	const { data: services = [], isLoading } =
 		useGetProfessionalServices(professionalId);
 	const [open, setOpen] = useState(false);
 	const [editing, setEditing] = useState<ProfessionalService | null>(null);
+
+	function closeDialog() {
+		setOpen(false);
+		setEditing(null);
+	}
 
 	return (
 		<Card>
@@ -56,7 +62,7 @@ export function ServicesCard({ professionalId }: ServicesCardProps) {
 								setOpen(true);
 							}}
 						>
-							<Plus className="h-4 w-4 mr-1" />
+							<Plus className="mr-1 h-4 w-4" />
 							Novo serviço
 						</Button>
 					</DialogTrigger>
@@ -89,29 +95,15 @@ export function ServicesCard({ professionalId }: ServicesCardProps) {
 						/>
 					))}
 				</div>
-
-				<Dialog
-					open={open && !!editing}
+				<ServicesEditDialog
+					editing={editing}
+					open={open}
 					onOpenChange={(v) => {
 						setOpen(v);
 						if (!v) setEditing(null);
 					}}
-				>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Editar serviço</DialogTitle>
-						</DialogHeader>
-						{editing && (
-							<ServiceForm
-								existing={editing}
-								onClose={() => {
-									setOpen(false);
-									setEditing(null);
-								}}
-							/>
-						)}
-					</DialogContent>
-				</Dialog>
+					onClose={closeDialog}
+				/>
 			</CardContent>
 		</Card>
 	);
