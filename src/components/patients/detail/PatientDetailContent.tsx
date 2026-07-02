@@ -14,16 +14,12 @@ import { PatientProfileCard } from "./PatientProfileCard";
 
 const TABS = ["info", "prontuario", "consultas"] as const;
 type Tab = (typeof TABS)[number];
-function isValidTab(v: string | null): v is Tab {
-	return TABS.includes(v as Tab);
-}
 
 export function PatientDetailContent({ id }: PatientDetailContentProps) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const activeTab: Tab = isValidTab(searchParams.get("tab"))
-		? (searchParams.get("tab") as Tab)
-		: "info";
+	const tab = searchParams.get("tab");
+	const activeTab: Tab = TABS.includes(tab as Tab) ? (tab as Tab) : "info";
 
 	const { data: patient, isLoading: loadingProfile } = usePatientProfile(id);
 	const { data: appointmentsPage, isLoading: loadingApps } =
