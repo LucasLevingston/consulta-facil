@@ -1,10 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLink, Globe, Save } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -14,49 +10,12 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import {
-	type UpdateSocialLinksInput,
-	updateSocialLinksSchema,
-	useUpdateSocialLinks,
-} from "@/features/professionals";
 import { SocialLinkField } from "./SocialLinkField";
 import type { SocialLinksFormProps } from "./SocialLinksForm.types";
+import { useSocialLinksForm } from "./useSocialLinksForm";
 
 export function SocialLinksForm({ professional }: SocialLinksFormProps) {
-	const { mutate, isPending } = useUpdateSocialLinks();
-
-	const form = useForm<UpdateSocialLinksInput>({
-		resolver: zodResolver(updateSocialLinksSchema),
-		defaultValues: {
-			instagramUrl: professional.instagramUrl ?? "",
-			linkedinUrl: professional.linkedinUrl ?? "",
-			websiteUrl: professional.websiteUrl ?? "",
-			facebookUrl: professional.facebookUrl ?? "",
-		},
-	});
-
-	useEffect(() => {
-		form.reset({
-			instagramUrl: professional.instagramUrl ?? "",
-			linkedinUrl: professional.linkedinUrl ?? "",
-			websiteUrl: professional.websiteUrl ?? "",
-			facebookUrl: professional.facebookUrl ?? "",
-		});
-	}, [professional, form]);
-
-	function onSubmit(data: UpdateSocialLinksInput) {
-		const payload = {
-			instagramUrl: data.instagramUrl || null,
-			linkedinUrl: data.linkedinUrl || null,
-			websiteUrl: data.websiteUrl || null,
-			facebookUrl: data.facebookUrl || null,
-		};
-		mutate(payload, {
-			onSuccess: () => toast.success("Redes sociais atualizadas!"),
-			onError: () => toast.error("Erro ao salvar links."),
-		});
-	}
-
+	const { form, isPending, onSubmit } = useSocialLinksForm({ professional });
 	return (
 		<Card>
 			<CardHeader>

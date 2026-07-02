@@ -1,12 +1,9 @@
 "use client";
 
-import { Check, X } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { useAcceptInvite, useDeclineInvite } from "@/features/notifications";
 import { cn } from "@/lib/utils/cn";
 import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
 import type { NotificationItemProps } from "./NotificationBell.types";
+import { NotificationInviteActions } from "./NotificationInviteActions";
 
 function timeAgo(dateStr: string) {
 	const diff = Date.now() - new Date(dateStr).getTime();
@@ -19,8 +16,6 @@ function timeAgo(dateStr: string) {
 }
 
 export function NotificationItem({ notification }: NotificationItemProps) {
-	const accept = useAcceptInvite();
-	const decline = useDeclineInvite();
 	const isPending = notification.status === "PENDING";
 	const {
 		icon: Icon,
@@ -59,47 +54,11 @@ export function NotificationItem({ notification }: NotificationItemProps) {
 					<div className="h-2 w-2 shrink-0 rounded-full bg-primary mt-1" />
 				)}
 			</div>
-			{notification.type === "CLINIC_INVITE" && isPending && (
-				<div className="flex gap-2 pl-9">
-					<Button
-						size="sm"
-						className="h-7 rounded-lg px-3 text-xs"
-						disabled={accept.isPending || decline.isPending}
-						onClick={() =>
-							accept.mutate(notification.id, {
-								onSuccess: () => toast.success("Você entrou na clínica!"),
-								onError: () => toast.error("Erro ao aceitar convite."),
-							})
-						}
-					>
-						<Check className="mr-1 h-3 w-3" />
-						Aceitar
-					</Button>
-					<Button
-						size="sm"
-						variant="outline"
-						className="h-7 rounded-lg px-3 text-xs"
-						disabled={accept.isPending || decline.isPending}
-						onClick={() =>
-							decline.mutate(notification.id, {
-								onSuccess: () => toast.info("Convite recusado."),
-								onError: () => toast.error("Erro ao recusar convite."),
-							})
-						}
-					>
-						<X className="mr-1 h-3 w-3" />
-						Recusar
-					</Button>
-				</div>
-			)}
-			{notification.status === "ACCEPTED" && (
-				<p className="pl-9 text-xs text-emerald-600 dark:text-emerald-400">
-					Convite aceito
-				</p>
-			)}
-			{notification.status === "DECLINED" && (
-				<p className="pl-9 text-xs text-muted-foreground">Convite recusado</p>
-			)}
+			<NotificationInviteActions
+				notificationId={notification.id}
+				type={notification.type}
+				status={notification.status}
+			/>
 		</div>
 	);
 }
