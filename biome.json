@@ -16,6 +16,9 @@
       "includes": ["src/components/ui/**", "src/lib/api/generated/**"],
       "linter": {
         "enabled": false
+      },
+      "assist": {
+        "enabled": false
       }
     },
     {

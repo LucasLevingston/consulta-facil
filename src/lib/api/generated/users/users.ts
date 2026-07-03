@@ -5,7 +5,7 @@
  * API para agendamento de consultas médicas com autenticação JWT
  * OpenAPI spec version: 1.0.0
  */
-
+import { useQuery } from "@tanstack/react-query";
 import type {
 	DataTag,
 	DefinedInitialDataOptions,
@@ -17,9 +17,10 @@ import type {
 	UseQueryOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
-import { customInstance } from "../../mutator";
+
 import type { UploadAvatarBody, UserResponseDTO } from "../model";
+
+import { customInstance } from "../../mutator";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 

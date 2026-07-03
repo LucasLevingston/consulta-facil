@@ -4,11 +4,6 @@ import { useMemo, useState } from "react";
 import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
 import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
-import type { LabFilterDerived } from "./LabFilterDerived.types";
-import type { LabFilterOptions } from "./LabFilterOptions.types";
-import type { LabFilterState } from "./LabFilterState.types";
-import type { LabFiltersActions } from "./LabFiltersActions.types";
-import type { LabLocationState } from "./LabLocationState.types";
 import type { UseLabFiltersReturn } from "./UseLabFiltersReturn.types";
 import { useLabLocation } from "./use-lab-location";
 

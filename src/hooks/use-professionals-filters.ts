@@ -6,9 +6,6 @@ import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
 import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
-import type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
-import type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";
-import type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
 import type { UseProfessionalsFiltersReturn } from "./UseProfessionalsFiltersReturn.types";
 import { useProfessionalsLocation } from "./use-professionals-location";
 
