@@ -22,14 +22,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: HUSKY=0 npm ci
 
       - name: '[SOLID] Verificar violações SOLID/SRP'
         run: |
           MAX_LINES=100
           FOUND=0
 
-          for file in $(find src -name "*.ts" -o -name "*.tsx" | grep -v generated | grep -v "components/ui/"); do
+          while IFS= read -r file; do
             content=$(cat "$file" 2>/dev/null)
 
             # 1. Tamanho
@@ -44,7 +44,7 @@ jobs:
             case "$file" in
               *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js) ;;
               *)
-                n=$(printf '%s\n' "$content" | grep -E "^export (default )?(async )?function [A-Za-z]|^export const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" | wc -l)
+                n=$(printf '%s\n' "$content" | grep -cE "^export (default )?(async )?function [A-Za-z]|^export const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" || true)
                 if [ "$n" -gt 1 ]; then
                   echo "BLOCKED [SRP-FN] $file — $n funções exportadas (máx 1)"
                   FOUND=1
@@ -54,7 +54,7 @@ jobs:
             # 3. Constantes uppercase fora de constants/
             case "$file" in *constants*|*Constants*) ;;
               *)
-                n=$(printf '%s\n' "$content" | grep -E "^export const [A-Z][A-Z0-9_]{2,}" | wc -l)
+                n=$(printf '%s\n' "$content" | grep -cE "^export const [A-Z][A-Z0-9_]{2,}" || true)
                 if [ "$n" -gt 0 ]; then
                   echo "BLOCKED [CONSTANTS] $file — $n constante(s) uppercase fora de constants/"
                   FOUND=1
@@ -62,44 +62,42 @@ jobs:
             esac
 
             # 4. Props inline em TSX
-            case "$file" in
-              *.tsx)
-                case "$file" in *.types.*|*.props.*|*types.ts|*props.ts|*/ui/*) ;;
-                  *)
-                    n=$(printf '%s\n' "$content" | grep -E "^(export )?(interface|type) [A-Za-z]+Props" | wc -l)
-                    if [ "$n" -gt 0 ]; then
-                      echo "BLOCKED [PROPS] $file — Props inline"
-                      FOUND=1
-                    fi ;;
-                esac ;;
+            case "$file" in *.tsx)
+              case "$file" in *.types.*|*.props.*|*types.ts|*props.ts|*/ui/*) ;;
+                *)
+                  n=$(printf '%s\n' "$content" | grep -cE "^(export )?(interface|type) [A-Za-z]+Props" || true)
+                  if [ "$n" -gt 0 ]; then
+                    echo "BLOCKED [PROPS] $file — Props inline"
+                    FOUND=1
+                  fi ;;
+              esac ;;
             esac
 
-            # 5. Funções utilitárias em componente TSX
-            case "$file" in
-              *.tsx)
-                case "$file" in */hooks/*|*utils*|*helpers*|*functions*) ;;
-                  *)
-                    n=$(printf '%s\n' "$content" | grep -E "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" | wc -l)
-                    if [ "$n" -gt 0 ]; then
-                      echo "BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s)"
-                      FOUND=1
-                    fi ;;
-                esac ;;
+            # 5. Funções utilitárias em TSX
+            case "$file" in *.tsx)
+              case "$file" in */hooks/*|*utils*|*helpers*|*functions*) ;;
+                *)
+                  n=$(printf '%s\n' "$content" | grep -cE "^export (function [a-z]|const [a-z][a-zA-Z]+ = (async )?\()" || true)
+                  if [ "$n" -gt 0 ]; then
+                    echo "BLOCKED [FUNCTIONS] $file — $n função(ões) utilitária(s)"
+                    FOUND=1
+                  fi ;;
+              esac ;;
             esac
 
             # 6. Tipos em .api.ts
-            case "$file" in
-              *.api.ts)
-                case "$file" in *generated*) ;;
-                  *)
-                    n=$(printf '%s\n' "$content" | grep -E "^export (interface [A-Za-z]|type [A-Za-z][A-Za-z0-9]*[ =<])" | wc -l)
-                    if [ "$n" -gt 0 ]; then
-                      echo "BLOCKED [API-TYPES] $file — $n tipo(s) em .api.ts"
-                      FOUND=1
-                    fi ;;
-                esac ;;
+            case "$file" in *.api.ts)
+              case "$file" in *generated*) ;;
+                *)
+                  n=$(printf '%s\n' "$content" | grep -cE "^export (interface [A-Za-z]|type [A-Za-z][A-Za-z0-9]*[ =<])" || true)
+                  if [ "$n" -gt 0 ]; then
+                    echo "BLOCKED [API-TYPES] $file — $n tipo(s) em .api.ts"
+                    FOUND=1
+                  fi ;;
+              esac ;;
             esac
-          done
+
+          done < <(find src \( -name "*.ts" -o -name "*.tsx" \) -not -path "*/generated/*" -not -path "*/components/ui/*")
 
           if [ "$FOUND" -eq 1 ]; then
             echo ""
@@ -115,7 +113,7 @@ jobs:
         run: npx tsc --noEmit
 
       - name: '[2/4] Lint + format (Biome)'
-        run: npx biome check src/
+        run: npm run lint
 
       - name: '[3/4] Testes com cobertura'
         run: npm run test:coverage
