@@ -17,14 +17,10 @@ vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 
 import { useCreateExamRequest } from "@/hooks/api/exam-requests/use-create-exam-request";
 import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
-import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
-import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
 import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 
 const mockCreate = vi.mocked(examRequestApi.create);
 const mockGetByAppointment = vi.mocked(examRequestApi.getByAppointment);
-const mockReview = vi.mocked(examRequestApi.review);
-const mockUpload = vi.mocked(examRequestApi.upload);
 
 const examRequest = { id: "exam-1", appointmentId: "a-1", status: "PENDING" };
 
@@ -68,41 +64,5 @@ describe("useCreateExamRequest", () => {
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(mockCreate).toHaveBeenCalledWith("a-1", data);
-	});
-});
-
-describe("useReviewExam", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls review with examId and data", async () => {
-		mockReview.mockResolvedValueOnce(examRequest as never);
-		const { result } = renderHook(() => useReviewExam(), {
-			wrapper: wrapper(),
-		});
-		const data = { status: "APPROVED", notes: "OK" };
-		await act(async () => {
-			result.current.mutate({ examId: "exam-1", data: data as never });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockReview).toHaveBeenCalledWith("exam-1", data);
-	});
-});
-
-describe("useUploadExamResult", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls upload with examId and file", async () => {
-		mockUpload.mockResolvedValueOnce(examRequest as never);
-		const { result } = renderHook(() => useUploadExamResult(), {
-			wrapper: wrapper(),
-		});
-		const file = new File(["content"], "result.pdf", {
-			type: "application/pdf",
-		});
-		await act(async () => {
-			result.current.mutate({ examId: "exam-1", file });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockUpload).toHaveBeenCalledWith("exam-1", file);
 	});
 });

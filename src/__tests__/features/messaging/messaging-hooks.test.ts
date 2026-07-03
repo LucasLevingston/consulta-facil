@@ -1,0 +1,67 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { renderHook } from "@testing-library/react";
+import { createElement } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("@/features/messaging/repositories/messaging.repository", () => ({
+	messagingRepository: {
+		list: vi.fn().mockResolvedValue([]),
+		getHistory: vi.fn().mockResolvedValue({ content: [], totalPages: 0 }),
+		getOrCreate: vi.fn().mockResolvedValue({}),
+		markAsRead: vi.fn().mockResolvedValue(undefined),
+	},
+}));
+
+import { useConversationHistory } from "@/features/messaging/hooks/use-conversation-history";
+import { useConversations } from "@/features/messaging/hooks/use-conversations";
+import { useMarkAsRead } from "@/features/messaging/hooks/use-mark-as-read";
+import { useStartConversation } from "@/features/messaging/hooks/use-start-conversation";
+
+function makeWrapper() {
+	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+	return ({ children }: { children: React.ReactNode }) =>
+		createElement(QueryClientProvider, { client: qc }, children);
+}
+
+describe("messaging hooks", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	it("useConversations returns data and isLoading", () => {
+		const { result } = renderHook(() => useConversations(), {
+			wrapper: makeWrapper(),
+		});
+		expect(result.current).toHaveProperty("data");
+		expect(result.current).toHaveProperty("isLoading");
+	});
+
+	it("useConversationHistory with id returns data and isLoading", () => {
+		const { result } = renderHook(() => useConversationHistory("conv-1"), {
+			wrapper: makeWrapper(),
+		});
+		expect(result.current).toHaveProperty("data");
+		expect(result.current).toHaveProperty("isLoading");
+	});
+
+	it("useConversationHistory with null id stays disabled", () => {
+		const { result } = renderHook(() => useConversationHistory(null), {
+			wrapper: makeWrapper(),
+		});
+		expect(result.current.fetchStatus).toBe("idle");
+	});
+
+	it("useStartConversation returns mutate and isPending", () => {
+		const { result } = renderHook(() => useStartConversation(), {
+			wrapper: makeWrapper(),
+		});
+		expect(typeof result.current.mutate).toBe("function");
+		expect(result.current.isPending).toBe(false);
+	});
+
+	it("useMarkAsRead returns mutate and isPending", () => {
+		const { result } = renderHook(() => useMarkAsRead(), {
+			wrapper: makeWrapper(),
+		});
+		expect(typeof result.current.mutate).toBe("function");
+		expect(result.current.isPending).toBe(false);
+	});
+});

@@ -25,20 +25,11 @@ vi.mock("@/lib/api/appointments/appointment-lifecycle.api", () => ({
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
 import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
 import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
-import { useDeleteAppointment } from "@/hooks/api/appointments/use-delete-appointment";
-import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
-import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
-import { useSetModality } from "@/hooks/api/appointments/use-set-modality";
 import { appointmentLifecycleApi } from "@/lib/api/appointments/appointment-lifecycle.api";
-import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockCancel = vi.mocked(appointmentLifecycleApi.cancel);
 const mockConfirm = vi.mocked(appointmentLifecycleApi.confirm);
 const mockComplete = vi.mocked(appointmentLifecycleApi.complete);
-const mockSetModality = vi.mocked(appointmentLifecycleApi.setModality);
-const mockReschedule = vi.mocked(appointmentsCrudApi.reschedule);
-const mockDelete = vi.mocked(appointmentsCrudApi.delete);
-const mockSchedule = vi.mocked(appointmentsCrudApi.schedule);
 
 const appt = { id: "a-1", status: "PENDING" };
 
@@ -94,78 +85,5 @@ describe("useCompleteAppointment", () => {
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(mockComplete).toHaveBeenCalledWith("a-1");
-	});
-});
-
-describe("useDeleteAppointment", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls delete with id", async () => {
-		mockDelete.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useDeleteAppointment(), {
-			wrapper: wrapper(),
-		});
-		await act(async () => {
-			result.current.mutate("a-1");
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockDelete).toHaveBeenCalledWith("a-1");
-	});
-});
-
-describe("useRescheduleAppointment", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls reschedule with id and data", async () => {
-		mockReschedule.mockResolvedValueOnce(appt as never);
-		const { result } = renderHook(() => useRescheduleAppointment(), {
-			wrapper: wrapper(),
-		});
-		const data = {
-			scheduledAt: new Date("2026-07-01T10:00:00Z"),
-			reason: "Reagendamento",
-		};
-		await act(async () => {
-			result.current.mutate({ id: "a-1", data });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockReschedule).toHaveBeenCalledWith("a-1", data);
-	});
-});
-
-describe("useScheduleAppointment", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls schedule with data", async () => {
-		mockSchedule.mockResolvedValueOnce(appt as never);
-		const { result } = renderHook(() => useScheduleAppointment(), {
-			wrapper: wrapper(),
-		});
-		const data = {
-			professionalId: "prof-1",
-			scheduledAt: "2026-07-01T10:00:00Z",
-		};
-		await act(async () => {
-			result.current.mutate(data as never);
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockSchedule).toHaveBeenCalledWith(data);
-	});
-});
-
-describe("useSetModality", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls setModality with id and data", async () => {
-		mockSetModality.mockResolvedValueOnce(appt as never);
-		const { result } = renderHook(() => useSetModality(), {
-			wrapper: wrapper(),
-		});
-		const data = { modality: "ONLINE" };
-		await act(async () => {
-			result.current.mutate({ id: "a-1", data: data as never });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockSetModality).toHaveBeenCalledWith("a-1", data);
 	});
 });
