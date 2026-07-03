@@ -4,8 +4,8 @@ import { Settings } from "lucide-react";
 
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
-import ProfessionalDetailsForm from "@/components/forms/DoctorDetails/ProfessionalDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
+import ProfessionalDetailsForm from "@/components/forms/ProfessionalDetails/ProfessionalDetailsForm";
 import { DocumentPhotoGrid } from "@/components/patients/health/DocumentPhotoGrid";
 import { EmergencyContactList } from "@/components/patients/health/EmergencyContactList";
 import { MedicalHealthForm } from "@/components/patients/health/MedicalHealthForm";

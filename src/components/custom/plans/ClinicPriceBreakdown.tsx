@@ -24,10 +24,11 @@ export function ClinicPriceBreakdown({ extraProfessionals, calcPrice }: Props) {
 				Base ({FREE_PROFESSIONALS} profissionais): R$ {fmtBRL(BASE_PRICE)}
 			</p>
 			{Array.from({ length: extraProfessionals }, (_, i) => {
-				const doctorNumber = FREE_PROFESSIONALS + i + 1;
+				const professionalNumber = FREE_PROFESSIONALS + i + 1;
 				return (
-					<p key={doctorNumber}>
-						{doctorNumber}º profissional (+20%): R$ {fmtBRL(BASE_PRICE * 0.2)}
+					<p key={professionalNumber}>
+						{professionalNumber}º profissional (+20%): R${" "}
+						{fmtBRL(BASE_PRICE * 0.2)}
 					</p>
 				);
 			})}

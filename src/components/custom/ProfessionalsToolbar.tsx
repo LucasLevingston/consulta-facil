@@ -1,7 +1,7 @@
 "use client";
 
 import { LayoutList, MapIcon } from "lucide-react";
-import DoctorFilters from "@/components/custom/doctor/DoctorFilters";
+import ProfessionalFilters from "@/components/custom/professional/ProfessionalFilters";
 import { Button } from "@/components/ui/button";
 import { ProfessionalsNearbyControl } from "./ProfessionalsNearbyControl";
 
@@ -30,7 +30,7 @@ export function ProfessionalsToolbar({
 }: Props) {
 	return (
 		<div className="flex flex-wrap items-start justify-between gap-3">
-			<DoctorFilters />
+			<ProfessionalFilters />
 			<div className="flex shrink-0 items-center gap-2">
 				<ProfessionalsNearbyControl
 					isNearbyMode={isNearbyMode}

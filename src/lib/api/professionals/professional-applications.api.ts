@@ -1,7 +1,7 @@
 import { api } from "@/config/api";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
-import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
+import type { CreateProfessionalInput } from "@/lib/schemas/professional/create-professional.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
 
 export const professionalApplicationsApi = {
 	create: async (

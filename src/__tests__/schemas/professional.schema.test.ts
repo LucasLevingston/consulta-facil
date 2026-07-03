@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { createDoctorSchema } from "@/lib/schemas/doctor/create-professional.schema";
+import { createProfessionalSchema } from "@/lib/schemas/professional/create-professional.schema";
 
-describe("createDoctorSchema", () => {
+describe("createProfessionalSchema", () => {
 	const valid = {
 		profession: "MEDICO",
 		specialty: "CARDIOLOGIA",
@@ -10,11 +10,11 @@ describe("createDoctorSchema", () => {
 	};
 
 	it("aceita dados mínimos válidos", () => {
-		expect(createDoctorSchema.safeParse(valid).success).toBe(true);
+		expect(createProfessionalSchema.safeParse(valid).success).toBe(true);
 	});
 
 	it("aceita todos os campos opcionais", () => {
-		const result = createDoctorSchema.safeParse({
+		const result = createProfessionalSchema.safeParse({
 			...valid,
 			name: "Dr. João Silva",
 			email: "joao@clinica.com",
@@ -24,13 +24,16 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita especialidade com menos de 3 caracteres", () => {
-		const result = createDoctorSchema.safeParse({ ...valid, specialty: "AB" });
+		const result = createProfessionalSchema.safeParse({
+			...valid,
+			specialty: "AB",
+		});
 		expect(result.success).toBe(false);
 		expect(result.error?.flatten().fieldErrors.specialty).toBeDefined();
 	});
 
 	it("rejeita especialidade com mais de 100 caracteres", () => {
-		const result = createDoctorSchema.safeParse({
+		const result = createProfessionalSchema.safeParse({
 			...valid,
 			specialty: "A".repeat(101),
 		});
@@ -39,7 +42,7 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita número de registro com menos de 5 caracteres", () => {
-		const result = createDoctorSchema.safeParse({
+		const result = createProfessionalSchema.safeParse({
 			...valid,
 			licenseNumber: "CRM1",
 		});
@@ -48,7 +51,7 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita número de registro com mais de 50 caracteres", () => {
-		const result = createDoctorSchema.safeParse({
+		const result = createProfessionalSchema.safeParse({
 			...valid,
 			licenseNumber: "A".repeat(51),
 		});
@@ -57,7 +60,7 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita e-mail inválido quando fornecido", () => {
-		const result = createDoctorSchema.safeParse({
+		const result = createProfessionalSchema.safeParse({
 			...valid,
 			email: "nao-e-email",
 		});
@@ -66,6 +69,6 @@ describe("createDoctorSchema", () => {
 	});
 
 	it("rejeita objeto sem campos obrigatórios", () => {
-		expect(createDoctorSchema.safeParse({}).success).toBe(false);
+		expect(createProfessionalSchema.safeParse({}).success).toBe(false);
 	});
 });

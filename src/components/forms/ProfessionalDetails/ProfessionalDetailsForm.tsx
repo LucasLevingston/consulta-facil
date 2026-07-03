@@ -5,7 +5,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useProfessionalDetailsForm } from "@/hooks/use-doctor-details-form";
+import { useProfessionalDetailsForm } from "@/hooks/use-professional-details-form";
 import type { ProfessionalDetailsProps } from "./ProfessionalDetailsForm.types";
 import { ProfessionalPersonalFields } from "./ProfessionalPersonalFields";
 

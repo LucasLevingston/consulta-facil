@@ -12,16 +12,18 @@ vi.mock("@/hooks/api/professionals/use-professionals", () => ({
 vi.mock("@/hooks/api/professionals/use-professionals-nearby", () => ({
 	useProfessionalsNearby: vi.fn(),
 }));
-vi.mock("@/components/custom/doctor/DoctorFilters", () => ({
-	default: () => <div data-testid="doctor-filters" />,
+vi.mock("@/components/custom/professional/ProfessionalFilters", () => ({
+	default: () => <div data-testid="professional-filters" />,
 }));
-vi.mock("@/components/custom/doctor/DoctorsClientList", () => ({
-	default: ({ doctors }: { doctors: unknown[] }) => (
-		<div data-testid="doctors-list">{doctors.length} doutores</div>
+vi.mock("@/components/custom/professional/ProfessionalsList", () => ({
+	default: ({ professionals }: { professionals: unknown[] }) => (
+		<div data-testid="professionals-list">
+			{professionals.length} profissionais
+		</div>
 	),
 }));
-vi.mock("@/components/custom/map/DoctorsMap", () => ({
-	DoctorsMap: () => <div data-testid="doctors-map" />,
+vi.mock("@/components/custom/map/ProfessionalsMap", () => ({
+	ProfessionalsMap: () => <div data-testid="professionals-map" />,
 }));
 vi.mock("@/providers/query-boundary", () => ({
 	QueryBoundary: ({
@@ -54,7 +56,6 @@ import { useProfessionalsNearby } from "@/hooks/api/professionals/use-profession
 
 const mockUseProfessionals = vi.mocked(useProfessionals);
 const mockUseProfessionalsNearby = vi.mocked(useProfessionalsNearby);
-
 const emptyPage = {
 	data: { content: [], totalPages: 1, totalElements: 0 },
 	isLoading: false,
@@ -70,25 +71,10 @@ function setupMocks() {
 	} as never);
 }
 
-describe("ProfessionalsContent", () => {
+describe("ProfessionalsContent — pagination and map", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		setupMocks();
-	});
-
-	it("renders page header", () => {
-		render(<ProfessionalsContent />);
-		expect(screen.getByText("Profissionais")).toBeInTheDocument();
-	});
-
-	it("renders DoctorFilters", () => {
-		render(<ProfessionalsContent />);
-		expect(screen.getByTestId("doctor-filters")).toBeInTheDocument();
-	});
-
-	it("shows list view by default", () => {
-		render(<ProfessionalsContent />);
-		expect(screen.getByTestId("doctors-list")).toBeInTheDocument();
 	});
 
 	it("shows pagination in list mode", () => {
@@ -103,32 +89,10 @@ describe("ProfessionalsContent", () => {
 
 	it("switches to map view when map button clicked", async () => {
 		render(<ProfessionalsContent />);
-		const buttons = screen.getAllByRole("button");
-		const _mapBtn = buttons.find((b) => b.querySelector("svg"));
 		const viewButtons = screen
 			.getAllByRole("button")
 			.filter((b) => b.className.includes("rounded-none"));
 		await userEvent.click(viewButtons[1]);
-		expect(screen.getByTestId("doctors-map")).toBeInTheDocument();
-	});
-
-	it("shows loading state", () => {
-		mockUseProfessionals.mockReturnValue({
-			data: null,
-			isLoading: true,
-			error: null,
-		} as never);
-		render(<ProfessionalsContent />);
-		expect(screen.getByTestId("loading")).toBeInTheDocument();
-	});
-
-	it("shows error state", () => {
-		mockUseProfessionals.mockReturnValue({
-			data: null,
-			isLoading: false,
-			error: new Error("fail"),
-		} as never);
-		render(<ProfessionalsContent />);
-		expect(screen.getByTestId("error")).toBeInTheDocument();
+		expect(screen.getByTestId("professionals-map")).toBeInTheDocument();
 	});
 });

@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/custom/doctor/DoctorFilters", () => ({
-	default: () => <div>doctor-filters</div>,
+vi.mock("@/components/custom/professional/ProfessionalFilters", () => ({
+	default: () => <div>professional-filters</div>,
 }));
 vi.mock("@/components/custom/ProfessionalsNearbyControl", () => ({
 	ProfessionalsNearbyControl: () => <div>nearby-control</div>,
@@ -37,9 +37,9 @@ const base = {
 };
 
 describe("ProfessionalsToolbar", () => {
-	it("renders DoctorFilters", () => {
+	it("renders ProfessionalFilters", () => {
 		render(<ProfessionalsToolbar {...base} />);
-		expect(screen.getByText("doctor-filters")).toBeInTheDocument();
+		expect(screen.getByText("professional-filters")).toBeInTheDocument();
 	});
 
 	it("renders NearbyControl", () => {

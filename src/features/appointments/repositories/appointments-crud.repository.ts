@@ -5,7 +5,7 @@ import type { CancelAppointmentInput } from "@/lib/schemas/appointment/cancel-ap
 import type { CreateAppointmentInput } from "@/lib/schemas/appointment/create-appointment.schema";
 import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment/reschedule-appointment.schema";
 import type { SetModalityInput } from "@/lib/schemas/appointment/set-modality.schema";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
 
 export const appointmentsCrudRepo = {
 	schedule: async (

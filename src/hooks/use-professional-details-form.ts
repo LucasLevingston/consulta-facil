@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-import { ProfessionalFormValidation } from "@/components/forms/DoctorDetails/FormValidation";
-import type { ProfessionalDetailsProps } from "@/components/forms/DoctorDetails/ProfessionalDetailsForm.types";
+import { ProfessionalFormValidation } from "@/components/forms/ProfessionalDetails/FormValidation";
+import type { ProfessionalDetailsProps } from "@/components/forms/ProfessionalDetails/ProfessionalDetailsForm.types";
 import { useCreateProfessional, useUpdateProfessional } from "@/features/professionals";
 import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants/profession-specialties";
 

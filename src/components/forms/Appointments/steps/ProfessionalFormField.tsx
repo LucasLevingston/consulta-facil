@@ -20,18 +20,18 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { DoctorComboboxTrigger } from "./DoctorComboboxTrigger";
-import type { DoctorFormFieldProps } from "./DoctorFormField.types";
-import { DoctorOption } from "./DoctorOption";
+import { ProfessionalComboboxTrigger } from "./ProfessionalComboboxTrigger";
+import type { ProfessionalFormFieldProps } from "./ProfessionalFormField.types";
+import { ProfessionalOption } from "./ProfessionalOption";
 
-export function DoctorFormField({
+export function ProfessionalFormField({
 	control,
 	professionals,
 	professionalsLoading,
 	professionalIdParam,
 	selectedProfessional,
-	onDoctorSelect,
-}: DoctorFormFieldProps) {
+	onProfessionalSelect,
+}: ProfessionalFormFieldProps) {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -43,7 +43,7 @@ export function DoctorFormField({
 					<FormControl>
 						<Popover open={open} onOpenChange={setOpen}>
 							<PopoverTrigger asChild>
-								<DoctorComboboxTrigger
+								<ProfessionalComboboxTrigger
 									selected={selectedProfessional}
 									open={open}
 									disabled={professionalsLoading || !!professionalIdParam}
@@ -62,15 +62,15 @@ export function DoctorFormField({
 										<CommandGroup>
 											{professionals
 												.filter((d) => d.name)
-												.map((doctor) => (
-													<DoctorOption
-														key={doctor.id}
-														doctor={doctor}
-														isSelected={field.value === doctor.id}
+												.map((professional) => (
+													<ProfessionalOption
+														key={professional.id}
+														professional={professional}
+														isSelected={field.value === professional.id}
 														onSelect={() => {
-															field.onChange(doctor.id);
+															field.onChange(professional.id);
 															setOpen(false);
-															onDoctorSelect();
+															onProfessionalSelect();
 														}}
 													/>
 												))}

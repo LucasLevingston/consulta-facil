@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UpdateBioInput } from "@/lib/schemas/doctor/update-bio.schema";
+import type { UpdateBioInput } from "@/lib/schemas/professional/update-bio.schema";
 import { professionalsRepository } from "../repositories/professionals.repository";
 import { professionalKeys } from "./professional-keys";
 

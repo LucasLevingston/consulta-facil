@@ -28,7 +28,7 @@ const appt: AppointmentResponse = {
 } as unknown as AppointmentResponse;
 
 describe("AppointmentsList", () => {
-	it("renders list title for doctor", () => {
+	it("renders list title for professional", () => {
 		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.getByText("Próximas consultas")).toBeInTheDocument();
 	});
@@ -38,7 +38,7 @@ describe("AppointmentsList", () => {
 		expect(screen.getByText("Consultas recentes")).toBeInTheDocument();
 	});
 
-	it("shows empty state for doctor", () => {
+	it("shows empty state for professional", () => {
 		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.getByText("Nenhuma consulta agendada.")).toBeInTheDocument();
 	});
@@ -55,7 +55,7 @@ describe("AppointmentsList", () => {
 		expect(screen.getByText("Agendar agora")).toBeInTheDocument();
 	});
 
-	it("does not show 'Agendar agora' for doctor empty state", () => {
+	it("does not show 'Agendar agora' for professional empty state", () => {
 		render(<AppointmentsList appointments={[]} isProfessional={true} />);
 		expect(screen.queryByText("Agendar agora")).not.toBeInTheDocument();
 	});

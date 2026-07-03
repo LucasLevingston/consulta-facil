@@ -9,7 +9,7 @@ import { professionalsListingApi } from "@/lib/api/professionals/professionals.a
 
 const mockGet = vi.mocked(api.get);
 
-const doctor = {
+const professional = {
 	id: "d-1",
 	name: "Dr. João",
 	email: "joao@clinica.com",
@@ -19,9 +19,14 @@ const doctor = {
 	phone: "11999990000",
 };
 
-const page = { content: [doctor], totalElements: 1, totalPages: 1, number: 0 };
+const page = {
+	content: [professional],
+	totalElements: 1,
+	totalPages: 1,
+	number: 0,
+};
 
-describe("doctorsApi", () => {
+describe("professionalsApi", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	describe("getAll", () => {
@@ -55,7 +60,7 @@ describe("doctorsApi", () => {
 
 	describe("getById", () => {
 		it("chama GET /professionals/:id e retorna o profissional", async () => {
-			mockGet.mockResolvedValueOnce({ data: doctor });
+			mockGet.mockResolvedValueOnce({ data: professional });
 
 			const result = await professionalsListingApi.getById("d-1");
 

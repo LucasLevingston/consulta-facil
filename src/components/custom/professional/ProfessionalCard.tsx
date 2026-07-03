@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { CustomButton } from "../custom-button";
-import type { ProfessionalCardProps } from "./doctorCard.types";
+import type { ProfessionalCardProps } from "./ProfessionalCard.types";
 import { ProfessionalCardInfo } from "./ProfessionalCardInfo";
 
 export default function ProfessionalCard({

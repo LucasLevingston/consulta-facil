@@ -1,7 +1,7 @@
 import { api } from "@/config/api";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 import type { PatientProfile } from "@/lib/schemas/patient/patient-profile.schema";
 import type { UpdatePatientInput } from "@/lib/schemas/patient/update-patient.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
 import type {
 	PatientSummary,
 	ProfessionalPatientsParams,

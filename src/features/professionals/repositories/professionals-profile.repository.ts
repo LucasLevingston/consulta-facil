@@ -1,14 +1,14 @@
 import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
-import type { CreateProfessionalInput } from "@/lib/schemas/doctor/create-professional.schema";
-import type { ProfessionalCertificateInput } from "@/lib/schemas/doctor/professional-certificate.schema";
-import type { ProfessionalEducationInput } from "@/lib/schemas/doctor/professional-education.schema";
-import type { ProfessionalExperienceInput } from "@/lib/schemas/doctor/professional-experience.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
-import type { UpdateAddressInput } from "@/lib/schemas/doctor/update-address.schema";
-import type { UpdateBioInput } from "@/lib/schemas/doctor/update-bio.schema";
-import type { UpdateCouncilInput } from "@/lib/schemas/doctor/update-council.schema";
-import type { UpdateSocialLinksInput } from "@/lib/schemas/doctor/update-social-links.schema";
+import type { CreateProfessionalInput } from "@/lib/schemas/professional/create-professional.schema";
+import type { ProfessionalCertificateInput } from "@/lib/schemas/professional/professional-certificate.schema";
+import type { ProfessionalEducationInput } from "@/lib/schemas/professional/professional-education.schema";
+import type { ProfessionalExperienceInput } from "@/lib/schemas/professional/professional-experience.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
+import type { UpdateAddressInput } from "@/lib/schemas/professional/update-address.schema";
+import type { UpdateBioInput } from "@/lib/schemas/professional/update-bio.schema";
+import type { UpdateCouncilInput } from "@/lib/schemas/professional/update-council.schema";
+import type { UpdateSocialLinksInput } from "@/lib/schemas/professional/update-social-links.schema";
 
 export const professionalsProfileRepo = {
 	update: async (

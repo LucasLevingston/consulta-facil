@@ -1,5 +1,5 @@
 import { api } from "@/config/api";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
 import type { UserResponse } from "@/lib/schemas/user/user-response.schema";
 
 export const usersApi = {

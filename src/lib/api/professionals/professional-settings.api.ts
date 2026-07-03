@@ -1,6 +1,6 @@
 import { api } from "@/config/api";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
-import type { UpdatePaymentSettingsInput } from "@/lib/schemas/doctor/update-payment-settings.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
+import type { UpdatePaymentSettingsInput } from "@/lib/schemas/professional/update-payment-settings.schema";
 
 export const professionalSettingsApi = {
 	setConsultationPrice: async (price: number): Promise<unknown> => {

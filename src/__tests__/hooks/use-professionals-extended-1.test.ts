@@ -26,22 +26,17 @@ vi.mock("@/lib/api/professionals/professional-applications.api", () => ({
 	},
 }));
 
-import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
-import { useProfessional } from "@/hooks/api/professionals/use-professional";
 import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
-import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
-import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
 const mockGetAll = vi.mocked(professionalsListingApi.getAll);
-const mockGetById = vi.mocked(professionalsListingApi.getById);
-const mockGetNearby = vi.mocked(professionalsListingApi.getNearby);
-const mockAppStatus = vi.mocked(
-	professionalApplicationsApi.getApplicationStatus,
-);
-
-const doctor = { id: "d-1", name: "Dra. Ana", specialty: "Cardiologia" };
-const page = { content: [doctor], totalElements: 1, totalPages: 1, number: 0 };
+const professional = { id: "d-1", name: "Dra. Ana", specialty: "Cardiologia" };
+const page = {
+	content: [professional],
+	totalElements: 1,
+	totalPages: 1,
+	number: 0,
+};
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -93,59 +88,5 @@ describe("useProfessionals", () => {
 			undefined,
 			undefined,
 		);
-	});
-});
-
-describe("useProfessional", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("disabled when id empty", () => {
-		const { result } = renderHook(() => useProfessional(""), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("fetches when id provided", async () => {
-		mockGetById.mockResolvedValueOnce(doctor as never);
-		const { result } = renderHook(() => useProfessional("d-1"), {
-			wrapper: wrapper(),
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(result.current.data?.id).toBe("d-1");
-	});
-});
-
-describe("useProfessionalsNearby", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("disabled when lat/lng null", () => {
-		const { result } = renderHook(() => useProfessionalsNearby(null, null), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("enabled with lat/lng", async () => {
-		mockGetNearby.mockResolvedValueOnce([doctor] as never);
-		const { result } = renderHook(() => useProfessionalsNearby(-23.5, -46.6), {
-			wrapper: wrapper(),
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-	});
-});
-
-describe("useApplicationStatus", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("fetches application status", async () => {
-		mockAppStatus.mockResolvedValueOnce({
-			id: "p-1",
-			status: "PENDING",
-		} as never);
-		const { result } = renderHook(() => useApplicationStatus(), {
-			wrapper: wrapper(),
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 	});
 });

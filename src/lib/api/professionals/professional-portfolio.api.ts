@@ -1,8 +1,8 @@
 import { api } from "@/config/api";
-import type { ProfessionalCertificateInput } from "@/lib/schemas/doctor/professional-certificate.schema";
-import type { ProfessionalEducationInput } from "@/lib/schemas/doctor/professional-education.schema";
-import type { ProfessionalExperienceInput } from "@/lib/schemas/doctor/professional-experience.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { ProfessionalCertificateInput } from "@/lib/schemas/professional/professional-certificate.schema";
+import type { ProfessionalEducationInput } from "@/lib/schemas/professional/professional-education.schema";
+import type { ProfessionalExperienceInput } from "@/lib/schemas/professional/professional-experience.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
 
 export const professionalPortfolioApi = {
 	addEducation: async (

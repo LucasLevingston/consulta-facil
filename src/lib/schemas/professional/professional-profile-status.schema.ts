@@ -9,7 +9,3 @@ export const professionalProfileStatusSchema = z.enum([
 export type ProfessionalProfileStatus = z.infer<
 	typeof professionalProfileStatusSchema
 >;
-
-// Backwards-compatible alias
-export const doctorProfileStatusSchema = professionalProfileStatusSchema;
-export type DoctorProfileStatus = ProfessionalProfileStatus;

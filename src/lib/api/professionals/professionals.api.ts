@@ -1,7 +1,7 @@
 import { api } from "@/config/api";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
-import type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
+import type { ProfessionalRating } from "@/lib/schemas/professional/professional-rating.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
 
 export const professionalsListingApi = {
 	getAll: async (

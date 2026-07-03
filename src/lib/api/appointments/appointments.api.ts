@@ -2,7 +2,7 @@ import { api } from "@/config/api";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import type { CreateAppointmentInput } from "@/lib/schemas/appointment/create-appointment.schema";
 import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment/reschedule-appointment.schema";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
 
 export const appointmentsCrudApi = {
 	schedule: async (

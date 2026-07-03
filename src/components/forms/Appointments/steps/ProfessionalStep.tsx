@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DoctorFormField } from "./DoctorFormField";
+import { ProfessionalFormField } from "./ProfessionalFormField";
 import type { ProfessionalStepProps } from "./ProfessionalStep.types";
 import { SelectedProfessionalCard } from "./SelectedProfessionalCard";
 
@@ -27,12 +27,12 @@ export function ProfessionalStep({
 			)
 		: professionals;
 
-	function onDoctorSelect() {
+	function onProfessionalSelect() {
 		setSelectedTime("");
 		setSelectedServiceId(null);
 	}
 
-	function onDoctorClear() {
+	function onProfessionalClear() {
 		form.setValue("professionalId", "");
 		setSelectedTime("");
 	}
@@ -48,20 +48,20 @@ export function ProfessionalStep({
 				</h3>
 			</div>
 
-			<DoctorFormField
+			<ProfessionalFormField
 				control={form.control}
 				professionals={filteredProfessionals}
 				professionalsLoading={professionalsLoading}
 				professionalIdParam={professionalIdParam}
 				selectedProfessional={selectedProfessional}
-				onDoctorSelect={onDoctorSelect}
+				onProfessionalSelect={onProfessionalSelect}
 			/>
 
 			{selectedProfessional && (
 				<SelectedProfessionalCard
 					professional={selectedProfessional}
 					showClear={!professionalIdParam}
-					onClear={onDoctorClear}
+					onClear={onProfessionalClear}
 				/>
 			)}
 		</div>

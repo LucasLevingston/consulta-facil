@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UpdateAddressInput } from "@/lib/schemas/doctor/update-address.schema";
+import type { UpdateAddressInput } from "@/lib/schemas/professional/update-address.schema";
 import { professionalsRepository } from "../repositories/professionals.repository";
 import { professionalKeys } from "./professional-keys";
 

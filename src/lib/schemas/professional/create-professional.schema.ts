@@ -26,7 +26,3 @@ export const createProfessionalSchema = z.object({
 });
 
 export type CreateProfessionalInput = z.infer<typeof createProfessionalSchema>;
-
-// Backwards-compatible aliases
-export const createDoctorSchema = createProfessionalSchema;
-export type CreateDoctorInput = CreateProfessionalInput;

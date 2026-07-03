@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { ProfessionalResponse } from "@/lib/schemas/professional/professional-response.schema";
 
 vi.mock("next/navigation", () => ({
 	useRouter: () => ({ push: vi.fn() }),
 }));
 
-import DoctorCard from "@/components/custom/doctor/doctorCard";
+import ProfessionalCard from "@/components/custom/professional/ProfessionalCard";
 
-const doctor: ProfessionalResponse = {
+const professional: ProfessionalResponse = {
 	id: "d-1",
 	userId: "u-1",
 	name: "Dra. Ana Silva",
@@ -32,46 +32,49 @@ const doctor: ProfessionalResponse = {
 	createdAt: "2026-01-01",
 } as unknown as ProfessionalResponse;
 
-describe("DoctorCard", () => {
-	it("renders doctor name", () => {
-		render(<DoctorCard professional={doctor} />);
+describe("ProfessionalCard", () => {
+	it("renders professional name", () => {
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText("Dra. Ana Silva")).toBeInTheDocument();
 	});
 
 	it("renders specialty badge", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText("Cardiologia")).toBeInTheDocument();
 	});
 
 	it("renders rating when provided", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText("4.8")).toBeInTheDocument();
 	});
 
 	it("renders CRM license number", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText(/CRM: CRM-12345/)).toBeInTheDocument();
 	});
 
 	it("renders appointment button by default", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByRole("button")).toBeInTheDocument();
 	});
 
 	it("hides appointment button when isActiveAppointmentButton=false", () => {
 		render(
-			<DoctorCard professional={doctor} isActiveAppointmentButton={false} />,
+			<ProfessionalCard
+				professional={professional}
+				isActiveAppointmentButton={false}
+			/>,
 		);
 		expect(screen.queryByRole("button")).not.toBeInTheDocument();
 	});
 
 	it("renders fallback initials when no image", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText("DA")).toBeInTheDocument();
 	});
 
 	it("renders email when provided", () => {
-		render(<DoctorCard professional={doctor} />);
+		render(<ProfessionalCard professional={professional} />);
 		expect(screen.getByText("ana@email.com")).toBeInTheDocument();
 	});
 });

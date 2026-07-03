@@ -7,14 +7,14 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
 import { getInitials } from "@/lib/utils/get-initials";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-import type { DoctorComboboxTriggerProps } from "./DoctorComboboxTrigger.types";
+import type { ProfessionalComboboxTriggerProps } from "./ProfessionalComboboxTrigger.types";
 
-export function DoctorComboboxTrigger({
+export function ProfessionalComboboxTrigger({
 	selected,
 	open,
 	disabled,
 	hasValue,
-}: DoctorComboboxTriggerProps) {
+}: ProfessionalComboboxTriggerProps) {
 	return (
 		<Button
 			variant="outline"

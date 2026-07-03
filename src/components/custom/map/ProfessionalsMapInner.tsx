@@ -5,7 +5,7 @@ import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-import type { DoctorsMapInnerProps } from "./DoctorsMapInner.types";
+import type { ProfessionalsMapInnerProps } from "./ProfessionalsMapInner.types";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -16,13 +16,13 @@ const markerIcon = L.icon({
 	shadowSize: [41, 41],
 });
 
-export default function DoctorsMapInner({
-	doctors,
+export default function ProfessionalsMapInner({
+	professionals,
 	center = [-15.8, -47.9],
 	zoom = 5,
-}: DoctorsMapInnerProps) {
-	const withLocation = doctors.filter(
-		(d) => d.latitude != null && d.longitude != null,
+}: ProfessionalsMapInnerProps) {
+	const withLocation = professionals.filter(
+		(p) => p.latitude != null && p.longitude != null,
 	);
 
 	const mapCenter: [number, number] =
@@ -41,23 +41,24 @@ export default function DoctorsMapInner({
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			{withLocation.map((doctor) => (
+			{withLocation.map((professional) => (
 				<Marker
-					key={doctor.id}
-					position={[doctor.latitude!, doctor.longitude!]}
+					key={professional.id}
+					position={[professional.latitude!, professional.longitude!]}
 					icon={markerIcon}
 				>
 					<Popup>
 						<div className="text-sm space-y-1">
-							<p className="font-semibold">{doctor.name}</p>
+							<p className="font-semibold">{professional.name}</p>
 							<p className="text-muted-foreground">
-								{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
+								{SPECIALTY_LABELS[professional.specialty] ??
+									professional.specialty}
 							</p>
-							{doctor.clinicName && <p>{doctor.clinicName}</p>}
-							{doctor.city && (
+							{professional.clinicName && <p>{professional.clinicName}</p>}
+							{professional.city && (
 								<p className="text-xs text-muted-foreground">
-									{doctor.city}
-									{doctor.state ? `, ${doctor.state}` : ""}
+									{professional.city}
+									{professional.state ? `, ${professional.state}` : ""}
 								</p>
 							)}
 						</div>

@@ -7,7 +7,6 @@ import {
 } from "@/lib/api/patients/patient-profile.api";
 import type { PatientSummary } from "@/lib/api/patients/patient-profile.api.types";
 import { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
-import type { ApiPage } from "@/lib/schemas/doctor/api-page.schema";
 import type { EmergencyContactInput } from "@/lib/schemas/patient/emergency-contact.schema";
 import type { MedicalRecord } from "@/lib/schemas/patient/medical-record.schema";
 import type {
@@ -20,6 +19,7 @@ import type {
 	PatientVaccineResponse,
 } from "@/lib/schemas/patient/patient-vaccine.schema";
 import type { UpdateMedicalRecordInput } from "@/lib/schemas/patient/update-medical-record.schema";
+import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
 
 export const patientsRepository = {
 	getMyProfile: async (): Promise<PatientProfile> =>

@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 
-import type { DoctorsMapProps } from "./DoctorsMap.types";
+import type { ProfessionalsMapProps } from "./ProfessionalsMap.types";
 
-const DoctorsMapInner = dynamic(() => import("./DoctorsMapInner"), {
+const ProfessionalsMapInner = dynamic(() => import("./ProfessionalsMapInner"), {
 	ssr: false,
 	loading: () => (
 		<div className="h-full w-full flex items-center justify-center bg-muted rounded-lg">
@@ -13,15 +13,19 @@ const DoctorsMapInner = dynamic(() => import("./DoctorsMapInner"), {
 	),
 });
 
-export function DoctorsMap({
-	doctors,
+export function ProfessionalsMap({
+	professionals,
 	center,
 	zoom,
 	className,
-}: DoctorsMapProps) {
+}: ProfessionalsMapProps) {
 	return (
 		<div className={className ?? "h-[420px] w-full"}>
-			<DoctorsMapInner doctors={doctors} center={center} zoom={zoom} />
+			<ProfessionalsMapInner
+				professionals={professionals}
+				center={center}
+				zoom={zoom}
+			/>
 		</div>
 	);
 }

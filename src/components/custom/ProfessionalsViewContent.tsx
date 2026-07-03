@@ -1,8 +1,8 @@
 "use client";
 
 import { CustomPagination } from "@/components/custom/custom-pagination";
-import DoctorsList from "@/components/custom/doctor/DoctorsClientList";
-import { DoctorsMap } from "@/components/custom/map/DoctorsMap";
+import { ProfessionalsMap } from "@/components/custom/map/ProfessionalsMap";
+import ProfessionalsList from "@/components/custom/professional/ProfessionalsList";
 import type { ProfessionalResponse } from "@/features/professionals";
 
 interface Props {
@@ -34,8 +34,8 @@ export function ProfessionalsViewContent({
 						Nenhum profissional com localização cadastrada encontrado.
 					</p>
 				)}
-				<DoctorsMap
-					doctors={displayed}
+				<ProfessionalsMap
+					professionals={displayed}
 					center={
 						userLocation ? [userLocation.lat, userLocation.lng] : undefined
 					}
@@ -47,7 +47,7 @@ export function ProfessionalsViewContent({
 	}
 	return (
 		<>
-			<DoctorsList doctors={displayed} />
+			<ProfessionalsList professionals={displayed} />
 			{!isNearbyMode && (
 				<CustomPagination
 					currentPage={currentPage}

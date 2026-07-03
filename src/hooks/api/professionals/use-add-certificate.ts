@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
-import type { ProfessionalCertificateInput } from "@/lib/schemas/doctor/professional-certificate.schema";
+import type { ProfessionalCertificateInput } from "@/lib/schemas/professional/professional-certificate.schema";
 import { professionalKeys } from "./professional-keys";
 
 export function useAddCertificate() {

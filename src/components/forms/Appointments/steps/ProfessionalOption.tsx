@@ -7,28 +7,28 @@ import { CommandItem } from "@/components/ui/command";
 import { cn } from "@/lib/utils/cn";
 import { getInitials } from "@/lib/utils/get-initials";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-import type { DoctorOptionProps } from "./DoctorOption.types";
+import type { ProfessionalOptionProps } from "./ProfessionalOption.types";
 
-export function DoctorOption({
-	doctor,
+export function ProfessionalOption({
+	professional,
 	isSelected,
 	onSelect,
-}: DoctorOptionProps) {
+}: ProfessionalOptionProps) {
 	return (
 		<CommandItem
-			value={`${doctor.name} ${doctor.specialty}`}
+			value={`${professional.name} ${professional.specialty}`}
 			onSelect={onSelect}
 		>
 			<div className="flex items-center gap-3 flex-1">
 				<Avatar className="h-8 w-8 rounded-lg">
 					<AvatarFallback className="rounded-lg bg-primary/10 text-primary text-xs font-bold">
-						{getInitials(doctor.name)}
+						{getInitials(professional.name)}
 					</AvatarFallback>
 				</Avatar>
 				<div>
-					<p className="text-sm font-medium">{doctor.name}</p>
+					<p className="text-sm font-medium">{professional.name}</p>
 					<p className="text-xs text-muted-foreground">
-						{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
+						{SPECIALTY_LABELS[professional.specialty] ?? professional.specialty}
 					</p>
 				</div>
 			</div>

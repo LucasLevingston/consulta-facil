@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { ProfessionalCertificateInput } from "@/lib/schemas/doctor/professional-certificate.schema";
+import type { ProfessionalCertificateInput } from "@/lib/schemas/professional/professional-certificate.schema";
 import { professionalsRepository } from "../repositories/professionals.repository";
 import { professionalKeys } from "./professional-keys";
 

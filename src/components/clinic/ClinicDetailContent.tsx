@@ -26,7 +26,7 @@ export function ClinicDetailContent() {
 
 	const user = useUserStore((s) => s.user);
 	const { data: clinic, isLoading, error } = useClinicById(clinicId);
-	const { data: myDoctorProfile } = useApplicationStatus();
+	const { data: myProfessionalProfile } = useApplicationStatus();
 	const { can } = usePermission();
 
 	const isOwner = !!user && clinic?.ownerId === user.id;
@@ -35,7 +35,7 @@ export function ClinicDetailContent() {
 		!!clinic &&
 		can("clinic:manage:own", { userId: user?.id, ownerId: clinic.ownerId });
 	const myMembership = clinic?.members?.find(
-		(m) => m.professionalProfileId === myDoctorProfile?.id,
+		(m) => m.professionalProfileId === myProfessionalProfile?.id,
 	);
 	const isMember = !!myMembership || isManager;
 
@@ -63,7 +63,7 @@ export function ClinicDetailContent() {
 						isMember={isMember}
 						isManager={isManager}
 						currentUserId={user?.id}
-						myProfessionalProfileId={myDoctorProfile?.id}
+						myProfessionalProfileId={myProfessionalProfile?.id}
 					/>
 				</div>
 			)}

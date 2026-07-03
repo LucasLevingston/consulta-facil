@@ -13,7 +13,7 @@ const mockPost = vi.mocked(api.post);
 const mockPut = vi.mocked(api.put);
 const mockDelete = vi.mocked(api.delete);
 
-const doctor = {
+const professional = {
 	id: "d-1",
 	name: "Dr. João",
 	email: "joao@clinica.com",
@@ -23,27 +23,32 @@ const doctor = {
 	phone: "11999990000",
 };
 
-const _page = { content: [doctor], totalElements: 1, totalPages: 1, number: 0 };
+const _page = {
+	content: [professional],
+	totalElements: 1,
+	totalPages: 1,
+	number: 0,
+};
 
-describe("doctorsApi", () => {
+describe("professionalsApi", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	describe("create", () => {
 		it("chama POST /professionals e retorna o profissional criado", async () => {
-			mockPost.mockResolvedValueOnce({ data: doctor });
+			mockPost.mockResolvedValueOnce({ data: professional });
 
 			const result = await professionalApplicationsApi.create({
-				name: doctor.name,
-				email: doctor.email,
-				profession: doctor.profession,
-				specialty: doctor.specialty,
-				licenseNumber: doctor.licenseNumber,
-				phone: doctor.phone,
+				name: professional.name,
+				email: professional.email,
+				profession: professional.profession,
+				specialty: professional.specialty,
+				licenseNumber: professional.licenseNumber,
+				phone: professional.phone,
 			});
 
 			expect(mockPost).toHaveBeenCalledWith(
 				"/professionals",
-				expect.objectContaining({ name: doctor.name }),
+				expect.objectContaining({ name: professional.name }),
 			);
 			expect(result.id).toBe("d-1");
 		});
@@ -51,11 +56,11 @@ describe("doctorsApi", () => {
 
 	describe("update", () => {
 		it("chama PUT /professionals/:id e retorna o profissional atualizado", async () => {
-			const updated = { ...doctor, name: "Dr. João Atualizado" };
+			const updated = { ...professional, name: "Dr. João Atualizado" };
 			mockPut.mockResolvedValueOnce({ data: updated });
 
 			const result = await professionalProfileApi.update("d-1", {
-				...doctor,
+				...professional,
 				name: "Dr. João Atualizado",
 			});
 

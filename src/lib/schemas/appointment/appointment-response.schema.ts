@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { paymentMethodSchema } from "../doctor/payment-method.schema";
-import { paymentTimingSchema } from "../doctor/payment-timing.schema";
+import { paymentMethodSchema } from "../professional/payment-method.schema";
+import { paymentTimingSchema } from "../professional/payment-timing.schema";
 import { appointmentModalitySchema } from "./appointment-modality.schema";
 import { appointmentPaymentStatusSchema } from "./appointment-payment-status.schema";
 import { appointmentStatusSchema } from "./appointment-status.schema";

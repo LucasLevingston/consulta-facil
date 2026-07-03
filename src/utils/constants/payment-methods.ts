@@ -1,3 +1,3 @@
-import { paymentMethodSchema } from "@/lib/schemas/doctor/payment-method.schema";
+import { paymentMethodSchema } from "@/lib/schemas/professional/payment-method.schema";
 
 export const ALL_METHODS = paymentMethodSchema.options;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UpdateSocialLinksInput } from "@/lib/schemas/doctor/update-social-links.schema";
+import type { UpdateSocialLinksInput } from "@/lib/schemas/professional/update-social-links.schema";
 import { professionalsRepository } from "../repositories/professionals.repository";
 import { professionalKeys } from "./professional-keys";
 

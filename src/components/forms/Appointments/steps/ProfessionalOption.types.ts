@@ -1,7 +1,7 @@
 import type { ProfessionalResponse } from "@/features/professionals";
 
-export interface DoctorOptionProps {
-	doctor: ProfessionalResponse;
+export interface ProfessionalOptionProps {
+	professional: ProfessionalResponse;
 	isSelected: boolean;
 	onSelect: () => void;
 }

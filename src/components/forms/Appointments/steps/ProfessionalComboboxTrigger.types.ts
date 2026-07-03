@@ -1,6 +1,6 @@
 import type { ProfessionalResponse } from "@/features/professionals";
 
-export interface DoctorComboboxTriggerProps {
+export interface ProfessionalComboboxTriggerProps {
 	selected: ProfessionalResponse | null | undefined;
 	open: boolean;
 	disabled: boolean;
