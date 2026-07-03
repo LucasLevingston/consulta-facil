@@ -77,7 +77,3 @@ export const professionalResponseSchema = z.object({
 });
 
 export type ProfessionalResponse = z.infer<typeof professionalResponseSchema>;
-
-// Backwards-compatible aliases
-export const doctorResponseSchema = professionalResponseSchema;
-export type DoctorResponse = ProfessionalResponse;

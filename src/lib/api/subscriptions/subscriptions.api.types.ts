@@ -4,5 +4,5 @@ export interface AdminSubscriptionResponse extends SubscriptionResponse {
 	userId: string;
 	userEmail: string;
 	planName: string;
-	ownerType: "DOCTOR" | "CLINIC" | "LABORATORY";
+	ownerType: "PROFESSIONAL" | "CLINIC" | "LABORATORY";
 }

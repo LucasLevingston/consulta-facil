@@ -3,7 +3,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BASE_PRICE } from "@/utils/constants/base-price";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 
 function fmtBRL(value: number) {
 	return value.toLocaleString("pt-BR", {
@@ -32,8 +32,8 @@ export function ClinicPriceDisplay({
 					<>
 						<p className="text-3xl font-bold text-emerald-600">Grátis</p>
 						<p className="mt-0.5 text-xs text-muted-foreground">
-							{calcProfessionals * FREE_CONSULTS_PER_DOCTOR} consultas gratuitas
-							incluídas
+							{calcProfessionals * FREE_CONSULTS_PER_PROFESSIONAL} consultas
+							gratuitas incluídas
 						</p>
 					</>
 				) : (

@@ -17,8 +17,8 @@ export default function AdminPage() {
 	const { can } = usePermission();
 	const router = useRouter();
 
-	const doctorQuery = useProfessionalAppointments(user?.id ?? "");
-	const appointments = doctorQuery.data?.content ?? [];
+	const professionalQuery = useProfessionalAppointments(user?.id ?? "");
+	const appointments = professionalQuery.data?.content ?? [];
 
 	useEffect(() => {
 		if (!isAuthenticated || !can("admin:access")) router.push("/auth");
@@ -37,8 +37,8 @@ export default function AdminPage() {
 			<PendingApplications />
 
 			<QueryBoundary
-				isLoading={doctorQuery.isLoading}
-				error={doctorQuery.error}
+				isLoading={professionalQuery.isLoading}
+				error={professionalQuery.error}
 			>
 				<Suspense>
 					<AppointmentsDashboard appointments={appointments} />

@@ -11,12 +11,12 @@ export type PaymentType =
 	| "PROCEDURE"
 	| "EXAM"
 	| "SUBSCRIPTION";
-export type OwnerType = "DOCTOR" | "CLINIC" | "LABORATORY";
+export type OwnerType = "PROFESSIONAL" | "CLINIC" | "LABORATORY";
 
 export const createBillingPaymentSchema = z.object({
 	paymentType: z.enum(["CONSULTATION", "PROCEDURE", "EXAM", "SUBSCRIPTION"]),
 	referenceId: z.string().optional(),
-	ownerType: z.enum(["DOCTOR", "CLINIC", "LABORATORY"]).optional(),
+	ownerType: z.enum(["PROFESSIONAL", "CLINIC", "LABORATORY"]).optional(),
 	ownerId: z.string().optional(),
 	amount: z.number().positive("amount deve ser maior que zero"),
 	paymentMethod: z.string().optional(),

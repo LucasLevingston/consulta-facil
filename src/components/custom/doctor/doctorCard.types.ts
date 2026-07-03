@@ -1,6 +1,6 @@
-﻿import type { ProfessionalResponse } from "@/features/professionals";
+import type { ProfessionalResponse } from "@/features/professionals";
 
-export interface DoctorCardProps {
-	doctor: ProfessionalResponse;
+export interface ProfessionalCardProps {
+	professional: ProfessionalResponse;
 	isActiveAppointmentButton?: boolean;
 }

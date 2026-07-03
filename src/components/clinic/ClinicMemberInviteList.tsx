@@ -23,27 +23,28 @@ export function ClinicMemberInviteList({
 	}
 	return (
 		<>
-			{professionals.map((doctor) => (
+			{professionals.map((professional) => (
 				<button
-					key={doctor.id}
+					key={professional.id}
 					type="button"
 					className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted"
-					onClick={() => onAdd(doctor.id)}
+					onClick={() => onAdd(professional.id)}
 					disabled={isPending}
 				>
 					<Avatar className="h-8 w-8">
 						<AvatarImage
-							src={doctor.imageUrl ?? undefined}
-							alt={doctor.name ?? ""}
+							src={professional.imageUrl ?? undefined}
+							alt={professional.name ?? ""}
 						/>
 						<AvatarFallback className="text-xs">
-							{doctor.name?.slice(0, 2).toUpperCase() ?? "DR"}
+							{professional.name?.slice(0, 2).toUpperCase() ?? "PR"}
 						</AvatarFallback>
 					</Avatar>
 					<div className="min-w-0 flex-1">
-						<p className="truncate text-sm font-medium">{doctor.name}</p>
+						<p className="truncate text-sm font-medium">{professional.name}</p>
 						<p className="text-xs text-muted-foreground">
-							{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
+							{SPECIALTY_LABELS[professional.specialty] ??
+								professional.specialty}
 						</p>
 					</div>
 					{isPending && (

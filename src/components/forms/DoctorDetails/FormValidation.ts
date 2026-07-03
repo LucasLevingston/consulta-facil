@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const DoctorFormValidation = z.object({
+export const ProfessionalFormValidation = z.object({
 	name: z.string().min(1, "Nome é obrigatório."),
 	email: z.string().email("Endereço de e-mail inválido."),
 	phone: z

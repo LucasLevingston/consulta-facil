@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import type { ClinicResponse } from "@/features/clinics";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 
 type Member = NonNullable<ClinicResponse["members"]>[number];
@@ -38,7 +38,7 @@ export function ClinicMemberRow({
 						</p>
 						<div className="flex items-center gap-1.5 shrink-0 ml-2">
 							<span className="text-xs tabular-nums text-muted-foreground">
-								{freeUsed}/{FREE_CONSULTS_PER_DOCTOR} grátis
+								{freeUsed}/{FREE_CONSULTS_PER_PROFESSIONAL} grátis
 							</span>
 							{paidCount > 0 && (
 								<Badge variant="outline" className="text-xs">
@@ -53,7 +53,7 @@ export function ClinicMemberRow({
 				</div>
 			</div>
 			<Progress
-				value={(freeUsed / FREE_CONSULTS_PER_DOCTOR) * 100}
+				value={(freeUsed / FREE_CONSULTS_PER_PROFESSIONAL) * 100}
 				className="h-1.5"
 			/>
 			{completed === 0 && (

@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
-import type { DoctorsListProps } from "./DoctorsClientList.types";
-import DoctorCard from "./doctorCard";
+import type { ProfessionalsListProps } from "./DoctorsClientList.types";
+import ProfessionalCard from "./doctorCard";
 
-export default function DoctorsList({ doctors }: DoctorsListProps) {
+export default function ProfessionalsList({ doctors }: ProfessionalsListProps) {
 	if (doctors.length === 0) {
 		return (
 			<p className="text-center text-muted-foreground py-12">
@@ -14,8 +14,8 @@ export default function DoctorsList({ doctors }: DoctorsListProps) {
 
 	return (
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-			{doctors.map((doctor) => (
-				<DoctorCard doctor={doctor} key={doctor.id} />
+			{doctors.map((professional) => (
+				<ProfessionalCard professional={professional} key={professional.id} />
 			))}
 		</div>
 	);

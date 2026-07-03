@@ -1,5 +1,5 @@
-import type { DoctorResponse } from "@/features/professionals";
+import type { ProfessionalResponse } from "@/features/professionals";
 
 export interface PendingApplicationCardProps {
-	doctor: DoctorResponse;
+	professional: ProfessionalResponse;
 }

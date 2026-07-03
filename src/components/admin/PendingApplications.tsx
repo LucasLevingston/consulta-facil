@@ -33,8 +33,11 @@ export function PendingApplications() {
 						</p>
 					) : (
 						<div className="space-y-3">
-							{applications.map((doctor) => (
-								<PendingApplicationCard key={doctor.id} doctor={doctor} />
+							{applications.map((professional) => (
+								<PendingApplicationCard
+									key={professional.id}
+									professional={professional}
+								/>
 							))}
 						</div>
 					)}

@@ -48,8 +48,11 @@ export default function AdminRequestsPage() {
 								{applications.length}
 							</Badge>
 						</div>
-						{applications.map((doctor) => (
-							<PendingApplicationCard key={doctor.id} doctor={doctor} />
+						{applications.map((professional) => (
+							<PendingApplicationCard
+								key={professional.id}
+								professional={professional}
+							/>
 						))}
 					</div>
 				)}

@@ -7,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import type { ClinicUsageCardProps } from "./ClinicUsageCard.types";
 
@@ -55,12 +55,12 @@ export function ClinicUsageCard({ clinic }: ClinicUsageCardProps) {
 					<div className="flex items-center justify-between text-sm mb-2">
 						<span className="text-muted-foreground">Consultas gratuitas</span>
 						<span className="font-semibold tabular-nums">
-							{currentProfessionals * FREE_CONSULTS_PER_DOCTOR}
+							{currentProfessionals * FREE_CONSULTS_PER_PROFESSIONAL}
 						</span>
 					</div>
 					<div className="flex flex-wrap gap-1 mt-1">
 						<Badge variant="secondary" className="text-xs">
-							{FREE_CONSULTS_PER_DOCTOR} por profissional
+							{FREE_CONSULTS_PER_PROFESSIONAL} por profissional
 						</Badge>
 						<Badge variant="secondary" className="text-xs">
 							× {currentProfessionals} profissional

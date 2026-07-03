@@ -34,42 +34,44 @@ const doctor: ProfessionalResponse = {
 
 describe("DoctorCard", () => {
 	it("renders doctor name", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText("Dra. Ana Silva")).toBeInTheDocument();
 	});
 
 	it("renders specialty badge", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText("Cardiologia")).toBeInTheDocument();
 	});
 
 	it("renders rating when provided", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText("4.8")).toBeInTheDocument();
 	});
 
 	it("renders CRM license number", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText(/CRM: CRM-12345/)).toBeInTheDocument();
 	});
 
 	it("renders appointment button by default", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByRole("button")).toBeInTheDocument();
 	});
 
 	it("hides appointment button when isActiveAppointmentButton=false", () => {
-		render(<DoctorCard doctor={doctor} isActiveAppointmentButton={false} />);
+		render(
+			<DoctorCard professional={doctor} isActiveAppointmentButton={false} />,
+		);
 		expect(screen.queryByRole("button")).not.toBeInTheDocument();
 	});
 
 	it("renders fallback initials when no image", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText("DA")).toBeInTheDocument();
 	});
 
 	it("renders email when provided", () => {
-		render(<DoctorCard doctor={doctor} />);
+		render(<DoctorCard professional={doctor} />);
 		expect(screen.getByText("ana@email.com")).toBeInTheDocument();
 	});
 });

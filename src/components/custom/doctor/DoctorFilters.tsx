@@ -1,18 +1,18 @@
 "use client";
 
-import { DoctorFiltersActiveBadges } from "./DoctorFiltersActiveBadges";
-import { DoctorFiltersAdvanced } from "./DoctorFiltersAdvanced";
-import { DoctorFiltersBasicRow } from "./DoctorFiltersBasicRow";
-import { useDoctorFilters } from "./useDoctorFilters";
+import { ProfessionalFiltersActiveBadges } from "./ProfessionalFiltersActiveBadges";
+import { ProfessionalFiltersAdvanced } from "./ProfessionalFiltersAdvanced";
+import { ProfessionalFiltersBasicRow } from "./ProfessionalFiltersBasicRow";
+import { useProfessionalFilters } from "./useProfessionalFilters";
 
-export default function DoctorFilters() {
-	const filters = useDoctorFilters();
+export default function ProfessionalFilters() {
+	const filters = useProfessionalFilters();
 	return (
 		<div className="space-y-3 w-full">
-			<DoctorFiltersBasicRow filters={filters} />
-			{filters.expanded && <DoctorFiltersAdvanced filters={filters} />}
+			<ProfessionalFiltersBasicRow filters={filters} />
+			{filters.expanded && <ProfessionalFiltersAdvanced filters={filters} />}
 			{filters.totalActive > 0 && (
-				<DoctorFiltersActiveBadges filters={filters} />
+				<ProfessionalFiltersActiveBadges filters={filters} />
 			)}
 		</div>
 	);

@@ -5,18 +5,23 @@ import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-import type { DoctorDetailsProps } from "@/components/forms/DoctorDetails/DoctorDetailsForm.types";
-import { DoctorFormValidation } from "@/components/forms/DoctorDetails/FormValidation";
+import { ProfessionalFormValidation } from "@/components/forms/DoctorDetails/FormValidation";
+import type { ProfessionalDetailsProps } from "@/components/forms/DoctorDetails/ProfessionalDetailsForm.types";
 import { useCreateProfessional, useUpdateProfessional } from "@/features/professionals";
 import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants/profession-specialties";
 
-export function useDoctorDetailsForm({ userId, userEmail, type, defaultData }: DoctorDetailsProps) {
+export function useProfessionalDetailsForm({
+	userId,
+	userEmail,
+	type,
+	defaultData,
+}: ProfessionalDetailsProps) {
 	const router = useRouter();
-	const createDoctor = useCreateProfessional();
-	const updateDoctor = useUpdateProfessional();
+	const createProfessional = useCreateProfessional();
+	const updateProfessional = useUpdateProfessional();
 
-	const form = useForm<z.infer<typeof DoctorFormValidation>>({
-		resolver: zodResolver(DoctorFormValidation),
+	const form = useForm<z.infer<typeof ProfessionalFormValidation>>({
+		resolver: zodResolver(ProfessionalFormValidation),
 		defaultValues: {
 			name: defaultData?.name ?? "",
 			email: defaultData?.email ?? userEmail,
@@ -44,7 +49,7 @@ export function useDoctorDetailsForm({ userId, userEmail, type, defaultData }: D
 		label: s,
 	}));
 
-	const onSubmit = async (values: z.infer<typeof DoctorFormValidation>) => {
+	const onSubmit = async (values: z.infer<typeof ProfessionalFormValidation>) => {
 		const payload = {
 			name: values.name,
 			email: values.email,
@@ -56,11 +61,11 @@ export function useDoctorDetailsForm({ userId, userEmail, type, defaultData }: D
 
 		try {
 			if (type === "create") {
-				await createDoctor.mutateAsync(payload);
+				await createProfessional.mutateAsync(payload);
 				toast.success("Dados salvos com sucesso!");
 				router.push("/");
 			} else {
-				await updateDoctor.mutateAsync({
+				await updateProfessional.mutateAsync({
 					professionalId: userId,
 					data: payload,
 				});
@@ -77,7 +82,7 @@ export function useDoctorDetailsForm({ userId, userEmail, type, defaultData }: D
 		professionOptions,
 		specialtyOptions,
 		onSubmit,
-		isPending: createDoctor.isPending || updateDoctor.isPending,
+		isPending: createProfessional.isPending || updateProfessional.isPending,
 		type,
 	};
 }

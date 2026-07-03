@@ -4,7 +4,7 @@ import { Settings } from "lucide-react";
 
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
-import DoctorDetailsForm from "@/components/forms/DoctorDetails/DoctorDetailsForm";
+import ProfessionalDetailsForm from "@/components/forms/DoctorDetails/ProfessionalDetailsForm";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
 import { DocumentPhotoGrid } from "@/components/patients/health/DocumentPhotoGrid";
 import { EmergencyContactList } from "@/components/patients/health/EmergencyContactList";
@@ -30,7 +30,6 @@ import { useApplicationStatus } from "@/features/professionals";
 export default function SettingsPage() {
 	const { user } = useUserStore();
 	const { can } = usePermission();
-
 	const isProfessional = can("professional:manage");
 	const { data: myProfile } = useApplicationStatus();
 
@@ -41,7 +40,6 @@ export default function SettingsPage() {
 				description="Gerencie suas informações pessoais e preferências."
 				icon={<Settings className="h-6 w-6" />}
 			/>
-
 			<Card>
 				<CardHeader>
 					<CardTitle>Foto de perfil</CardTitle>
@@ -53,10 +51,9 @@ export default function SettingsPage() {
 					<AvatarUpload size="lg" />
 				</CardContent>
 			</Card>
-
 			<div className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8">
 				{isProfessional ? (
-					<DoctorDetailsForm
+					<ProfessionalDetailsForm
 						userId={user?.id ?? ""}
 						userEmail={user?.email ?? ""}
 						type="edit"
@@ -69,35 +66,24 @@ export default function SettingsPage() {
 					/>
 				)}
 			</div>
-
 			{isProfessional && myProfile && <BioForm professional={myProfile} />}
-
 			{isProfessional && myProfile && (
 				<SocialLinksForm professional={myProfile} />
 			)}
-
 			{isProfessional && myProfile && <CouncilForm professional={myProfile} />}
-
 			{isProfessional && myProfile && <AddressForm professional={myProfile} />}
-
 			{isProfessional && myProfile && (
 				<EducationList professional={myProfile} />
 			)}
-
 			{isProfessional && myProfile && (
 				<ExperienceList professional={myProfile} />
 			)}
-
 			{isProfessional && myProfile && (
 				<CertificateList professional={myProfile} />
 			)}
-
 			{!isProfessional && user && <MedicalHealthForm userId={user.id} />}
-
 			{!isProfessional && <EmergencyContactList />}
-
 			{!isProfessional && <VaccineList />}
-
 			{!isProfessional && <DocumentPhotoGrid />}
 		</div>
 	);

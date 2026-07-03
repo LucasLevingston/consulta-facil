@@ -1,5 +1,5 @@
 import type { ProfessionalResponse } from "@/features/professionals";
 
-export interface DoctorsListProps {
+export interface ProfessionalsListProps {
 	doctors: ProfessionalResponse[];
 }

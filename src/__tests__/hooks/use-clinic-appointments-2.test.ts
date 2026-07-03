@@ -61,7 +61,7 @@ describe("useClinicFinancialStats", () => {
 		});
 		await waitFor(() => expect(result.current.isLoading).toBe(false));
 		expect(result.current.totalCompleted).toBe(1);
-		expect(result.current.totalFreeQuota).toBe(5); // FREE_CONSULTS_PER_DOCTOR = 5
+		expect(result.current.totalFreeQuota).toBe(5); // FREE_CONSULTS_PER_PROFESSIONAL = 5
 		expect(result.current.memberStats).toHaveLength(1);
 	});
 });

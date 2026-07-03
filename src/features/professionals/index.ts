@@ -25,7 +25,7 @@ export { useUpdateExperience } from "@/hooks/api/professionals/use-update-experi
 export { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 export { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
 export { useAddressForm } from "@/hooks/use-address-form";
-export { useDoctorDetailsForm } from "@/hooks/use-doctor-details-form";
+export { useProfessionalDetailsForm } from "@/hooks/use-doctor-details-form";
 export type { UseProfessionalsFiltersReturn } from "@/hooks/use-professionals-filters";
 export { useProfessionalsFilters } from "@/hooks/use-professionals-filters";
 export { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
@@ -50,10 +50,7 @@ export {
 	professionalExperienceSchema,
 } from "@/lib/schemas/doctor/professional-experience.schema";
 export type { ProfessionalRating } from "@/lib/schemas/doctor/professional-rating.schema";
-export type {
-	DoctorResponse,
-	ProfessionalResponse,
-} from "@/lib/schemas/doctor/professional-response.schema";
+export type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
 export {
 	type UpdateAddressInput,
 	updateAddressSchema,

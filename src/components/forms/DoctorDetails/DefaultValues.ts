@@ -1,4 +1,4 @@
-export const DoctorDefaultValues = {
+export const ProfessionalDefaultValues = {
 	name: "",
 	email: "",
 	phone: "",

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { ClinicResponse } from "@/features/clinics";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import { ClinicMemberRow } from "./ClinicMemberRow";
 
@@ -47,7 +47,7 @@ export function ClinicMemberUsageCard({
 					<div>
 						<CardTitle className="text-base">Uso por profissional</CardTitle>
 						<CardDescription>
-							Cada profissional tem {FREE_CONSULTS_PER_DOCTOR} consultas
+							Cada profissional tem {FREE_CONSULTS_PER_PROFESSIONAL} consultas
 							gratuitas
 						</CardDescription>
 					</div>
@@ -74,7 +74,7 @@ export function ClinicMemberUsageCard({
 					</p>
 					<p>
 						• {totalFreeQuota} consultas gratuitas totais (
-						{FREE_CONSULTS_PER_DOCTOR} × {membersCount})
+						{FREE_CONSULTS_PER_PROFESSIONAL} × {membersCount})
 					</p>
 					<p>
 						• {totalPaid} consulta{totalPaid !== 1 ? "s" : ""} além da cota

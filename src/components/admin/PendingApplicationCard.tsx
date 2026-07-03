@@ -14,7 +14,7 @@ import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { PendingApplicationCardProps } from "./PendingApplicationCard.types";
 
 export function PendingApplicationCard({
-	doctor,
+	professional,
 }: PendingApplicationCardProps) {
 	const { mutateAsync: approve, isPending: isApproving } =
 		useApproveApplication();
@@ -24,8 +24,10 @@ export function PendingApplicationCard({
 
 	async function handleApprove() {
 		try {
-			await approve(doctor.id);
-			toast.success(`${doctor.name ?? "Profissional"} aprovado com sucesso`);
+			await approve(professional.id);
+			toast.success(
+				`${professional.name ?? "Profissional"} aprovado com sucesso`,
+			);
 		} catch {
 			toast.error("Erro ao aprovar solicitação");
 		}
@@ -33,7 +35,7 @@ export function PendingApplicationCard({
 
 	async function handleReject() {
 		try {
-			await reject(doctor.id);
+			await reject(professional.id);
 			toast.success("Solicitação recusada");
 		} catch {
 			toast.error("Erro ao recusar solicitação");
@@ -44,16 +46,18 @@ export function PendingApplicationCard({
 		<div className="flex items-center gap-4 rounded-xl border border-border p-4">
 			<Avatar className="h-10 w-10 shrink-0">
 				<AvatarImage
-					src={doctor.imageUrl ?? undefined}
-					alt={doctor.name ?? ""}
+					src={professional.imageUrl ?? undefined}
+					alt={professional.name ?? ""}
 				/>
-				<AvatarFallback>{(doctor.name ?? "?")[0]}</AvatarFallback>
+				<AvatarFallback>{(professional.name ?? "?")[0]}</AvatarFallback>
 			</Avatar>
 			<div className="min-w-0 flex-1">
-				<p className="truncate font-medium text-sm">{doctor.name}</p>
-				<p className="truncate text-xs text-muted-foreground">{doctor.email}</p>
+				<p className="truncate font-medium text-sm">{professional.name}</p>
+				<p className="truncate text-xs text-muted-foreground">
+					{professional.email}
+				</p>
 				<Badge variant="secondary" className="mt-1 text-xs">
-					{SPECIALTY_LABELS[doctor.specialty] ?? doctor.specialty}
+					{SPECIALTY_LABELS[professional.specialty] ?? professional.specialty}
 				</Badge>
 			</div>
 			<div className="flex shrink-0 gap-2">
