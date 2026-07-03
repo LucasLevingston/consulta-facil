@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+﻿import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
 	Briefcase,
@@ -12,7 +12,7 @@ import {
 import { PatientDetailInfoRow } from "@/components/patients/detail/PatientDetailInfoRow";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { PatientProfile } from "@/lib/schemas/patient/patient-profile.schema";
+import type { PatientInfoCardProps } from "./PatientInfoCard.types";
 
 function genderLabel(gender?: string | null) {
 	if (gender === "MALE") return "Masculino";
@@ -21,7 +21,7 @@ function genderLabel(gender?: string | null) {
 	return null;
 }
 
-export function PatientInfoCard({ patient }: { patient: PatientProfile }) {
+export function PatientInfoCard({ patient }: PatientInfoCardProps) {
 	return (
 		<Card>
 			<CardHeader>

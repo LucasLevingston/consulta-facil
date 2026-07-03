@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BadgeCheck, Layers, Loader2, PowerOff } from "lucide-react";
 import { toast } from "sonner";
@@ -14,11 +14,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import {
-	useAdminDeactivatePlan,
-	useAdminPlans,
-} from "@/hooks/api/plans/use-plans";
-import type { PlanResponse } from "@/lib/api/plans.api";
+import type { PlanResponse } from "@/features/plans";
+import { useAdminDeactivatePlan, useAdminPlans } from "@/features/plans";
 
 const PERIOD_LABELS: Record<string, string> = {
 	MONTHLY: "Mensal",

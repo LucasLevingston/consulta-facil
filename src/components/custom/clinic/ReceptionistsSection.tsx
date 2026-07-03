@@ -1,26 +1,23 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Trash2, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import CustomFormField, {
-	FormFieldType,
-} from "@/components/custom/forms-components/custom-form-field";
-import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
-import { useClinicReceptionists } from "@/hooks/api/clinics/use-clinic-receptionists";
-import { useInviteReceptionist } from "@/hooks/api/clinics/use-invite-receptionist";
-import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
 import {
 	type InviteReceptionistInput,
 	inviteReceptionistSchema,
-} from "@/lib/schemas/clinic/invite-receptionist.schema";
+	useClinicReceptionists,
+	useInviteReceptionist,
+	useRemoveReceptionist,
+} from "@/features/clinics";
+import { ReceptionistInviteForm } from "./ReceptionistInviteForm";
+import { ReceptionistList } from "./ReceptionistList";
+import type { ReceptionistsSectionProps } from "./ReceptionistsSection.types";
 
-export function ReceptionistsSection({ clinicId }: { clinicId: string }) {
+export function ReceptionistsSection({ clinicId }: ReceptionistsSectionProps) {
 	const { data: receptionists = [], isLoading } =
 		useClinicReceptionists(clinicId);
 	const { mutateAsync: invite } = useInviteReceptionist(clinicId);
@@ -77,62 +74,22 @@ export function ReceptionistsSection({ clinicId }: { clinicId: string }) {
 					</Button>
 				)}
 			</div>
-
 			{open && (
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className="flex gap-2 items-end"
-					>
-						<div className="flex-1">
-							<CustomFormField
-								form={form}
-								name="email"
-								fieldType={FormFieldType.EMAIL}
-								label="E-mail do usuário"
-								placeholder="usuario@email.com"
-							/>
-						</div>
-						<CustomSubmitButton form={form} submittingText="Adicionando...">
-							Adicionar
-						</CustomSubmitButton>
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							onClick={() => setOpen(false)}
-						>
-							Cancelar
-						</Button>
-					</form>
-				</Form>
+				<ReceptionistInviteForm
+					form={form}
+					onSubmit={form.handleSubmit(onSubmit)}
+					onCancel={() => setOpen(false)}
+				/>
 			)}
-
 			{receptionists.length === 0 ? (
 				<p className="text-sm text-muted-foreground">
 					Nenhum recepcionista cadastrado.
 				</p>
 			) : (
-				<div className="space-y-2">
-					{receptionists.map((r) => (
-						<Card key={r.id}>
-							<CardContent className="py-3 flex items-center justify-between">
-								<div>
-									<p className="text-sm font-medium">{r.name}</p>
-									<p className="text-xs text-muted-foreground">{r.email}</p>
-								</div>
-								<Button
-									size="icon"
-									variant="ghost"
-									className="text-destructive hover:text-destructive"
-									onClick={() => handleRemove(r.id)}
-								>
-									<Trash2 className="h-4 w-4" />
-								</Button>
-							</CardContent>
-						</Card>
-					))}
-				</div>
+				<ReceptionistList
+					receptionists={receptionists}
+					onRemove={handleRemove}
+				/>
 			)}
 		</div>
 	);

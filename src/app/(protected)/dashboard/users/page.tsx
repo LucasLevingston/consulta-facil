@@ -22,10 +22,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAllUsers } from "@/hooks/api/users/use-all-users";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission, useUserStore } from "@/features/auth";
+import { useAllUsers } from "@/features/users";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 

@@ -1,12 +1,11 @@
 "use client";
 
-import { Loader2, Mic, MicOff, X } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Loader2, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useVoiceBooking } from "@/hooks/use-voice-booking";
+import { useVoiceBooking } from "@/features/appointments";
 import { cn } from "@/lib/utils/cn";
-import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { VoiceBookingButtonProps } from "./voice-booking-button.types";
+import { VoiceBookingResultCard } from "./voice-booking-result";
 
 export function VoiceBookingButton({
 	onResult,
@@ -19,52 +18,14 @@ export function VoiceBookingButton({
 
 	if (result && status === "done") {
 		return (
-			<div className="flex flex-col gap-2 rounded-xl border border-primary/20 bg-primary/5 p-3">
-				<div className="flex items-center justify-between gap-2">
-					<p className="text-xs font-medium text-primary">{result.summary}</p>
-					<Button
-						type="button"
-						variant="ghost"
-						size="icon"
-						className="h-6 w-6 shrink-0"
-						onClick={reset}
-					>
-						<X className="h-3 w-3" />
-					</Button>
-				</div>
-				<div className="flex flex-wrap gap-1.5">
-					{result.specialty && (
-						<Badge variant="secondary" className="text-xs">
-							{SPECIALTY_LABELS[result.specialty] ?? result.specialty}
-						</Badge>
-					)}
-					{result.date && (
-						<Badge variant="secondary" className="text-xs">
-							{new Date(result.date + "T12:00:00").toLocaleDateString("pt-BR")}
-						</Badge>
-					)}
-					{result.timePreference && result.timePreference !== "any" && (
-						<Badge variant="secondary" className="text-xs">
-							{result.timePreference === "morning"
-								? "Manhã"
-								: result.timePreference === "afternoon"
-									? "Tarde"
-									: "Noite"}
-						</Badge>
-					)}
-				</div>
-				<Button
-					type="button"
-					size="sm"
-					className="w-full"
-					onClick={() => {
-						onResult(result);
-						reset();
-					}}
-				>
-					Usar esses dados
-				</Button>
-			</div>
+			<VoiceBookingResultCard
+				result={result}
+				onReset={reset}
+				onUse={() => {
+					onResult(result);
+					reset();
+				}}
+			/>
 		);
 	}
 

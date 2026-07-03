@@ -1,4 +1,4 @@
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission } from "@/features/auth";
 import type { AbacGuardProps } from "./AbacGuard.types";
 export function AbacGuard({
 	permission,

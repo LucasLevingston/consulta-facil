@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { MessageSquare, Star } from "lucide-react";
 import { useState } from "react";
@@ -12,16 +12,13 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-
+import type { AppointmentRatingSectionProps } from "./AppointmentRatingSection.types";
 import { StarDisplay } from "./StarDisplay";
 
-interface Props {
-	appointment: AppointmentResponse;
-	canRate: boolean;
-}
-
-export function AppointmentRatingSection({ appointment, canRate }: Props) {
+export function AppointmentRatingSection({
+	appointment,
+	canRate,
+}: AppointmentRatingSectionProps) {
 	const [rateOpen, setRateOpen] = useState(false);
 
 	if (appointment.status !== "COMPLETED") return null;

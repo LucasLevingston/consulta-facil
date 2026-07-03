@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { procedureRequestsApi } from "@/lib/api/procedure-requests.api";
+import { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";
 import { procedureRequestKeys } from "./procedure-request-keys";
 
 export function useGetMyProcedureRequests() {

@@ -1,21 +1,17 @@
-import { format } from "date-fns";
+﻿import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Clock, Stethoscope, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { QueueCardProps } from "./QueueCard.types";
 
 export function QueueCard({
 	professionalName,
 	specialty,
 	appointments,
-}: {
-	professionalName: string;
-	specialty?: string | null;
-	appointments: AppointmentResponse[];
-}) {
+}: QueueCardProps) {
 	const inProgress = appointments.find((a) => a.status === "IN_PROGRESS");
 	const waiting = appointments.filter((a) => a.status === "CHECKED_IN");
 

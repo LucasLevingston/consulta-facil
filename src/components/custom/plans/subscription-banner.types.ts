@@ -1,4 +1,4 @@
-import type { SubscriptionResponse } from "@/lib/api/subscriptions/get-my-subscription.api";
+import type { SubscriptionResponse } from "@/features/subscriptions";
 
 export interface SubscriptionBannerProps {
 	subscription: SubscriptionResponse;

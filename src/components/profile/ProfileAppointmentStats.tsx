@@ -1,16 +1,14 @@
-import { CalendarDays } from "lucide-react";
+﻿import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { ProfileAppointmentStatsProps } from "./ProfileAppointmentStats.types";
 
 export function ProfileAppointmentStats({
 	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+}: ProfileAppointmentStatsProps) {
 	const stats = [
 		{
 			label: "Total",

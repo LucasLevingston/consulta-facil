@@ -6,7 +6,8 @@ export { useConversations } from "@/hooks/api/conversations/use-conversations";
 export { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
 export { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
 export { useChat } from "@/hooks/use-chat";
-export { conversationsApi } from "@/lib/api/conversations.api";
+export { useMessagesPage } from "@/hooks/use-messages-page";
+export { conversationsApi } from "@/lib/api/conversations/conversations.api";
 export type {
 	ConversationResponse,
 	MessageResponse,

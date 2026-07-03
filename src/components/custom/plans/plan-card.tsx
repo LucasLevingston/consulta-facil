@@ -1,7 +1,6 @@
 "use client";
 
 import { CheckCircle2, Loader2 } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +26,7 @@ export function PlanCard({
 	const isActive =
 		subscription?.status === "ACTIVE" && subscription.planId === plan.id;
 	const savings = YEARLY_SAVINGS[plan.id];
-
+	const highlighted = plan.highlight || isActive;
 	return (
 		<Card
 			className={cn(
@@ -38,7 +37,7 @@ export function PlanCard({
 				isActive && "ring-2 ring-green-500/40",
 			)}
 		>
-			{(plan.highlight || isActive) && (
+			{highlighted && (
 				<div className="absolute -top-3 left-4 flex gap-2">
 					{plan.highlight && !isActive && (
 						<Badge className="bg-primary text-primary-foreground shadow-sm">
@@ -52,10 +51,7 @@ export function PlanCard({
 					)}
 				</div>
 			)}
-
-			<CardHeader
-				className={cn("pb-4", (plan.highlight || isActive) && "pt-6")}
-			>
+			<CardHeader className={cn("pb-4", highlighted && "pt-6")}>
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2 text-primary">
 						{plan.icon}
@@ -64,13 +60,12 @@ export function PlanCard({
 					{savings && (
 						<Badge
 							variant="secondary"
-							className="text-xs bg-green-500/10 text-green-600 border-green-500/20"
+							className="border-green-500/20 bg-green-500/10 text-xs text-green-600"
 						>
 							{savings}
 						</Badge>
 					)}
 				</div>
-
 				<div className="mt-3 space-y-0.5">
 					<div className="flex items-end gap-1">
 						<span className="text-3xl font-bold text-foreground">
@@ -84,10 +79,8 @@ export function PlanCard({
 						</p>
 					)}
 				</div>
-
 				<p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
 			</CardHeader>
-
 			<CardContent className="space-y-2">
 				{plan.features.map((feature) => (
 					<div key={feature} className="flex items-center gap-2 text-sm">
@@ -96,7 +89,6 @@ export function PlanCard({
 					</div>
 				))}
 			</CardContent>
-
 			<CardFooter className="pt-4">
 				{isActive ? (
 					<Button className="w-full" variant="outline" disabled>

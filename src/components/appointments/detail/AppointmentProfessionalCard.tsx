@@ -1,16 +1,14 @@
-"use client";
+﻿"use client";
 
 import { Stethoscope } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { AppointmentProfessionalCardProps } from "./AppointmentProfessionalCard.types";
 
-interface Props {
-	appointment: AppointmentResponse;
-}
-
-export function AppointmentProfessionalCard({ appointment }: Props) {
+export function AppointmentProfessionalCard({
+	appointment,
+}: AppointmentProfessionalCardProps) {
 	return (
 		<Card>
 			<CardHeader>

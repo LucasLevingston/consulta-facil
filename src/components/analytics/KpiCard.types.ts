@@ -1,4 +1,4 @@
-import type { Kpi } from "@/lib/schemas/analytics/analytics.schema";
+﻿import type { Kpi } from "@/features/analytics";
 
 export interface KpiCardProps {
 	kpi: Kpi;

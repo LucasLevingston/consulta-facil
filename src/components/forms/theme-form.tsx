@@ -7,17 +7,10 @@ import { toast } from "sonner";
 import type { z } from "zod";
 
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils/cn";
-import { themeFormSchema } from "../../schemas/theme-schema";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { themeFormSchema } from "@/lib/schemas/theme/theme-form.schema";
+import { ThemeOption } from "./ThemeOption";
 
 export function ThemeForm() {
 	const { theme, setTheme } = useTheme();
@@ -31,7 +24,6 @@ export function ThemeForm() {
 
 	const onSubmit = form.handleSubmit(async (data) => {
 		setTheme(data.theme);
-
 		toast.success("Sucesso", {
 			description: `O tema foi alterado para: ${data.theme}`,
 		});
@@ -46,89 +38,52 @@ export function ThemeForm() {
 					render={({ field }) => (
 						<FormItem className="space-y-4">
 							<FormMessage />
-
 							<RadioGroup
 								value={field.value}
 								onValueChange={field.onChange}
 								className="grid max-w-md grid-cols-2 gap-8 pt-2"
 							>
-								{/* Light */}
-								<FormItem>
-									<FormLabel className="cursor-pointer">
-										<FormControl>
-											<RadioGroupItem value="light" className="hidden" />
-										</FormControl>
-
-										<div
-											className={cn(
-												"rounded-md border-[3px] p-1 transition-colors",
-												field.value === "light"
-													? "border-primary"
-													: "border-muted",
-											)}
-										>
-											<div className="space-y-2 rounded-sm bg-[#ecedef] p-2">
-												<div className="space-y-2 rounded-md bg-white p-2 shadow-sm">
-													<div className="h-2 w-[80px] rounded-lg bg-[#ecedef]" />
-													<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
-												</div>
-
-												<div className="flex items-center space-x-2 rounded-md bg-white p-2 shadow-sm">
-													<div className="size-4 rounded-full bg-[#ecedef]" />
-													<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
-												</div>
-
-												<div className="flex items-center space-x-2 rounded-md bg-white p-2 shadow-sm">
-													<div className="size-4 rounded-full bg-[#ecedef]" />
-													<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
-												</div>
-											</div>
+								<ThemeOption
+									value="light"
+									label="Light"
+									currentValue={field.value}
+								>
+									<div className="space-y-2 rounded-sm bg-[#ecedef] p-2">
+										<div className="space-y-2 rounded-md bg-white p-2 shadow-sm">
+											<div className="h-2 w-[80px] rounded-lg bg-[#ecedef]" />
+											<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
 										</div>
-
-										<span className="block w-full p-2 text-center font-normal">
-											Light
-										</span>
-									</FormLabel>
-								</FormItem>
-
-								{/* Dark */}
-								<FormItem>
-									<FormLabel className="cursor-pointer">
-										<FormControl>
-											<RadioGroupItem value="dark" className="hidden" />
-										</FormControl>
-
-										<div
-											className={cn(
-												"rounded-md border-[3px] p-1 transition-colors",
-												field.value === "dark"
-													? "border-primary"
-													: "border-muted",
-											)}
-										>
-											<div className="space-y-2 rounded-sm bg-slate-950 p-2">
-												<div className="space-y-2 rounded-md bg-slate-800 p-2 shadow-sm">
-													<div className="h-2 w-[80px] rounded-lg bg-slate-400" />
-													<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
-												</div>
-
-												<div className="flex items-center space-x-2 rounded-md bg-slate-800 p-2 shadow-sm">
-													<div className="size-4 rounded-full bg-slate-400" />
-													<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
-												</div>
-
-												<div className="flex items-center space-x-2 rounded-md bg-slate-800 p-2 shadow-sm">
-													<div className="size-4 rounded-full bg-slate-400" />
-													<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
-												</div>
-											</div>
+										<div className="flex items-center space-x-2 rounded-md bg-white p-2 shadow-sm">
+											<div className="size-4 rounded-full bg-[#ecedef]" />
+											<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
 										</div>
+										<div className="flex items-center space-x-2 rounded-md bg-white p-2 shadow-sm">
+											<div className="size-4 rounded-full bg-[#ecedef]" />
+											<div className="h-2 w-[100px] rounded-lg bg-[#ecedef]" />
+										</div>
+									</div>
+								</ThemeOption>
 
-										<span className="block w-full p-2 text-center font-normal">
-											Dark
-										</span>
-									</FormLabel>
-								</FormItem>
+								<ThemeOption
+									value="dark"
+									label="Dark"
+									currentValue={field.value}
+								>
+									<div className="space-y-2 rounded-sm bg-slate-950 p-2">
+										<div className="space-y-2 rounded-md bg-slate-800 p-2 shadow-sm">
+											<div className="h-2 w-[80px] rounded-lg bg-slate-400" />
+											<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
+										</div>
+										<div className="flex items-center space-x-2 rounded-md bg-slate-800 p-2 shadow-sm">
+											<div className="size-4 rounded-full bg-slate-400" />
+											<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
+										</div>
+										<div className="flex items-center space-x-2 rounded-md bg-slate-800 p-2 shadow-sm">
+											<div className="size-4 rounded-full bg-slate-400" />
+											<div className="h-2 w-[100px] rounded-lg bg-slate-400" />
+										</div>
+									</div>
+								</ThemeOption>
 							</RadioGroup>
 						</FormItem>
 					)}

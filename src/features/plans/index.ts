@@ -3,4 +3,5 @@ export {
 	useAdminDeactivatePlan,
 	useAdminPlans,
 	usePlans,
-} from "@/hooks/api/plans/use-plans";
+} from "@/hooks/api/billing/use-plans";
+export type { PlanResponse } from "@/lib/api/billing/plans.api";

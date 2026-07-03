@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { procedureRequestsApi } from "@/lib/api/procedure-requests.api";
+import { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";
 import type { ScheduleProcedureRequestInput } from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
 import { procedureRequestKeys } from "./procedure-request-keys";
 

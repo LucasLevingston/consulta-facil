@@ -5,33 +5,17 @@ import { BadgeCheck } from "lucide-react";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-
-import CustomFormField, {
-	FormFieldType,
-} from "@/components/custom/forms-components/custom-form-field";
-import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
-import { useCreateProfessional } from "@/hooks/api/doctors/use-create-professional";
-import { professionalTypeSchema } from "@/lib/schemas/professional/professional-type.schema";
-import { specialtySchema } from "@/lib/schemas/professional/specialty.schema";
+import { useCreateProfessional } from "@/features/professionals";
 import {
 	PROFESSION_SPECIALTIES,
 	SPECIALTY_LABELS,
 } from "@/utils/constants/profession-specialties";
-import { PROFESSIONAL_TYPE_OPTIONS } from "@/utils/constants/professional-types";
-
-const becomeProfessionalSchema = z.object({
-	profession: professionalTypeSchema,
-	specialty: specialtySchema,
-	licenseNumber: z
-		.string()
-		.min(5, "Número de registro deve ter pelo menos 5 caracteres")
-		.max(50, "Número de registro muito longo"),
-});
-
-type BecomeProfessionalValues = z.infer<typeof becomeProfessionalSchema>;
+import {
+	type BecomeProfessionalValues,
+	becomeProfessionalSchema,
+} from "./BecomeProfessionalForm.schema";
+import { BecomeProfessionalFormContent } from "./BecomeProfessionalFormContent";
 
 export function BecomeProfessionalForm() {
 	const { mutateAsync: createProfessional, isPending } =
@@ -51,9 +35,7 @@ export function BecomeProfessionalForm() {
 		: [];
 
 	useEffect(() => {
-		if (selectedProfession) {
-			form.resetField("specialty");
-		}
+		if (selectedProfession) form.resetField("specialty");
 	}, [selectedProfession, form]);
 
 	async function onSubmit(values: BecomeProfessionalValues) {
@@ -91,47 +73,17 @@ export function BecomeProfessionalForm() {
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-						<CustomFormField
-							form={form}
-							name="profession"
-							fieldType={FormFieldType.SELECT}
-							label="Profissão"
-							placeholder="Selecione sua profissão"
-							selectOptions={PROFESSIONAL_TYPE_OPTIONS}
-						/>
-
-						<CustomFormField
-							form={form}
-							name="specialty"
-							fieldType={FormFieldType.SELECT}
-							label="Especialidade"
-							placeholder={
-								selectedProfession
-									? "Selecione sua especialidade"
-									: "Primeiro selecione a profissão"
-							}
-							selectOptions={availableSpecialties.map((s) => ({
-								value: s,
-								label: SPECIALTY_LABELS[s] ?? s,
-							}))}
-							disabled={!selectedProfession}
-						/>
-
-						<CustomFormField
-							form={form}
-							name="licenseNumber"
-							fieldType={FormFieldType.INPUT}
-							label="Número de registro"
-							placeholder={licenseHint}
-						/>
-
-						<CustomSubmitButton form={form} isSubmitting={isPending}>
-							Enviar solicitação
-						</CustomSubmitButton>
-					</form>
-				</Form>
+				<BecomeProfessionalFormContent
+					form={form}
+					isPending={isPending}
+					availableSpecialties={availableSpecialties.map((s) => ({
+						value: s,
+						label: SPECIALTY_LABELS[s] ?? s,
+					}))}
+					selectedProfession={selectedProfession}
+					licenseHint={licenseHint}
+					onSubmit={form.handleSubmit(onSubmit)}
+				/>
 			</CardContent>
 		</Card>
 	);

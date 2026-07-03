@@ -1,6 +1,16 @@
-export { dependentKeys } from "@/hooks/api/dependents/dependent-keys";
-export { useCreateDependent } from "@/hooks/api/dependents/use-create-dependent";
-export { useDeleteDependent } from "@/hooks/api/dependents/use-delete-dependent";
-export { useMyDependents } from "@/hooks/api/dependents/use-my-dependents";
-export { useUpdateDependent } from "@/hooks/api/dependents/use-update-dependent";
-export { dependentsApi } from "@/lib/api/dependents.api";
+export { useDependentForm } from "@/hooks/use-dependent-form";
+export { useDependentsPage } from "@/hooks/use-dependents-page";
+export { dependentsApi } from "@/lib/api/dependents/dependents.api";
+export {
+	type CreateDependentInput,
+	createDependentSchema,
+} from "@/lib/schemas/dependent/create-dependent.schema";
+export type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
+export { useDependentsController } from "./controllers/use-dependents.controller";
+export { dependentKeys } from "./hooks/dependent-keys";
+export { useCreateDependent } from "./hooks/use-create-dependent";
+export { useDeleteDependent } from "./hooks/use-delete-dependent";
+export { useMyDependents } from "./hooks/use-my-dependents";
+export { useUpdateDependent } from "./hooks/use-update-dependent";
+export { dependentsRepository } from "./repositories/dependents.repository";
+export { dependentsService } from "./services/dependents.service";

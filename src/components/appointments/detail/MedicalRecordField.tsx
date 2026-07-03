@@ -2,16 +2,13 @@
 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type { MedicalRecordFieldProps } from "./MedicalRecordField.types";
 
 export function MedicalRecordField({
 	label,
 	value,
 	onChange,
-}: {
-	label: string;
-	value: string;
-	onChange: (v: string) => void;
-}) {
+}: MedicalRecordFieldProps) {
 	return (
 		<div className="space-y-1.5">
 			<Label className="text-xs font-semibold text-primary">{label}</Label>

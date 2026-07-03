@@ -1,12 +1,10 @@
+import type { ProfileInfoRowProps } from "./ProfileInfoRow.types";
+
 export function ProfileInfoRow({
 	icon: Icon,
 	label,
 	value,
-}: {
-	icon: React.ElementType;
-	label: string;
-	value?: string | null;
-}) {
+}: ProfileInfoRowProps) {
 	if (!value) return null;
 	return (
 		<div className="flex items-start gap-3">

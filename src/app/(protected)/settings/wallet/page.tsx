@@ -1,13 +1,10 @@
-"use client";
+﻿"use client";
 
 import { Wallet } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
 import { WalletCard } from "@/components/wallet/WalletCard";
 import { WalletHistoryTable } from "@/components/wallet/WalletHistoryTable";
-import {
-	useMyWallet,
-	useMyWalletTransactions,
-} from "@/hooks/api/billing/use-wallet";
+import { useMyWallet, useMyWalletTransactions } from "@/features/billing";
 
 export default function WalletSettingsPage() {
 	const { data: wallet, isLoading } = useMyWallet();

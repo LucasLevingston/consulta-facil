@@ -1,11 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Save } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -13,29 +11,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { useUpdateCouncil } from "@/hooks/api/doctors/use-update-council";
-import {
-	councilTypeOptions,
 	type UpdateCouncilInput,
 	updateCouncilSchema,
-} from "@/lib/schemas/doctor/update-council.schema";
+	useUpdateCouncil,
+} from "@/features/professionals";
 import type { CouncilFormProps } from "./CouncilForm.types";
+import { CouncilFormFields } from "./CouncilFormFields";
 
 export function CouncilForm({ professional }: CouncilFormProps) {
 	const { mutate, isPending } = useUpdateCouncil();
@@ -78,60 +61,11 @@ export function CouncilForm({ professional }: CouncilFormProps) {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-						<div className="flex gap-4">
-							<FormField
-								control={form.control}
-								name="councilType"
-								render={({ field }) => (
-									<FormItem className="flex-1">
-										<FormLabel>Tipo</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											value={field.value ?? ""}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Selecione" />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{councilTypeOptions.map((opt) => (
-													<SelectItem key={opt.value} value={opt.value}>
-														{opt.label}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="councilState"
-								render={({ field }) => (
-									<FormItem className="w-24">
-										<FormLabel>UF</FormLabel>
-										<FormControl>
-											<Input
-												placeholder="SP"
-												maxLength={2}
-												{...field}
-												value={field.value ?? ""}
-												className="uppercase"
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-						<Button type="submit" disabled={isPending} className="gap-2">
-							<Save className="h-4 w-4" />
-							{isPending ? "Salvando..." : "Salvar"}
-						</Button>
-					</form>
+					<CouncilFormFields
+						control={form.control}
+						onSubmit={form.handleSubmit(onSubmit)}
+						isPending={isPending}
+					/>
 				</Form>
 			</CardContent>
 		</Card>

@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { useUserStore } from "@/features/auth";
 import { cn } from "@/lib/utils/cn";
-import { useUserStore } from "@/store/useUserStore";
 import { SETTINGS_LINKS } from "@/utils/constants/settings-links";
 
 export function SettingsSidebar() {

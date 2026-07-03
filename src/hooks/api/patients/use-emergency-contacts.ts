@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { patientsApi } from "@/lib/api/patients.api";
+import { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
 import { patientKeys } from "./patient-keys";
 
 export function useEmergencyContacts() {
 	return useQuery({
 		queryKey: patientKeys.emergencyContacts,
-		queryFn: patientsApi.listEmergencyContacts,
+		queryFn: patientEmergencyContactsApi.listEmergencyContacts,
 	});
 }

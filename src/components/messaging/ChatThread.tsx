@@ -4,21 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useConversationHistory } from "@/hooks/api/conversations/use-conversation-history";
-import { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
-import { useChat } from "@/hooks/use-chat";
-import type {
-	ConversationResponse,
-	MessageResponse,
-} from "@/lib/schemas/messaging/message.schema";
-import { cn } from "@/lib/utils/cn";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/features/auth";
+import type { MessageResponse } from "@/features/messaging";
+import {
+	useChat,
+	useConversationHistory,
+	useMarkAsRead,
+} from "@/features/messaging";
+import { ChatMessageBubble } from "./ChatMessageBubble";
+import type { ChatThreadProps } from "./ChatThread.types";
 
-interface Props {
-	conversation: ConversationResponse;
-}
-
-export function ChatThread({ conversation }: Props) {
+export function ChatThread({ conversation }: ChatThreadProps) {
 	const user = useUserStore((s) => s.user);
 	const { data: historyPage } = useConversationHistory(conversation.id);
 	const markAsRead = useMarkAsRead();
@@ -57,45 +53,28 @@ export function ChatThread({ conversation }: Props) {
 	const allMessages = [...historicalMessages, ...liveMessages];
 
 	return (
-		<div className="flex flex-col h-full">
-			{/* Header */}
-			<div className="flex items-center gap-3 px-4 py-3 border-b shrink-0">
+		<div className="flex h-full flex-col">
+			<div className="flex shrink-0 items-center gap-3 border-b px-4 py-3">
 				<Avatar className="h-9 w-9">
 					<AvatarImage src={conversation.otherUserImageUrl ?? undefined} />
 					<AvatarFallback>
 						{conversation.otherUserName.charAt(0).toUpperCase()}
 					</AvatarFallback>
 				</Avatar>
-				<p className="font-medium text-sm">{conversation.otherUserName}</p>
+				<p className="text-sm font-medium">{conversation.otherUserName}</p>
 			</div>
-
-			{/* Messages */}
-			<div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-				{allMessages.map((msg, i) => {
-					const isOwn = msg.senderId === user?.id;
-					return (
-						<div
-							key={msg.id ?? `live-${i}`}
-							className={cn("flex", isOwn ? "justify-end" : "justify-start")}
-						>
-							<div
-								className={cn(
-									"max-w-[70%] rounded-2xl px-4 py-2 text-sm",
-									isOwn
-										? "bg-primary text-primary-foreground rounded-br-sm"
-										: "bg-muted rounded-bl-sm",
-								)}
-							>
-								{msg.content}
-							</div>
-						</div>
-					);
-				})}
+			<div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+				{allMessages.map((msg, i) => (
+					<ChatMessageBubble
+						key={msg.id ?? `live-${i}`}
+						msgKey={msg.id ?? `live-${i}`}
+						msg={msg}
+						isOwn={msg.senderId === user?.id}
+					/>
+				))}
 				<div ref={bottomRef} />
 			</div>
-
-			{/* Input */}
-			<div className="flex items-center gap-2 px-4 py-3 border-t shrink-0">
+			<div className="flex shrink-0 items-center gap-2 border-t px-4 py-3">
 				<Input
 					placeholder="Escreva uma mensagem..."
 					value={input}

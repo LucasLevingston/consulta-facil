@@ -1,83 +1,21 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import CustomFormField, {
 	FormFieldType,
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { LocationPicker } from "@/components/custom/map/LocationPicker";
 import { Form } from "@/components/ui/form";
-import { useCreateClinic } from "@/hooks/api/clinics/use-create-clinic";
-import { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
-import {
-	type CreateClinicInput,
-	createClinicSchema,
-} from "@/lib/schemas/clinic/create-clinic.schema";
+import { useClinicForm } from "@/hooks/use-clinic-form";
+import type { ClinicFormProps } from "./ClinicForm.types";
 
-export function ClinicForm({ clinic }: { clinic?: ClinicResponse }) {
-	const isEdit = !!clinic;
-	const [lat, setLat] = useState<number | null>(clinic?.latitude ?? null);
-	const [lng, setLng] = useState<number | null>(clinic?.longitude ?? null);
-
-	const { mutateAsync: createClinic } = useCreateClinic();
-	const { mutateAsync: updateClinic } = useUpdateClinic();
-
-	const form = useForm<CreateClinicInput>({
-		resolver: zodResolver(createClinicSchema),
-		defaultValues: isEdit
-			? {
-					name: clinic.name,
-					description: clinic.description ?? "",
-					phone: clinic.phone ?? "",
-					address: clinic.address ?? "",
-					city: clinic.city ?? "",
-					state: clinic.state ?? "",
-					zipCode: clinic.zipCode ?? "",
-					latitude: clinic.latitude ?? undefined,
-					longitude: clinic.longitude ?? undefined,
-				}
-			: {
-					name: "",
-					description: "",
-					phone: "",
-					address: "",
-					city: "",
-					state: "",
-					zipCode: "",
-				},
-	});
-
-	function handleLocationSelect(selectedLat: number, selectedLng: number) {
-		setLat(selectedLat);
-		setLng(selectedLng);
-		form.setValue("latitude", selectedLat);
-		form.setValue("longitude", selectedLng);
-	}
-
-	async function onSubmit(values: CreateClinicInput) {
-		try {
-			if (isEdit) {
-				await updateClinic({ id: clinic.id, data: values });
-				toast.success("Clínica atualizada com sucesso!");
-			} else {
-				await createClinic(values);
-				toast.success("Clínica criada com sucesso!");
-			}
-		} catch {
-			toast.error("Erro ao salvar clínica.");
-		}
-	}
+export function ClinicForm({ clinic }: ClinicFormProps) {
+	const { form, isEdit, lat, lng, handleLocationSelect, onSubmit } =
+		useClinicForm(clinic);
 
 	return (
 		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="space-y-6 max-w-2xl"
-			>
+			<form onSubmit={onSubmit} className="space-y-6 max-w-2xl">
 				<div className="space-y-4">
 					<h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
 						Informações básicas

@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { FlaskConical } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
+import { useExamRequestsByAppointment } from "@/features/exams";
 import { ExamCard } from "./ExamCard";
 import type { ExamsSectionProps } from "./ExamsSection.types";
 import { RequestExamForm } from "./RequestExamForm";

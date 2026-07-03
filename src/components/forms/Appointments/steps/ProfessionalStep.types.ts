@@ -1,14 +1,6 @@
-import type { Control } from "react-hook-form";
-import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
-import type { ProfessionalResponse } from "@/lib/schemas/doctor/professional-response.schema";
+import type { UseAppointmentFormSetupReturn } from "@/hooks/use-appointment-form-setup";
 
 export interface ProfessionalStepProps {
-	control: Control<AppointmentFormValues>;
-	professionals: ProfessionalResponse[];
-	professionalsLoading: boolean;
-	professionalIdParam: string | null;
-	selectedProfessional: ProfessionalResponse | undefined;
+	hook: UseAppointmentFormSetupReturn;
 	initialSpecialtyFilter?: string;
-	onDoctorSelect: () => void;
-	onDoctorClear: () => void;
 }

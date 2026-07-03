@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { servicesApi } from "@/lib/api/services.api";
+import { professionalServicesApi } from "@/lib/api/services/professional-services.api";
 import type { UpdateServiceInput } from "@/lib/schemas/service/update-service.schema";
 import { serviceKeys } from "./service-keys";
 
@@ -14,7 +14,7 @@ export function useUpdateService() {
 		}: {
 			serviceId: string;
 			data: UpdateServiceInput;
-		}) => servicesApi.update(serviceId, data),
+		}) => professionalServicesApi.update(serviceId, data),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
 	});

@@ -1,19 +1,13 @@
-"use client";
+﻿"use client";
 
 import { Clock, DollarSign, Edit2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useDeactivateService } from "@/hooks/api/services/use-deactivate-service";
-import type { ProfessionalService } from "@/lib/schemas/service/professional-service.schema";
+import { useDeactivateService } from "@/features/services";
+import type { ServiceRowProps } from "./ServiceRow.types";
 
-export function ServiceRow({
-	service,
-	onEdit,
-}: {
-	service: ProfessionalService;
-	onEdit: () => void;
-}) {
+export function ServiceRow({ service, onEdit }: ServiceRowProps) {
 	const { mutateAsync: deactivate, isPending } = useDeactivateService();
 
 	async function handleDeactivate() {

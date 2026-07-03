@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -9,16 +9,13 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
-import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { useCheckInByQr, useCheckInToken } from "@/features/appointments";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { AppointmentCheckInCardProps } from "./AppointmentCheckInCard.types";
 
 export function AppointmentCheckInCard({
 	appointment,
-}: {
-	appointment: AppointmentResponse;
-}) {
+}: AppointmentCheckInCardProps) {
 	const [done, setDone] = useState(false);
 	const { data: tokenData, isLoading: tokenLoading } = useCheckInToken(
 		appointment.id,

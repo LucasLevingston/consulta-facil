@@ -1,12 +1,14 @@
-"use client";
+﻿"use client";
 
 import { TrendingUp } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
 import { FinancialContent } from "@/components/financial/FinancialContent";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
-import { usePermission } from "@/hooks/use-permission";
+import {
+	useAllAdminAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { usePermission } from "@/features/auth";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function FinancialPage() {

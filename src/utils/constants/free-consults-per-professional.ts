@@ -1,0 +1,1 @@
+export const FREE_CONSULTS_PER_PROFESSIONAL = 5;

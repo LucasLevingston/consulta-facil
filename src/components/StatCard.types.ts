@@ -1,4 +1,4 @@
-import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
+﻿import type { AppointmentStatus } from "@/features/appointments";
 
 export type StatCardProps = {
 	type?: AppointmentStatus;

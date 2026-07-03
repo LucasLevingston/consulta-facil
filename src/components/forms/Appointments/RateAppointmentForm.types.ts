@@ -1,5 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+﻿import type { Dispatch, SetStateAction } from "react";
+import type { AppointmentResponse } from "@/features/appointments";
 
 export interface RateAppointmentFormProps {
 	appointment: AppointmentResponse;

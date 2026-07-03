@@ -10,8 +10,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useUserCouponHistory } from "@/hooks/api/billing/use-coupons";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/features/auth";
+import { useUserCouponHistory } from "@/features/billing";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {

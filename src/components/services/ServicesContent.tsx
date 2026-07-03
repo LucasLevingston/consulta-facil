@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { useApplicationStatus } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ConsultationPriceCard } from "./ConsultationPriceCard";
 import { PaymentSettingsCard } from "./PaymentSettingsCard";

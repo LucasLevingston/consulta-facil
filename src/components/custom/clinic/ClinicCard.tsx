@@ -1,26 +1,16 @@
 "use client";
 
-import { ArrowRight, Building2, MapPin, Phone, Users } from "lucide-react";
+import { ArrowRight, Building2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomButton } from "../custom-button";
 import type { ClinicCardProps } from "./ClinicCard.types";
+import { ClinicCardContent } from "./ClinicCardContent";
 
 export default function ClinicCard({ clinic }: ClinicCardProps) {
-	const memberCount = clinic.members?.length ?? 0;
-
 	return (
-		<Card className="w-full flex flex-col hover:shadow-md transition-shadow duration-200 overflow-hidden">
+		<Card className="flex w-full flex-col overflow-hidden transition-shadow duration-200 hover:shadow-md">
 			{clinic.imageUrl && (
 				<div className="relative h-36 w-full shrink-0">
 					<Image
@@ -32,7 +22,6 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 					/>
 				</div>
 			)}
-
 			<CardHeader className="pb-2">
 				<div className="flex items-start gap-3">
 					{!clinic.imageUrl && (
@@ -41,7 +30,7 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 						</div>
 					)}
 					<div className="min-w-0 flex-1">
-						<CardTitle className="text-base leading-tight truncate">
+						<CardTitle className="truncate text-base leading-tight">
 							{clinic.name}
 						</CardTitle>
 						{clinic.city && (
@@ -53,58 +42,8 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 					</div>
 				</div>
 			</CardHeader>
-
-			<CardContent className="grid gap-2 flex-1 pb-3">
-				{clinic.description && (
-					<p className="text-sm text-muted-foreground line-clamp-2">
-						{clinic.description}
-					</p>
-				)}
-
-				{clinic.address && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<MapPin className="size-3.5 shrink-0" />
-						<span className="truncate">{clinic.address}</span>
-					</div>
-				)}
-
-				{clinic.phone && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Phone className="size-3.5 shrink-0" />
-						<span>{clinic.phone}</span>
-					</div>
-				)}
-
-				{memberCount > 0 && (
-					<div className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Users className="size-3.5 shrink-0" />
-						<span>
-							{memberCount} profissional{memberCount !== 1 ? "is" : ""}
-						</span>
-					</div>
-				)}
-
-				{clinic.members && clinic.members.length > 0 && (
-					<div className="flex flex-wrap gap-1 mt-1">
-						{clinic.members.slice(0, 3).map((m) => (
-							<Badge
-								key={m.professionalProfileId}
-								variant="secondary"
-								className="text-xs"
-							>
-								{SPECIALTY_LABELS[m.specialty] ?? m.specialty}
-							</Badge>
-						))}
-						{clinic.members.length > 3 && (
-							<Badge variant="outline" className="text-xs">
-								+{clinic.members.length - 3}
-							</Badge>
-						)}
-					</div>
-				)}
-			</CardContent>
-
-			<CardFooter className="pt-0 pb-3">
+			<ClinicCardContent clinic={clinic} />
+			<CardFooter className="pb-3 pt-0">
 				<CustomButton asChild>
 					<Link href={`/clinics/${clinic.id}`}>
 						Ver clínica

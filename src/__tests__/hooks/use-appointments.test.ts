@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/appointments.api", () => ({
-	appointmentsApi: {
+vi.mock("@/lib/api/appointments/appointments.api", () => ({
+	appointmentsCrudApi: {
 		getByPatient: vi.fn(),
 		getByProfessional: vi.fn(),
 		getById: vi.fn(),
@@ -21,11 +21,11 @@ vi.mock("@/lib/api/appointments.api", () => ({
 import { useAppointment } from "@/hooks/api/appointments/use-appointment";
 import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
-const mockByPatient = vi.mocked(appointmentsApi.getByPatient);
-const mockByProfessional = vi.mocked(appointmentsApi.getByProfessional);
-const mockById = vi.mocked(appointmentsApi.getById);
+const mockByPatient = vi.mocked(appointmentsCrudApi.getByPatient);
+const mockByProfessional = vi.mocked(appointmentsCrudApi.getByProfessional);
+const mockById = vi.mocked(appointmentsCrudApi.getById);
 
 const appt = {
 	id: "a-1",

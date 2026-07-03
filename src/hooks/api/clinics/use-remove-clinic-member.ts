@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 import { clinicKeys } from "./clinic-keys";
 
 export function useRemoveClinicMember() {
@@ -14,7 +14,7 @@ export function useRemoveClinicMember() {
 		}: {
 			clinicId: string;
 			professionalProfileId: string;
-		}) => clinicsApi.removeMember(clinicId, professionalProfileId),
+		}) => clinicsCrudApi.removeMember(clinicId, professionalProfileId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { DollarSign } from "lucide-react";
 import { AnalyticsBarChart } from "@/components/analytics/charts/AnalyticsBarChart";
@@ -7,7 +7,7 @@ import { AnalyticsLineChart } from "@/components/analytics/charts/AnalyticsLineC
 import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useFinancialAnalytics } from "@/hooks/api/analytics/use-analytics";
+import { useFinancialAnalytics } from "@/features/analytics";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(

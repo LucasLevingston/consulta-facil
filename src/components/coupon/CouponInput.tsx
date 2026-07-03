@@ -1,16 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useValidateCoupon } from "@/hooks/api/billing/use-coupons";
-import type { CouponValidationResult } from "@/lib/schemas/billing/coupon.schema";
-
-interface CouponInputProps {
-	amount: number;
-	userId: string;
-	onApply?: (result: CouponValidationResult) => void;
-}
+import { useValidateCoupon } from "@/features/billing";
+import type { CouponInputProps } from "./CouponInput.types";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {

@@ -1,13 +1,9 @@
-"use client";
+﻿"use client";
 
 import { Separator } from "@/components/ui/separator";
-import type { ProntuarioResponse } from "@/lib/schemas/anamnesis/prontuario-response.schema";
+import type { ProntuarioReadViewProps } from "./ProntuarioReadView.types";
 
-export function ProntuarioReadView({
-	prontuario,
-}: {
-	prontuario: ProntuarioResponse;
-}) {
+export function ProntuarioReadView({ prontuario }: ProntuarioReadViewProps) {
 	const fields: [string, string | undefined][] = [
 		["Anotações clínicas / Exame físico", prontuario.clinicalNotes],
 		["Diagnóstico", prontuario.diagnosis],

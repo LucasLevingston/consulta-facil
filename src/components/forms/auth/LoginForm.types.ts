@@ -1,4 +1,4 @@
-import type { LoginInput } from "@/lib/schemas/auth/login.schema";
+﻿import type { LoginInput } from "@/features/auth";
 
 export interface LoginFormProps {
 	onSubmit: (values: LoginInput) => Promise<void>;

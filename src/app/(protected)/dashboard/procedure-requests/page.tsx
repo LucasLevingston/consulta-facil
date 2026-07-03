@@ -4,7 +4,7 @@ import { CalendarClock } from "lucide-react";
 
 import PageHeader from "@/components/custom/page-header";
 import { ProcedureRequestsContent } from "@/components/procedure-requests/ProcedureRequestsContent";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission } from "@/features/auth";
 
 export default function ProcedureRequestsPage() {
 	const { can } = usePermission();

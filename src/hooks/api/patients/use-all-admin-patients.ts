@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import {
 	type ProfessionalPatientsParams,
-	patientsApi,
-} from "@/lib/api/patients.api";
+	patientProfileApi,
+} from "@/lib/api/patients/patient-profile.api";
 import { patientKeys } from "./patient-keys";
 
 export function useAllAdminPatients(params: ProfessionalPatientsParams) {
 	return useQuery({
 		queryKey: [...patientKeys.all, "admin", params],
-		queryFn: () => patientsApi.getAll(params),
+		queryFn: () => patientProfileApi.getAll(params),
 	});
 }

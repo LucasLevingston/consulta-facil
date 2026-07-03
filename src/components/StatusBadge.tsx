@@ -1,5 +1,6 @@
-import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
+﻿import type { AppointmentStatus } from "@/features/appointments";
 import { cn } from "@/lib/utils/cn";
+import type { StatusBadgeProps } from "./StatusBadge.types";
 
 const statusConfig: Record<
 	AppointmentStatus,
@@ -32,7 +33,7 @@ const statusConfig: Record<
 	},
 };
 
-export const StatusBadge = ({ status }: { status: AppointmentStatus }) => {
+export const StatusBadge = ({ status }: StatusBadgeProps) => {
 	const config = statusConfig[status] ?? statusConfig.PENDING;
 
 	return (

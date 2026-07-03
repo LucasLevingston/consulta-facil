@@ -7,12 +7,14 @@ import { ProfilePatientMedicalInfo } from "@/components/profile/ProfilePatientMe
 import { ProfilePersonalInfo } from "@/components/profile/ProfilePersonalInfo";
 import { ProfileStatsBanner } from "@/components/profile/ProfileStatsBanner";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
-import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
+import {
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
+import { useMyProfile } from "@/features/patients";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function ProfilePage() {
 	const { user } = useUserStore();

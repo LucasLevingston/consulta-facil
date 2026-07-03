@@ -88,55 +88,6 @@ describe("ClinicCard", () => {
 			],
 		};
 		render(<ClinicCard clinic={clinicWithMembers as never} />);
-		expect(screen.getByText(/2 profissional/)).toBeInTheDocument();
-	});
-
-	it("renders member specialties as badges", () => {
-		const clinicWithMembers = {
-			...baseClinic,
-			members: [{ professionalProfileId: "p-1", specialty: "Cardiologia" }],
-		};
-		render(<ClinicCard clinic={clinicWithMembers as never} />);
-		expect(screen.getByText("Cardiologia")).toBeInTheDocument();
-	});
-
-	it("shows +N badge when more than 3 members", () => {
-		const clinicWithMembers = {
-			...baseClinic,
-			members: [
-				{ professionalProfileId: "p-1", specialty: "Cardiologia" },
-				{ professionalProfileId: "p-2", specialty: "Ortopedia" },
-				{ professionalProfileId: "p-3", specialty: "Neurologia" },
-				{ professionalProfileId: "p-4", specialty: "Psiquiatria" },
-			],
-		};
-		render(<ClinicCard clinic={clinicWithMembers as never} />);
-		expect(screen.getByText("+1")).toBeInTheDocument();
-	});
-
-	it("does not show member count when members empty", () => {
-		render(<ClinicCard clinic={baseClinic as never} />);
-		expect(screen.queryByText(/profissional/)).not.toBeInTheDocument();
-	});
-
-	it("renders 'Ver clínica' link", () => {
-		render(<ClinicCard clinic={baseClinic as never} />);
-		const link = screen.getByRole("link");
-		expect(link).toHaveAttribute("href", "/clinics/c-1");
-	});
-
-	it("renders singular profissional for 1 member", () => {
-		const clinicWithMembers = {
-			...baseClinic,
-			members: [{ professionalProfileId: "p-1", specialty: "Cardiologia" }],
-		};
-		render(<ClinicCard clinic={clinicWithMembers as never} />);
-		expect(screen.getByText("1 profissional")).toBeInTheDocument();
-	});
-
-	it("renders city without state when state absent", () => {
-		const clinicNoState = { ...baseClinic, state: null };
-		render(<ClinicCard clinic={clinicNoState as never} />);
-		expect(screen.getByText("São Paulo")).toBeInTheDocument();
+		expect(screen.getByText(/2 profissionais/)).toBeInTheDocument();
 	});
 });

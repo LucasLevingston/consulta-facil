@@ -1,21 +1,15 @@
 import { CheckCircle2, CreditCard, TrendingUp, XCircle } from "lucide-react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import type { PatientScoreCardProps } from "./PatientScoreCard.types";
+import { PatientScoreStatItem } from "./PatientScoreStatItem";
 
-export function PatientScoreCard({
-	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+export function PatientScoreCard({ appointments }: PatientScoreCardProps) {
 	const completed = appointments.filter((a) => a.status === "COMPLETED").length;
 	const canceled = appointments.filter((a) => a.status === "CANCELED").length;
 	const total = appointments.length;
 	const decisive = completed + canceled;
-
 	const attendanceRate =
 		decisive > 0 ? Math.round((completed / decisive) * 100) : null;
-
 	const withPayment = appointments.filter(
 		(a) => a.paymentStatus === "PAID" || a.paymentStatus === "PENDING_PAYMENT",
 	);
@@ -24,14 +18,11 @@ export function PatientScoreCard({
 		withPayment.length > 0
 			? Math.round((paid / withPayment.length) * 100)
 			: null;
-
 	const score =
 		attendanceRate !== null && paymentRate !== null
 			? Math.round(attendanceRate * 0.6 + paymentRate * 0.4)
 			: (attendanceRate ?? paymentRate ?? null);
-
 	if (total === 0) return null;
-
 	const scoreColor =
 		score === null
 			? "text-muted-foreground"
@@ -40,7 +31,6 @@ export function PatientScoreCard({
 				: score >= 50
 					? "text-yellow-600 dark:text-yellow-400"
 					: "text-red-600 dark:text-red-400";
-
 	const scoreBg =
 		score === null
 			? "bg-muted/30"
@@ -53,7 +43,7 @@ export function PatientScoreCard({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-base flex items-center gap-2">
+				<CardTitle className="flex items-center gap-2 text-base">
 					<TrendingUp className="h-4 w-4" />
 					Score do paciente
 				</CardTitle>
@@ -70,57 +60,33 @@ export function PatientScoreCard({
 							<span className="text-xs text-muted-foreground">/ 100</span>
 						</div>
 					)}
-
 					<div className="flex flex-1 flex-wrap gap-4">
 						{attendanceRate !== null && (
-							<div className="flex items-center gap-3">
-								<div className="flex h-9 w-9 items-center justify-center rounded-xl bg-green-500/10">
-									<CheckCircle2 className="h-4 w-4 text-green-600" />
-								</div>
-								<div>
-									<p className="text-xs text-muted-foreground">
-										Comparecimento
-									</p>
-									<p className="font-semibold text-foreground">
-										{attendanceRate}%
-									</p>
-									<p className="text-xs text-muted-foreground">
-										{completed}/{decisive} consultas
-									</p>
-								</div>
-							</div>
+							<PatientScoreStatItem
+								iconBg="bg-green-500/10"
+								icon={<CheckCircle2 className="h-4 w-4 text-green-600" />}
+								label="Comparecimento"
+								value={`${attendanceRate}%`}
+								subtitle={`${completed}/${decisive} consultas`}
+							/>
 						)}
-
 						{paymentRate !== null && (
-							<div className="flex items-center gap-3">
-								<div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
-									<CreditCard className="h-4 w-4 text-primary" />
-								</div>
-								<div>
-									<p className="text-xs text-muted-foreground">Pagamentos</p>
-									<p className="font-semibold text-foreground">
-										{paymentRate}%
-									</p>
-									<p className="text-xs text-muted-foreground">
-										{paid}/{withPayment.length} pagos
-									</p>
-								</div>
-							</div>
+							<PatientScoreStatItem
+								iconBg="bg-primary/10"
+								icon={<CreditCard className="h-4 w-4 text-primary" />}
+								label="Pagamentos"
+								value={`${paymentRate}%`}
+								subtitle={`${paid}/${withPayment.length} pagos`}
+							/>
 						)}
-
 						{canceled > 0 && (
-							<div className="flex items-center gap-3">
-								<div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10">
-									<XCircle className="h-4 w-4 text-red-500" />
-								</div>
-								<div>
-									<p className="text-xs text-muted-foreground">Cancelamentos</p>
-									<p className="font-semibold text-foreground">{canceled}</p>
-									<p className="text-xs text-muted-foreground">
-										de {total} consultas
-									</p>
-								</div>
-							</div>
+							<PatientScoreStatItem
+								iconBg="bg-red-500/10"
+								icon={<XCircle className="h-4 w-4 text-red-500" />}
+								label="Cancelamentos"
+								value={String(canceled)}
+								subtitle={`de ${total} consultas`}
+							/>
 						)}
 					</div>
 				</div>

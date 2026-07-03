@@ -12,6 +12,12 @@
       "linter": {
         "enabled": false
       }
+    },
+    {
+      "includes": ["src/hooks/**"],
+      "formatter": {
+        "lineWidth": 100
+      }
     }
   ]
 }

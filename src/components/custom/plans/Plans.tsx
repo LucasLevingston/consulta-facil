@@ -2,15 +2,14 @@
 
 import { BadgeCheck, Building2, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
-import { usePlans } from "@/hooks/api/plans/use-plans";
-import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
-import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
-import type { PlanResponse } from "@/lib/api/plans.api";
+import type { PlanResponse } from "@/features/plans";
+import { usePlans } from "@/features/plans";
+import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { PRO_PLAN_IDS } from "../../../utils/constants/pro-plan-ids";
+import { apiPlanToUiPlan } from "./Plans.utils";
 import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
-import type { Plan } from "./types";
 
 const TIER_ICONS: Record<string, React.ReactNode> = {
 	FREE: <BadgeCheck className="h-5 w-5" />,
@@ -18,40 +17,6 @@ const TIER_ICONS: Record<string, React.ReactNode> = {
 	PRO: <Sparkles className="h-5 w-5" />,
 	CLINIC: <Building2 className="h-5 w-5" />,
 };
-
-const HIGHLIGHT_TIERS = new Set(["PRO"]);
-
-function apiPlanToUiPlan(p: PlanResponse): Plan {
-	const limitLabel =
-		p.maxAppointments !== null && p.maxAppointments !== undefined
-			? `Até ${p.maxAppointments} consultas/mês`
-			: "Consultas ilimitadas";
-
-	return {
-		id: p.slug,
-		title: p.name,
-		monthlyEquiv:
-			p.price === 0
-				? "0,00"
-				: p.price.toLocaleString("pt-BR", {
-						minimumFractionDigits: 2,
-						maximumFractionDigits: 2,
-					}),
-		totalPrice:
-			p.price === 0
-				? "Grátis"
-				: p.price.toLocaleString("pt-BR", {
-						minimumFractionDigits: 2,
-						maximumFractionDigits: 2,
-					}),
-		period: "/mês",
-		description: p.description ?? "",
-		features: [...p.features, limitLabel],
-		highlight: HIGHLIGHT_TIERS.has(p.tier),
-		icon: TIER_ICONS[p.tier] ?? <Zap className="h-5 w-5" />,
-		maxAppointments: p.maxAppointments,
-	};
-}
 
 export default function Plans() {
 	const {
@@ -79,7 +44,9 @@ export default function Plans() {
 
 	const plans = (plansData ?? [])
 		.sort((a, b) => a.displayOrder - b.displayOrder)
-		.map(apiPlanToUiPlan);
+		.map((p: PlanResponse) =>
+			apiPlanToUiPlan(p, TIER_ICONS[p.tier] ?? <Zap className="h-5 w-5" />),
+		);
 
 	return (
 		<QueryBoundary
@@ -89,7 +56,6 @@ export default function Plans() {
 			{subscription && subscription.status !== "EXPIRED" && (
 				<SubscriptionBanner subscription={subscription} />
 			)}
-
 			<div className="space-y-6">
 				<div>
 					<h2 className="text-lg font-semibold text-foreground">
@@ -100,7 +66,6 @@ export default function Plans() {
 						necessárias.
 					</p>
 				</div>
-
 				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 					{plans.map((plan) => (
 						<PlanCard

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -11,17 +11,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
 import { CreateProcedureRequestForm } from "./CreateProcedureRequestForm";
 import { ProfessionalRequestCard } from "./ProfessionalRequestCard";
+import type { ProfessionalViewProps } from "./ProfessionalView.types";
 
 export function ProfessionalView({
 	requests,
 	professionalId,
-}: {
-	requests: ProcedureRequest[];
-	professionalId: string;
-}) {
+}: ProfessionalViewProps) {
 	const [open, setOpen] = useState(false);
 
 	return (

@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/appointments.api", () => ({
-	appointmentsApi: {
+vi.mock("@/lib/api/appointments/appointments.api", () => ({
+	appointmentsCrudApi: {
 		getAll: vi.fn(),
 		getByPatient: vi.fn(),
 		getByProfessional: vi.fn(),
@@ -17,9 +17,9 @@ vi.mock("@/lib/api/appointments.api", () => ({
 
 import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
 import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
-const mockGetAll = vi.mocked(appointmentsApi.getAll);
+const mockGetAll = vi.mocked(appointmentsCrudApi.getAll);
 
 const appt = {
 	id: "a-1",

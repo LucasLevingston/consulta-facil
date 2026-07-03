@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMyBillingPayments } from "@/hooks/api/billing/use-billing-payments";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/features/auth";
+import { useMyBillingPayments } from "@/features/billing";
 
 function PaymentHistoryContent() {
 	const { user } = useUserStore();

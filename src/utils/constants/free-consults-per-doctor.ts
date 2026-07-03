@@ -1,1 +1,0 @@
-export const FREE_CONSULTS_PER_DOCTOR = 5;

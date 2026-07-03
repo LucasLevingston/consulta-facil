@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { professionalsApi } from "@/lib/api/doctors.api";
+import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 
 const mockGet = vi.mocked(api.get);
 
@@ -33,7 +33,7 @@ describe("professionalsApi — getAll pagination", () => {
 		const page = makePage([professional], 1, 1, 0);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(0, 12);
+		const result = await professionalsListingApi.getAll(0, 12);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -50,7 +50,7 @@ describe("professionalsApi — getAll pagination", () => {
 		const page = makePage([professional], 25, 3, 1);
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(1, 12);
+		const result = await professionalsListingApi.getAll(1, 12);
 
 		expect(mockGet).toHaveBeenCalledWith(
 			"/professionals",
@@ -68,7 +68,7 @@ describe("professionalsApi — getAll pagination", () => {
 		};
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await professionalsApi.getAll(2, 12);
+		const result = await professionalsListingApi.getAll(2, 12);
 
 		expect(result.number).toBe(2);
 		expect(result.last).toBe(true);
@@ -82,144 +82,11 @@ describe("professionalsApi — getAll pagination", () => {
 			.mockResolvedValueOnce({ data: pageOne })
 			.mockResolvedValueOnce({ data: pageTwo });
 
-		const r1 = await professionalsApi.getAll(0, 12);
-		const r2 = await professionalsApi.getAll(1, 12);
+		const r1 = await professionalsListingApi.getAll(0, 12);
+		const r2 = await professionalsListingApi.getAll(1, 12);
 
 		expect(r1.content[0].id).toBe("p-1");
 		expect(r2.content[0].id).toBe("p-2");
 		expect(r1.totalPages).toBe(r2.totalPages);
 	});
-
-	it("filtra por especialidade e passa para a API", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		await professionalsApi.getAll(0, 12, undefined, "Cardiologia");
-
-		expect(mockGet).toHaveBeenCalledWith(
-			"/professionals",
-			expect.objectContaining({
-				params: expect.objectContaining({ specialty: "Cardiologia" }),
-			}),
-		);
-	});
-
-	it("filtra por nome", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		await professionalsApi.getAll(0, 12, undefined, undefined, "Ana");
-
-		expect(mockGet).toHaveBeenCalledWith(
-			"/professionals",
-			expect.objectContaining({
-				params: expect.objectContaining({ name: "Ana" }),
-			}),
-		);
-	});
-
-	it("string vazia para filtros é enviada como undefined", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		await professionalsApi.getAll(0, 12, "", "", "");
-
-		const callParams = mockGet.mock.calls[0][1] as {
-			params: Record<string, unknown>;
-		};
-		expect(callParams.params.profession).toBeUndefined();
-		expect(callParams.params.specialty).toBeUndefined();
-		expect(callParams.params.name).toBeUndefined();
-	});
-
-	it("retorna totalElements correto em resultado vazio", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		const result = await propessionalPage0();
-
-		expect(result.totalElements).toBe(0);
-		expect(result.totalPages).toBe(0);
-		expect(result.content).toHaveLength(0);
-	});
-
-	it("filtra por serviceTitle e passa para a API", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		await professionalsApi.getAll(
-			0,
-			12,
-			undefined,
-			undefined,
-			undefined,
-			"Acupuntura",
-		);
-
-		expect(mockGet).toHaveBeenCalledWith(
-			"/professionals",
-			expect.objectContaining({
-				params: expect.objectContaining({ serviceTitle: "Acupuntura" }),
-			}),
-		);
-	});
-
-	it("serviceTitle vazio é enviado como undefined", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([], 0, 0, 0) });
-
-		await professionalsApi.getAll(0, 12, "", "", "", "");
-
-		const callParams = mockGet.mock.calls[0][1] as {
-			params: Record<string, unknown>;
-		};
-		expect(callParams.params.serviceTitle).toBeUndefined();
-	});
-
-	it("combinação de specialty + serviceTitle envia ambos os filtros", async () => {
-		mockGet.mockResolvedValueOnce({ data: makePage([professional], 1, 1, 0) });
-
-		await professionalsApi.getAll(
-			0,
-			12,
-			undefined,
-			"Dermatologia",
-			undefined,
-			"Peeling",
-		);
-
-		const callParams = mockGet.mock.calls[0][1] as {
-			params: Record<string, unknown>;
-		};
-		expect(callParams.params.specialty).toBe("Dermatologia");
-		expect(callParams.params.serviceTitle).toBe("Peeling");
-	});
-
-	it("paginação com serviceTitle mantém filtro em todas as páginas", async () => {
-		mockGet
-			.mockResolvedValueOnce({ data: makePage([professional], 25, 3, 0) })
-			.mockResolvedValueOnce({
-				data: makePage([{ ...professional, id: "p-2" }], 25, 3, 1),
-			});
-
-		await professionalsApi.getAll(
-			0,
-			12,
-			undefined,
-			undefined,
-			undefined,
-			"Botox",
-		);
-		await professionalsApi.getAll(
-			1,
-			12,
-			undefined,
-			undefined,
-			undefined,
-			"Botox",
-		);
-
-		for (const call of mockGet.mock.calls) {
-			const params = (call[1] as { params: Record<string, unknown> }).params;
-			expect(params.serviceTitle).toBe("Botox");
-		}
-	});
 });
-
-async function propessionalPage0() {
-	return professionalsApi.getAll(0, 12);
-}

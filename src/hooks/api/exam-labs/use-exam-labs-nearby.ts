@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { examLabApi } from "@/lib/api/examLab.api";
+import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
 import { examLabKeys } from "./exam-lab-keys";
 
 export function useExamLabsNearby(

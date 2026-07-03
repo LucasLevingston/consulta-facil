@@ -1,6 +1,6 @@
 import { Star, Users, Zap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 
 export function ClinicFreemiumInfo() {
@@ -15,8 +15,8 @@ export function ClinicFreemiumInfo() {
 					},
 					{
 						icon: Star,
-						label: `${FREE_CONSULTS_PER_DOCTOR} consultas por profissional`,
-						desc: `Cada profissional tem ${FREE_CONSULTS_PER_DOCTOR} agendamentos gratuitos pelo sistema.`,
+						label: `${FREE_CONSULTS_PER_PROFESSIONAL} consultas por profissional`,
+						desc: `Cada profissional tem ${FREE_CONSULTS_PER_PROFESSIONAL} agendamentos gratuitos pelo sistema.`,
 					},
 					{
 						icon: Zap,

@@ -7,11 +7,9 @@ import { Suspense, useEffect } from "react";
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import { PendingApplications } from "@/components/admin/PendingApplications";
 import PageHeader from "@/components/custom/page-header";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { usePermission } from "@/hooks/use-permission";
+import { useProfessionalAppointments } from "@/features/appointments";
+import { useAuthStore, usePermission, useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useAuthStore } from "@/store/auth.store";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function AdminPage() {
 	const { isAuthenticated } = useAuthStore();
@@ -19,8 +17,8 @@ export default function AdminPage() {
 	const { can } = usePermission();
 	const router = useRouter();
 
-	const doctorQuery = useProfessionalAppointments(user?.id ?? "");
-	const appointments = doctorQuery.data?.content ?? [];
+	const professionalQuery = useProfessionalAppointments(user?.id ?? "");
+	const appointments = professionalQuery.data?.content ?? [];
 
 	useEffect(() => {
 		if (!isAuthenticated || !can("admin:access")) router.push("/auth");
@@ -39,8 +37,8 @@ export default function AdminPage() {
 			<PendingApplications />
 
 			<QueryBoundary
-				isLoading={doctorQuery.isLoading}
-				error={doctorQuery.error}
+				isLoading={professionalQuery.isLoading}
+				error={professionalQuery.error}
 			>
 				<Suspense>
 					<AppointmentsDashboard appointments={appointments} />

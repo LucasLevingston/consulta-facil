@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
-vi.mock("@/lib/api/anamnesis.api", () => ({
+vi.mock("@/lib/api/anamnesis/anamnesis.api", () => ({
 	anamnesisApi: {
 		getAnamnesis: vi.fn(),
 		getProntuario: vi.fn(),
@@ -19,7 +19,7 @@ import { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
 import { useProntuario } from "@/hooks/api/anamnesis/use-prontuario";
 import { useSaveAnamnesis } from "@/hooks/api/anamnesis/use-save-anamnesis";
 import { useSaveProntuario } from "@/hooks/api/anamnesis/use-save-prontuario";
-import { anamnesisApi } from "@/lib/api/anamnesis.api";
+import { anamnesisApi } from "@/lib/api/anamnesis/anamnesis.api";
 
 const mockGetAnamnesis = vi.mocked(anamnesisApi.getAnamnesis);
 const mockGetProntuario = vi.mocked(anamnesisApi.getProntuario);

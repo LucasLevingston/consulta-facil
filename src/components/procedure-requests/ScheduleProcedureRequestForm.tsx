@@ -7,27 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
-import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,
-} from "@/lib/schemas/procedure-request/schedule-procedure-request.schema";
+	useScheduleProcedureRequest,
+} from "@/features/procedure-requests";
+import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
+import type { ScheduleProcedureRequestFormProps } from "./ScheduleProcedureRequestForm.types";
 
 export function ScheduleProcedureRequestForm({
 	requestId,
 	serviceName,
 	onClose,
-}: {
-	requestId: string;
-	serviceName: string;
-	onClose: () => void;
-}) {
+}: ScheduleProcedureRequestFormProps) {
 	const { mutateAsync: schedule, isPending } = useScheduleProcedureRequest();
 
 	const form = useForm<ScheduleProcedureRequestInput>({
@@ -75,20 +66,10 @@ export function ScheduleProcedureRequestForm({
 
 			<div className="space-y-1">
 				<Label>Modalidade</Label>
-				<Select
-					onValueChange={(v) =>
-						form.setValue("modality", v as "IN_PERSON" | "ONLINE")
-					}
+				<ProcedureModalitySelect
 					value={form.watch("modality") ?? ""}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Selecione (opcional)" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="IN_PERSON">Presencial</SelectItem>
-						<SelectItem value="ONLINE">Online</SelectItem>
-					</SelectContent>
-				</Select>
+					onChange={(v) => form.setValue("modality", v)}
+				/>
 			</div>
 
 			<div className="flex gap-2 pt-2">

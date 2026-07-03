@@ -5,13 +5,14 @@ import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useMyProfessionalProfile } from "@/hooks/api/doctors/use-my-professional-profile";
-import { usePermission } from "@/hooks/use-permission";
+import {
+	useAllAdminAppointments,
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/features/appointments";
+import { usePermission, useUserStore } from "@/features/auth";
+import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
 
 export default function AppointmentsPage() {
 	const { user } = useUserStore();

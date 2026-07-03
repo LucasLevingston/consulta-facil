@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BadgeCheck, Pencil, Settings, Shield } from "lucide-react";
 import Link from "next/link";
@@ -7,23 +7,14 @@ import { AvatarUpload } from "@/components/custom/avatar-upload";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { UserResponse } from "@/lib/schemas/auth/user-response.schema";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
-
-interface ProfessionalData {
-	specialty?: string | null;
-	licenseNumber?: string | null;
-}
+import type { ProfileHeroProps } from "./ProfileHero.types";
 
 export function ProfileHero({
 	user,
 	isProfessional,
 	professionalData,
-}: {
-	user: UserResponse;
-	isProfessional: boolean;
-	professionalData?: ProfessionalData | null;
-}) {
+}: ProfileHeroProps) {
 	return (
 		<Card className="overflow-hidden">
 			<div className="h-28 bg-gradient-to-br from-primary/25 via-primary/10 to-secondary/20 relative">

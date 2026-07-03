@@ -1,14 +1,11 @@
-"use client";
+﻿"use client";
 
 import { Users } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
 import { ReferralCodeCard } from "@/components/referral/ReferralCodeCard";
 import { ReferralStatsCard } from "@/components/referral/ReferralStatsCard";
 import { Button } from "@/components/ui/button";
-import {
-	useMyReferralStats,
-	useRegenerateCode,
-} from "@/hooks/api/billing/use-referrals";
+import { useMyReferralStats, useRegenerateCode } from "@/features/billing";
 
 export default function ReferralsSettingsPage() {
 	const { data: stats, isLoading } = useMyReferralStats();

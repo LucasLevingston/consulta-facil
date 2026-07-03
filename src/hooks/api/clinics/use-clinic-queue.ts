@@ -2,13 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { clinicsApi } from "@/lib/api/clinics.api";
+import { clinicQueueApi } from "@/lib/api/clinics/clinic-queue.api";
 import { clinicKeys } from "./clinic-keys";
 
 export function useClinicQueue(clinicId: string) {
 	return useQuery({
 		queryKey: clinicKeys.queue(clinicId),
-		queryFn: () => clinicsApi.getQueue(clinicId),
+		queryFn: () => clinicQueueApi.getQueue(clinicId),
 		enabled: !!clinicId,
 		refetchInterval: 30_000,
 		staleTime: 0,

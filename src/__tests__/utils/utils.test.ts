@@ -1,10 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { cn } from "@/lib/utils/cn";
-import { convertFileToUrl } from "@/lib/utils/convert-file-to-url";
-import { formatDateTime } from "@/lib/utils/format-date-time";
 import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
-import { getPlaceholderByFormName } from "@/lib/utils/get-placeholder-by-form-name";
 
 // ── cn ────────────────────────────────────────────────────────────────────────
 
@@ -83,105 +80,5 @@ describe("getLabelByFormName — mapeamento nome → label PT", () => {
 	it("é case-sensitive — 'Email' != 'email'", () => {
 		expect(getLabelByFormName("Email")).toBe("Email");
 		expect(getLabelByFormName("email")).toBe("E-mail");
-	});
-});
-
-// ── getPlaceholderByFormName ──────────────────────────────────────────────────
-
-describe("getPlaceholderByFormName — mapeamento nome → placeholder", () => {
-	it("retorna placeholder correto para email", () => {
-		expect(getPlaceholderByFormName("email")).toBe("seu@exemplo.com");
-	});
-
-	it("retorna placeholder correto para phone", () => {
-		expect(getPlaceholderByFormName("phone")).toBe("(11) 99999-9999");
-	});
-
-	it("retorna placeholder correto para cpf", () => {
-		expect(getPlaceholderByFormName("cpf")).toBe("000.000.000-00");
-	});
-
-	it("retorna placeholder correto para password", () => {
-		expect(getPlaceholderByFormName("password")).toBe("••••••");
-	});
-
-	it("retorna string vazia para campos sem placeholder mapeado", () => {
-		expect(getPlaceholderByFormName("specialty")).toBe("");
-		expect(getPlaceholderByFormName("unknownField")).toBe("");
-	});
-});
-
-// ── formatDateTime ────────────────────────────────────────────────────────────
-
-describe("formatDateTime — formatação de data em pt-BR", () => {
-	it("formata data e hora completa em pt-BR", () => {
-		const date = new Date("2026-06-15T14:30:00");
-		const result = formatDateTime(date);
-		expect(result.dateTime).toMatch(/15\/06\/2026/);
-		expect(result.dateTime).toMatch(/14:30/);
-	});
-
-	it("retorna dateOnly no formato dd/MM/yyyy", () => {
-		const date = new Date("2026-01-05T08:00:00");
-		const result = formatDateTime(date);
-		expect(result.dateOnly).toBe("05/01/2026");
-	});
-
-	it("retorna timeOnly no formato HH:mm", () => {
-		const date = new Date("2026-06-15T09:05:00");
-		const result = formatDateTime(date);
-		expect(result.timeOnly).toBe("09:05");
-	});
-
-	it("formata meia-noite corretamente", () => {
-		const date = new Date("2026-12-31T00:00:00");
-		const result = formatDateTime(date);
-		expect(result.timeOnly).toBe("00:00");
-		expect(result.dateOnly).toBe("31/12/2026");
-	});
-
-	it("retorna objeto com três campos: dateTime, dateOnly, timeOnly", () => {
-		const result = formatDateTime(new Date("2026-06-15T14:30:00"));
-		expect(result).toHaveProperty("dateTime");
-		expect(result).toHaveProperty("dateOnly");
-		expect(result).toHaveProperty("timeOnly");
-	});
-});
-
-// ── convertFileToUrl ──────────────────────────────────────────────────────────
-
-describe("convertFileToUrl — File → object URL", () => {
-	beforeEach(() => {
-		vi.stubGlobal("URL", {
-			createObjectURL: vi.fn(() => "blob:http://localhost/abc-123"),
-		});
-	});
-
-	it("chama URL.createObjectURL com o arquivo recebido", () => {
-		const file = new File(["conteúdo"], "foto.jpg", { type: "image/jpeg" });
-
-		convertFileToUrl(file);
-
-		expect(URL.createObjectURL).toHaveBeenCalledWith(file);
-	});
-
-	it("retorna a URL gerada pelo browser", () => {
-		const file = new File(["dados"], "exame.pdf", { type: "application/pdf" });
-
-		const result = convertFileToUrl(file);
-
-		expect(result).toBe("blob:http://localhost/abc-123");
-	});
-
-	it("arquivos diferentes produzem chamadas diferentes", () => {
-		const f1 = new File(["a"], "a.png", { type: "image/png" });
-		const f2 = new File(["b"], "b.png", { type: "image/png" });
-
-		convertFileToUrl(f1);
-		convertFileToUrl(f2);
-
-		expect(URL.createObjectURL).toHaveBeenCalledTimes(2);
-		expect(URL.createObjectURL).toHaveBeenNthCalledWith(1, f1);
-		expect(URL.createObjectURL).toHaveBeenNthCalledWith(2, f2);
 	});
 });

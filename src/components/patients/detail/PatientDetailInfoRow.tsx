@@ -1,12 +1,10 @@
+import type { PatientDetailInfoRowProps } from "./PatientDetailInfoRow.types";
+
 export function PatientDetailInfoRow({
 	icon: Icon,
 	label,
 	value,
-}: {
-	icon: React.ElementType;
-	label: string;
-	value?: string | null;
-}) {
+}: PatientDetailInfoRowProps) {
 	if (!value) return null;
 	return (
 		<div className="flex items-center gap-3 text-sm">

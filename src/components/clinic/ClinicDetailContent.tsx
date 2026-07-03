@@ -1,18 +1,12 @@
 "use client";
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-
-import { ClinicAppointmentsTab } from "@/components/clinic/ClinicAppointmentsTab";
-import { ClinicDetailHeader } from "@/components/clinic/ClinicDetailHeader";
-import { ClinicFinancialTab } from "@/components/clinic/ClinicFinancialTab";
-import { ClinicMembersTab } from "@/components/clinic/ClinicMembersTab";
-import { ClinicOverviewTab } from "@/components/clinic/ClinicOverviewTab";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
-import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission, useUserStore } from "@/features/auth";
+import { useClinicById } from "@/features/clinics";
+import { useApplicationStatus } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
-import { useUserStore } from "@/store/useUserStore";
+import { ClinicDetailHeader } from "./ClinicDetailHeader";
+import { ClinicDetailTabs } from "./ClinicDetailTabs";
 
 const TABS = ["overview", "members", "appointments", "financial"] as const;
 type ClinicTab = (typeof TABS)[number];
@@ -32,7 +26,7 @@ export function ClinicDetailContent() {
 
 	const user = useUserStore((s) => s.user);
 	const { data: clinic, isLoading, error } = useClinicById(clinicId);
-	const { data: myDoctorProfile } = useApplicationStatus();
+	const { data: myProfessionalProfile } = useApplicationStatus();
 	const { can } = usePermission();
 
 	const isOwner = !!user && clinic?.ownerId === user.id;
@@ -40,9 +34,8 @@ export function ClinicDetailContent() {
 	const isManager =
 		!!clinic &&
 		can("clinic:manage:own", { userId: user?.id, ownerId: clinic.ownerId });
-
 	const myMembership = clinic?.members?.find(
-		(m) => m.professionalProfileId === myDoctorProfile?.id,
+		(m) => m.professionalProfileId === myProfessionalProfile?.id,
 	);
 	const isMember = !!myMembership || isManager;
 
@@ -63,53 +56,15 @@ export function ClinicDetailContent() {
 						isAdmin={isAdmin}
 						hasMembership={!!myMembership}
 					/>
-
-					<Tabs
-						value={activeTab}
-						onValueChange={(v) => setTab(v as ClinicTab)}
-						className="space-y-4"
-					>
-						<TabsList className="flex-wrap h-auto gap-1">
-							<TabsTrigger value="overview">Visão Geral</TabsTrigger>
-							<TabsTrigger value="members">
-								Profissionais ({clinic.members?.length ?? 0})
-							</TabsTrigger>
-							{isMember && (
-								<TabsTrigger value="appointments">Consultas</TabsTrigger>
-							)}
-							{isManager && (
-								<TabsTrigger value="financial">Financeiro</TabsTrigger>
-							)}
-						</TabsList>
-
-						<TabsContent value="overview">
-							<ClinicOverviewTab clinic={clinic} />
-						</TabsContent>
-
-						<TabsContent value="members">
-							<ClinicMembersTab
-								clinic={clinic}
-								isManager={isManager}
-								currentUserId={user?.id}
-							/>
-						</TabsContent>
-
-						{isMember && (
-							<TabsContent value="appointments">
-								<ClinicAppointmentsTab
-									clinic={clinic}
-									isManager={isManager}
-									myProfessionalProfileId={myDoctorProfile?.id}
-								/>
-							</TabsContent>
-						)}
-
-						{isManager && (
-							<TabsContent value="financial">
-								<ClinicFinancialTab clinic={clinic} />
-							</TabsContent>
-						)}
-					</Tabs>
+					<ClinicDetailTabs
+						clinic={clinic}
+						activeTab={activeTab}
+						onTabChange={(v) => setTab(v as ClinicTab)}
+						isMember={isMember}
+						isManager={isManager}
+						currentUserId={user?.id}
+						myProfessionalProfileId={myProfessionalProfile?.id}
+					/>
 				</div>
 			)}
 		</QueryBoundary>

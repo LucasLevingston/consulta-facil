@@ -1,74 +1,16 @@
 "use client";
 
-import {
-	CheckCircle,
-	FileText,
-	FlaskConical,
-	Paperclip,
-	Upload,
-} from "lucide-react";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { CheckCircle, FlaskConical, Paperclip } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
-import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
-import type { ExamRequestResponse } from "@/lib/schemas/examRequest/exam-request-response.schema";
+import { EXAM_STATUS_CONFIG } from "@/lib/constants/exam-status-config";
 import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
 import type { ExamCardProps } from "./ExamCard.types";
-
-const STATUS_CONFIG: Record<
-	ExamRequestResponse["status"],
-	{ label: string; variant: "default" | "secondary" | "outline" }
-> = {
-	PENDING: { label: "Pendente", variant: "secondary" },
-	SCHEDULED: { label: "Agendado", variant: "secondary" },
-	UPLOADED: { label: "Enviado", variant: "default" },
-	REVIEWED: { label: "Analisado", variant: "outline" },
-};
+import { ExamReviewForm } from "./ExamReviewForm";
+import { ExamUploadButton } from "./ExamUploadButton";
 
 export function ExamCard({ exam, isPatient, isProfessional }: ExamCardProps) {
-	const { mutateAsync: upload } = useUploadExamResult();
-	const { mutateAsync: review } = useReviewExam();
-	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [uploading, setUploading] = useState(false);
-	const [reviewNotes, setReviewNotes] = useState("");
-	const [reviewing, setReviewing] = useState(false);
-	const [showReviewForm, setShowReviewForm] = useState(false);
-	const statusCfg = STATUS_CONFIG[exam.status];
-
-	async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-		const file = e.target.files?.[0];
-		if (!file) return;
-		setUploading(true);
-		try {
-			await upload({ examId: exam.id, file });
-			toast.success("Arquivo enviado com sucesso!");
-		} catch {
-			toast.error("Erro ao enviar arquivo.");
-		} finally {
-			setUploading(false);
-		}
-	}
-
-	async function handleReview() {
-		if (!reviewNotes.trim()) return;
-		setReviewing(true);
-		try {
-			await review({
-				examId: exam.id,
-				data: { professionalNotes: reviewNotes },
-			});
-			toast.success("Observações salvas!");
-			setShowReviewForm(false);
-		} catch {
-			toast.error("Erro ao salvar observações.");
-		} finally {
-			setReviewing(false);
-		}
-	}
+	const statusCfg = EXAM_STATUS_CONFIG[exam.status];
 
 	return (
 		<div className="space-y-2">
@@ -114,61 +56,10 @@ export function ExamCard({ exam, isPatient, isProfessional }: ExamCardProps) {
 			)}
 
 			{isPatient && exam.status === "PENDING" && (
-				<>
-					<input
-						ref={fileInputRef}
-						type="file"
-						accept=".pdf,.jpg,.jpeg,.png"
-						className="hidden"
-						onChange={handleUpload}
-					/>
-					<Button
-						size="sm"
-						variant="outline"
-						className="gap-2"
-						disabled={uploading}
-						onClick={() => fileInputRef.current?.click()}
-					>
-						<Upload className="h-3.5 w-3.5" />
-						{uploading ? "Enviando..." : "Enviar resultado"}
-					</Button>
-				</>
+				<ExamUploadButton examId={exam.id} />
 			)}
-
-			{isProfessional && exam.status === "UPLOADED" && !showReviewForm && (
-				<Button
-					size="sm"
-					variant="outline"
-					className="gap-2"
-					onClick={() => setShowReviewForm(true)}
-				>
-					<FileText className="h-3.5 w-3.5" />
-					Adicionar observações
-				</Button>
-			)}
-
-			{showReviewForm && (
-				<div className="space-y-2">
-					<Textarea
-						value={reviewNotes}
-						onChange={(e) => setReviewNotes(e.target.value)}
-						placeholder="Descreva suas observações sobre o resultado..."
-						rows={3}
-						className="resize-none text-sm"
-					/>
-					<div className="flex gap-2">
-						<Button size="sm" onClick={handleReview} disabled={reviewing}>
-							{reviewing ? "Salvando..." : "Salvar"}
-						</Button>
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={() => setShowReviewForm(false)}
-						>
-							Cancelar
-						</Button>
-					</div>
-				</div>
+			{isProfessional && exam.status === "UPLOADED" && (
+				<ExamReviewForm examId={exam.id} />
 			)}
 		</div>
 	);

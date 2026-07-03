@@ -1,20 +1,14 @@
-"use client";
+﻿"use client";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { DAY_LABELS } from "@/lib/schemas/schedule/days-of-week.schema";
-import type { ProfessionalScheduleItem } from "@/lib/schemas/schedule/professional-schedule-item.schema";
+import { DAY_LABELS } from "@/features/schedule";
+import type { ScheduleDayRowProps } from "./ScheduleDayRow.types";
 
-export function ScheduleDayRow({
-	row,
-	onChange,
-}: {
-	row: ProfessionalScheduleItem;
-	onChange: (patch: Partial<ProfessionalScheduleItem>) => void;
-}) {
+export function ScheduleDayRow({ row, onChange }: ScheduleDayRowProps) {
 	return (
 		<Card className={row.isActive ? "" : "opacity-60"}>
 			<CardContent className="pt-4 pb-4">

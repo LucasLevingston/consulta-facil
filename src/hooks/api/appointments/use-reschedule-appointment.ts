@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 import type { RescheduleAppointmentInput } from "@/lib/schemas/appointment/reschedule-appointment.schema";
 import { appointmentKeys } from "./appointment-keys";
 
@@ -15,7 +15,7 @@ export function useRescheduleAppointment() {
 		}: {
 			id: string;
 			data: RescheduleAppointmentInput;
-		}) => appointmentsApi.reschedule(id, data),
+		}) => appointmentsCrudApi.reschedule(id, data),
 		onSuccess: () =>
 			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});

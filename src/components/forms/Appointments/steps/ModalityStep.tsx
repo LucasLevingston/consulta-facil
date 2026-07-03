@@ -1,20 +1,8 @@
 "use client";
 
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { MODALITY_OPTIONS } from "@/lib/constants/modality-options";
 import type { ModalityStepProps } from "./ModalityStep.types";
-
-const MODALITY_OPTIONS = [
-	{
-		value: "IN_PERSON" as const,
-		label: "Presencial",
-		desc: "Na clínica ou consultório",
-	},
-	{
-		value: "ONLINE" as const,
-		label: "Online",
-		desc: "Videochamada via Google Meet",
-	},
-];
 
 export function ModalityStep({ control }: ModalityStepProps) {
 	return (

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -9,10 +9,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import {
-	type RegisterInput,
-	registerSchema,
-} from "@/lib/schemas/auth/register.schema";
+import { type RegisterInput, registerSchema } from "@/features/auth";
 import type { RegisterFormProps } from "./registerForm.types";
 
 export function RegisterForm({ onSubmit, isPending }: RegisterFormProps) {

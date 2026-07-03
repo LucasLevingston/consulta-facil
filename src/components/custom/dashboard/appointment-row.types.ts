@@ -1,4 +1,4 @@
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+﻿import type { AppointmentResponse } from "@/features/appointments";
 
 export interface AppointmentRowProps {
 	appointment: AppointmentResponse;

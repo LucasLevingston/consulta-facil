@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { paymentMethodSchema } from "../doctor/payment-method.schema";
+import { paymentMethodSchema } from "../professional/payment-method.schema";
 import { appointmentModalitySchema } from "./appointment-modality.schema";
 
 // Form schema — scheduledAt is a Date object (converted to ISO string on submit)

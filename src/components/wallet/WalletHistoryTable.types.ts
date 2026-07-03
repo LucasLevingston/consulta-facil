@@ -1,4 +1,4 @@
-import type { WalletTransactionResponse } from "@/lib/schemas/billing/wallet.schema";
+﻿import type { WalletTransactionResponse } from "@/features/billing";
 
 export interface WalletHistoryTableProps {
 	transactions: WalletTransactionResponse[];

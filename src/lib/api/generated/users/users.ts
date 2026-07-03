@@ -18,8 +18,6 @@ import type {
 	UseQueryResult,
 } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { BodyType, ErrorType } from "../../mutator";
-
 import { customInstance } from "../../mutator";
 import type { UploadAvatarBody, UserResponseDTO } from "../model";
 
@@ -60,16 +58,16 @@ export const uploadAvatar = async (
 };
 
 export const getUploadAvatarQueryKey = (
-	uploadAvatarBody?: BodyType<UploadAvatarBody>,
+	uploadAvatarBody?: UploadAvatarBody,
 ) => {
 	return ["POST", `/users/me/avatar`, uploadAvatarBody] as const;
 };
 
 export const getUploadAvatarQueryOptions = <
 	TData = Awaited<ReturnType<typeof uploadAvatar>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	uploadAvatarBody?: BodyType<UploadAvatarBody>,
+	uploadAvatarBody?: UploadAvatarBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
@@ -96,13 +94,13 @@ export const getUploadAvatarQueryOptions = <
 export type UploadAvatarQueryResult = NonNullable<
 	Awaited<ReturnType<typeof uploadAvatar>>
 >;
-export type UploadAvatarQueryError = ErrorType<unknown>;
+export type UploadAvatarQueryError = unknown;
 
 export function useUploadAvatar<
 	TData = Awaited<ReturnType<typeof uploadAvatar>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	uploadAvatarBody: undefined | BodyType<UploadAvatarBody>,
+	uploadAvatarBody: undefined | UploadAvatarBody,
 	options: {
 		query: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
@@ -123,9 +121,9 @@ export function useUploadAvatar<
 };
 export function useUploadAvatar<
 	TData = Awaited<ReturnType<typeof uploadAvatar>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	uploadAvatarBody?: BodyType<UploadAvatarBody>,
+	uploadAvatarBody?: UploadAvatarBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
@@ -146,9 +144,9 @@ export function useUploadAvatar<
 };
 export function useUploadAvatar<
 	TData = Awaited<ReturnType<typeof uploadAvatar>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	uploadAvatarBody?: BodyType<UploadAvatarBody>,
+	uploadAvatarBody?: UploadAvatarBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
@@ -165,9 +163,9 @@ export function useUploadAvatar<
 
 export function useUploadAvatar<
 	TData = Awaited<ReturnType<typeof uploadAvatar>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
-	uploadAvatarBody?: BodyType<UploadAvatarBody>,
+	uploadAvatarBody?: UploadAvatarBody,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<Awaited<ReturnType<typeof uploadAvatar>>, TError, TData>
@@ -222,7 +220,7 @@ export const getGetUserByIdQueryKey = (userId: string) => {
 
 export const getGetUserByIdQueryOptions = <
 	TData = Awaited<ReturnType<typeof getUserById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -255,11 +253,11 @@ export const getGetUserByIdQueryOptions = <
 export type GetUserByIdQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getUserById>>
 >;
-export type GetUserByIdQueryError = ErrorType<unknown>;
+export type GetUserByIdQueryError = unknown;
 
 export function useGetUserById<
 	TData = Awaited<ReturnType<typeof getUserById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options: {
@@ -282,7 +280,7 @@ export function useGetUserById<
 };
 export function useGetUserById<
 	TData = Awaited<ReturnType<typeof getUserById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -305,7 +303,7 @@ export function useGetUserById<
 };
 export function useGetUserById<
 	TData = Awaited<ReturnType<typeof getUserById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -324,7 +322,7 @@ export function useGetUserById<
 
 export function useGetUserById<
 	TData = Awaited<ReturnType<typeof getUserById>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -381,7 +379,7 @@ export const getDeleteUserQueryKey = (userId: string) => {
 
 export const getDeleteUserQueryOptions = <
 	TData = Awaited<ReturnType<typeof deleteUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -414,11 +412,11 @@ export const getDeleteUserQueryOptions = <
 export type DeleteUserQueryResult = NonNullable<
 	Awaited<ReturnType<typeof deleteUser>>
 >;
-export type DeleteUserQueryError = ErrorType<unknown>;
+export type DeleteUserQueryError = unknown;
 
 export function useDeleteUser<
 	TData = Awaited<ReturnType<typeof deleteUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options: {
@@ -441,7 +439,7 @@ export function useDeleteUser<
 };
 export function useDeleteUser<
 	TData = Awaited<ReturnType<typeof deleteUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -464,7 +462,7 @@ export function useDeleteUser<
 };
 export function useDeleteUser<
 	TData = Awaited<ReturnType<typeof deleteUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -483,7 +481,7 @@ export function useDeleteUser<
 
 export function useDeleteUser<
 	TData = Awaited<ReturnType<typeof deleteUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	userId: string,
 	options?: {
@@ -539,7 +537,7 @@ export const getGetCurrentUserQueryKey = () => {
 
 export const getGetCurrentUserQueryOptions = <
 	TData = Awaited<ReturnType<typeof getCurrentUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(options?: {
 	query?: Partial<
 		UseQueryOptions<Awaited<ReturnType<typeof getCurrentUser>>, TError, TData>
@@ -564,11 +562,11 @@ export const getGetCurrentUserQueryOptions = <
 export type GetCurrentUserQueryResult = NonNullable<
 	Awaited<ReturnType<typeof getCurrentUser>>
 >;
-export type GetCurrentUserQueryError = ErrorType<unknown>;
+export type GetCurrentUserQueryError = unknown;
 
 export function useGetCurrentUser<
 	TData = Awaited<ReturnType<typeof getCurrentUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options: {
 		query: Partial<
@@ -590,7 +588,7 @@ export function useGetCurrentUser<
 };
 export function useGetCurrentUser<
 	TData = Awaited<ReturnType<typeof getCurrentUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -612,7 +610,7 @@ export function useGetCurrentUser<
 };
 export function useGetCurrentUser<
 	TData = Awaited<ReturnType<typeof getCurrentUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<
@@ -630,7 +628,7 @@ export function useGetCurrentUser<
 
 export function useGetCurrentUser<
 	TData = Awaited<ReturnType<typeof getCurrentUser>>,
-	TError = ErrorType<unknown>,
+	TError = unknown,
 >(
 	options?: {
 		query?: Partial<

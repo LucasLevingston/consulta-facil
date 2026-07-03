@@ -6,26 +6,26 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), defaults: { headers: { common: {} } } },
 }));
-vi.mock("@/lib/api/notifications.api", () => ({
+vi.mock("@/lib/api/notifications/notifications.api", () => ({
 	notificationsApi: {
 		getAll: vi.fn(),
 		getUnreadCount: vi.fn(),
 		markAllRead: vi.fn(),
 	},
 }));
-vi.mock("@/lib/api/services.api", () => ({
-	servicesApi: { getByProfessional: vi.fn(), create: vi.fn() },
+vi.mock("@/lib/api/services/professional-services.api", () => ({
+	professionalServicesApi: { getByProfessional: vi.fn(), create: vi.fn() },
 }));
 
 import { useNotifications } from "@/hooks/api/notifications/use-notifications";
 import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
 import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
-import { notificationsApi } from "@/lib/api/notifications.api";
-import { servicesApi } from "@/lib/api/services.api";
+import { notificationsApi } from "@/lib/api/notifications/notifications.api";
+import { professionalServicesApi } from "@/lib/api/services/professional-services.api";
 
 const mockGetAll = vi.mocked(notificationsApi.getAll);
 const mockUnread = vi.mocked(notificationsApi.getUnreadCount);
-const mockGetServices = vi.mocked(servicesApi.getByProfessional);
+const mockGetServices = vi.mocked(professionalServicesApi.getByProfessional);
 
 function wrapper() {
 	const qc = new QueryClient({

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format, isToday } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -8,8 +8,8 @@ import { useParams } from "next/navigation";
 import { AppointmentCheckInCard } from "@/components/clinics/checkin/AppointmentCheckInCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useUserStore } from "@/store/useUserStore";
+import { usePatientAppointments } from "@/features/appointments";
+import { useUserStore } from "@/features/auth";
 
 export default function ClinicCheckInPage() {
 	const { id } = useParams<{ id: string }>();

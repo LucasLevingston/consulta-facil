@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -6,14 +6,10 @@ import { PhoneCall } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCallPatient } from "@/hooks/api/appointments/use-call-patient";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { useCallPatient } from "@/features/appointments";
+import type { QueueCardProps } from "./QueueCard.types";
 
-export function QueueCard({
-	appointment,
-}: {
-	appointment: AppointmentResponse;
-}) {
+export function QueueCard({ appointment }: QueueCardProps) {
 	const { mutateAsync: call, isPending } = useCallPatient();
 
 	async function handleCall() {

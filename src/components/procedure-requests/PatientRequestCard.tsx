@@ -1,9 +1,7 @@
 "use client";
 
-import { CalendarClock, Clock, DollarSign, X } from "lucide-react";
-import { useState } from "react";
+import { Clock, DollarSign } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -11,22 +9,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
-import type { ProcedureRequest } from "@/lib/schemas/procedure-request/procedure-request.schema";
-import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
+import { useCancelProcedureRequest } from "@/features/procedure-requests";
+import { PatientRequestActions } from "./PatientRequestActions";
+import type { PatientRequestCardProps } from "./PatientRequestCard.types";
 import { StatusBadge } from "./StatusBadge";
 
-export function PatientRequestCard({ request }: { request: ProcedureRequest }) {
+export function PatientRequestCard({ request }: PatientRequestCardProps) {
 	const { mutateAsync: cancel, isPending: canceling } =
 		useCancelProcedureRequest();
-	const [scheduleOpen, setScheduleOpen] = useState(false);
 
 	async function handleCancel() {
 		try {
@@ -70,42 +60,14 @@ export function PatientRequestCard({ request }: { request: ProcedureRequest }) {
 				{request.notes && (
 					<p className="text-xs text-muted-foreground">{request.notes}</p>
 				)}
-				{(canSchedule || canCancel) && (
-					<div className="flex justify-end gap-2">
-						{canSchedule && (
-							<Dialog open={scheduleOpen} onOpenChange={setScheduleOpen}>
-								<DialogTrigger asChild>
-									<Button size="sm" className="h-8">
-										<CalendarClock className="h-3 w-3 mr-1" />
-										Agendar
-									</Button>
-								</DialogTrigger>
-								<DialogContent>
-									<DialogHeader>
-										<DialogTitle>Agendar procedimento</DialogTitle>
-									</DialogHeader>
-									<ScheduleProcedureRequestForm
-										requestId={request.id}
-										serviceName={request.serviceName}
-										onClose={() => setScheduleOpen(false)}
-									/>
-								</DialogContent>
-							</Dialog>
-						)}
-						{canCancel && (
-							<Button
-								variant="ghost"
-								size="sm"
-								className="text-destructive h-8"
-								onClick={handleCancel}
-								disabled={canceling}
-							>
-								<X className="h-3 w-3 mr-1" />
-								Cancelar
-							</Button>
-						)}
-					</div>
-				)}
+				<PatientRequestActions
+					requestId={request.id}
+					serviceName={request.serviceName}
+					canSchedule={canSchedule}
+					canCancel={canCancel}
+					canceling={canceling}
+					onCancel={handleCancel}
+				/>
 			</CardContent>
 		</Card>
 	);

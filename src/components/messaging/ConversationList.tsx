@@ -1,24 +1,18 @@
-"use client";
+﻿"use client";
 
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import type { ConversationResponse } from "@/lib/schemas/messaging/message.schema";
 import { cn } from "@/lib/utils/cn";
-
-interface Props {
-	conversations: ConversationResponse[];
-	selectedId: string | null;
-	onSelect: (id: string) => void;
-}
+import type { ConversationListProps } from "./ConversationList.types";
 
 export function ConversationList({
 	conversations,
 	selectedId,
 	onSelect,
-}: Props) {
+}: ConversationListProps) {
 	if (conversations.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center h-full gap-2 py-12 text-muted-foreground">

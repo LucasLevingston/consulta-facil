@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { type LoginInput, loginSchema } from "@/lib/schemas/auth/login.schema";
+import { type LoginInput, loginSchema } from "@/features/auth";
 import type { LoginFormProps } from "./LoginForm.types";
 
 export default function LoginForm({ onSubmit, isPending }: LoginFormProps) {

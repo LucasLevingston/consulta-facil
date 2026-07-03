@@ -2,6 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils/cn";
+import type { SummaryCardProps } from "./SummaryCard.types";
 
 export function SummaryCard({
 	icon,
@@ -9,13 +10,7 @@ export function SummaryCard({
 	value,
 	sub,
 	colorClass,
-}: {
-	icon: React.ReactNode;
-	label: string;
-	value: string;
-	sub?: string;
-	colorClass: string;
-}) {
+}: SummaryCardProps) {
 	return (
 		<Card className="border-border bg-card">
 			<CardContent className="flex items-center gap-4 p-5">

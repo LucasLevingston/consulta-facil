@@ -6,7 +6,7 @@ import ClinicCard from "@/components/custom/clinic/ClinicCard";
 import { ClinicsMap } from "@/components/custom/map/ClinicsMap";
 import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
-import { useClinicsFilters } from "@/hooks/use-clinics-filters";
+import { useClinicsFilters } from "@/features/clinics";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function ClinicsPage() {

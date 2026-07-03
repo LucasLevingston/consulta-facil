@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+﻿import { Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -7,11 +7,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
-import { FREE_CONSULTS_PER_DOCTOR } from "@/utils/constants/free-consults-per-doctor";
+import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import type { ClinicUsageCardProps } from "./ClinicUsageCard.types";
 
-export function ClinicUsageCard({ clinic }: { clinic: ClinicResponse }) {
+export function ClinicUsageCard({ clinic }: ClinicUsageCardProps) {
 	const currentProfessionals = clinic.members?.length ?? 1;
 
 	return (
@@ -55,12 +55,12 @@ export function ClinicUsageCard({ clinic }: { clinic: ClinicResponse }) {
 					<div className="flex items-center justify-between text-sm mb-2">
 						<span className="text-muted-foreground">Consultas gratuitas</span>
 						<span className="font-semibold tabular-nums">
-							{currentProfessionals * FREE_CONSULTS_PER_DOCTOR}
+							{currentProfessionals * FREE_CONSULTS_PER_PROFESSIONAL}
 						</span>
 					</div>
 					<div className="flex flex-wrap gap-1 mt-1">
 						<Badge variant="secondary" className="text-xs">
-							{FREE_CONSULTS_PER_DOCTOR} por profissional
+							{FREE_CONSULTS_PER_PROFESSIONAL} por profissional
 						</Badge>
 						<Badge variant="secondary" className="text-xs">
 							× {currentProfessionals} profissional

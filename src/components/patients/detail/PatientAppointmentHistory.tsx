@@ -1,17 +1,15 @@
-import { CalendarDays } from "lucide-react";
+﻿import { CalendarDays } from "lucide-react";
 
 import { StatusBadge } from "@/components/StatusBadge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import type { PatientAppointmentHistoryProps } from "./PatientAppointmentHistory.types";
 
 export function PatientAppointmentHistory({
 	appointments,
-}: {
-	appointments: AppointmentResponse[];
-}) {
+}: PatientAppointmentHistoryProps) {
 	return (
 		<Card>
 			<CardHeader>

@@ -1,4 +1,4 @@
-import type { AxiosError, AxiosRequestConfig } from "axios";
+import type { AxiosRequestConfig } from "axios";
 import { api } from "@/config/api";
 
 export const customInstance = <T>(
@@ -10,5 +10,4 @@ export const customInstance = <T>(
 		.then((r) => r.data);
 };
 
-export type ErrorType<Error> = AxiosError<Error>;
-export type BodyType<BodyData> = BodyData;
+export type { BodyType, ErrorType } from "./mutator.types";

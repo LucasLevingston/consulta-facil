@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LoginFormValidation } from "@/lib/login-form-validation";
+import { LoginFormValidation } from "@/lib/schemas/login-form-validation";
 import { UserFormValidation } from "@/lib/user-form-validation";
 
 describe("LoginFormValidation", () => {

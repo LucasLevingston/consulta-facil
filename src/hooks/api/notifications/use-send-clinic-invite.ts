@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 
-import { notificationsApi } from "@/lib/api/notifications.api";
+import { invitesApi } from "@/lib/api/notifications/invites.api";
 
 export function useSendClinicInvite() {
 	return useMutation({
@@ -12,6 +12,6 @@ export function useSendClinicInvite() {
 		}: {
 			clinicId: string;
 			professionalProfileId: string;
-		}) => notificationsApi.sendClinicInvite(clinicId, professionalProfileId),
+		}) => invitesApi.sendClinicInvite(clinicId, professionalProfileId),
 	});
 }

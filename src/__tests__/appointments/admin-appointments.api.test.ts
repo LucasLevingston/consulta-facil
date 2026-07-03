@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { appointmentsApi } from "@/lib/api/appointments.api";
+import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockGet = vi.mocked(api.get);
 
@@ -24,13 +24,13 @@ const appt = {
 
 const page = { content: [appt], totalElements: 1, totalPages: 1, number: 0 };
 
-describe("appointmentsApi.getAll — admin endpoint", () => {
+describe("appointmentsCrudApi.getAll — admin endpoint", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("chama GET /appointments com page e size padrão", async () => {
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await appointmentsApi.getAll();
+		const result = await appointmentsCrudApi.getAll();
 
 		expect(mockGet).toHaveBeenCalledWith("/appointments", {
 			params: { page: 0, size: 100 },
@@ -41,7 +41,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 	it("chama GET /appointments com page e size customizados", async () => {
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		await appointmentsApi.getAll(2, 50);
+		await appointmentsCrudApi.getAll(2, 50);
 
 		expect(mockGet).toHaveBeenCalledWith("/appointments", {
 			params: { page: 2, size: 50 },
@@ -52,7 +52,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 		const bigPage = { ...page, totalElements: 99, totalPages: 2 };
 		mockGet.mockResolvedValueOnce({ data: bigPage });
 
-		const result = await appointmentsApi.getAll(0, 50);
+		const result = await appointmentsCrudApi.getAll(0, 50);
 
 		expect(result.totalElements).toBe(99);
 		expect(result.totalPages).toBe(2);
@@ -61,7 +61,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 	it("retorna appointments com paymentStatus e paymentAmount", async () => {
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await appointmentsApi.getAll();
+		const result = await appointmentsCrudApi.getAll();
 
 		expect(result.content[0].paymentStatus).toBe("PAID");
 		expect(result.content[0].paymentAmount).toBe(200);
@@ -70,7 +70,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 	it("retorna appointments com patientName e professionalName", async () => {
 		mockGet.mockResolvedValueOnce({ data: page });
 
-		const result = await appointmentsApi.getAll();
+		const result = await appointmentsCrudApi.getAll();
 
 		expect(result.content[0].patientName).toBe("João Silva");
 		expect(result.content[0].professionalName).toBe("Dra. Ana");
@@ -80,7 +80,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 		const empty = { content: [], totalElements: 0, totalPages: 0, number: 0 };
 		mockGet.mockResolvedValueOnce({ data: empty });
 
-		const result = await appointmentsApi.getAll();
+		const result = await appointmentsCrudApi.getAll();
 
 		expect(result.content).toHaveLength(0);
 		expect(result.totalElements).toBe(0);
@@ -96,7 +96,7 @@ describe("appointmentsApi.getAll — admin endpoint", () => {
 		const multiPage = { ...page, content: [appt, appt2], totalElements: 2 };
 		mockGet.mockResolvedValueOnce({ data: multiPage });
 
-		const result = await appointmentsApi.getAll();
+		const result = await appointmentsCrudApi.getAll();
 
 		expect(result.content).toHaveLength(2);
 		const names = result.content.map((a) => a.professionalName);

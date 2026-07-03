@@ -1,28 +1,17 @@
 "use client";
 
-import { Star } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
-
-import { CancelAppointmentForm } from "@/components/forms/Appointments/CancelAppointmentForm";
-import { RateAppointmentForm } from "@/components/forms/Appointments/RateAppointmentForm";
 import { Button } from "@/components/ui/button";
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
-import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
-import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
-import { usePermission } from "@/hooks/use-permission";
-import { useUserStore } from "@/store/useUserStore";
+	useCompleteAppointment,
+	useConfirmAppointment,
+} from "@/features/appointments";
+import { usePermission, useUserStore } from "@/features/auth";
 import type { AppointmentActionsProps } from "./AppointmentActions.types";
+import { AppointmentCancelButton } from "./AppointmentCancelButton";
+import { AppointmentRateButton } from "./AppointmentRateButton";
 
 export function AppointmentActions({ appointment }: AppointmentActionsProps) {
-	const [cancelOpen, setCancelOpen] = useState(false);
-	const [rateOpen, setRateOpen] = useState(false);
 	const confirm = useConfirmAppointment();
 	const complete = useCompleteAppointment();
 	const { can } = usePermission();
@@ -87,60 +76,8 @@ export function AppointmentActions({ appointment }: AppointmentActionsProps) {
 					{complete.isPending ? "..." : "Concluir"}
 				</Button>
 			)}
-			{canRate && (
-				<>
-					<Button
-						variant="ghost"
-						size="sm"
-						className="text-amber-500 hover:text-amber-400 gap-1"
-						onClick={() => setRateOpen(true)}
-					>
-						<Star className="size-3.5" />
-						Avaliar
-					</Button>
-					<Dialog open={rateOpen} onOpenChange={setRateOpen}>
-						<DialogContent className="sm:max-w-md">
-							<DialogHeader className="mb-2 space-y-1">
-								<DialogTitle>Avaliar consulta</DialogTitle>
-								<DialogDescription>
-									Sua avaliação ajuda outros pacientes a escolher o profissional
-									certo.
-								</DialogDescription>
-							</DialogHeader>
-							<RateAppointmentForm
-								appointment={appointment}
-								setOpen={setRateOpen}
-							/>
-						</DialogContent>
-					</Dialog>
-				</>
-			)}
-			{canCancel && (
-				<>
-					<Button
-						variant="ghost"
-						size="sm"
-						className="text-destructive hover:text-destructive/80"
-						onClick={() => setCancelOpen(true)}
-					>
-						Cancelar
-					</Button>
-					<Dialog open={cancelOpen} onOpenChange={setCancelOpen}>
-						<DialogContent className="sm:max-w-md">
-							<DialogHeader className="mb-4 space-y-3">
-								<DialogTitle>Cancelar Consulta</DialogTitle>
-								<DialogDescription>
-									Tem certeza de que deseja cancelar sua consulta?
-								</DialogDescription>
-							</DialogHeader>
-							<CancelAppointmentForm
-								appointment={appointment}
-								setOpen={setCancelOpen}
-							/>
-						</DialogContent>
-					</Dialog>
-				</>
-			)}
+			{canRate && <AppointmentRateButton appointment={appointment} />}
+			{canCancel && <AppointmentCancelButton appointment={appointment} />}
 		</div>
 	);
 }

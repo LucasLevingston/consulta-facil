@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Users } from "lucide-react";
 import { AnalyticsDonutChart } from "@/components/analytics/charts/AnalyticsDonutChart";
@@ -6,7 +6,7 @@ import { AnalyticsLineChart } from "@/components/analytics/charts/AnalyticsLineC
 import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUserAnalytics } from "@/hooks/api/analytics/use-analytics";
+import { useUserAnalytics } from "@/features/analytics";
 
 export default function UserAnalyticsPage() {
 	const { data, isLoading } = useUserAnalytics();

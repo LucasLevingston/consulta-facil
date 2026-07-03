@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Settings } from "lucide-react";
@@ -18,13 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-	useBillingSettings,
-	useUpdateBillingSettings,
-} from "@/hooks/api/billing/use-billing-settings";
-import {
 	type UpdateBillingSettingsValues,
 	updateBillingSettingsSchema,
-} from "@/lib/schemas/billing/billing-settings.schema";
+	useBillingSettings,
+	useUpdateBillingSettings,
+} from "@/features/billing";
 
 export default function AdminBillingSettingsPage() {
 	const { data: settings, isLoading } = useBillingSettings();

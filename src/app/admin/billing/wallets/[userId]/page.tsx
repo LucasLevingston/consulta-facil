@@ -1,20 +1,16 @@
-"use client";
+﻿"use client";
 
 import { Wallet } from "lucide-react";
 import { use } from "react";
 import PageHeader from "@/components/custom/page-header";
 import { WalletCard } from "@/components/wallet/WalletCard";
 import { WalletHistoryTable } from "@/components/wallet/WalletHistoryTable";
-import {
-	useUserWallet,
-	useUserWalletTransactions,
-} from "@/hooks/api/billing/use-wallet";
+import { useUserWallet, useUserWalletTransactions } from "@/features/billing";
+import type { AdminUserWalletPageProps } from "./page.types";
 
-interface Props {
-	params: Promise<{ userId: string }>;
-}
-
-export default function AdminUserWalletPage({ params }: Props) {
+export default function AdminUserWalletPage({
+	params,
+}: AdminUserWalletPageProps) {
 	const { userId } = use(params);
 	const { data: wallet, isLoading } = useUserWallet(userId);
 	const { data: transactions = [] } = useUserWalletTransactions(userId);

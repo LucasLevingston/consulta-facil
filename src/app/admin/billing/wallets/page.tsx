@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Wallet } from "lucide-react";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useAdminWallets } from "@/hooks/api/billing/use-wallet";
+import { useAdminWallets } from "@/features/billing";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {

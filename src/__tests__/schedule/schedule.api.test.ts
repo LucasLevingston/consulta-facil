@@ -5,7 +5,8 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { scheduleApi } from "@/lib/api/schedule.api";
+import { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
+import { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPut = vi.mocked(api.put);
@@ -36,7 +37,7 @@ describe("scheduleApi — getMySchedule", () => {
 	it("chama endpoint correto", async () => {
 		mockGet.mockResolvedValueOnce({ data: [scheduleItem] });
 
-		await scheduleApi.getMySchedule();
+		await professionalScheduleApi.getMySchedule();
 
 		expect(mockGet).toHaveBeenCalledWith("/professionals/me/schedule");
 	});
@@ -50,7 +51,7 @@ describe("scheduleApi — getMySchedule", () => {
 		}));
 		mockGet.mockResolvedValueOnce({ data: fullSchedule });
 
-		const result = await scheduleApi.getMySchedule();
+		const result = await professionalScheduleApi.getMySchedule();
 
 		expect(result).toHaveLength(5);
 		expect(result.map((r) => r.dayOfWeek)).toEqual(days);
@@ -59,7 +60,7 @@ describe("scheduleApi — getMySchedule", () => {
 	it("retorna array vazio quando profissional não configurou horários", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await scheduleApi.getMySchedule();
+		const result = await professionalScheduleApi.getMySchedule();
 
 		expect(result).toEqual([]);
 	});
@@ -67,7 +68,7 @@ describe("scheduleApi — getMySchedule", () => {
 	it("cada item contém duração e intervalo", async () => {
 		mockGet.mockResolvedValueOnce({ data: [scheduleItem] });
 
-		const result = await scheduleApi.getMySchedule();
+		const result = await professionalScheduleApi.getMySchedule();
 
 		expect(result[0].consultationDurationMinutes).toBe(30);
 		expect(result[0].breakBetweenConsultationsMinutes).toBe(10);
@@ -82,7 +83,7 @@ describe("scheduleApi — getScheduleByProfessional filtro por ID", () => {
 	it("passa professionalId correto na URL", async () => {
 		mockGet.mockResolvedValueOnce({ data: [scheduleItem] });
 
-		await scheduleApi.getScheduleByProfessional("prof-1");
+		await professionalScheduleApi.getScheduleByProfessional("prof-1");
 
 		expect(mockGet).toHaveBeenCalledWith("/professionals/prof-1/schedule");
 	});
@@ -92,8 +93,8 @@ describe("scheduleApi — getScheduleByProfessional filtro por ID", () => {
 			.mockResolvedValueOnce({ data: [scheduleItem] })
 			.mockResolvedValueOnce({ data: [] });
 
-		await scheduleApi.getScheduleByProfessional("prof-1");
-		await scheduleApi.getScheduleByProfessional("prof-99");
+		await professionalScheduleApi.getScheduleByProfessional("prof-1");
+		await professionalScheduleApi.getScheduleByProfessional("prof-99");
 
 		expect(mockGet.mock.calls[0][0]).toBe("/professionals/prof-1/schedule");
 		expect(mockGet.mock.calls[1][0]).toBe("/professionals/prof-99/schedule");
@@ -106,7 +107,8 @@ describe("scheduleApi — getScheduleByProfessional filtro por ID", () => {
 		];
 		mockGet.mockResolvedValueOnce({ data: schedule });
 
-		const result = await scheduleApi.getScheduleByProfessional("prof-1");
+		const result =
+			await professionalScheduleApi.getScheduleByProfessional("prof-1");
 
 		const active = result.filter((r) => r.isActive);
 		expect(active).toHaveLength(1);
@@ -116,7 +118,8 @@ describe("scheduleApi — getScheduleByProfessional filtro por ID", () => {
 	it("profissional sem agenda retorna array vazio", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await scheduleApi.getScheduleByProfessional("prof-new");
+		const result =
+			await professionalScheduleApi.getScheduleByProfessional("prof-new");
 
 		expect(result).toEqual([]);
 	});
@@ -130,7 +133,7 @@ describe("scheduleApi — getClinicWorkingHours filtro por clínica", () => {
 	it("passa clinicId correto na URL", async () => {
 		mockGet.mockResolvedValueOnce({ data: [workingHoursItem] });
 
-		await scheduleApi.getClinicWorkingHours("clinic-1");
+		await clinicWorkingHoursApi.getClinicWorkingHours("clinic-1");
 
 		expect(mockGet).toHaveBeenCalledWith("/clinics/clinic-1/working-hours");
 	});
@@ -140,8 +143,8 @@ describe("scheduleApi — getClinicWorkingHours filtro por clínica", () => {
 			.mockResolvedValueOnce({ data: [workingHoursItem] })
 			.mockResolvedValueOnce({ data: [] });
 
-		await scheduleApi.getClinicWorkingHours("clinic-1");
-		await scheduleApi.getClinicWorkingHours("clinic-2");
+		await clinicWorkingHoursApi.getClinicWorkingHours("clinic-1");
+		await clinicWorkingHoursApi.getClinicWorkingHours("clinic-2");
 
 		expect(mockGet.mock.calls[0][0]).toBe("/clinics/clinic-1/working-hours");
 		expect(mockGet.mock.calls[1][0]).toBe("/clinics/clinic-2/working-hours");
@@ -156,7 +159,8 @@ describe("scheduleApi — getClinicWorkingHours filtro por clínica", () => {
 		}));
 		mockGet.mockResolvedValueOnce({ data: hours });
 
-		const result = await scheduleApi.getClinicWorkingHours("clinic-1");
+		const result =
+			await clinicWorkingHoursApi.getClinicWorkingHours("clinic-1");
 
 		expect(result).toHaveLength(3);
 		expect(result.map((h) => h.dayOfWeek)).toEqual(days);
@@ -169,7 +173,8 @@ describe("scheduleApi — getClinicWorkingHours filtro por clínica", () => {
 		];
 		mockGet.mockResolvedValueOnce({ data: hours });
 
-		const result = await scheduleApi.getClinicWorkingHours("clinic-1");
+		const result =
+			await clinicWorkingHoursApi.getClinicWorkingHours("clinic-1");
 
 		const open = result.filter((h) => h.isOpen);
 		expect(open).toHaveLength(1);
@@ -179,7 +184,8 @@ describe("scheduleApi — getClinicWorkingHours filtro por clínica", () => {
 	it("clínica sem horários configurados retorna array vazio", async () => {
 		mockGet.mockResolvedValueOnce({ data: [] });
 
-		const result = await scheduleApi.getClinicWorkingHours("clinic-new");
+		const result =
+			await clinicWorkingHoursApi.getClinicWorkingHours("clinic-new");
 
 		expect(result).toEqual([]);
 	});
@@ -203,7 +209,7 @@ describe("scheduleApi — saveMySchedule", () => {
 		];
 		mockPut.mockResolvedValueOnce({ data: [scheduleItem] });
 
-		await scheduleApi.saveMySchedule(items);
+		await professionalScheduleApi.saveMySchedule(items);
 
 		expect(mockPut).toHaveBeenCalledWith("/professionals/me/schedule", items);
 	});
@@ -211,7 +217,7 @@ describe("scheduleApi — saveMySchedule", () => {
 	it("retorna agenda salva com todos os campos", async () => {
 		mockPut.mockResolvedValueOnce({ data: [scheduleItem] });
 
-		const result = await scheduleApi.saveMySchedule([
+		const result = await professionalScheduleApi.saveMySchedule([
 			{
 				dayOfWeek: "MONDAY",
 				startTime: "08:00",

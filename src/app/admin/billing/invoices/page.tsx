@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { FileText } from "lucide-react";
 import { InvoiceTable } from "@/components/billing/InvoiceTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminInvoices } from "@/hooks/api/billing/use-invoices";
+import { useAdminInvoices } from "@/features/billing";
 
 export default function AdminBillingInvoicesPage() {
 	const { data: invoices = [], isLoading } = useAdminInvoices();

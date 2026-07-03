@@ -1,42 +1,25 @@
 "use client";
 
 import { Plus, Users } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 import PageHeader from "@/components/custom/page-header";
 import { DependentCard } from "@/components/dependents/DependentCard";
 import { DependentFormDialog } from "@/components/dependents/DependentFormDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useDeleteDependent } from "@/hooks/api/dependents/use-delete-dependent";
-import { useMyDependents } from "@/hooks/api/dependents/use-my-dependents";
-import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
+import { useDependentsPage } from "@/hooks/use-dependents-page";
 
 export default function DependentsPage() {
-	const { data: dependents = [], isLoading } = useMyDependents();
-	const deleteMutation = useDeleteDependent();
-
-	const [dialogOpen, setDialogOpen] = useState(false);
-	const [editing, setEditing] = useState<DependentResponse | null>(null);
-
-	function openCreate() {
-		setEditing(null);
-		setDialogOpen(true);
-	}
-
-	function openEdit(dep: DependentResponse) {
-		setEditing(dep);
-		setDialogOpen(true);
-	}
-
-	async function handleDelete(id: string) {
-		try {
-			await deleteMutation.mutateAsync(id);
-			toast.success("Dependente removido.");
-		} catch {
-			toast.error("Erro ao remover dependente.");
-		}
-	}
+	const {
+		dependents,
+		isLoading,
+		dialogOpen,
+		setDialogOpen,
+		editing,
+		openCreate,
+		openEdit,
+		handleDelete,
+		deleting,
+	} = useDependentsPage();
 
 	return (
 		<div className="space-y-6">
@@ -82,7 +65,7 @@ export default function DependentsPage() {
 						dependent={dep}
 						onEdit={openEdit}
 						onDelete={handleDelete}
-						deleting={deleteMutation.isPending}
+						deleting={deleting}
 					/>
 				))}
 			</div>

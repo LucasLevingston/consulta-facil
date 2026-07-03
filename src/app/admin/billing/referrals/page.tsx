@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Users } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
@@ -11,8 +11,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useAdminReferrals } from "@/hooks/api/billing/use-referrals";
-import type { ReferralStatus } from "@/lib/schemas/billing/referral.schema";
+import type { ReferralStatus } from "@/features/billing";
+import { useAdminReferrals } from "@/features/billing";
 
 const STATUS_LABELS: Record<ReferralStatus, string> = {
 	PENDING: "Pendente",

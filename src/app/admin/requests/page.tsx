@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Stethoscope } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
 import PageHeader from "@/components/custom/page-header";
 import { Badge } from "@/components/ui/badge";
-import { usePendingApplications } from "@/hooks/api/doctors/use-pending-applications";
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission } from "@/features/auth";
+import { usePendingApplications } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export default function AdminRequestsPage() {
@@ -48,8 +48,11 @@ export default function AdminRequestsPage() {
 								{applications.length}
 							</Badge>
 						</div>
-						{applications.map((doctor) => (
-							<PendingApplicationCard key={doctor.id} doctor={doctor} />
+						{applications.map((professional) => (
+							<PendingApplicationCard
+								key={professional.id}
+								professional={professional}
+							/>
 						))}
 					</div>
 				)}

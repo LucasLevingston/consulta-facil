@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { Clock, XCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useApplicationStatus } from "@/hooks/api/doctors/use-application-status";
+import { useApplicationStatus } from "@/features/professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import { PROFESSIONAL_TYPE_LABELS } from "@/utils/constants/professional-types";
 import { BecomeProfessionalForm } from "./BecomeProfessionalForm";

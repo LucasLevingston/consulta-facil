@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useMyClinic } from "@/hooks/api/clinics/use-my-clinic";
+import { useMyClinic } from "@/features/clinics";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ClinicForm } from "../../forms/ClinicForm";
 import { ClinicWorkingHoursSection } from "./ClinicWorkingHoursSection";

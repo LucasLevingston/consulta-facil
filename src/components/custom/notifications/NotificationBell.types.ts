@@ -1,4 +1,4 @@
-import type { NotificationResponse } from "@/lib/schemas/notification/notification.schema";
+﻿import type { NotificationResponse } from "@/features/notifications";
 
 export interface NotificationItemProps {
 	notification: NotificationResponse;

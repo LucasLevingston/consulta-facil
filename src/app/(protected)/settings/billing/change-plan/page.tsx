@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowLeft, BadgeCheck, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -14,9 +14,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePlans } from "@/hooks/api/plans/use-plans";
-import { useCreateCheckout } from "@/hooks/api/subscriptions/use-create-checkout";
-import { useMySubscription } from "@/hooks/api/subscriptions/use-my-subscription";
+import { usePlans } from "@/features/plans";
+import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
 
 const PERIOD_LABELS: Record<string, string> = {
 	MONTHLY: "mês",

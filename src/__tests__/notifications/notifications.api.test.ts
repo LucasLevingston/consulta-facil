@@ -5,7 +5,8 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { notificationsApi } from "@/lib/api/notifications.api";
+import { invitesApi } from "@/lib/api/notifications/invites.api";
+import { notificationsApi } from "@/lib/api/notifications/notifications.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPut = vi.mocked(api.put);
@@ -176,7 +177,7 @@ describe("notificationsApi — acceptInvite e declineInvite", () => {
 		const accepted = { ...notification, status: "ACCEPTED" as const };
 		mockPut.mockResolvedValueOnce({ data: accepted });
 
-		const result = await notificationsApi.acceptInvite("notif-1");
+		const result = await invitesApi.acceptInvite("notif-1");
 
 		expect(mockPut).toHaveBeenCalledWith("/notifications/notif-1/accept");
 		expect(result.status).toBe("ACCEPTED");
@@ -186,7 +187,7 @@ describe("notificationsApi — acceptInvite e declineInvite", () => {
 		const declined = { ...notification, status: "DECLINED" as const };
 		mockPut.mockResolvedValueOnce({ data: declined });
 
-		const result = await notificationsApi.declineInvite("notif-1");
+		const result = await invitesApi.declineInvite("notif-1");
 
 		expect(mockPut).toHaveBeenCalledWith("/notifications/notif-1/decline");
 		expect(result.status).toBe("DECLINED");
@@ -201,7 +202,7 @@ describe("notificationsApi — sendClinicInvite", () => {
 	it("chama POST com clinicId e professionalProfileId corretos", async () => {
 		mockPost.mockResolvedValueOnce({ data: undefined });
 
-		await notificationsApi.sendClinicInvite("clinic-1", "prof-1");
+		await invitesApi.sendClinicInvite("clinic-1", "prof-1");
 
 		expect(mockPost).toHaveBeenCalledWith("/clinics/clinic-1/invites/prof-1");
 	});
@@ -211,8 +212,8 @@ describe("notificationsApi — sendClinicInvite", () => {
 			.mockResolvedValueOnce({ data: undefined })
 			.mockResolvedValueOnce({ data: undefined });
 
-		await notificationsApi.sendClinicInvite("clinic-1", "prof-1");
-		await notificationsApi.sendClinicInvite("clinic-2", "prof-2");
+		await invitesApi.sendClinicInvite("clinic-1", "prof-1");
+		await invitesApi.sendClinicInvite("clinic-2", "prof-2");
 
 		expect(mockPost.mock.calls[0][0]).toBe("/clinics/clinic-1/invites/prof-1");
 		expect(mockPost.mock.calls[1][0]).toBe("/clinics/clinic-2/invites/prof-2");

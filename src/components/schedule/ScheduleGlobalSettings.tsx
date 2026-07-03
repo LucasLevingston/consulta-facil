@@ -6,16 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import type { ScheduleGlobalSettingsProps } from "./ScheduleGlobalSettings.types";
 
 export function ScheduleGlobalSettings({
 	defaultDuration,
 	defaultBreak,
 	onApply,
-}: {
-	defaultDuration: number;
-	defaultBreak: number;
-	onApply: (duration: number, breakTime: number) => void;
-}) {
+}: ScheduleGlobalSettingsProps) {
 	const [duration, setDuration] = useState(defaultDuration);
 	const [breakTime, setBreakTime] = useState(defaultBreak);
 

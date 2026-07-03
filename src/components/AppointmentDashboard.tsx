@@ -1,14 +1,12 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { AppointmentDashboardFilters } from "@/components/AppointmentDashboardFilters";
 import { CustomPagination } from "@/components/custom/custom-pagination";
-import { StatCard } from "@/components/StatCard";
 import { makeColumns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
-import { Input } from "@/components/ui/input";
-import type { AppointmentStatus } from "@/lib/schemas/appointment/appointment-status.schema";
+import type { AppointmentStatus } from "@/features/appointments";
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { AppointmentsDashboardProps } from "./AppointmentDashboard.types";
@@ -78,62 +76,16 @@ const AppointmentsDashboard = ({
 
 	return (
 		<div className="space-y-6">
-			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-				<StatCard
-					count={counts.total}
-					label="Todas"
-					icon=""
-					onClick={() => updateParams({ status: null })}
-					onActive={activeStatus === null}
-				/>
-				<StatCard
-					type="CONFIRMED"
-					count={counts.confirmed}
-					label="Confirmadas"
-					icon=""
-					onClick={() => updateParams({ status: "CONFIRMED" })}
-					onActive={activeStatus === "CONFIRMED"}
-				/>
-				<StatCard
-					type="PENDING"
-					count={counts.pending}
-					label="Pendentes"
-					icon=""
-					onClick={() => updateParams({ status: "PENDING" })}
-					onActive={activeStatus === "PENDING"}
-				/>
-				<StatCard
-					type="CANCELED"
-					count={counts.canceled}
-					label="Canceladas"
-					icon=""
-					onClick={() => updateParams({ status: "CANCELED" })}
-					onActive={activeStatus === "CANCELED"}
-				/>
-				<StatCard
-					type="COMPLETED"
-					count={counts.completed}
-					label="Concluídas"
-					icon=""
-					onClick={() => updateParams({ status: "COMPLETED" })}
-					onActive={activeStatus === "COMPLETED"}
-				/>
-			</div>
-
-			<div className="relative">
-				<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-				<Input
-					placeholder="Buscar por paciente, profissional, especialidade ou motivo..."
-					value={search}
-					onChange={(e) => updateParams({ q: e.target.value || null })}
-					className="pl-9 rounded-xl"
-				/>
-			</div>
-
+			<AppointmentDashboardFilters
+				counts={counts}
+				activeStatus={activeStatus}
+				search={search}
+				onStatusChange={(s) => updateParams({ status: s })}
+				onSearchChange={(q) => updateParams({ q: q || null })}
+			/>
 			<div className="rounded-2xl border border-border bg-card shadow-sm">
 				<DataTable columns={columns} data={paginated} />
 			</div>
-
 			<CustomPagination
 				currentPage={currentPage}
 				totalPages={totalPages}

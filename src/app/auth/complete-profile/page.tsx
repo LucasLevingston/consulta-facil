@@ -5,8 +5,7 @@ import { useEffect } from "react";
 import { Loading } from "@/components/custom/loading";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
 import { Logo } from "@/components/logo";
-import { useAuthStore } from "@/store/auth.store";
-import { useUserStore } from "@/store/useUserStore";
+import { useAuthStore, useUserStore } from "@/features/auth";
 
 export default function CompleteProfilePage() {
 	const router = useRouter();
