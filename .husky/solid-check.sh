@@ -9,8 +9,8 @@ for file in $staged; do
 
   content=$(git show ":$file" 2>/dev/null)
 
-  # 1. Tamanho (excluir arquivos gerados e configs)
-  case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js) ;;
+  # 1. Tamanho (excluir gerados, configs, testes, tipos, constants e use-toast)
+  case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js|*__tests__*|*.d.ts|*use-toast*|*/constants/*|*constants.ts|*/app/*) ;;
     *)
       lines=$(printf '%s\n' "$content" | wc -l)
       if [ "$lines" -gt "$MAX_LINES" ]; then

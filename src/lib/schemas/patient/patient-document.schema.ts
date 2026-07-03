@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export { DOCUMENT_TYPE_LABELS } from "./constants";
+
 export const documentTypeSchema = z.enum([
 	"CPF",
 	"RG",
@@ -23,12 +25,3 @@ export const patientDocumentResponseSchema = z.object({
 export type PatientDocumentResponse = z.infer<
 	typeof patientDocumentResponseSchema
 >;
-
-export const DOCUMENT_TYPE_LABELS: Record<string, string> = {
-	CPF: "CPF",
-	RG: "RG",
-	CNH: "CNH",
-	HEALTH_CARD: "Cartão de Saúde",
-	INSURANCE_CARD: "Carteirinha do Plano",
-	OTHER: "Outro",
-};

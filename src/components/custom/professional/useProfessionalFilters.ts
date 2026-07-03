@@ -34,9 +34,7 @@ export function useProfessionalFilters() {
 	const availableSpecialties = profession
 		? (PROFESSION_SPECIALTIES[profession] ?? [])
 		: specialties;
-
 	const isFirstRender = useRef(true);
-
 	useEffect(() => {
 		if (isFirstRender.current) {
 			isFirstRender.current = false;

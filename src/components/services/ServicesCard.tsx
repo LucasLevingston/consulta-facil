@@ -1,8 +1,7 @@
 "use client";
 
-import { Briefcase, Plus } from "lucide-react";
+import { Briefcase } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -10,16 +9,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
 import type { ProfessionalService } from "@/features/services";
 import { useGetProfessionalServices } from "@/features/services";
-import { ServiceForm } from "./ServiceForm";
+import { NewServiceButton } from "./NewServiceButton";
 import { ServiceRow } from "./ServiceRow";
 import type { ServicesCardProps } from "./ServicesCard.types";
 import { ServicesEditDialog } from "./ServicesEditDialog";
@@ -27,13 +19,7 @@ import { ServicesEditDialog } from "./ServicesEditDialog";
 export function ServicesCard({ professionalId }: ServicesCardProps) {
 	const { data: services = [], isLoading } =
 		useGetProfessionalServices(professionalId);
-	const [open, setOpen] = useState(false);
 	const [editing, setEditing] = useState<ProfessionalService | null>(null);
-
-	function closeDialog() {
-		setOpen(false);
-		setEditing(null);
-	}
 
 	return (
 		<Card>
@@ -47,32 +33,7 @@ export function ServicesCard({ professionalId }: ServicesCardProps) {
 						Serviços e procedimentos que você oferece.
 					</CardDescription>
 				</div>
-				<Dialog
-					open={open && !editing}
-					onOpenChange={(v) => {
-						setOpen(v);
-						if (!v) setEditing(null);
-					}}
-				>
-					<DialogTrigger asChild>
-						<Button
-							size="sm"
-							onClick={() => {
-								setEditing(null);
-								setOpen(true);
-							}}
-						>
-							<Plus className="mr-1 h-4 w-4" />
-							Novo serviço
-						</Button>
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Novo serviço</DialogTitle>
-						</DialogHeader>
-						<ServiceForm onClose={() => setOpen(false)} />
-					</DialogContent>
-				</Dialog>
+				<NewServiceButton />
 			</CardHeader>
 			<CardContent>
 				{isLoading && (
@@ -88,21 +49,17 @@ export function ServicesCard({ professionalId }: ServicesCardProps) {
 						<ServiceRow
 							key={svc.id}
 							service={svc}
-							onEdit={() => {
-								setEditing(svc);
-								setOpen(true);
-							}}
+							onEdit={() => setEditing(svc)}
 						/>
 					))}
 				</div>
 				<ServicesEditDialog
 					editing={editing}
-					open={open}
+					open={!!editing}
 					onOpenChange={(v) => {
-						setOpen(v);
 						if (!v) setEditing(null);
 					}}
-					onClose={closeDialog}
+					onClose={() => setEditing(null)}
 				/>
 			</CardContent>
 		</Card>

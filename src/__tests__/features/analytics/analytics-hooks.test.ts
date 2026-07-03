@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/analytics/repositories/analytics.repository", () => ({
@@ -22,49 +22,53 @@ import { useUserAnalytics } from "@/features/analytics/hooks/use-user-analytics"
 function makeWrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("analytics query hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("useAppointmentAnalytics returns data and isLoading", () => {
+	it("useAppointmentAnalytics resolves with data", async () => {
 		const { result } = renderHook(() => useAppointmentAnalytics(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual({});
 	});
 
-	it("useFinancialAnalytics returns data and isLoading", () => {
+	it("useFinancialAnalytics resolves with data", async () => {
 		const { result } = renderHook(() => useFinancialAnalytics(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual({});
 	});
 
-	it("useReferralAnalytics returns data and isLoading", () => {
+	it("useReferralAnalytics resolves with data", async () => {
 		const { result } = renderHook(() => useReferralAnalytics(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual({});
 	});
 
-	it("useSubscriptionAnalytics returns data and isLoading", () => {
+	it("useSubscriptionAnalytics resolves with data", async () => {
 		const { result } = renderHook(() => useSubscriptionAnalytics(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual({});
 	});
 
-	it("useUserAnalytics returns data and isLoading", () => {
+	it("useUserAnalytics resolves with data", async () => {
 		const { result } = renderHook(() => useUserAnalytics(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual({});
 	});
 });

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export { RELATIONSHIP_LABELS } from "./constants";
+
 export const emergencyContactRelationshipSchema = z.enum([
 	"MOTHER",
 	"FATHER",
@@ -19,13 +21,3 @@ export const emergencyContactSchema = z.object({
 });
 
 export type EmergencyContactInput = z.infer<typeof emergencyContactSchema>;
-
-export const RELATIONSHIP_LABELS: Record<string, string> = {
-	MOTHER: "Mãe",
-	FATHER: "Pai",
-	SPOUSE: "Cônjuge",
-	SIBLING: "Irmão(ã)",
-	CHILD: "Filho(a)",
-	FRIEND: "Amigo(a)",
-	OTHER: "Outro",
-};

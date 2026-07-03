@@ -9,6 +9,7 @@ import type { LabFilterOptions } from "./LabFilterOptions.types";
 import type { LabFilterState } from "./LabFilterState.types";
 import type { LabFiltersActions } from "./LabFiltersActions.types";
 import type { LabLocationState } from "./LabLocationState.types";
+import type { UseLabFiltersReturn } from "./UseLabFiltersReturn.types";
 import { useLabLocation } from "./use-lab-location";
 
 export type { LabFilterDerived } from "./LabFilterDerived.types";
@@ -16,21 +17,7 @@ export type { LabFilterOptions } from "./LabFilterOptions.types";
 export type { LabFilterState } from "./LabFilterState.types";
 export type { LabFiltersActions } from "./LabFiltersActions.types";
 export type { LabLocationState } from "./LabLocationState.types";
-
-export interface UseLabFiltersReturn {
-	filterState: LabFilterState;
-	location: LabLocationState;
-	options: LabFilterOptions;
-	derived: LabFilterDerived;
-	actions: LabFiltersActions;
-	displayed: ReturnType<typeof useExamLabs>["data"] extends infer T
-		? T extends unknown[]
-			? T
-			: never[]
-		: never[];
-	isLoading: boolean;
-	error: unknown;
-}
+export type { UseLabFiltersReturn } from "./UseLabFiltersReturn.types";
 
 export function useLabFilters(): UseLabFiltersReturn {
 	const [search, setSearch] = useState("");
@@ -96,7 +83,7 @@ export function useLabFilters(): UseLabFiltersReturn {
 			requestLocation: loc.requestLocation,
 			clearLocation: loc.clearLocation,
 		},
-		displayed: displayed as UseLabFiltersReturn["displayed"],
+		displayed,
 		isLoading,
 		error,
 	};

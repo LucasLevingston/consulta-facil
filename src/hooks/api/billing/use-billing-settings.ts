@@ -1,22 +1,2 @@
-"use client";
-
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { billingSettingsApi } from "@/lib/api/billing/billing-settings.api";
-import type { UpdateBillingSettingsValues } from "@/lib/schemas/billing/billing-settings.schema";
-
-export function useBillingSettings() {
-	return useQuery({
-		queryKey: ["billing", "settings"],
-		queryFn: billingSettingsApi.get,
-	});
-}
-
-export function useUpdateBillingSettings() {
-	const qc = useQueryClient();
-	return useMutation({
-		mutationFn: (data: UpdateBillingSettingsValues) =>
-			billingSettingsApi.update(data),
-		onSuccess: () =>
-			qc.invalidateQueries({ queryKey: ["billing", "settings"] }),
-	});
-}
+export { useBillingSettings } from "./use-billing-settings-query";
+export { useUpdateBillingSettings } from "./use-update-billing-settings";

@@ -1,15 +1,10 @@
 "use client";
 
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils/cn";
+import { PlanCardFooter } from "./PlanCardFooter";
 import type { PlanCardProps } from "./plan-card.types";
 
 const YEARLY_SAVINGS: Record<string, string> = {
@@ -89,24 +84,12 @@ export function PlanCard({
 					</div>
 				))}
 			</CardContent>
-			<CardFooter className="pt-4">
-				{isActive ? (
-					<Button className="w-full" variant="outline" disabled>
-						<CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
-						Plano atual
-					</Button>
-				) : (
-					<Button
-						className="w-full"
-						variant={plan.highlight ? "default" : "outline"}
-						onClick={() => onSelect(plan.id)}
-						disabled={isPending}
-					>
-						{isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-						Assinar agora
-					</Button>
-				)}
-			</CardFooter>
+			<PlanCardFooter
+				isActive={isActive}
+				isPending={isPending}
+				highlight={!!plan.highlight}
+				onSelect={() => onSelect(plan.id)}
+			/>
 		</Card>
 	);
 }

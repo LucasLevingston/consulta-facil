@@ -4,13 +4,9 @@ import { useMemo, useState } from "react";
 import { useClinics } from "@/hooks/api/clinics/use-clinics";
 import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
 import type { DayKey } from "@/utils/constants/days-of-week";
-import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
-import type { ClinicsFilterDerived } from "./ClinicsFilterDerived.types";
-import type { ClinicsFilterOptions } from "./ClinicsFilterOptions.types";
-import type { ClinicsFilterState } from "./ClinicsFilterState.types";
-import type { ClinicsFiltersActions } from "./ClinicsFiltersActions.types";
-import type { ClinicsLocationState } from "./ClinicsLocationState.types";
 import type { ClinicsViewMode } from "./ClinicsViewMode.types";
+import type { UseClinicsFiltersReturn } from "./UseClinicsFiltersReturn.types";
+import { useClinicFilterOptions } from "./use-clinic-filter-options";
 import { useClinicsLocation } from "./use-clinics-location";
 
 export type { ClinicsFilterDerived } from "./ClinicsFilterDerived.types";
@@ -19,17 +15,7 @@ export type { ClinicsFilterState } from "./ClinicsFilterState.types";
 export type { ClinicsFiltersActions } from "./ClinicsFiltersActions.types";
 export type { ClinicsLocationState } from "./ClinicsLocationState.types";
 export type { ClinicsViewMode } from "./ClinicsViewMode.types";
-
-export interface UseClinicsFiltersReturn {
-	filterState: ClinicsFilterState;
-	location: ClinicsLocationState;
-	options: ClinicsFilterOptions;
-	derived: ClinicsFilterDerived;
-	actions: ClinicsFiltersActions;
-	displayed: NonNullable<ReturnType<typeof useClinics>["data"]>;
-	isLoading: boolean;
-	error: unknown;
-}
+export type { UseClinicsFiltersReturn } from "./UseClinicsFiltersReturn.types";
 
 export function useClinicsFilters(): UseClinicsFiltersReturn {
 	const [viewMode, setViewMode] = useState<ClinicsViewMode>("list");
@@ -53,19 +39,7 @@ export function useClinicsFilters(): UseClinicsFiltersReturn {
 	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
 	const error = isNearbyMode ? nearbyError : allError;
 	const baseList = isNearbyMode ? nearbyClinics : allClinics;
-
-	const { availableStates, availableSpecialties, availableProfessions } = useMemo(
-		() => ({
-			availableStates: [...new Set(allClinics.flatMap((c) => (c.state ? [c.state] : [])))].sort(),
-			availableSpecialties: [
-				...new Set(allClinics.flatMap((c) => c.members?.map((m) => m.specialty) ?? [])),
-			].sort(),
-			availableProfessions: [
-				...new Set(allClinics.flatMap((c) => c.members?.map((m) => m.role) ?? [])),
-			].sort(),
-		}),
-		[allClinics],
-	);
+	const options = useClinicFilterOptions(allClinics);
 
 	const displayed = useMemo(() => {
 		let r = baseList;
@@ -78,12 +52,8 @@ export function useClinicsFilters(): UseClinicsFiltersReturn {
 		return r;
 	}, [baseList, search, filterState, filterCity, filterSpecialty, filterProfession]);
 
-	const advancedCount = [
-		filterCity,
-		filterSpecialty,
-		filterProfession,
-		selectedDays.length > 0,
-	].filter(Boolean).length;
+	const advancedFilters = [filterCity, filterSpecialty, filterProfession, selectedDays.length > 0];
+	const advancedCount = advancedFilters.filter(Boolean).length;
 	const totalActive = [search, filterState].filter(Boolean).length + advancedCount;
 
 	return {
@@ -98,12 +68,7 @@ export function useClinicsFilters(): UseClinicsFiltersReturn {
 			viewMode,
 		},
 		location: loc,
-		options: {
-			availableStates,
-			availableSpecialties,
-			availableProfessions,
-			radiusOptions: RADIUS_OPTIONS,
-		},
+		options,
 		derived: { totalActive, advancedCount, isNearbyMode },
 		actions: {
 			setSearch,

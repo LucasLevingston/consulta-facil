@@ -9,28 +9,13 @@ import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 import type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
 import type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";
 import type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
+import type { UseProfessionalsFiltersReturn } from "./UseProfessionalsFiltersReturn.types";
 import { useProfessionalsLocation } from "./use-professionals-location";
 
 export type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
 export type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";
 export type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
-
-export interface UseProfessionalsFiltersReturn {
-	viewMode: ProfessionalsViewMode;
-	location: ProfessionalsLocationState;
-	actions: ProfessionalsFiltersActions;
-	displayed: NonNullable<ReturnType<typeof useProfessionals>["data"]> extends { content: infer C }
-		? C
-		: never[];
-	professionalsWithLocation: UseProfessionalsFiltersReturn["displayed"];
-	totalElements: number;
-	totalPages: number;
-	currentPage: number;
-	isNearbyMode: boolean;
-	isLoading: boolean;
-	error: unknown;
-	radiusOptions: typeof RADIUS_OPTIONS;
-}
+export type { UseProfessionalsFiltersReturn } from "./UseProfessionalsFiltersReturn.types";
 
 export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 	const router = useRouter();
@@ -97,9 +82,8 @@ export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 			clearLocation: loc.clearLocation,
 			goToPage,
 		},
-		displayed: displayed as UseProfessionalsFiltersReturn["displayed"],
-		professionalsWithLocation:
-			professionalsWithLocation as UseProfessionalsFiltersReturn["displayed"],
+		displayed,
+		professionalsWithLocation,
 		totalElements,
 		totalPages,
 		currentPage: page,
