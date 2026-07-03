@@ -38,7 +38,6 @@ export function useClinicFinancialStats(members: ClinicMember[]) {
 				);
 				return { member, completed, freeUsed, paidCount };
 			}),
-		// biome-ignore lint/correctness/useExhaustiveDependencies: results array changes reference every render
 		[results, members],
 	);
 

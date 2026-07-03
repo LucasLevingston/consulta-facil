@@ -8,9 +8,7 @@ import { serviceKeys } from "./service-keys";
 export function useCreateService() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: CreateServiceInput) =>
-			professionalServicesApi.create(data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
+		mutationFn: (data: CreateServiceInput) => professionalServicesApi.create(data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
 	});
 }

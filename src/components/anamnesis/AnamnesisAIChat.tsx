@@ -17,7 +17,6 @@ export function AnamnesisAIChat({ onSave, onClose }: AnamnesisAIChatProps) {
 	const [input, setInput] = useState("");
 	const bottomRef = useRef<HTMLDivElement>(null);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: scroll on new messages
 	useEffect(() => {
 		if (messages.length > 0)
 			bottomRef.current?.scrollIntoView({ behavior: "smooth" });

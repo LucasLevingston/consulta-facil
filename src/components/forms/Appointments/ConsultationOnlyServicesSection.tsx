@@ -3,7 +3,6 @@
 import { AlertTriangle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import type { ProfessionalService } from "@/features/services";
 import { formatBRL } from "@/utils/format-brl";
 import type { ConsultationOnlyServicesSectionProps } from "./ConsultationOnlyServicesSection.types";
 

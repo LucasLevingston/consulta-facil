@@ -18,7 +18,6 @@ export function useClinicAppointments(targetIds: string[]) {
 
 	const appointments: AppointmentResponse[] = useMemo(
 		() => results.flatMap((r) => r.data?.content ?? []),
-		// biome-ignore lint/correctness/useExhaustiveDependencies: results array changes reference every render
 		[results],
 	);
 

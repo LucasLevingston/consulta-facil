@@ -13,23 +13,9 @@ export function useProfessionals(
 	serviceTitle?: string,
 ) {
 	return useQuery({
-		queryKey: professionalKeys.list(
-			page,
-			size,
-			profession,
-			specialty,
-			name,
-			serviceTitle,
-		),
+		queryKey: professionalKeys.list(page, size, profession, specialty, name, serviceTitle),
 		queryFn: () =>
-			professionalsListingApi.getAll(
-				page,
-				size,
-				profession,
-				specialty,
-				name,
-				serviceTitle,
-			),
+			professionalsListingApi.getAll(page, size, profession, specialty, name, serviceTitle),
 		staleTime: 1000 * 60 * 5,
 	});
 }

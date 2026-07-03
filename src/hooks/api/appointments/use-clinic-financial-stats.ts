@@ -30,7 +30,6 @@ export function useClinicFinancialStats(members: ClinicMember[]) {
 				const paidCount = Math.max(0, completed - FREE_CONSULTS_PER_PROFESSIONAL);
 				return { member, completed, freeUsed, paidCount };
 			}),
-		// biome-ignore lint/correctness/useExhaustiveDependencies: results array changes reference every render
 		[results, members],
 	);
 

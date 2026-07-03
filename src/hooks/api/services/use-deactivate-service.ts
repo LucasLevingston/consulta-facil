@@ -7,9 +7,7 @@ import { serviceKeys } from "./service-keys";
 export function useDeactivateService() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (serviceId: string) =>
-			professionalServicesApi.deactivate(serviceId),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
+		mutationFn: (serviceId: string) => professionalServicesApi.deactivate(serviceId),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
 	});
 }

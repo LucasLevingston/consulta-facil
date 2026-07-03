@@ -8,9 +8,7 @@ import { patientKeys } from "./patient-keys";
 export function useUpdateMyProfile() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: Record<string, unknown>) =>
-			patientProfileApi.updateMyProfile(data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: patientKeys.me() }),
+		mutationFn: (data: Record<string, unknown>) => patientProfileApi.updateMyProfile(data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: patientKeys.me() }),
 	});
 }

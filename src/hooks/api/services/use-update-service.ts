@@ -8,14 +8,8 @@ import { serviceKeys } from "./service-keys";
 export function useUpdateService() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({
-			serviceId,
-			data,
-		}: {
-			serviceId: string;
-			data: UpdateServiceInput;
-		}) => professionalServicesApi.update(serviceId, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
+		mutationFn: ({ serviceId, data }: { serviceId: string; data: UpdateServiceInput }) =>
+			professionalServicesApi.update(serviceId, data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceKeys.all }),
 	});
 }

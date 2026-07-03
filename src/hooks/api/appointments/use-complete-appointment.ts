@@ -9,7 +9,6 @@ export function useCompleteAppointment() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => appointmentLifecycleApi.complete(id),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

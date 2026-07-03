@@ -7,8 +7,7 @@ import { scheduleKeys } from "./schedule-keys";
 export function useProfessionalSchedule(professionalId: string) {
 	return useQuery({
 		queryKey: scheduleKeys.byProfessional(professionalId),
-		queryFn: () =>
-			professionalScheduleApi.getScheduleByProfessional(professionalId),
+		queryFn: () => professionalScheduleApi.getScheduleByProfessional(professionalId),
 		enabled: !!professionalId,
 		staleTime: 1000 * 60 * 10,
 	});

@@ -8,8 +8,7 @@ import { anamnesisKeys } from "./anamnesis-keys";
 export function useSaveProntuario(appointmentId: string) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: ProntuarioInput) =>
-			anamnesisApi.saveProntuario(appointmentId, data),
+		mutationFn: (data: ProntuarioInput) => anamnesisApi.saveProntuario(appointmentId, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: anamnesisKeys.prontuario(appointmentId),

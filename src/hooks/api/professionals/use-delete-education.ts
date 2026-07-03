@@ -5,8 +5,7 @@ import { professionalKeys } from "./professional-keys";
 export function useDeleteEducation() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (educationId: string) =>
-			professionalPortfolioApi.deleteEducation(educationId),
+		mutationFn: (educationId: string) => professionalPortfolioApi.deleteEducation(educationId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

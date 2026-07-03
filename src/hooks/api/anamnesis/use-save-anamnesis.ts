@@ -8,8 +8,7 @@ import { anamnesisKeys } from "./anamnesis-keys";
 export function useSaveAnamnesis(appointmentId: string) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: AnamnesisInput) =>
-			anamnesisApi.saveAnamnesis(appointmentId, data),
+		mutationFn: (data: AnamnesisInput) => anamnesisApi.saveAnamnesis(appointmentId, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: anamnesisKeys.anamnesis(appointmentId),

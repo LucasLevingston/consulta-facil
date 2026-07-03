@@ -1,5 +1,4 @@
 export interface ProfilePatientMedicalInfoProps {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	patientProfile: Record<string, string> | undefined | null | any;
+	patientProfile: Record<string, string | null | undefined> | undefined | null;
 	isLoading: boolean;
 }

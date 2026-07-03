@@ -8,9 +8,7 @@ import { queueKeys } from "./queue-keys";
 export function useCallPatient() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (appointmentId: string) =>
-			appointmentCheckinApi.callPatient(appointmentId),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
+		mutationFn: (appointmentId: string) => appointmentCheckinApi.callPatient(appointmentId),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
 	});
 }

@@ -11,7 +11,6 @@ export function useSetModality() {
 	return useMutation({
 		mutationFn: ({ id, data }: { id: string; data: SetModalityInput }) =>
 			appointmentLifecycleApi.setModality(id, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

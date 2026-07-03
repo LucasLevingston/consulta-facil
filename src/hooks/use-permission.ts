@@ -18,9 +18,7 @@ type Attrs = Record<string, unknown>;
  */
 export function usePermission() {
 	const { user } = useUserStore();
-	const role = (user?.role ?? "PATIENT") as Parameters<
-		(typeof PERMISSIONS)[PermissionKey]
-	>[0];
+	const role = (user?.role ?? "PATIENT") as Parameters<(typeof PERMISSIONS)[PermissionKey]>[0];
 
 	const can = (permission: PermissionKey, attrs?: Attrs): boolean => {
 		if (!user) return false;

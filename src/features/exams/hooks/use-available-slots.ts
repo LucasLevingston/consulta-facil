@@ -10,7 +10,8 @@ export function useAvailableSlots(
 ) {
 	return useQuery({
 		queryKey: examLabKeys.slots(examLabId ?? "", date ?? ""),
-		queryFn: () => examsRepository.getAvailableSlots(examLabId!, date!),
+		queryFn: () =>
+			examsRepository.getAvailableSlots(examLabId ?? "", date ?? ""),
 		enabled: !!examLabId && !!date,
 	});
 }

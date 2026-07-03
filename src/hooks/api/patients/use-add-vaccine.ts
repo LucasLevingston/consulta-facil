@@ -9,7 +9,6 @@ export function useAddVaccine() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: patientVaccinesApi.addVaccine,
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
 	});
 }

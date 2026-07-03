@@ -9,7 +9,6 @@ export function useGenerateMeetLink() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => appointmentVideoApi.generateMeetLink(id),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

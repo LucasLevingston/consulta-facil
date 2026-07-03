@@ -5,8 +5,7 @@ import { professionalKeys } from "./professional-keys";
 export function useDeleteExperience() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (experienceId: string) =>
-			professionalPortfolioApi.deleteExperience(experienceId),
+		mutationFn: (experienceId: string) => professionalPortfolioApi.deleteExperience(experienceId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

@@ -27,7 +27,7 @@ export default function ProfessionalsMapInner({
 
 	const mapCenter: [number, number] =
 		withLocation.length > 0
-			? [withLocation[0].latitude!, withLocation[0].longitude!]
+			? [withLocation[0].latitude ?? 0, withLocation[0].longitude ?? 0]
 			: center;
 
 	return (
@@ -44,7 +44,7 @@ export default function ProfessionalsMapInner({
 			{withLocation.map((professional) => (
 				<Marker
 					key={professional.id}
-					position={[professional.latitude!, professional.longitude!]}
+					position={[professional.latitude ?? 0, professional.longitude ?? 0]}
 					icon={markerIcon}
 				>
 					<Popup>

@@ -7,5 +7,5 @@ export function AbacGuard({
 	children,
 }: AbacGuardProps) {
 	const { can } = usePermission();
-	return can(permission, attrs) ? <>{children}</> : <>{fallback}</>;
+	return can(permission, attrs) ? children : fallback;
 }

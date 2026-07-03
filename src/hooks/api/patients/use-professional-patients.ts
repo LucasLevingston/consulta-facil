@@ -14,8 +14,7 @@ export function useProfessionalPatients(
 ) {
 	return useQuery({
 		queryKey: [...patientKeys.all, "professional", professionalId, params],
-		queryFn: () =>
-			patientProfileApi.getProfessionalPatients(professionalId, params),
+		queryFn: () => patientProfileApi.getProfessionalPatients(professionalId, params),
 		enabled: !!professionalId,
 	});
 }

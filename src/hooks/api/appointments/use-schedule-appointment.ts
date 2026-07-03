@@ -9,9 +9,7 @@ import { appointmentKeys } from "./appointment-keys";
 export function useScheduleAppointment() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: CreateAppointmentInput) =>
-			appointmentsCrudApi.schedule(data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		mutationFn: (data: CreateAppointmentInput) => appointmentsCrudApi.schedule(data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

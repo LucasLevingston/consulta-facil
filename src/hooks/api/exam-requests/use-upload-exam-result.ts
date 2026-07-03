@@ -10,7 +10,6 @@ export function useUploadExamResult() {
 	return useMutation({
 		mutationFn: ({ examId, file }: { examId: string; file: File }) =>
 			examRequestApi.upload(examId, file),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: examRequestKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: examRequestKeys.all }),
 	});
 }

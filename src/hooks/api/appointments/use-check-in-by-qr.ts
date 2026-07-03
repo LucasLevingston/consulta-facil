@@ -9,7 +9,6 @@ export function useCheckInByQr() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (token: string) => appointmentCheckinApi.checkInByQr(token),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: queueKeys.queue }),
 	});
 }

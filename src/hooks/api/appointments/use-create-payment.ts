@@ -8,14 +8,8 @@ import { appointmentKeys } from "./appointment-keys";
 export function useCreatePayment() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({
-			appointmentId,
-			amount,
-		}: {
-			appointmentId: string;
-			amount?: number;
-		}) => appointmentPaymentApi.createPayment(appointmentId, amount),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		mutationFn: ({ appointmentId, amount }: { appointmentId: string; amount?: number }) =>
+			appointmentPaymentApi.createPayment(appointmentId, amount),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

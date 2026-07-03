@@ -22,7 +22,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { usePermission, useUserStore } from "@/features/auth";
+import { usePermission } from "@/features/auth";
 import { useAllUsers } from "@/features/users";
 import { QueryBoundary } from "@/providers/query-boundary";
 

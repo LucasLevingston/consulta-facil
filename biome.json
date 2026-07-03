@@ -6,9 +6,14 @@
   "formatter": {
     "enabled": true
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "overrides": [
     {
-      "includes": ["src/components/ui/**"],
+      "includes": ["src/components/ui/**", "src/lib/api/generated/**"],
       "linter": {
         "enabled": false
       }

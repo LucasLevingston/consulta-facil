@@ -22,7 +22,7 @@ export default function ClinicQueuePage() {
 		for (const appt of queue) {
 			const key = appt.professionalId ?? "";
 			if (!map.has(key)) map.set(key, []);
-			map.get(key)!.push(appt);
+			map.get(key)?.push(appt);
 		}
 		return Array.from(map.entries()).map(([, appointments]) => ({
 			professionalId: appointments[0].professionalId,

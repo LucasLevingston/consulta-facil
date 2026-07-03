@@ -8,14 +8,8 @@ import { procedureRequestKeys } from "./procedure-request-keys";
 export function useScheduleProcedureRequest() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({
-			requestId,
-			data,
-		}: {
-			requestId: string;
-			data: ScheduleProcedureRequestInput;
-		}) => procedureRequestsApi.schedule(requestId, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
+		mutationFn: ({ requestId, data }: { requestId: string; data: ScheduleProcedureRequestInput }) =>
+			procedureRequestsApi.schedule(requestId, data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
 	});
 }

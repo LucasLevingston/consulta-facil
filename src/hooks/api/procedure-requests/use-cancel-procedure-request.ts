@@ -8,7 +8,6 @@ export function useCancelProcedureRequest() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (requestId: string) => procedureRequestsApi.cancel(requestId),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
 	});
 }

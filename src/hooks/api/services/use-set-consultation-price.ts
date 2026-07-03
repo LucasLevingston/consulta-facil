@@ -6,9 +6,7 @@ import { professionalSettingsApi } from "@/lib/api/professionals/professional-se
 export function useSetConsultationPrice() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (price: number) =>
-			professionalSettingsApi.setConsultationPrice(price),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: ["professionals"] }),
+		mutationFn: (price: number) => professionalSettingsApi.setConsultationPrice(price),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["professionals"] }),
 	});
 }

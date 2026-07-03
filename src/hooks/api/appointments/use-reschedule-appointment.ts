@@ -9,14 +9,8 @@ import { appointmentKeys } from "./appointment-keys";
 export function useRescheduleAppointment() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({
-			id,
-			data,
-		}: {
-			id: string;
-			data: RescheduleAppointmentInput;
-		}) => appointmentsCrudApi.reschedule(id, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		mutationFn: ({ id, data }: { id: string; data: RescheduleAppointmentInput }) =>
+			appointmentsCrudApi.reschedule(id, data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

@@ -8,7 +8,6 @@ export function useMarkAsRead() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => conversationsApi.markAsRead(id),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: conversationKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: conversationKeys.all }),
 	});
 }

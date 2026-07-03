@@ -8,8 +8,7 @@ import { professionalKeys } from "./professional-keys";
 export function useApproveApplication() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (professionalId: string) =>
-			professionalApplicationsApi.approve(professionalId),
+		mutationFn: (professionalId: string) => professionalApplicationsApi.approve(professionalId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: applicationKeys.all });
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });

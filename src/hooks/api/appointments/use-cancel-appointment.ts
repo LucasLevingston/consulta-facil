@@ -11,7 +11,6 @@ export function useCancelAppointment() {
 	return useMutation({
 		mutationFn: ({ id, data }: { id: string; data: CancelAppointmentInput }) =>
 			appointmentLifecycleApi.cancel(id, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }

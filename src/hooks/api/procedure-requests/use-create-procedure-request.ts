@@ -8,9 +8,7 @@ import { procedureRequestKeys } from "./procedure-request-keys";
 export function useCreateProcedureRequest() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: CreateProcedureRequestInput) =>
-			procedureRequestsApi.create(data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
+		mutationFn: (data: CreateProcedureRequestInput) => procedureRequestsApi.create(data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: procedureRequestKeys.all }),
 	});
 }

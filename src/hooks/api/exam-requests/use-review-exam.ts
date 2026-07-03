@@ -9,14 +9,8 @@ import { examRequestKeys } from "./exam-request-keys";
 export function useReviewExam() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({
-			examId,
-			data,
-		}: {
-			examId: string;
-			data: ReviewExamRequestInput;
-		}) => examRequestApi.review(examId, data),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: examRequestKeys.all }),
+		mutationFn: ({ examId, data }: { examId: string; data: ReviewExamRequestInput }) =>
+			examRequestApi.review(examId, data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: examRequestKeys.all }),
 	});
 }

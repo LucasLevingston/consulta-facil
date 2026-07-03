@@ -9,7 +9,6 @@ export function useDeleteVaccine() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: patientVaccinesApi.deleteVaccine,
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
 	});
 }

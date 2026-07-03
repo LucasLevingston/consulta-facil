@@ -33,7 +33,7 @@ export function VoiceBookingResultCard({ result, onReset, onUse }: Props) {
 				)}
 				{result.date && (
 					<Badge variant="secondary" className="text-xs">
-						{new Date(result.date + "T12:00:00").toLocaleDateString("pt-BR")}
+						{new Date(`${result.date}T12:00:00`).toLocaleDateString("pt-BR")}
 					</Badge>
 				)}
 				{result.timePreference && result.timePreference !== "any" && (

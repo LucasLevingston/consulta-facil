@@ -24,6 +24,7 @@ export function HeaderDropdown({ user }: HeaderDropdownProps) {
 
 	const handleLogout = () => {
 		logout();
+		// biome-ignore lint/suspicious/noDocumentCookie: clearing auth cookie on logout
 		document.cookie = "auth_token=; Max-Age=0; path=/";
 		router.push("/");
 	};

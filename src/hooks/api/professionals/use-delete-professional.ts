@@ -7,9 +7,7 @@ import { professionalKeys } from "./professional-keys";
 export function useDeleteProfessional() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (professionalId: string) =>
-			professionalProfileApi.delete(professionalId),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: professionalKeys.all }),
+		mutationFn: (professionalId: string) => professionalProfileApi.delete(professionalId),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: professionalKeys.all }),
 	});
 }

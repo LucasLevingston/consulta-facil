@@ -9,8 +9,7 @@ import { examRequestKeys } from "./exam-request-keys";
 export function useCreateExamRequest(appointmentId: string) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: CreateExamRequestInput) =>
-			examRequestApi.create(appointmentId, data),
+		mutationFn: (data: CreateExamRequestInput) => examRequestApi.create(appointmentId, data),
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: examRequestKeys.byAppointment(appointmentId),

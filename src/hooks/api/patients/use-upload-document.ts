@@ -18,7 +18,6 @@ export function useUploadDocument() {
 			documentType: DocumentType;
 			documentLabel?: string;
 		}) => patientDocumentsApi.uploadDocument(file, documentType, documentLabel),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: patientKeys.documents }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: patientKeys.documents }),
 	});
 }

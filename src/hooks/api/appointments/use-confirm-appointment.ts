@@ -9,7 +9,6 @@ export function useConfirmAppointment() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => appointmentLifecycleApi.confirm(id),
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: appointmentKeys.all }),
 	});
 }
