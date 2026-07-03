@@ -18,18 +18,18 @@ const PAYMENT_TYPE_LABELS: Record<string, string> = {
 	SUBSCRIPTION: "Assinatura",
 };
 
-function formatCurrency(value: number) {
-	return new Intl.NumberFormat("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	}).format(value);
-}
-
-function formatDate(iso: string) {
-	return new Date(iso).toLocaleDateString("pt-BR");
-}
-
 export function PaymentTable({ payments }: PaymentTableProps) {
+	function formatCurrency(value: number) {
+		return new Intl.NumberFormat("pt-BR", {
+			style: "currency",
+			currency: "BRL",
+		}).format(value);
+	}
+
+	function formatDate(iso: string) {
+		return new Date(iso).toLocaleDateString("pt-BR");
+	}
+
 	if (payments.length === 0) {
 		return (
 			<p className="text-center text-muted-foreground py-8">

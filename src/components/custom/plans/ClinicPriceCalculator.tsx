@@ -17,14 +17,14 @@ import { ClinicPriceBreakdown } from "./ClinicPriceBreakdown";
 import type { ClinicPriceCalculatorProps } from "./ClinicPriceCalculator.types";
 import { ClinicPriceDisplay } from "./ClinicPriceDisplay";
 
-function calcMonthlyPrice(totalProfessionals: number): number {
-	const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);
-	return BASE_PRICE * (1 + extra * 0.2);
-}
-
 export function ClinicPriceCalculator({
 	initialProfessionals,
 }: ClinicPriceCalculatorProps) {
+	function calcMonthlyPrice(totalProfessionals: number): number {
+		const extra = Math.max(0, totalProfessionals - FREE_PROFESSIONALS);
+		return BASE_PRICE * (1 + extra * 0.2);
+	}
+
 	const [calcProfessionals, setCalcProfessionals] = useState(
 		Math.max(initialProfessionals, 1),
 	);

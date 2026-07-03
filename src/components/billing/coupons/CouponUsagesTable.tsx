@@ -8,12 +8,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { formatBRL } from "@/utils/format-brl";
 import type { CouponUsagesTableProps } from "./CouponUsagesTable.types";
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-		n,
-	);
 
 export function CouponUsagesTable({ usages }: CouponUsagesTableProps) {
 	return (
@@ -35,7 +31,7 @@ export function CouponUsagesTable({ usages }: CouponUsagesTableProps) {
 						<TableCell className="font-mono">
 							{u.couponCode ?? u.couponId}
 						</TableCell>
-						<TableCell>{brl(u.discountAmount)}</TableCell>
+						<TableCell>{formatBRL(u.discountAmount)}</TableCell>
 						<TableCell>
 							{new Date(u.usedAt).toLocaleDateString("pt-BR")}
 						</TableCell>

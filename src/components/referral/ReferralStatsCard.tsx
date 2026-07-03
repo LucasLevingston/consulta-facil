@@ -1,11 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { formatBRL } from "@/utils/format-brl";
 import type { ReferralStatsCardProps } from "./ReferralStatsCard.types";
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	}).format(n);
 
 export function ReferralStatsCard({ stats }: ReferralStatsCardProps) {
 	const items = [
@@ -15,7 +10,7 @@ export function ReferralStatsCard({ stats }: ReferralStatsCardProps) {
 			label: "Comissoes Disponiveis",
 			value: String(stats.availableCommissions),
 		},
-		{ label: "Saldo Disponivel", value: brl(stats.availableBalance) },
+		{ label: "Saldo Disponivel", value: formatBRL(stats.availableBalance) },
 	];
 
 	return (

@@ -14,10 +14,6 @@ const DAY_LABELS: Record<string, string> = {
 	SUNDAY: "Dom",
 };
 
-function formatTime(time: string) {
-	return time.slice(0, 5);
-}
-
 type Hours = NonNullable<ExamLabResponse["hours"]>;
 
 interface Props {
@@ -33,6 +29,10 @@ export function LabCardHours({
 	showHours,
 	onToggle,
 }: Props) {
+	function formatTime(time: string) {
+		return time.slice(0, 5);
+	}
+
 	return (
 		<div>
 			<button

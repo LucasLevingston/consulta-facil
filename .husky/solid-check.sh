@@ -20,14 +20,14 @@ for file in $staged; do
       fi ;;
   esac
 
-  # 2. Múltiplas funções exportadas por arquivo (SRP — 1 arquivo = 1 função)
+  # 2. Múltiplas funções por arquivo — exportadas OU não (SRP — 1 arquivo = 1 função)
   case "$file" in
-    *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js)
+    *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js|*/app/*)
       ;;
     *)
-      n=$(printf '%s\n' "$content" | grep -E "^export (default )?(async )?function [A-Za-z]|^export const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" | wc -l)
+      n=$(printf '%s\n' "$content" | grep -E "^(export (default )?)?(async )?function [A-Za-z]|^(export )?const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" | wc -l)
       if [ "$n" -gt 1 ]; then
-        echo "BLOCKED [SRP-FN] $file — $n funções exportadas (máx 1 por arquivo)"
+        echo "BLOCKED [SRP-FN] $file — $n funções (máx 1 por arquivo)"
         echo "  Divida: cada função em seu próprio arquivo"
         FOUND=1
       fi

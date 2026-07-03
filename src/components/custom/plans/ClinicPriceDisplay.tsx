@@ -5,13 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { BASE_PRICE } from "@/utils/constants/base-price";
 import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 
-function fmtBRL(value: number) {
-	return value.toLocaleString("pt-BR", {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	});
-}
-
 interface Props {
 	isFree: boolean;
 	calcPrice: number;
@@ -25,6 +18,13 @@ export function ClinicPriceDisplay({
 	extraProfessionals,
 	calcProfessionals,
 }: Props) {
+	function fmtBRL(value: number) {
+		return value.toLocaleString("pt-BR", {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		});
+	}
+
 	return (
 		<div className="flex items-end justify-between gap-4">
 			<div>

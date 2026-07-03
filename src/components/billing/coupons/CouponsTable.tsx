@@ -9,13 +9,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { formatBRL } from "@/utils/format-brl";
 import type { CouponsTableProps } from "./CouponsTable.types";
 import { EditCouponDialog } from "./EditCouponDialog";
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-		n,
-	);
 
 const STATUS_LABELS: Record<string, string> = {
 	ACTIVE: "Ativo",
@@ -52,7 +48,7 @@ export function CouponsTable({ coupons }: CouponsTableProps) {
 						<TableCell className="font-mono font-semibold">{c.code}</TableCell>
 						<TableCell>{c.type === "PERCENT" ? "%" : "R$"}</TableCell>
 						<TableCell>
-							{c.type === "PERCENT" ? `${c.value}%` : brl(c.value)}
+							{c.type === "PERCENT" ? `${c.value}%` : formatBRL(c.value)}
 						</TableCell>
 						<TableCell>
 							{c.currentUses}

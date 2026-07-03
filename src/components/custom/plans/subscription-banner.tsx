@@ -9,12 +9,12 @@ import { SubscriptionProgressBar } from "./SubscriptionProgressBar";
 import { SubscriptionStatusBadges } from "./SubscriptionStatusBadges";
 import type { SubscriptionBannerProps } from "./subscription-banner.types";
 
-function getDaysRemaining(expiresAt: string | null): number | null {
-	if (!expiresAt) return null;
-	return differenceInDays(parseISO(expiresAt), new Date());
-}
-
 export function SubscriptionBanner({ subscription }: SubscriptionBannerProps) {
+	function getDaysRemaining(expiresAt: string | null): number | null {
+		if (!expiresAt) return null;
+		return differenceInDays(parseISO(expiresAt), new Date());
+	}
+
 	const label = PLAN_LABELS[subscription.planId] ?? subscription.planId;
 	const daysRemaining = getDaysRemaining(subscription.expiresAt);
 	const isActive = subscription.status === "ACTIVE";

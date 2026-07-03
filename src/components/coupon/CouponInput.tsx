@@ -4,13 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useValidateCoupon } from "@/features/billing";
+import { formatBRL } from "@/utils/format-brl";
 import type { CouponInputProps } from "./CouponInput.types";
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	}).format(n);
 
 export function CouponInput({ amount, userId, onApply }: CouponInputProps) {
 	const [code, setCode] = useState("");
@@ -52,7 +47,7 @@ export function CouponInput({ amount, userId, onApply }: CouponInputProps) {
 					}
 				>
 					{validate.data.valid
-						? `Desconto: ${brl(validate.data.discountAmount)} — Total: ${brl(validate.data.finalAmount)}`
+						? `Desconto: ${formatBRL(validate.data.discountAmount)} — Total: ${formatBRL(validate.data.finalAmount)}`
 						: validate.data.message}
 				</p>
 			)}

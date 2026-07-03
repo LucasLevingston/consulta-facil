@@ -1,9 +1,9 @@
 "use client";
 
-import { MapPin, Search, Stethoscope, X } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { MapPin, Search, Stethoscope } from "lucide-react";
 import { DAYS } from "@/utils/constants/days-of-week";
 import { ALL } from "@/utils/constants/filter-sentinels";
+import { FilterBadge } from "./FilterBadge";
 import type { useProfessionalFilters } from "./useProfessionalFilters";
 
 interface Props {
@@ -53,32 +53,5 @@ export function ProfessionalFiltersActiveBadges({ filters }: Props) {
 				</FilterBadge>
 			))}
 		</div>
-	);
-}
-
-function FilterBadge({
-	children,
-	icon,
-	onRemove,
-}: {
-	children: React.ReactNode;
-	icon?: React.ReactNode;
-	onRemove: () => void;
-}) {
-	return (
-		<Badge
-			variant="secondary"
-			className="gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-		>
-			{icon}
-			{children}
-			<button
-				type="button"
-				onClick={onRemove}
-				className="ml-0.5 rounded-full hover:opacity-70 transition-opacity cursor-pointer"
-			>
-				<X className="h-3 w-3" />
-			</button>
-		</Badge>
 	);
 }

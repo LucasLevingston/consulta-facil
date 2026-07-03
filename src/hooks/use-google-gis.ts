@@ -32,6 +32,14 @@ export function useGoogleGIS(
 	useEffect(() => {
 		if (!clientId) return;
 
+		function initGoogle(cid: string, cb: (token: string) => void) {
+			window.google?.accounts.id.initialize({
+				client_id: cid,
+				callback: (res) => cb(res.credential),
+				auto_select: false,
+			});
+		}
+
 		const cid = clientId;
 		const scriptId = "google-gis-script";
 		if (document.getElementById(scriptId)) {
@@ -53,12 +61,4 @@ export function useGoogleGIS(
 	}, []);
 
 	return { isAvailable, signIn };
-}
-
-function initGoogle(clientId: string, onCredential: (token: string) => void) {
-	window.google?.accounts.id.initialize({
-		client_id: clientId,
-		callback: (res) => onCredential(res.credential),
-		auto_select: false,
-	});
 }

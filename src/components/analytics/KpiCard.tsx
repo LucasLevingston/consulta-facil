@@ -2,20 +2,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Kpi } from "@/features/analytics";
+import { formatBRL } from "@/utils/format-brl";
 import type { KpiCardProps } from "./KpiCard.types";
 
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-		n,
-	);
-
-function formatValue(kpi: Kpi): string {
-	if (kpi.unit === "BRL") return brl(kpi.value);
-	if (kpi.unit === "%") return `${kpi.value.toFixed(1)}%`;
-	return kpi.value.toLocaleString("pt-BR");
-}
-
 export function KpiCard({ kpi }: KpiCardProps) {
+	function formatValue(k: Kpi): string {
+		if (k.unit === "BRL") return formatBRL(k.value);
+		if (k.unit === "%") return `${k.value.toFixed(1)}%`;
+		return k.value.toLocaleString("pt-BR");
+	}
+
 	return (
 		<Card>
 			<CardHeader className="pb-2">

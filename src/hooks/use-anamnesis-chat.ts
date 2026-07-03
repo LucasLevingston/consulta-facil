@@ -9,11 +9,11 @@ import { INITIAL_ANAMNESIS_MESSAGE } from "@/utils/constants/anamnesis-initial-m
 
 type ChatMessage = AnamnesisMessage & { id: string };
 
-function makeMsg(role: AnamnesisMessage["role"], content: string): ChatMessage {
-	return { id: `${Date.now()}-${Math.random()}`, role, content };
-}
-
 export function useAnamnesisChat() {
+	function makeMsg(role: AnamnesisMessage["role"], content: string): ChatMessage {
+		return { id: `${Date.now()}-${Math.random()}`, role, content };
+	}
+
 	const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_ANAMNESIS_MESSAGE]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);

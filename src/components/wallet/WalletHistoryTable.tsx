@@ -7,6 +7,7 @@
 	TableRow,
 } from "@/components/ui/table";
 import type { WalletTransactionType } from "@/features/billing";
+import { formatBRL } from "@/utils/format-brl";
 import type { WalletHistoryTableProps } from "./WalletHistoryTable.types";
 
 const TYPE_LABELS: Record<WalletTransactionType, string> = {
@@ -15,12 +16,6 @@ const TYPE_LABELS: Record<WalletTransactionType, string> = {
 	DEPOSIT: "Deposito",
 	ADJUSTMENT: "Ajuste",
 };
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	}).format(n);
 
 export function WalletHistoryTable({ transactions }: WalletHistoryTableProps) {
 	if (transactions.length === 0) {
@@ -45,7 +40,7 @@ export function WalletHistoryTable({ transactions }: WalletHistoryTableProps) {
 				{transactions.map((t) => (
 					<TableRow key={t.id}>
 						<TableCell>{TYPE_LABELS[t.type]}</TableCell>
-						<TableCell>{brl(t.amount)}</TableCell>
+						<TableCell>{formatBRL(t.amount)}</TableCell>
 						<TableCell className="text-muted-foreground">
 							{t.description ?? "-"}
 						</TableCell>

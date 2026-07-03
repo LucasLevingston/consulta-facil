@@ -44,9 +44,9 @@ jobs:
             case "$file" in
               *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js) ;;
               *)
-                n=$(printf '%s\n' "$content" | grep -cE "^export (default )?(async )?function [A-Za-z]|^export const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" || true)
+                n=$(printf '%s\n' "$content" | grep -cE "^(export (default )?)?(async )?function [A-Za-z]|^(export )?const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" || true)
                 if [ "$n" -gt 1 ]; then
-                  echo "BLOCKED [SRP-FN] $file — $n funções exportadas (máx 1)"
+                  echo "BLOCKED [SRP-FN] $file — $n funções (máx 1 por arquivo)"
                   FOUND=1
                 fi ;;
             esac

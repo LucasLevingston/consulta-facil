@@ -5,17 +5,17 @@ import { NOTIFICATION_ICON } from "@/utils/constants/notification-icon";
 import type { NotificationItemProps } from "./NotificationBell.types";
 import { NotificationInviteActions } from "./NotificationInviteActions";
 
-function timeAgo(dateStr: string) {
-	const diff = Date.now() - new Date(dateStr).getTime();
-	const mins = Math.floor(diff / 60_000);
-	if (mins < 1) return "agora";
-	if (mins < 60) return `${mins}m atrás`;
-	const hrs = Math.floor(mins / 60);
-	if (hrs < 24) return `${hrs}h atrás`;
-	return `${Math.floor(hrs / 24)}d atrás`;
-}
-
 export function NotificationItem({ notification }: NotificationItemProps) {
+	function timeAgo(dateStr: string) {
+		const diff = Date.now() - new Date(dateStr).getTime();
+		const mins = Math.floor(diff / 60_000);
+		if (mins < 1) return "agora";
+		if (mins < 60) return `${mins}m atrás`;
+		const hrs = Math.floor(mins / 60);
+		if (hrs < 24) return `${hrs}h atrás`;
+		return `${Math.floor(hrs / 24)}d atrás`;
+	}
+
 	const isPending = notification.status === "PENDING";
 	const {
 		icon: Icon,

@@ -17,14 +17,6 @@ export type {
 	FilterSwitchConfig,
 } from "./custom-filter.types";
 
-function countActiveFilters(props: CustomFilterProps): number {
-	let count = 0;
-	if (props.search?.value) count++;
-	for (const s of props.selects ?? []) if (s.value) count++;
-	for (const sw of props.switches ?? []) if (sw.checked) count++;
-	return count;
-}
-
 export function CustomFilter({
 	search,
 	selects,
@@ -32,6 +24,14 @@ export function CustomFilter({
 	onReset,
 	className,
 }: CustomFilterProps) {
+	function countActiveFilters(props: CustomFilterProps): number {
+		let count = 0;
+		if (props.search?.value) count++;
+		for (const s of props.selects ?? []) if (s.value) count++;
+		for (const sw of props.switches ?? []) if (sw.checked) count++;
+		return count;
+	}
+
 	const activeCount = countActiveFilters({ search, selects, switches });
 	const hasFilters = activeCount > 0;
 

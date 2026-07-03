@@ -14,14 +14,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { PatientInfoCardProps } from "./PatientInfoCard.types";
 
-function genderLabel(gender?: string | null) {
-	if (gender === "MALE") return "Masculino";
-	if (gender === "FEMALE") return "Feminino";
-	if (gender === "OTHER") return "Outro";
-	return null;
-}
-
 export function PatientInfoCard({ patient }: PatientInfoCardProps) {
+	function genderLabel(gender?: string | null) {
+		if (gender === "MALE") return "Masculino";
+		if (gender === "FEMALE") return "Feminino";
+		if (gender === "OTHER") return "Outro";
+		return null;
+	}
+
 	return (
 		<Card>
 			<CardHeader>

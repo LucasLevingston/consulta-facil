@@ -20,21 +20,23 @@ const GENDER_LABELS: Record<string, string> = {
 	OTHER: "Outro",
 };
 
-function calcAge(birthDate?: string | null) {
-	if (!birthDate) return null;
-	const birth = new Date(birthDate);
-	const now = new Date();
-	const age = now.getFullYear() - birth.getFullYear();
-	const m = now.getMonth() - birth.getMonth();
-	return m < 0 || (m === 0 && now.getDate() < birth.getDate()) ? age - 1 : age;
-}
-
 export function DependentCard({
 	dependent: dep,
 	onEdit,
 	onDelete,
 	deleting,
 }: DependentCardProps) {
+	function calcAge(birthDate?: string | null) {
+		if (!birthDate) return null;
+		const birth = new Date(birthDate);
+		const now = new Date();
+		const age = now.getFullYear() - birth.getFullYear();
+		const m = now.getMonth() - birth.getMonth();
+		return m < 0 || (m === 0 && now.getDate() < birth.getDate())
+			? age - 1
+			: age;
+	}
+
 	const age = calcAge(dep.birthDate);
 	return (
 		<Card>

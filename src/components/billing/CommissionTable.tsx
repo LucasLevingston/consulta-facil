@@ -8,6 +8,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { CommissionStatus } from "@/features/billing";
+import { formatBRL } from "@/utils/format-brl";
 import type { CommissionTableProps } from "./CommissionTable.types";
 
 const STATUS_LABELS: Record<CommissionStatus, string> = {
@@ -26,12 +27,6 @@ const STATUS_VARIANT: Record<
 	PAID: "default",
 	CANCELED: "destructive",
 };
-
-const brl = (n: number) =>
-	new Intl.NumberFormat("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	}).format(n);
 
 export function CommissionTable({ commissions }: CommissionTableProps) {
 	if (commissions.length === 0) {
@@ -55,7 +50,7 @@ export function CommissionTable({ commissions }: CommissionTableProps) {
 			<TableBody>
 				{commissions.map((c) => (
 					<TableRow key={c.id}>
-						<TableCell>{brl(c.amount)}</TableCell>
+						<TableCell>{formatBRL(c.amount)}</TableCell>
 						<TableCell>{c.percentage}%</TableCell>
 						<TableCell>
 							{new Date(c.availableAt).toLocaleDateString("pt-BR")}

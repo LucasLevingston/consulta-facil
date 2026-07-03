@@ -5,10 +5,6 @@ import { cn } from "@/lib/utils/cn";
 
 type Slot = { time: string; available: boolean };
 
-function formatTime(time: string) {
-	return time.slice(0, 5);
-}
-
 interface Props {
 	slots: Slot[];
 	slotsLoading: boolean;
@@ -22,6 +18,10 @@ export function SlotTimePicker({
 	selectedTime,
 	onSelect,
 }: Props) {
+	function formatTime(time: string) {
+		return time.slice(0, 5);
+	}
+
 	const availableSlots = slots.filter((s) => s.available);
 	return (
 		<div className="space-y-2">

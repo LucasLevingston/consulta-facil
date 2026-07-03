@@ -2,12 +2,9 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
-
-import type {
-	ClickHandlerProps,
-	LocationPickerInnerProps,
-} from "./LocationPickerInner.types";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { ClickHandler } from "./ClickHandler";
+import type { LocationPickerInnerProps } from "./LocationPickerInner.types";
 
 const markerIcon = L.icon({
 	iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -17,15 +14,6 @@ const markerIcon = L.icon({
 	popupAnchor: [1, -34],
 	shadowSize: [41, 41],
 });
-
-function ClickHandler({ onLocationSelect }: ClickHandlerProps) {
-	useMapEvents({
-		click(e) {
-			onLocationSelect(e.latlng.lat, e.latlng.lng);
-		},
-	});
-	return null;
-}
 
 export default function LocationPickerInner({
 	lat,

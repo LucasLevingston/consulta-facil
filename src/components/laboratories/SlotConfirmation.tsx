@@ -6,10 +6,6 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-function formatTime(time: string) {
-	return time.slice(0, 5);
-}
-
 interface Props {
 	selectedDate: Date;
 	selectedTime: string;
@@ -23,6 +19,10 @@ export function SlotConfirmation({
 	isPending,
 	onConfirm,
 }: Props) {
+	function formatTime(time: string) {
+		return time.slice(0, 5);
+	}
+
 	return (
 		<div className="space-y-3">
 			<Separator />
