@@ -49,8 +49,8 @@ export function RatingDistributionCard({
 							))}
 						</div>
 						<p className="text-xs text-muted-foreground mt-1">
-							{ratings.totalRatings} avaliacao
-							{ratings.totalRatings !== 1 ? "es" : ""}
+							{ratings.totalRatings} avalia
+							{ratings.totalRatings !== 1 ? "coes" : "cao"}
 						</p>
 					</div>
 
