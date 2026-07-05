@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/messaging/repositories/messaging.repository", () => ({
-	messagingRepository: {
+vi.mock("@/lib/api/conversations/conversations.api", () => ({
+	conversationsApi: {
 		list: vi.fn().mockResolvedValue([]),
 		getHistory: vi.fn().mockResolvedValue({ content: [], totalPages: 0 }),
 		getOrCreate: vi.fn().mockResolvedValue({}),
@@ -12,26 +12,32 @@ vi.mock("@/features/messaging/repositories/messaging.repository", () => ({
 	},
 }));
 
-import { useConversationHistory } from "@/features/messaging/hooks/use-conversation-history";
-import { useConversations } from "@/features/messaging/hooks/use-conversations";
-import { useMarkAsRead } from "@/features/messaging/hooks/use-mark-as-read";
-import { useStartConversation } from "@/features/messaging/hooks/use-start-conversation";
+import { useConversationHistory } from "@/hooks/api/conversations/use-conversation-history";
+import { useConversations } from "@/hooks/api/conversations/use-conversations";
+import { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
+import { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
 
-function makeWrapper() {
+function makeWrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("messaging hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("useConversations returns data and isLoading", () => {
+	it("useConversations resolves with data", async () => {
 		const { result } = renderHook(() => useConversations(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual([]);
 	});
 
 	it("useConversationHistory with id returns data and isLoading", () => {

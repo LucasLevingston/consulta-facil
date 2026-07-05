@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import type { DependentResponse } from "@/features/dependents";
-import { useDeleteDependent, useMyDependents } from "@/features/dependents";
+import { useDeleteDependent } from "@/features/dependents";
 
 export function useDependentsPage() {
-	const { data: dependents = [], isLoading } = useMyDependents();
 	const deleteMutation = useDeleteDependent();
 
 	const [dialogOpen, setDialogOpen] = useState(false);
@@ -32,8 +31,6 @@ export function useDependentsPage() {
 	}
 
 	return {
-		dependents,
-		isLoading,
 		dialogOpen,
 		setDialogOpen,
 		editing,

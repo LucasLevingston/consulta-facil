@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -39,29 +39,28 @@ const mockAppStatus = vi.mocked(
 );
 const professional = { id: "d-1", name: "Dra. Ana", specialty: "Cardiologia" };
 
-function wrapper() {
+function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("useProfessional", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when id empty", () => {
-		const { result } = renderHook(() => useProfessional(""), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("fetches when id provided", async () => {
 		mockGetById.mockResolvedValueOnce(professional as never);
 		const { result } = renderHook(() => useProfessional("d-1"), {
-			wrapper: wrapper(),
+			wrapper: wrapper(true),
 		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(result.current.data?.id).toBe("d-1");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data.id).toBe("d-1");
 	});
 });
 

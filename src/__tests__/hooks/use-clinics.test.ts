@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -26,10 +26,16 @@ const mockGetNearby = vi.mocked(clinicsCrudApi.getNearby);
 
 const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP", state: "SP" };
 
-function wrapper() {
+function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("useClinics", () => {
@@ -52,19 +58,12 @@ describe("useClinics", () => {
 describe("useClinicById", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when id is empty", () => {
-		const { result } = renderHook(() => useClinicById(""), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("fetches when id provided", async () => {
 		mockGetById.mockResolvedValueOnce(clinic as never);
 		const { result } = renderHook(() => useClinicById("c-1"), {
-			wrapper: wrapper(),
+			wrapper: wrapper(true),
 		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(result.current.data).toEqual(clinic);
 	});
 });

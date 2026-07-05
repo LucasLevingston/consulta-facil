@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -24,28 +24,27 @@ const mockGetByAppointment = vi.mocked(examRequestApi.getByAppointment);
 
 const examRequest = { id: "exam-1", appointmentId: "a-1", status: "PENDING" };
 
-function wrapper() {
+function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("useExamRequestsByAppointment", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when appointmentId empty", () => {
-		const { result } = renderHook(() => useExamRequestsByAppointment(""), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("fetches when appointmentId provided", async () => {
 		mockGetByAppointment.mockResolvedValueOnce([examRequest] as never);
 		const { result } = renderHook(() => useExamRequestsByAppointment("a-1"), {
-			wrapper: wrapper(),
+			wrapper: wrapper(true),
 		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(result.current.data).toHaveLength(1);
 	});
 });

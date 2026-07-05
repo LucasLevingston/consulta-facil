@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/dependents/repositories/dependents.repository", () => ({
@@ -20,18 +20,22 @@ import { useUpdateDependent } from "@/features/dependents/hooks/use-update-depen
 function makeWrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("dependents hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("useMyDependents returns data and isLoading", () => {
+	it("useMyDependents resolves with data", async () => {
 		const { result } = renderHook(() => useMyDependents(), {
 			wrapper: makeWrapper(),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual([]);
 	});
 
 	it("useCreateDependent returns mutate and isPending", () => {

@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
 
 vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
@@ -28,7 +29,11 @@ const page = { content: [user], totalElements: 1, totalPages: 1, number: 0 };
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("useAllUsers", () => {
@@ -41,9 +46,9 @@ describe("useAllUsers", () => {
 			wrapper: wrapper(),
 		});
 
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(mockGetAll).toHaveBeenCalledWith(0, 20, undefined);
-		expect(result.current.data?.content).toHaveLength(1);
+		expect(result.current.data.content).toHaveLength(1);
 	});
 
 	it("busca com filtro de role", async () => {
@@ -53,7 +58,7 @@ describe("useAllUsers", () => {
 			wrapper: wrapper(),
 		});
 
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(mockGetAll).toHaveBeenCalledWith(0, 20, "PROFESSIONAL");
 	});
 
@@ -74,17 +79,39 @@ describe("useAllUsers", () => {
 			wrapper: wrapper(),
 		});
 
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(result.current.data?.totalElements).toBe(150);
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data.totalElements).toBe(150);
 	});
 
-	it("propaga erro da API", async () => {
+	it("propaga erro da API para o ErrorBoundary", async () => {
 		mockGetAll.mockRejectedValueOnce(new Error("Forbidden"));
+		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
 
-		const { result } = renderHook(() => useAllUsers(), {
-			wrapper: wrapper(),
+		let caught: Error | null = null;
+		const qc = new QueryClient({
+			defaultOptions: { queries: { retry: false } },
 		});
+		const wrapperWithBoundary = ({ children }: { children: React.ReactNode }) =>
+			createElement(
+				QueryClientProvider,
+				{ client: qc },
+				createElement(
+					ErrorBoundary,
+					{
+						fallbackRender: ({ error }: { error: Error }) => {
+							caught = error;
+							return null;
+						},
+					},
+					createElement(Suspense, { fallback: null }, children),
+				),
+			);
 
-		await waitFor(() => expect(result.current.isError).toBe(true));
+		renderHook(() => useAllUsers(), { wrapper: wrapperWithBoundary });
+
+		await waitFor(() => expect(caught).not.toBeNull());
+		expect((caught as unknown as Error).message).toBe("Forbidden");
+
+		spy.mockRestore();
 	});
 });

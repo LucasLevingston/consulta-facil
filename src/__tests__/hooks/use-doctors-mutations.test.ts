@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -52,10 +52,14 @@ const page = {
 	number: 0,
 };
 
-function wrapper() {
+function suspenseWrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("usePendingApplications", () => {
@@ -64,9 +68,9 @@ describe("usePendingApplications", () => {
 	it("fetches pending applications", async () => {
 		mockGetPending.mockResolvedValueOnce(page as never);
 		const { result } = renderHook(() => usePendingApplications(), {
-			wrapper: wrapper(),
+			wrapper: suspenseWrapper(),
 		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(result.current.data).toEqual(page);
 	});
 });
