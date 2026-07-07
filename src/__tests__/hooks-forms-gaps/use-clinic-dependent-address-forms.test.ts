@@ -28,11 +28,11 @@ vi.mock("@/features/professionals", () => ({
 
 import { toast } from "sonner";
 import { useCreateClinic, useUpdateClinic } from "@/features/clinics";
+import { useClinicForm } from "@/features/clinics/hooks/use-clinic-form";
 import { useCreateDependent, useUpdateDependent } from "@/features/dependents";
+import { useDependentForm } from "@/features/dependents/hooks/use-dependent-form";
 import { useUpdateAddress } from "@/features/professionals";
-import { useAddressForm } from "@/hooks/use-address-form";
-import { useClinicForm } from "@/hooks/use-clinic-form";
-import { useDependentForm } from "@/hooks/use-dependent-form";
+import { useAddressForm } from "@/features/professionals/hooks/use-address-form";
 
 const mockCreateClinic = vi.mocked(useCreateClinic);
 const mockUpdateClinic = vi.mocked(useUpdateClinic);

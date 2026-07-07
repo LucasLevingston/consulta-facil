@@ -11,10 +11,10 @@ vi.mock("@/hooks/api/services/use-get-professional-services", () => ({
 	useGetProfessionalServices: vi.fn(),
 }));
 
+import { useAppointmentProfessionalData } from "@/features/appointments/hooks/use-appointment-professional-data";
 import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
 import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
 import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
-import { useAppointmentProfessionalData } from "@/hooks/use-appointment-professional-data";
 
 const mockUseProfessionals = vi.mocked(useProfessionals);
 const mockUseProfessionalSchedule = vi.mocked(useProfessionalSchedule);

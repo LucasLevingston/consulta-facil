@@ -5,8 +5,8 @@ vi.mock("@/hooks/api/appointments/use-professional-appointments", () => ({
 	useProfessionalAppointments: vi.fn(),
 }));
 
+import { useAppointmentSlots } from "@/features/appointments/hooks/use-appointment-slots";
 import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
-import { useAppointmentSlots } from "@/hooks/use-appointment-slots";
 
 const mockUseProfessionalAppointments = vi.mocked(useProfessionalAppointments);
 

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/professionals", () => ({}));
-vi.mock("@/hooks/use-address-form", () => ({
+vi.mock("@/features/professionals/hooks/use-address-form", () => ({
 	useAddressForm: vi.fn(),
 }));
 vi.mock("@/components/ui/form", () => ({
@@ -33,7 +33,7 @@ vi.mock("@/components/ui/input", () => ({
 }));
 
 import { AddressForm } from "@/components/professionals/AddressForm";
-import { useAddressForm } from "@/hooks/use-address-form";
+import { useAddressForm } from "@/features/professionals/hooks/use-address-form";
 
 const mockUseAddressForm = vi.mocked(useAddressForm);
 

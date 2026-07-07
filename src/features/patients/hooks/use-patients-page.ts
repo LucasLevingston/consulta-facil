@@ -3,7 +3,10 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDeferredValue } from "react";
 import { usePermission, useUserStore } from "@/features/auth";
-import { useAllAdminPatients, useProfessionalPatients } from "@/features/patients";
+import {
+	useAllAdminPatients,
+	useProfessionalPatients,
+} from "@/features/patients";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 
 type SortOption = "name" | "recent";
@@ -24,7 +27,10 @@ export function usePatientsPage() {
 
 	const debouncedSearch = useDeferredValue(search);
 
-	function updateParams(updates: Record<string, string | null>, resetPage = true) {
+	function updateParams(
+		updates: Record<string, string | null>,
+		resetPage = true,
+	) {
 		const params = new URLSearchParams(searchParams.toString());
 		for (const [key, value] of Object.entries(updates)) {
 			if (value === null) params.delete(key);
@@ -37,7 +43,10 @@ export function usePatientsPage() {
 	const queryParams = { page, size: PAGE_SIZE, search: debouncedSearch, sort };
 
 	const adminQuery = useAllAdminPatients(queryParams);
-	const professionalQuery = useProfessionalPatients(professionalId, queryParams);
+	const professionalQuery = useProfessionalPatients(
+		professionalId,
+		queryParams,
+	);
 
 	const { data, isLoading, error } = isAdmin ? adminQuery : professionalQuery;
 

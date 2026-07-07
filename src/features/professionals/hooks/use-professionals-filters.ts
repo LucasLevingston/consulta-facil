@@ -31,7 +31,14 @@ export function useProfessionalsFilters(): UseProfessionalsFiltersReturn {
 		data: pageData,
 		isLoading: listLoading,
 		error: listError,
-	} = useProfessionals(page, ITEMS_PER_PAGE, profession, specialty, name, serviceTitle);
+	} = useProfessionals(
+		page,
+		ITEMS_PER_PAGE,
+		profession,
+		specialty,
+		name,
+		serviceTitle,
+	);
 	const {
 		data: nearbyRaw = [],
 		isLoading: nearbyLoading,

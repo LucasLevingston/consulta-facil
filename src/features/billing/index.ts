@@ -1,5 +1,5 @@
-export { useBillingFeaturesPage } from "@/hooks/use-billing-features-page";
-export { useSystemFeesPage } from "@/hooks/use-system-fees-page";
+export { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
+export { useSystemFeesPage } from "@/features/billing/hooks/use-system-fees-page";
 export { PAYMENT_METHOD_LABELS as FEE_PAYMENT_METHOD_LABELS } from "@/lib/constants/fee-payment-method-labels";
 export {
 	type BillingSettingsResponse,

@@ -1,3 +1,7 @@
+export { useAddressForm } from "@/features/professionals/hooks/use-address-form";
+export { useProfessionalDetailsForm } from "@/features/professionals/hooks/use-professional-details-form";
+export type { UseProfessionalsFiltersReturn } from "@/features/professionals/hooks/use-professionals-filters";
+export { useProfessionalsFilters } from "@/features/professionals/hooks/use-professionals-filters";
 export { useAddCertificate } from "@/hooks/api/professionals/use-add-certificate";
 export { useAddEducation } from "@/hooks/api/professionals/use-add-education";
 export { useAddExperience } from "@/hooks/api/professionals/use-add-experience";
@@ -24,10 +28,6 @@ export { useUpdateEducation } from "@/hooks/api/professionals/use-update-educati
 export { useUpdateExperience } from "@/hooks/api/professionals/use-update-experience";
 export { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
 export { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
-export { useAddressForm } from "@/hooks/use-address-form";
-export { useProfessionalDetailsForm } from "@/hooks/use-professional-details-form";
-export type { UseProfessionalsFiltersReturn } from "@/hooks/use-professionals-filters";
-export { useProfessionalsFilters } from "@/hooks/use-professionals-filters";
 export { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 export { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 export { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";

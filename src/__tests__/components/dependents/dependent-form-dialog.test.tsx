@@ -6,7 +6,7 @@ const { mockUseDependentForm } = vi.hoisted(() => ({
 	mockUseDependentForm: vi.fn(),
 }));
 
-vi.mock("@/hooks/use-dependent-form", () => ({
+vi.mock("@/features/dependents/hooks/use-dependent-form", () => ({
 	useDependentForm: mockUseDependentForm,
 }));
 vi.mock("@/components/ui/dialog", () => ({

@@ -5,7 +5,7 @@ vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: vi.fn(() => vi.fn()),
 }));
 
-import { useAppointmentFormState } from "@/hooks/use-appointment-form-state";
+import { useAppointmentFormState } from "@/features/appointments/hooks/use-appointment-form-state";
 
 describe("useAppointmentFormState", () => {
 	it("inicializa com valores padrão quando não há appointment nem parâmetros", () => {

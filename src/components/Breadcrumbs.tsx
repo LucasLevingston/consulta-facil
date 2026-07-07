@@ -9,7 +9,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useBreadcrumbs } from "@/hooks/use-breadcrumbs";
+import { useBreadcrumbs } from "@/hooks/shared/use-breadcrumbs";
 
 export function Breadcrumbs() {
 	const items = useBreadcrumbs();

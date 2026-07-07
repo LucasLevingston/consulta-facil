@@ -12,7 +12,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { SystemFeeResponse } from "@/features/billing";
-import { useSystemFeesPage } from "@/hooks/use-system-fees-page";
+import { useSystemFeesPage } from "@/features/billing/hooks/use-system-fees-page";
 
 export default function AdminSystemFeesPage() {
 	const {

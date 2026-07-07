@@ -26,7 +26,7 @@ import {
 	useCreateProfessional,
 	useUpdateProfessional,
 } from "@/features/professionals";
-import { useProfessionalDetailsForm } from "@/hooks/use-professional-details-form";
+import { useProfessionalDetailsForm } from "@/features/professionals/hooks/use-professional-details-form";
 
 const mockRouter = vi.mocked(useRouter);
 const mockCreate = vi.mocked(useCreateProfessional);

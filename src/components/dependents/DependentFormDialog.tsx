@@ -8,7 +8,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import { useDependentForm } from "@/hooks/use-dependent-form";
+import { useDependentForm } from "@/features/dependents/hooks/use-dependent-form";
 import type { DependentFormDialogProps } from "./DependentFormDialog.types";
 import { DependentFormFields } from "./DependentFormFields";
 

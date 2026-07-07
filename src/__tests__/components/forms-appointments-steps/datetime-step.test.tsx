@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { DatePickerField } from "@/components/forms/Appointments/steps/DatePickerField";
 import { DateTimeStep } from "@/components/forms/Appointments/steps/DateTimeStep";
 import { TimeSlotPicker } from "@/components/forms/Appointments/steps/TimeSlotPicker";
-import type { UseAppointmentFormSetupReturn } from "@/hooks/use-appointment-form-setup";
+import type { UseAppointmentFormSetupReturn } from "@/features/appointments/hooks/use-appointment-form-setup";
 import type { TimeSlot } from "@/lib/types/time-slot";
 
 describe("TimeSlotPicker", () => {

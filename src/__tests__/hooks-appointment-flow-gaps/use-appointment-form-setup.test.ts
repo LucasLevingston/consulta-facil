@@ -7,25 +7,28 @@ vi.mock("next/navigation", () => ({
 vi.mock("@/store/useUserStore", () => ({
 	useUserStore: vi.fn(),
 }));
-vi.mock("@/hooks/use-appointment-form-state", () => ({
+vi.mock("@/features/appointments/hooks/use-appointment-form-state", () => ({
 	useAppointmentFormState: vi.fn(),
 }));
-vi.mock("@/hooks/use-appointment-professional-data", () => ({
-	useAppointmentProfessionalData: vi.fn(),
-}));
-vi.mock("@/hooks/use-appointment-slots", () => ({
+vi.mock(
+	"@/features/appointments/hooks/use-appointment-professional-data",
+	() => ({
+		useAppointmentProfessionalData: vi.fn(),
+	}),
+);
+vi.mock("@/features/appointments/hooks/use-appointment-slots", () => ({
 	useAppointmentSlots: vi.fn(),
 }));
-vi.mock("@/hooks/use-appointment-submit", () => ({
+vi.mock("@/features/appointments/hooks/use-appointment-submit", () => ({
 	useAppointmentSubmit: vi.fn(),
 }));
 
 import { useSearchParams } from "next/navigation";
-import { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
-import { useAppointmentFormState } from "@/hooks/use-appointment-form-state";
-import { useAppointmentProfessionalData } from "@/hooks/use-appointment-professional-data";
-import { useAppointmentSlots } from "@/hooks/use-appointment-slots";
-import { useAppointmentSubmit } from "@/hooks/use-appointment-submit";
+import { useAppointmentFormSetup } from "@/features/appointments/hooks/use-appointment-form-setup";
+import { useAppointmentFormState } from "@/features/appointments/hooks/use-appointment-form-state";
+import { useAppointmentProfessionalData } from "@/features/appointments/hooks/use-appointment-professional-data";
+import { useAppointmentSlots } from "@/features/appointments/hooks/use-appointment-slots";
+import { useAppointmentSubmit } from "@/features/appointments/hooks/use-appointment-submit";
 import { useUserStore } from "@/store/useUserStore";
 
 const mockUseSearchParams = vi.mocked(useSearchParams);

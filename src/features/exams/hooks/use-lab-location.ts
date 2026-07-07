@@ -12,7 +12,10 @@ interface UseLabLocationReturn {
 }
 
 export function useLabLocation(): UseLabLocationReturn {
-	const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+	const [userLocation, setUserLocation] = useState<{
+		lat: number;
+		lng: number;
+	} | null>(null);
 	const [locationLoading, setLocationLoading] = useState(false);
 	const [radiusKm, setRadiusKm] = useState(50);
 
@@ -21,7 +24,10 @@ export function useLabLocation(): UseLabLocationReturn {
 		setLocationLoading(true);
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+				setUserLocation({
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude,
+				});
 				setLocationLoading(false);
 			},
 			() => setLocationLoading(false),

@@ -1,21 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import type { Dispatch, SetStateAction } from "react";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-import type { VoiceBookingResult } from "@/lib/types/ai";
 import { useUserStore } from "@/store/useUserStore";
+import type { UseAppointmentFormSetupProps } from "./use-appointment-form-setup.types";
 import { useAppointmentFormState } from "./use-appointment-form-state";
 import { useAppointmentProfessionalData } from "./use-appointment-professional-data";
 import { useAppointmentSlots } from "./use-appointment-slots";
 import { useAppointmentSubmit } from "./use-appointment-submit";
-
-interface UseAppointmentFormSetupProps {
-	type: "create" | "schedule" | "cancel";
-	appointment?: AppointmentResponse;
-	setOpen?: Dispatch<SetStateAction<boolean>>;
-	voicePreset?: VoiceBookingResult | null;
-}
 
 export function useAppointmentFormSetup({
 	type,
@@ -24,17 +15,23 @@ export function useAppointmentFormSetup({
 	voicePreset,
 }: UseAppointmentFormSetupProps) {
 	const searchParams = useSearchParams();
-	const professionalIdParam = searchParams.get("professionalid") ?? searchParams.get("doctorid");
+	const professionalIdParam =
+		searchParams.get("professionalid") ?? searchParams.get("doctorid");
 	const serviceIdParam = searchParams.get("serviceid");
 	const { user: authUser } = useUserStore();
-	const { form, selectedTime, setSelectedTime, selectedServiceId, setSelectedServiceId } =
-		useAppointmentFormState({
-			appointment,
-			professionalIdParam,
-			serviceIdParam,
-			userId: authUser?.id ?? "",
-			voicePreset,
-		});
+	const {
+		form,
+		selectedTime,
+		setSelectedTime,
+		selectedServiceId,
+		setSelectedServiceId,
+	} = useAppointmentFormState({
+		appointment,
+		professionalIdParam,
+		serviceIdParam,
+		userId: authUser?.id ?? "",
+		voicePreset,
+	});
 	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
 	const {
@@ -48,16 +45,21 @@ export function useAppointmentFormSetup({
 		selectedProfessionalId,
 		selectedServiceId,
 	});
-	const { bookedTimesForDate, availableSlots, isQueueMode, isDayDisabled, handleTimeSelect } =
-		useAppointmentSlots({
-			professionalId: selectedProfessional?.id ?? "",
-			selectedDate,
-			selectedService,
-			scheduleList,
-			scheduleLoading,
-			form,
-			setSelectedTime,
-		});
+	const {
+		bookedTimesForDate,
+		availableSlots,
+		isQueueMode,
+		isDayDisabled,
+		handleTimeSelect,
+	} = useAppointmentSlots({
+		professionalId: selectedProfessional?.id ?? "",
+		selectedDate,
+		selectedService,
+		scheduleList,
+		scheduleLoading,
+		form,
+		setSelectedTime,
+	});
 	const { onSubmit, isPending } = useAppointmentSubmit({
 		type,
 		appointment,
@@ -87,4 +89,6 @@ export function useAppointmentFormSetup({
 		professionalIdParam,
 	};
 }
-export type UseAppointmentFormSetupReturn = ReturnType<typeof useAppointmentFormSetup>;
+export type UseAppointmentFormSetupReturn = ReturnType<
+	typeof useAppointmentFormSetup
+>;

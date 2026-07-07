@@ -13,7 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { usePatientsPage } from "@/hooks/use-patients-page";
+import { usePatientsPage } from "@/features/patients/hooks/use-patients-page";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 function PatientsContent() {

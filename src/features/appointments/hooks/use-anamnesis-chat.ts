@@ -10,11 +10,16 @@ import { INITIAL_ANAMNESIS_MESSAGE } from "@/utils/constants/anamnesis-initial-m
 type ChatMessage = AnamnesisMessage & { id: string };
 
 export function useAnamnesisChat() {
-	function makeMsg(role: AnamnesisMessage["role"], content: string): ChatMessage {
+	function makeMsg(
+		role: AnamnesisMessage["role"],
+		content: string,
+	): ChatMessage {
 		return { id: `${Date.now()}-${Math.random()}`, role, content };
 	}
 
-	const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_ANAMNESIS_MESSAGE]);
+	const [messages, setMessages] = useState<ChatMessage[]>([
+		INITIAL_ANAMNESIS_MESSAGE,
+	]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);
 
@@ -32,15 +37,21 @@ export function useAnamnesisChat() {
 		setIsLoading(true);
 
 		try {
-			const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
-			const response = await fetch(`${env.NEXT_PUBLIC_API_URL}/ai/anamnesis/chat`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					...(token ? { Authorization: `Bearer ${token}` } : {}),
+			const token =
+				typeof window !== "undefined"
+					? localStorage.getItem("authToken")
+					: null;
+			const response = await fetch(
+				`${env.NEXT_PUBLIC_API_URL}/ai/anamnesis/chat`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						...(token ? { Authorization: `Bearer ${token}` } : {}),
+					},
+					body: JSON.stringify({ messages: toApiMessages(nextMessages) }),
 				},
-				body: JSON.stringify({ messages: toApiMessages(nextMessages) }),
-			});
+			);
 
 			const reader = response.body?.getReader();
 			if (!reader) return;
@@ -55,7 +66,10 @@ export function useAnamnesisChat() {
 				const chunk = decoder.decode(value);
 				setMessages((prev) => {
 					const last = prev[prev.length - 1];
-					return [...prev.slice(0, -1), { ...last, content: last.content + chunk }];
+					return [
+						...prev.slice(0, -1),
+						{ ...last, content: last.content + chunk },
+					];
 				});
 			}
 		} finally {

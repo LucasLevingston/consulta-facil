@@ -7,7 +7,9 @@ import { useConversations } from "@/features/messaging";
 export function useMessagesPage() {
 	const searchParams = useSearchParams();
 	const { data: conversations } = useConversations();
-	const [selectedId, setSelectedId] = useState<string | null>(searchParams.get("c"));
+	const [selectedId, setSelectedId] = useState<string | null>(
+		searchParams.get("c"),
+	);
 	const [mobileShowThread, setMobileShowThread] = useState(false);
 
 	const selected = conversations.find((c) => c.id === selectedId);

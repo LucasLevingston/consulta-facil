@@ -26,7 +26,9 @@ export function useAppointmentFormState({
 	voicePreset,
 }: UseAppointmentFormStateProps) {
 	const [selectedTime, setSelectedTime] = useState<string>("");
-	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(serviceIdParam);
+	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+		serviceIdParam,
+	);
 
 	const form = useForm<AppointmentFormValues>({
 		resolver: zodResolver(appointmentFormSchema),

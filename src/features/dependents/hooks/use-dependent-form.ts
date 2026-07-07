@@ -27,7 +27,9 @@ export function useDependentForm({ editing, onClose }: UseDependentFormProps) {
 			cpf: editing?.cpf ?? "",
 			birthDate: editing?.birthDate ?? "",
 			gender: (editing?.gender as CreateDependentInput["gender"]) ?? undefined,
-			relationship: (editing?.relationship as CreateDependentInput["relationship"]) ?? undefined,
+			relationship:
+				(editing?.relationship as CreateDependentInput["relationship"]) ??
+				undefined,
 		},
 	});
 

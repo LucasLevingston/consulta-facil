@@ -10,7 +10,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useAddressForm } from "@/hooks/use-address-form";
+import { useAddressForm } from "@/features/professionals/hooks/use-address-form";
 import { AddressCityFields } from "./AddressCityFields";
 import type { AddressFormProps } from "./AddressForm.types";
 import { AddressStreetFields } from "./AddressStreetFields";

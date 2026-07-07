@@ -1,5 +1,5 @@
-export { useDependentForm } from "@/hooks/use-dependent-form";
-export { useDependentsPage } from "@/hooks/use-dependents-page";
+export { useDependentForm } from "@/features/dependents/hooks/use-dependent-form";
+export { useDependentsPage } from "@/features/dependents/hooks/use-dependents-page";
 export { dependentsApi } from "@/lib/api/dependents/dependents.api";
 export {
 	type CreateDependentInput,

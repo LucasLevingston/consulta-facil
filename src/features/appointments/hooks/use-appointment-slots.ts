@@ -41,7 +41,9 @@ export function useAppointmentSlots({
 		return new Set(
 			(professionalAppointmentsPage.content ?? [])
 				.filter(
-					(a) => a.status !== "CANCELED" && new Date(a.scheduledAt).toDateString() === dateStr,
+					(a) =>
+						a.status !== "CANCELED" &&
+						new Date(a.scheduledAt).toDateString() === dateStr,
 				)
 				.map((a) => {
 					const d = new Date(a.scheduledAt);
@@ -50,17 +52,25 @@ export function useAppointmentSlots({
 		);
 	}, [selectedDate, professionalAppointmentsPage]);
 	const activeDaySet = useMemo<Set<DayOfWeek>>(
-		() => new Set(scheduleList.filter((s) => s.isActive).map((s) => s.dayOfWeek as DayOfWeek)),
+		() =>
+			new Set(
+				scheduleList
+					.filter((s) => s.isActive)
+					.map((s) => s.dayOfWeek as DayOfWeek),
+			),
 		[scheduleList],
 	);
 	const availableSlots = useMemo<TimeSlot[]>(() => {
 		if (!selectedDate || scheduleList.length === 0) return [];
 		const dow = JS_DAY_TO_DOW[selectedDate.getDay()];
-		const daySchedule = scheduleList.find((s) => s.dayOfWeek === dow && s.isActive);
+		const daySchedule = scheduleList.find(
+			(s) => s.dayOfWeek === dow && s.isActive,
+		);
 		if (!daySchedule) return [];
 		return computeSlots(daySchedule, selectedService?.durationMinutes);
 	}, [selectedDate, scheduleList, selectedService]);
-	const isQueueMode = !!professionalId && !scheduleLoading && scheduleList.length === 0;
+	const isQueueMode =
+		!!professionalId && !scheduleLoading && scheduleList.length === 0;
 	const isDayDisabled = (date: Date): boolean => {
 		if (date < new Date(new Date().setHours(0, 0, 0, 0))) return true;
 		if (scheduleList.length === 0) return false;
@@ -70,7 +80,10 @@ export function useAppointmentSlots({
 	const handleTimeSelect = (slot: TimeSlot) => {
 		setSelectedTime(slot.label);
 		const base = selectedDate ?? new Date();
-		form.setValue("scheduledAt", setMinutes(setHours(base, slot.hours), slot.minutes));
+		form.setValue(
+			"scheduledAt",
+			setMinutes(setHours(base, slot.hours), slot.minutes),
+		);
 	};
 	return {
 		bookedTimesForDate,

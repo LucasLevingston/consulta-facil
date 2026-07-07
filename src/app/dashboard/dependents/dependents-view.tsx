@@ -8,7 +8,7 @@ import { DependentFormDialog } from "@/components/dependents/DependentFormDialog
 import { Button } from "@/components/ui/button";
 import type { DependentResponse } from "@/features/dependents";
 import { useMyDependents } from "@/features/dependents";
-import { useDependentsPage } from "@/hooks/use-dependents-page";
+import { useDependentsPage } from "@/features/dependents/hooks/use-dependents-page";
 
 function DependentsList({
 	openEdit,

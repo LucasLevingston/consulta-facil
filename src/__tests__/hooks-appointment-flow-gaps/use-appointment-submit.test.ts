@@ -16,9 +16,9 @@ vi.mock("@/hooks/api/appointments/use-cancel-appointment", () => ({
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useAppointmentSubmit } from "@/features/appointments/hooks/use-appointment-submit";
 import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
 import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
-import { useAppointmentSubmit } from "@/hooks/use-appointment-submit";
 
 const mockUseRouter = vi.mocked(useRouter);
 const mockUseScheduleAppointment = vi.mocked(useScheduleAppointment);

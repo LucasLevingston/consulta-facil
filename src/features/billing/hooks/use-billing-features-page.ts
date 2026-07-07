@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useCreateFeature, useDeleteFeature, useFeatures } from "@/features/billing";
+import {
+	useCreateFeature,
+	useDeleteFeature,
+	useFeatures,
+} from "@/features/billing";
 
 export function useBillingFeaturesPage() {
 	const { data: features = [], isLoading } = useFeatures();
