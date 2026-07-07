@@ -1,21 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import type { Dispatch, SetStateAction } from "react";
-import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
-import type { VoiceBookingResult } from "@/lib/types/ai";
 import { useUserStore } from "@/store/useUserStore";
+import type { UseAppointmentFormSetupProps } from "./use-appointment-form-setup.types";
 import { useAppointmentFormState } from "./use-appointment-form-state";
 import { useAppointmentProfessionalData } from "./use-appointment-professional-data";
 import { useAppointmentSlots } from "./use-appointment-slots";
 import { useAppointmentSubmit } from "./use-appointment-submit";
-
-interface UseAppointmentFormSetupProps {
-	type: "create" | "schedule" | "cancel";
-	appointment?: AppointmentResponse;
-	setOpen?: Dispatch<SetStateAction<boolean>>;
-	voicePreset?: VoiceBookingResult | null;
-}
 
 export function useAppointmentFormSetup({
 	type,
