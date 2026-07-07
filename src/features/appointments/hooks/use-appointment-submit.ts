@@ -64,7 +64,10 @@ export function useAppointmentSubmit({
 				form.reset();
 			}
 		} catch (error: unknown) {
-			toast.error((error instanceof Error ? error.message : null) ?? "Erro ao processar consulta.");
+			toast.error(
+				(error instanceof Error ? error.message : null) ??
+					"Erro ao processar consulta.",
+			);
 		}
 	};
 

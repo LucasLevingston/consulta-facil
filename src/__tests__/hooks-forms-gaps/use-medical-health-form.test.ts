@@ -20,7 +20,7 @@ import {
 	useMedicalRecords,
 	useUpdateMedicalRecords,
 } from "@/features/patients";
-import { useMedicalHealthForm } from "@/hooks/use-medical-health-form";
+import { useMedicalHealthForm } from "@/features/patients/hooks/use-medical-health-form";
 
 const mockUseMedicalRecords = vi.mocked(useMedicalRecords);
 const mockUseUpdate = vi.mocked(useUpdateMedicalRecords);

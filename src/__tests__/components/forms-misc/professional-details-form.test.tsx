@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/hooks/use-professional-details-form", () => ({
+vi.mock("@/features/professionals/hooks/use-professional-details-form", () => ({
 	useProfessionalDetailsForm: vi.fn(),
 }));
 
@@ -62,7 +62,7 @@ vi.mock("@/components/custom/forms-components/custom-submit-button", () => ({
 
 import ProfessionalDetailsForm from "@/components/forms/ProfessionalDetails/ProfessionalDetailsForm";
 import { ProfessionalPersonalFields } from "@/components/forms/ProfessionalDetails/ProfessionalPersonalFields";
-import { useProfessionalDetailsForm } from "@/hooks/use-professional-details-form";
+import { useProfessionalDetailsForm } from "@/features/professionals/hooks/use-professional-details-form";
 
 const mockUseProfessionalDetailsForm = vi.mocked(useProfessionalDetailsForm);
 

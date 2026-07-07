@@ -6,7 +6,7 @@ import CustomFormField, {
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { LocationPicker } from "@/components/custom/map/LocationPicker";
 import { Form } from "@/components/ui/form";
-import { useClinicForm } from "@/hooks/use-clinic-form";
+import { useClinicForm } from "@/features/clinics/hooks/use-clinic-form";
 import type { ClinicFormProps } from "./ClinicForm.types";
 
 export function ClinicForm({ clinic }: ClinicFormProps) {

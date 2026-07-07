@@ -41,17 +41,17 @@ import {
 	useSystemFees,
 	useUpdateSystemFee,
 } from "@/features/billing";
+import { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
+import { useSystemFeesPage } from "@/features/billing/hooks/use-system-fees-page";
 import { useDeleteDependent } from "@/features/dependents";
+import { useDependentsPage } from "@/features/dependents/hooks/use-dependents-page";
 import { useConversations } from "@/features/messaging";
+import { useMessagesPage } from "@/features/messaging/hooks/use-messages-page";
 import {
 	useAllAdminPatients,
 	useProfessionalPatients,
 } from "@/features/patients";
-import { useBillingFeaturesPage } from "@/hooks/use-billing-features-page";
-import { useDependentsPage } from "@/hooks/use-dependents-page";
-import { useMessagesPage } from "@/hooks/use-messages-page";
-import { usePatientsPage } from "@/hooks/use-patients-page";
-import { useSystemFeesPage } from "@/hooks/use-system-fees-page";
+import { usePatientsPage } from "@/features/patients/hooks/use-patients-page";
 
 const mockUseSearchParams = vi.mocked(useSearchParams);
 const mockUseRouter = vi.mocked(useRouter);

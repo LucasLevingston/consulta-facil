@@ -6,7 +6,7 @@ import PageHeader from "@/components/custom/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBillingFeaturesPage } from "@/hooks/use-billing-features-page";
+import { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
 
 export default function AdminFeaturesPage() {
 	const {

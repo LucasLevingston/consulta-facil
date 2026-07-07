@@ -16,13 +16,17 @@ export function useChat(conversationId: string | null) {
 		if (!conversationId || !token) return;
 
 		const stompClient = new Client({
-			webSocketFactory: () => new SockJS(`${env.NEXT_PUBLIC_API_URL}/ws`) as WebSocket,
+			webSocketFactory: () =>
+				new SockJS(`${env.NEXT_PUBLIC_API_URL}/ws`) as WebSocket,
 			connectHeaders: { Authorization: `Bearer ${token}` },
 			onConnect: () => {
-				stompClient.subscribe(`/topic/conversation.${conversationId}`, (msg) => {
-					const data: MessageResponse = JSON.parse(msg.body);
-					setMessages((prev) => [...prev, data]);
-				});
+				stompClient.subscribe(
+					`/topic/conversation.${conversationId}`,
+					(msg) => {
+						const data: MessageResponse = JSON.parse(msg.body);
+						setMessages((prev) => [...prev, data]);
+					},
+				);
 			},
 			onStompError: (frame) => {
 				console.error("STOMP error", frame);

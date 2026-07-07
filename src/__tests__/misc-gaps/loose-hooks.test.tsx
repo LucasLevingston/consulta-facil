@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { useBreadcrumbs } from "@/hooks/use-breadcrumbs";
-import { useClinicFilterOptions } from "@/hooks/use-clinic-filter-options";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { reducer, toast, useToast } from "@/hooks/use-toast";
+import { useClinicFilterOptions } from "@/features/clinics/hooks/use-clinic-filter-options";
+import { useBreadcrumbs } from "@/hooks/shared/use-breadcrumbs";
+import { useIsMobile } from "@/hooks/shared/use-mobile";
+import { reducer, toast, useToast } from "@/hooks/shared/use-toast";
 import type { ClinicResponse } from "@/lib/schemas/clinic/clinic-response.schema";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 

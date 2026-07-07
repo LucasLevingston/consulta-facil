@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), defaults: { headers: { common: {} } } },
 }));
 
-import { usePermission } from "@/hooks/use-permission";
+import { usePermission } from "@/features/auth/hooks/use-permission";
 import { useUserStore } from "@/store/useUserStore";
 
 const makeUser = (role: string) => ({

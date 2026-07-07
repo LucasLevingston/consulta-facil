@@ -49,7 +49,8 @@ export function useMedicalHealthForm(userId: string) {
 
 	const height = form.watch("height");
 	const weight = form.watch("weight");
-	const bmi = height && weight && height > 0 ? weight / (height * height) : null;
+	const bmi =
+		height && weight && height > 0 ? weight / (height * height) : null;
 
 	function onSubmit(data: UpdateMedicalRecordInput) {
 		mutate(data, {

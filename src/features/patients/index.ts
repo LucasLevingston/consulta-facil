@@ -1,3 +1,5 @@
+export { useMedicalHealthForm } from "@/features/patients/hooks/use-medical-health-form";
+export { usePatientsPage } from "@/features/patients/hooks/use-patients-page";
 export { patientKeys } from "@/hooks/api/patients/patient-keys";
 export { useAddEmergencyContact } from "@/hooks/api/patients/use-add-emergency-contact";
 export { useAddVaccine } from "@/hooks/api/patients/use-add-vaccine";
@@ -16,8 +18,6 @@ export { useUpdateMedicalRecords } from "@/hooks/api/patients/use-update-medical
 export { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
 export { useUploadDocument } from "@/hooks/api/patients/use-upload-document";
 export { useVaccines } from "@/hooks/api/patients/use-vaccines";
-export { useMedicalHealthForm } from "@/hooks/use-medical-health-form";
-export { usePatientsPage } from "@/hooks/use-patients-page";
 export { patientDocumentsApi } from "@/lib/api/patients/patient-documents.api";
 export { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
 export { patientHealthApi } from "@/lib/api/patients/patient-health.api";

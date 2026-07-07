@@ -1,3 +1,7 @@
+export { useAnamnesisChat } from "@/features/appointments/hooks/use-anamnesis-chat";
+export type { UseAppointmentFormSetupReturn } from "@/features/appointments/hooks/use-appointment-form-setup";
+export { useAppointmentFormSetup } from "@/features/appointments/hooks/use-appointment-form-setup";
+export { useVoiceBooking } from "@/features/appointments/hooks/use-voice-booking";
 export { anamnesisKeys } from "@/hooks/api/anamnesis/anamnesis-keys";
 export { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
 export { useProntuario } from "@/hooks/api/anamnesis/use-prontuario";
@@ -25,10 +29,6 @@ export { useRateAppointment } from "@/hooks/api/appointments/use-rate-appointmen
 export { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
 export { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
 export { useSetModality } from "@/hooks/api/appointments/use-set-modality";
-export { useAnamnesisChat } from "@/hooks/use-anamnesis-chat";
-export type { UseAppointmentFormSetupReturn } from "@/hooks/use-appointment-form-setup";
-export { useAppointmentFormSetup } from "@/hooks/use-appointment-form-setup";
-export { useVoiceBooking } from "@/hooks/use-voice-booking";
 export type { AnamnesisInput } from "@/lib/schemas/anamnesis/anamnesis.schema";
 export type { AnamnesisResponse } from "@/lib/schemas/anamnesis/anamnesis-response.schema";
 export type { ProntuarioInput } from "@/lib/schemas/anamnesis/prontuario.schema";

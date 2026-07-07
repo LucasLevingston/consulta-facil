@@ -6,7 +6,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { useVoiceBooking } from "@/hooks/use-voice-booking";
+import { useVoiceBooking } from "@/features/appointments/hooks/use-voice-booking";
 
 const mockApiPost = vi.mocked(api.post);
 

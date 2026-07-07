@@ -24,17 +24,23 @@ export function useAppointmentFormSetup({
 	voicePreset,
 }: UseAppointmentFormSetupProps) {
 	const searchParams = useSearchParams();
-	const professionalIdParam = searchParams.get("professionalid") ?? searchParams.get("doctorid");
+	const professionalIdParam =
+		searchParams.get("professionalid") ?? searchParams.get("doctorid");
 	const serviceIdParam = searchParams.get("serviceid");
 	const { user: authUser } = useUserStore();
-	const { form, selectedTime, setSelectedTime, selectedServiceId, setSelectedServiceId } =
-		useAppointmentFormState({
-			appointment,
-			professionalIdParam,
-			serviceIdParam,
-			userId: authUser?.id ?? "",
-			voicePreset,
-		});
+	const {
+		form,
+		selectedTime,
+		setSelectedTime,
+		selectedServiceId,
+		setSelectedServiceId,
+	} = useAppointmentFormState({
+		appointment,
+		professionalIdParam,
+		serviceIdParam,
+		userId: authUser?.id ?? "",
+		voicePreset,
+	});
 	const selectedProfessionalId = form.watch("professionalId");
 	const selectedDate = form.watch("scheduledAt");
 	const {
@@ -48,16 +54,21 @@ export function useAppointmentFormSetup({
 		selectedProfessionalId,
 		selectedServiceId,
 	});
-	const { bookedTimesForDate, availableSlots, isQueueMode, isDayDisabled, handleTimeSelect } =
-		useAppointmentSlots({
-			professionalId: selectedProfessional?.id ?? "",
-			selectedDate,
-			selectedService,
-			scheduleList,
-			scheduleLoading,
-			form,
-			setSelectedTime,
-		});
+	const {
+		bookedTimesForDate,
+		availableSlots,
+		isQueueMode,
+		isDayDisabled,
+		handleTimeSelect,
+	} = useAppointmentSlots({
+		professionalId: selectedProfessional?.id ?? "",
+		selectedDate,
+		selectedService,
+		scheduleList,
+		scheduleLoading,
+		form,
+		setSelectedTime,
+	});
 	const { onSubmit, isPending } = useAppointmentSubmit({
 		type,
 		appointment,
@@ -87,4 +98,6 @@ export function useAppointmentFormSetup({
 		professionalIdParam,
 	};
 }
-export type UseAppointmentFormSetupReturn = ReturnType<typeof useAppointmentFormSetup>;
+export type UseAppointmentFormSetupReturn = ReturnType<
+	typeof useAppointmentFormSetup
+>;

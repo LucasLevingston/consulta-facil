@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/hooks/use-breadcrumbs", () => ({
+vi.mock("@/hooks/shared/use-breadcrumbs", () => ({
 	useBreadcrumbs: vi.fn(),
 }));
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { useBreadcrumbs } from "@/hooks/use-breadcrumbs";
+import { useBreadcrumbs } from "@/hooks/shared/use-breadcrumbs";
 
 const mockUseBreadcrumbs = vi.mocked(useBreadcrumbs);
 

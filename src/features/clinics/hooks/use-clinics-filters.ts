@@ -29,12 +29,20 @@ export function useClinicsFilters(): UseClinicsFiltersReturn {
 	const loc = useClinicsLocation();
 	const isNearbyMode = loc.userLocation !== null;
 
-	const { data: allClinics = [], isLoading: allLoading, error: allError } = useClinics();
+	const {
+		data: allClinics = [],
+		isLoading: allLoading,
+		error: allError,
+	} = useClinics();
 	const {
 		data: nearbyClinics = [],
 		isLoading: nearbyLoading,
 		error: nearbyError,
-	} = useClinicsNearby(loc.userLocation?.lat ?? null, loc.userLocation?.lng ?? null, loc.radiusKm);
+	} = useClinicsNearby(
+		loc.userLocation?.lat ?? null,
+		loc.userLocation?.lng ?? null,
+		loc.radiusKm,
+	);
 
 	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
 	const error = isNearbyMode ? nearbyError : allError;
@@ -43,18 +51,38 @@ export function useClinicsFilters(): UseClinicsFiltersReturn {
 
 	const displayed = useMemo(() => {
 		let r = baseList;
-		if (search.trim()) r = r.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
+		if (search.trim())
+			r = r.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
 		if (filterState) r = r.filter((c) => c.state === filterState);
-		if (filterCity) r = r.filter((c) => c.city?.toLowerCase().includes(filterCity.toLowerCase()));
+		if (filterCity)
+			r = r.filter((c) =>
+				c.city?.toLowerCase().includes(filterCity.toLowerCase()),
+			);
 		if (filterSpecialty)
-			r = r.filter((c) => c.members?.some((m) => m.specialty === filterSpecialty));
-		if (filterProfession) r = r.filter((c) => c.members?.some((m) => m.role === filterProfession));
+			r = r.filter((c) =>
+				c.members?.some((m) => m.specialty === filterSpecialty),
+			);
+		if (filterProfession)
+			r = r.filter((c) => c.members?.some((m) => m.role === filterProfession));
 		return r;
-	}, [baseList, search, filterState, filterCity, filterSpecialty, filterProfession]);
+	}, [
+		baseList,
+		search,
+		filterState,
+		filterCity,
+		filterSpecialty,
+		filterProfession,
+	]);
 
-	const advancedFilters = [filterCity, filterSpecialty, filterProfession, selectedDays.length > 0];
+	const advancedFilters = [
+		filterCity,
+		filterSpecialty,
+		filterProfession,
+		selectedDays.length > 0,
+	];
 	const advancedCount = advancedFilters.filter(Boolean).length;
-	const totalActive = [search, filterState].filter(Boolean).length + advancedCount;
+	const totalActive =
+		[search, filterState].filter(Boolean).length + advancedCount;
 
 	return {
 		filterState: {

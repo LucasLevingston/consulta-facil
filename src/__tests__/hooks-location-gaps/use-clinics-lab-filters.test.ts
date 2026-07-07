@@ -19,12 +19,12 @@ vi.mock("@/hooks/api/exam-labs/use-exam-labs-nearby", () => ({
 	useExamLabsNearby: vi.fn(),
 }));
 
+import { useClinicsFilters } from "@/features/clinics/hooks/use-clinics-filters";
+import { useLabFilters } from "@/features/exams/hooks/use-lab-filters";
 import { useClinics } from "@/hooks/api/clinics/use-clinics";
 import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
 import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
 import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
-import { useClinicsFilters } from "@/hooks/use-clinics-filters";
-import { useLabFilters } from "@/hooks/use-lab-filters";
 
 const mockUseClinics = vi.mocked(useClinics);
 const mockUseClinicsNearby = vi.mocked(useClinicsNearby);

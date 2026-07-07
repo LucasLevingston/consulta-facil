@@ -7,8 +7,14 @@ import { toast } from "sonner";
 import type { z } from "zod";
 import { ProfessionalFormValidation } from "@/components/forms/ProfessionalDetails/FormValidation";
 import type { ProfessionalDetailsProps } from "@/components/forms/ProfessionalDetails/ProfessionalDetailsForm.types";
-import { useCreateProfessional, useUpdateProfessional } from "@/features/professionals";
-import { PROFESSION_SPECIALTIES, professions } from "@/utils/constants/profession-specialties";
+import {
+	useCreateProfessional,
+	useUpdateProfessional,
+} from "@/features/professionals";
+import {
+	PROFESSION_SPECIALTIES,
+	professions,
+} from "@/utils/constants/profession-specialties";
 
 export function useProfessionalDetailsForm({
 	userId,
@@ -44,12 +50,16 @@ export function useProfessionalDetailsForm({
 		name: "profession",
 	});
 	const professionOptions = professions.map((p) => ({ value: p, label: p }));
-	const specialtyOptions = (PROFESSION_SPECIALTIES[selectedProfession] ?? []).map((s) => ({
+	const specialtyOptions = (
+		PROFESSION_SPECIALTIES[selectedProfession] ?? []
+	).map((s) => ({
 		value: s,
 		label: s,
 	}));
 
-	const onSubmit = async (values: z.infer<typeof ProfessionalFormValidation>) => {
+	const onSubmit = async (
+		values: z.infer<typeof ProfessionalFormValidation>,
+	) => {
 		const payload = {
 			name: values.name,
 			email: values.email,
@@ -72,7 +82,9 @@ export function useProfessionalDetailsForm({
 				toast.success("Dados salvos com sucesso!");
 			}
 		} catch (error: unknown) {
-			toast.error(error instanceof Error ? error.message : "Erro ao salvar os dados");
+			toast.error(
+				error instanceof Error ? error.message : "Erro ao salvar os dados",
+			);
 		}
 	};
 

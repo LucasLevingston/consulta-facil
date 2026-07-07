@@ -12,7 +12,7 @@ const { formState } = vi.hoisted(() => ({
 	},
 }));
 
-vi.mock("@/hooks/use-medical-health-form", () => ({
+vi.mock("@/features/patients/hooks/use-medical-health-form", () => ({
 	useMedicalHealthForm: () => ({
 		form: {
 			control: {},

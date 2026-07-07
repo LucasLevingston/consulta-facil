@@ -29,7 +29,8 @@ export function useVoiceBooking() {
 		setTranscript("");
 		setStatus("listening");
 
-		const SpeechRecognition = window.SpeechRecognition ?? window.webkitSpeechRecognition;
+		const SpeechRecognition =
+			window.SpeechRecognition ?? window.webkitSpeechRecognition;
 		const recognition = new SpeechRecognition();
 		recognition.lang = "pt-BR";
 		recognition.interimResults = false;
@@ -42,9 +43,12 @@ export function useVoiceBooking() {
 			setStatus("processing");
 
 			try {
-				const { data } = await api.post<VoiceBookingResult>("/ai/voice-booking", {
-					transcript: text,
-				});
+				const { data } = await api.post<VoiceBookingResult>(
+					"/ai/voice-booking",
+					{
+						transcript: text,
+					},
+				);
 				setResult(data);
 				setStatus("done");
 			} catch (e) {

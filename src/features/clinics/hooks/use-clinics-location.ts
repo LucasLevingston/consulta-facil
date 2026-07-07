@@ -1,33 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import type { ProfessionalsViewMode } from "./ProfessionalsViewMode.types";
 
-interface UseProfessionalsLocationReturn {
+interface UseClinicsLocationReturn {
 	userLocation: { lat: number; lng: number } | null;
 	locationLoading: boolean;
 	radiusKm: number;
-	viewMode: ProfessionalsViewMode;
-	setViewMode: (v: ProfessionalsViewMode) => void;
 	setRadiusKm: (v: number) => void;
-	requestLocation: () => void;
+	requestLocation: (onSuccess?: () => void) => void;
 	clearLocation: () => void;
 }
 
-export function useProfessionalsLocation(): UseProfessionalsLocationReturn {
-	const [viewMode, setViewMode] = useState<ProfessionalsViewMode>("list");
-	const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+export function useClinicsLocation(): UseClinicsLocationReturn {
+	const [userLocation, setUserLocation] = useState<{
+		lat: number;
+		lng: number;
+	} | null>(null);
 	const [locationLoading, setLocationLoading] = useState(false);
 	const [radiusKm, setRadiusKm] = useState(50);
 
-	function requestLocation() {
+	function requestLocation(onSuccess?: () => void) {
 		if (!navigator.geolocation) return;
 		setLocationLoading(true);
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-				setViewMode("map");
+				setUserLocation({
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude,
+				});
 				setLocationLoading(false);
+				onSuccess?.();
 			},
 			() => setLocationLoading(false),
 		);
@@ -37,8 +39,6 @@ export function useProfessionalsLocation(): UseProfessionalsLocationReturn {
 		userLocation,
 		locationLoading,
 		radiusKm,
-		viewMode,
-		setViewMode,
 		setRadiusKm,
 		requestLocation,
 		clearLocation: () => setUserLocation(null),

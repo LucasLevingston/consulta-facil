@@ -23,18 +23,27 @@ export function useLabFilters(): UseLabFiltersReturn {
 	const loc = useLabLocation();
 	const isNearbyMode = loc.userLocation !== null;
 
-	const { data: allLabs = [], isLoading: allLoading, error: allError } = useExamLabs();
+	const {
+		data: allLabs = [],
+		isLoading: allLoading,
+		error: allError,
+	} = useExamLabs();
 	const {
 		data: nearbyLabs = [],
 		isLoading: nearbyLoading,
 		error: nearbyError,
-	} = useExamLabsNearby(loc.userLocation?.lat ?? null, loc.userLocation?.lng ?? null, loc.radiusKm);
+	} = useExamLabsNearby(
+		loc.userLocation?.lat ?? null,
+		loc.userLocation?.lng ?? null,
+		loc.radiusKm,
+	);
 
 	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
 	const error = isNearbyMode ? nearbyError : allError;
 
 	const availableStates = useMemo(
-		() => [...new Set(allLabs.flatMap((l) => (l.state ? [l.state] : [])))].sort(),
+		() =>
+			[...new Set(allLabs.flatMap((l) => (l.state ? [l.state] : [])))].sort(),
 		[allLabs],
 	);
 
@@ -46,11 +55,15 @@ export function useLabFilters(): UseLabFiltersReturn {
 			result = result.filter(
 				(l) =>
 					l.name.toLowerCase().includes(search.toLowerCase()) ||
-					l.acceptedExams?.some((e) => e.toLowerCase().includes(search.toLowerCase())),
+					l.acceptedExams?.some((e) =>
+						e.toLowerCase().includes(search.toLowerCase()),
+					),
 			);
 		if (filterState) result = result.filter((l) => l.state === filterState);
 		if (filterCity)
-			result = result.filter((l) => l.city?.toLowerCase().includes(filterCity.toLowerCase()));
+			result = result.filter((l) =>
+				l.city?.toLowerCase().includes(filterCity.toLowerCase()),
+			);
 		return result;
 	}, [baseList, search, filterState, filterCity]);
 
