@@ -1,13 +1,13 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
+import { scheduleRepository } from "../repositories/schedule.repository";
 import { scheduleKeys } from "./schedule-keys";
 
 export function useClinicWorkingHours(clinicId: string | undefined) {
 	return useQuery({
 		queryKey: scheduleKeys.clinicHours(clinicId ?? ""),
-		queryFn: () => clinicWorkingHoursApi.getClinicWorkingHours(clinicId ?? ""),
+		queryFn: () => scheduleRepository.getClinicWorkingHours(clinicId ?? ""),
 		enabled: !!clinicId,
 	});
 }

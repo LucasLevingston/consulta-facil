@@ -1,14 +1,13 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { invitesApi } from "@/lib/api/notifications/invites.api";
+import { notificationsRepository } from "../repositories/notifications.repository";
 import { notificationKeys } from "./notification-keys";
 
-export function useDeclineInvite() {
+export function useMarkAllAsRead() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (id: string) => invitesApi.declineInvite(id),
+		mutationFn: () => notificationsRepository.markAllAsRead(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: notificationKeys.all });
 		},

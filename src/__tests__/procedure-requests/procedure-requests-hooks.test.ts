@@ -15,10 +15,10 @@ vi.mock("@/lib/api/procedure-requests/procedure-requests.api", () => ({
 	},
 }));
 
-import { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
-import { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
-import { useGetMyProcedureRequests } from "@/hooks/api/procedure-requests/use-get-my-procedure-requests";
-import { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
+import { useCancelProcedureRequest } from "@/features/procedure-requests/hooks/use-cancel-procedure-request";
+import { useCreateProcedureRequest } from "@/features/procedure-requests/hooks/use-create-procedure-request";
+import { useGetMyProcedureRequests } from "@/features/procedure-requests/hooks/use-get-my-procedure-requests";
+import { useScheduleProcedureRequest } from "@/features/procedure-requests/hooks/use-schedule-procedure-request";
 import { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";
 
 const mockCreate = vi.mocked(procedureRequestsApi.create);

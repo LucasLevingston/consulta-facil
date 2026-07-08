@@ -14,8 +14,8 @@ vi.mock("@/lib/api/professionals/professional-schedule.api", () => ({
 	},
 }));
 
-import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
-import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
+import { useMySchedule } from "@/features/schedule/hooks/use-my-schedule";
+import { useProfessionalSchedule } from "@/features/schedule/hooks/use-professional-schedule";
 import { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";
 
 const mockGetMine = vi.mocked(professionalScheduleApi.getMySchedule);

@@ -1,14 +1,13 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-
-import { notificationsApi } from "@/lib/api/notifications/notifications.api";
+import { notificationsRepository } from "../repositories/notifications.repository";
 import { notificationKeys } from "./notification-keys";
 
 export function useUnreadCount() {
 	return useQuery({
 		queryKey: notificationKeys.unreadCount(),
-		queryFn: () => notificationsApi.getUnreadCount(),
+		queryFn: () => notificationsRepository.getUnreadCount(),
 		refetchInterval: 30_000,
 		staleTime: 0,
 	});

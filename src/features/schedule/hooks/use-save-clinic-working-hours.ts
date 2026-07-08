@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
 import type { ClinicWorkingHoursItem } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
+import { scheduleRepository } from "../repositories/schedule.repository";
 import { scheduleKeys } from "./schedule-keys";
 
 export function useSaveClinicWorkingHours(clinicId: string | undefined) {
@@ -10,7 +10,7 @@ export function useSaveClinicWorkingHours(clinicId: string | undefined) {
 	const id = clinicId ?? "";
 	return useMutation({
 		mutationFn: (items: ClinicWorkingHoursItem[]) =>
-			clinicWorkingHoursApi.saveClinicWorkingHours(id, items),
+			scheduleRepository.saveClinicWorkingHours(id, items),
 		onSuccess: () => {
 			if (id) {
 				queryClient.invalidateQueries({

@@ -1,9 +1,9 @@
-export { procedureRequestKeys } from "@/hooks/api/procedure-requests/procedure-request-keys";
-export { useCancelProcedureRequest } from "@/hooks/api/procedure-requests/use-cancel-procedure-request";
-export { useCreateProcedureRequest } from "@/hooks/api/procedure-requests/use-create-procedure-request";
-export { useGetMyProcedureRequests } from "@/hooks/api/procedure-requests/use-get-my-procedure-requests";
-export { useScheduleProcedureRequest } from "@/hooks/api/procedure-requests/use-schedule-procedure-request";
-export { procedureRequestsApi } from "@/lib/api/procedure-requests/procedure-requests.api";
+export { procedureRequestKeys } from "@/features/procedure-requests/hooks/procedure-request-keys";
+export { useCancelProcedureRequest } from "@/features/procedure-requests/hooks/use-cancel-procedure-request";
+export { useCreateProcedureRequest } from "@/features/procedure-requests/hooks/use-create-procedure-request";
+export { useGetMyProcedureRequests } from "@/features/procedure-requests/hooks/use-get-my-procedure-requests";
+export { useScheduleProcedureRequest } from "@/features/procedure-requests/hooks/use-schedule-procedure-request";
+export { procedureRequestsRepository } from "@/features/procedure-requests/repositories/procedure-requests.repository";
 export {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,

@@ -1,8 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-
-import { invitesApi } from "@/lib/api/notifications/invites.api";
+import { notificationsRepository } from "../repositories/notifications.repository";
 
 export function useSendClinicInvite() {
 	return useMutation({
@@ -12,6 +11,7 @@ export function useSendClinicInvite() {
 		}: {
 			clinicId: string;
 			professionalProfileId: string;
-		}) => invitesApi.sendClinicInvite(clinicId, professionalProfileId),
+		}) =>
+			notificationsRepository.sendClinicInvite(clinicId, professionalProfileId),
 	});
 }
