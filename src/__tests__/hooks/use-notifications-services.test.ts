@@ -19,7 +19,7 @@ vi.mock("@/lib/api/services/professional-services.api", () => ({
 
 import { useNotifications } from "@/features/notifications/hooks/use-notifications";
 import { useUnreadCount } from "@/features/notifications/hooks/use-unread-count";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
+import { useGetProfessionalServices } from "@/features/services/hooks/use-get-professional-services";
 import { notificationsApi } from "@/lib/api/notifications/notifications.api";
 import { professionalServicesApi } from "@/lib/api/services/professional-services.api";
 

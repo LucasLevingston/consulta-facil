@@ -1,8 +1,8 @@
 "use client";
 
 import { useProfessionalSchedule } from "@/features/schedule/hooks/use-professional-schedule";
+import { useGetProfessionalServices } from "@/features/services/hooks/use-get-professional-services";
 import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
 
 interface UseAppointmentProfessionalDataProps {
 	selectedProfessionalId: string;

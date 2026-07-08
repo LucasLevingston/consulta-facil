@@ -21,12 +21,12 @@ vi.mock("@/lib/api/professionals/professional-settings.api", () => ({
 	},
 }));
 
-import { useCreateService } from "@/hooks/api/services/use-create-service";
-import { useDeactivateService } from "@/hooks/api/services/use-deactivate-service";
-import { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
-import { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
-import { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
-import { useUpdateService } from "@/hooks/api/services/use-update-service";
+import { useCreateService } from "@/features/services/hooks/use-create-service";
+import { useDeactivateService } from "@/features/services/hooks/use-deactivate-service";
+import { useGetProfessionalServices } from "@/features/services/hooks/use-get-professional-services";
+import { useSetConsultationPrice } from "@/features/services/hooks/use-set-consultation-price";
+import { useUpdatePaymentSettings } from "@/features/services/hooks/use-update-payment-settings";
+import { useUpdateService } from "@/features/services/hooks/use-update-service";
 import { professionalSettingsApi } from "@/lib/api/professionals/professional-settings.api";
 import { professionalServicesApi } from "@/lib/api/services/professional-services.api";
 
