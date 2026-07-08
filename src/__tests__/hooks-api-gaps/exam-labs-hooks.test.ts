@@ -19,8 +19,8 @@ vi.mock("@/lib/api/exam-labs/exam-labs.api", () => ({
 	},
 }));
 
-import { useCancelExamScheduling } from "@/hooks/api/exam-labs/use-cancel-exam-scheduling";
-import { useScheduleExam } from "@/hooks/api/exam-labs/use-schedule-exam";
+import { useCancelExamScheduling } from "@/features/exams/hooks/use-cancel-exam-scheduling";
+import { useScheduleExam } from "@/features/exams/hooks/use-schedule-exam";
 import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
 
 const mockScheduleExam = vi.mocked(examLabApi.scheduleExam);

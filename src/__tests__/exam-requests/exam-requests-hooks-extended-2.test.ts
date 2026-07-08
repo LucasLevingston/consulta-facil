@@ -15,8 +15,8 @@ vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 	},
 }));
 
-import { useReviewExam } from "@/hooks/api/exam-requests/use-review-exam";
-import { useUploadExamResult } from "@/hooks/api/exam-requests/use-upload-exam-result";
+import { useReviewExam } from "@/features/exams/hooks/use-review-exam";
+import { useUploadExamResult } from "@/features/exams/hooks/use-upload-exam-result";
 import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 
 const mockReview = vi.mocked(examRequestApi.review);

@@ -12,19 +12,19 @@ vi.mock("@/hooks/api/clinics/use-clinics-nearby", () => ({
 }));
 
 // Mocks das queries internas de exam-labs
-vi.mock("@/hooks/api/exam-labs/use-exam-labs", () => ({
+vi.mock("@/features/exams/hooks/use-exam-labs", () => ({
 	useExamLabs: vi.fn(),
 }));
-vi.mock("@/hooks/api/exam-labs/use-exam-labs-nearby", () => ({
+vi.mock("@/features/exams/hooks/use-exam-labs-nearby", () => ({
 	useExamLabsNearby: vi.fn(),
 }));
 
 import { useClinicsFilters } from "@/features/clinics/hooks/use-clinics-filters";
+import { useExamLabs } from "@/features/exams/hooks/use-exam-labs";
+import { useExamLabsNearby } from "@/features/exams/hooks/use-exam-labs-nearby";
 import { useLabFilters } from "@/features/exams/hooks/use-lab-filters";
 import { useClinics } from "@/hooks/api/clinics/use-clinics";
 import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
-import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
-import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
 
 const mockUseClinics = vi.mocked(useClinics);
 const mockUseClinicsNearby = vi.mocked(useClinicsNearby);
