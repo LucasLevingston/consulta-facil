@@ -1,19 +1,15 @@
 ﻿"use client";
 
-import { useClinicWorkingHours } from "@/features/schedule";
-import { QueryBoundary } from "@/providers/query-boundary";
-import { ClinicHoursEditor } from "./ClinicHoursEditor";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { Suspense } from "react";
+import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ClinicWorkingHoursContent } from "./ClinicWorkingHoursContent";
 import type { ClinicWorkingHoursSectionProps } from "./ClinicWorkingHoursSection.types";
 
 export function ClinicWorkingHoursSection({
 	clinicId,
 }: ClinicWorkingHoursSectionProps) {
-	const {
-		data: savedHours = [],
-		isLoading,
-		error,
-	} = useClinicWorkingHours(clinicId);
-
 	return (
 		<div className="max-w-2xl space-y-4">
 			<div>
@@ -24,9 +20,17 @@ export function ClinicWorkingHoursSection({
 					Configure os dias e horários em que a clínica está aberta.
 				</p>
 			</div>
-			<QueryBoundary isLoading={isLoading} error={error}>
-				<ClinicHoursEditor clinicId={clinicId} savedHours={savedHours} />
-			</QueryBoundary>
+			<QueryErrorResetBoundary>
+				{({ reset }) => (
+					<ErrorBoundary onReset={reset}>
+						<Suspense
+							fallback={<Skeleton className="h-64 w-full rounded-2xl" />}
+						>
+							<ClinicWorkingHoursContent clinicId={clinicId} />
+						</Suspense>
+					</ErrorBoundary>
+				)}
+			</QueryErrorResetBoundary>
 		</div>
 	);
 }

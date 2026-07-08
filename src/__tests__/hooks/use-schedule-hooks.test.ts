@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -43,10 +43,16 @@ const mockSaveClinicHours = vi.mocked(
 const schedule = [{ day: "MONDAY", startTime: "08:00", endTime: "17:00" }];
 const clinicHours = [{ day: "MONDAY", open: "08:00", close: "18:00" }];
 
-function wrapper() {
+function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("useMySchedule", () => {
@@ -92,19 +98,12 @@ describe("useProfessionalSchedule", () => {
 describe("useClinicWorkingHours", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when clinicId undefined", () => {
-		const { result } = renderHook(() => useClinicWorkingHours(undefined), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("fetches when clinicId provided", async () => {
 		mockGetClinicHours.mockResolvedValueOnce(clinicHours as never);
 		const { result } = renderHook(() => useClinicWorkingHours("c-1"), {
-			wrapper: wrapper(),
+			wrapper: wrapper(true),
 		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(result.current.data).toEqual(clinicHours);
 	});
 });
