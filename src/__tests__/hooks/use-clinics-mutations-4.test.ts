@@ -31,8 +31,8 @@ vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
 	},
 }));
 
-import { useInviteReceptionist } from "@/hooks/api/clinics/use-invite-receptionist";
-import { useRemoveClinicMember } from "@/hooks/api/clinics/use-remove-clinic-member";
+import { useInviteReceptionist } from "@/features/clinics/hooks/use-invite-receptionist";
+import { useRemoveClinicMember } from "@/features/clinics/hooks/use-remove-clinic-member";
 import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 

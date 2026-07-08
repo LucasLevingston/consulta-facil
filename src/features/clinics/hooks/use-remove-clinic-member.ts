@@ -1,8 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { clinicsRepository } from "../repositories/clinics.repository";
 import { clinicKeys } from "./clinic-keys";
 
 export function useRemoveClinicMember() {
@@ -14,7 +13,7 @@ export function useRemoveClinicMember() {
 		}: {
 			clinicId: string;
 			professionalProfileId: string;
-		}) => clinicsCrudApi.removeMember(clinicId, professionalProfileId),
+		}) => clinicsRepository.removeMember(clinicId, professionalProfileId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},

@@ -31,7 +31,7 @@ vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
 	},
 }));
 
-import { useRemoveReceptionist } from "@/hooks/api/clinics/use-remove-receptionist";
+import { useRemoveReceptionist } from "@/features/clinics/hooks/use-remove-receptionist";
 import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
 
 const mockRemoveReceptionist = vi.mocked(clinicStaffApi.removeReceptionist);

@@ -1,6 +1,6 @@
-import { useClinics } from "@/hooks/api/clinics/use-clinics";
-import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
+import { useClinics } from "./use-clinics";
 import type { useClinicsLocation } from "./use-clinics-location";
+import { useClinicsNearby } from "./use-clinics-nearby";
 
 export function useClinicsListSource(
 	loc: ReturnType<typeof useClinicsLocation>,

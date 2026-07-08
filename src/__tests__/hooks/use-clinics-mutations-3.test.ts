@@ -31,8 +31,8 @@ vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
 	},
 }));
 
-import { useAddClinicMember } from "@/hooks/api/clinics/use-add-clinic-member";
-import { useUpdateClinic } from "@/hooks/api/clinics/use-update-clinic";
+import { useAddClinicMember } from "@/features/clinics/hooks/use-add-clinic-member";
+import { useUpdateClinic } from "@/features/clinics/hooks/use-update-clinic";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
 const mockUpdate = vi.mocked(clinicsCrudApi.update);

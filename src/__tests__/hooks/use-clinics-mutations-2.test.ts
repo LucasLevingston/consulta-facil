@@ -31,8 +31,8 @@ vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
 	},
 }));
 
-import { useClinicReceptionists } from "@/hooks/api/clinics/use-clinic-receptionists";
-import { useCreateClinic } from "@/hooks/api/clinics/use-create-clinic";
+import { useClinicReceptionists } from "@/features/clinics/hooks/use-clinic-receptionists";
+import { useCreateClinic } from "@/features/clinics/hooks/use-create-clinic";
 import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
