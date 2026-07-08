@@ -15,8 +15,8 @@ vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 	},
 }));
 
-import { useCreateExamRequest } from "@/hooks/api/exam-requests/use-create-exam-request";
-import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
+import { useCreateExamRequest } from "@/features/exams/hooks/use-create-exam-request";
+import { useExamRequestsByAppointment } from "@/features/exams/hooks/use-exam-requests-by-appointment";
 import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
 
 const mockCreate = vi.mocked(examRequestApi.create);

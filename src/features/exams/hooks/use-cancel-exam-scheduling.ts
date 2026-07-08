@@ -1,13 +1,14 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { examRequestKeys } from "@/hooks/api/exam-requests/exam-request-keys";
-import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
+import { examsRepository } from "../repositories/exams.repository";
+import { examRequestKeys } from "./exam-request-keys";
 
 export function useCancelExamScheduling() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (schedulingId: string) => examLabApi.cancelScheduling(schedulingId),
+		mutationFn: (schedulingId: string) =>
+			examsRepository.cancelScheduling(schedulingId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: examRequestKeys.all });
 		},

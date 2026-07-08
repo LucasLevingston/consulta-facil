@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
-import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 import type { UseLabFiltersReturn } from "./UseLabFiltersReturn.types";
+import { useExamLabs } from "./use-exam-labs";
+import { useExamLabsNearby } from "./use-exam-labs-nearby";
 import { useLabLocation } from "./use-lab-location";
 
 export type { LabFilterDerived } from "./LabFilterDerived.types";

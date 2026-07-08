@@ -17,11 +17,11 @@ vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 	},
 }));
 
-import { useAvailableSlots } from "@/hooks/api/exam-labs/use-available-slots";
-import { useExamLabs } from "@/hooks/api/exam-labs/use-exam-labs";
-import { useExamLabsNearby } from "@/hooks/api/exam-labs/use-exam-labs-nearby";
-import { useExamRequestsByAppointment } from "@/hooks/api/exam-requests/use-exam-requests-by-appointment";
-import { useMyExams } from "@/hooks/api/exam-requests/use-my-exams";
+import { useAvailableSlots } from "@/features/exams/hooks/use-available-slots";
+import { useExamLabs } from "@/features/exams/hooks/use-exam-labs";
+import { useExamLabsNearby } from "@/features/exams/hooks/use-exam-labs-nearby";
+import { useExamRequestsByAppointment } from "@/features/exams/hooks/use-exam-requests-by-appointment";
+import { useMyExams } from "@/features/exams/hooks/use-my-exams";
 
 function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
