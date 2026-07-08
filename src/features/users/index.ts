@@ -1,2 +1,3 @@
+export { useAllUsers } from "@/features/users/hooks/use-all-users";
 export { useAvatarUpload } from "@/features/users/hooks/use-avatar-upload";
-export { useAllUsers } from "@/hooks/api/users/use-all-users";
+export { usersRepository } from "@/features/users/repositories/users.repository";

@@ -20,11 +20,11 @@ vi.mock("@/lib/api/clinics/clinic-working-hours.api", () => ({
 	},
 }));
 
-import { useClinicWorkingHours } from "@/hooks/api/schedule/use-clinic-working-hours";
-import { useMySchedule } from "@/hooks/api/schedule/use-my-schedule";
-import { useProfessionalSchedule } from "@/hooks/api/schedule/use-professional-schedule";
-import { useSaveClinicWorkingHours } from "@/hooks/api/schedule/use-save-clinic-working-hours";
-import { useSaveMySchedule } from "@/hooks/api/schedule/use-save-my-schedule";
+import { useClinicWorkingHours } from "@/features/schedule/hooks/use-clinic-working-hours";
+import { useMySchedule } from "@/features/schedule/hooks/use-my-schedule";
+import { useProfessionalSchedule } from "@/features/schedule/hooks/use-professional-schedule";
+import { useSaveClinicWorkingHours } from "@/features/schedule/hooks/use-save-clinic-working-hours";
+import { useSaveMySchedule } from "@/features/schedule/hooks/use-save-my-schedule";
 import { clinicWorkingHoursApi } from "@/lib/api/clinics/clinic-working-hours.api";
 import { professionalScheduleApi } from "@/lib/api/professionals/professional-schedule.api";
 

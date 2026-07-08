@@ -1,14 +1,13 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { notificationsApi } from "@/lib/api/notifications/notifications.api";
+import { notificationsRepository } from "../repositories/notifications.repository";
 import { notificationKeys } from "./notification-keys";
 
-export function useMarkAllAsRead() {
+export function useMarkAsRead() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: () => notificationsApi.markAllAsRead(),
+		mutationFn: (id: string) => notificationsRepository.markAsRead(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: notificationKeys.all });
 		},

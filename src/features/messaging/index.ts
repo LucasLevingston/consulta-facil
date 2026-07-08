@@ -1,13 +1,13 @@
 export { ChatThread } from "@/components/messaging/ChatThread";
 export { ConversationList } from "@/components/messaging/ConversationList";
+export { conversationKeys } from "@/features/messaging/hooks/conversation-keys";
 export { useChat } from "@/features/messaging/hooks/use-chat";
+export { useConversationHistory } from "@/features/messaging/hooks/use-conversation-history";
+export { useConversations } from "@/features/messaging/hooks/use-conversations";
+export { useMarkAsRead } from "@/features/messaging/hooks/use-mark-as-read";
 export { useMessagesPage } from "@/features/messaging/hooks/use-messages-page";
-export { conversationKeys } from "@/hooks/api/conversations/conversation-keys";
-export { useConversationHistory } from "@/hooks/api/conversations/use-conversation-history";
-export { useConversations } from "@/hooks/api/conversations/use-conversations";
-export { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
-export { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
-export { conversationsApi } from "@/lib/api/conversations/conversations.api";
+export { useStartConversation } from "@/features/messaging/hooks/use-start-conversation";
+export { messagingRepository } from "@/features/messaging/repositories/messaging.repository";
 export type {
 	ConversationResponse,
 	MessageResponse,

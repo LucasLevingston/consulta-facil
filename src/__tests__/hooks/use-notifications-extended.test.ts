@@ -22,13 +22,13 @@ vi.mock("@/lib/api/notifications/invites.api", () => ({
 	},
 }));
 
-import { useAcceptInvite } from "@/hooks/api/notifications/use-accept-invite";
-import { useDeclineInvite } from "@/hooks/api/notifications/use-decline-invite";
-import { useMarkAllAsRead } from "@/hooks/api/notifications/use-mark-all-as-read";
-import { useMarkAsRead } from "@/hooks/api/notifications/use-mark-as-read";
-import { useNotifications } from "@/hooks/api/notifications/use-notifications";
-import { useSendClinicInvite } from "@/hooks/api/notifications/use-send-clinic-invite";
-import { useUnreadCount } from "@/hooks/api/notifications/use-unread-count";
+import { useAcceptInvite } from "@/features/notifications/hooks/use-accept-invite";
+import { useDeclineInvite } from "@/features/notifications/hooks/use-decline-invite";
+import { useMarkAllAsRead } from "@/features/notifications/hooks/use-mark-all-as-read";
+import { useMarkAsRead } from "@/features/notifications/hooks/use-mark-as-read";
+import { useNotifications } from "@/features/notifications/hooks/use-notifications";
+import { useSendClinicInvite } from "@/features/notifications/hooks/use-send-clinic-invite";
+import { useUnreadCount } from "@/features/notifications/hooks/use-unread-count";
 import { invitesApi } from "@/lib/api/notifications/invites.api";
 import { notificationsApi } from "@/lib/api/notifications/notifications.api";
 

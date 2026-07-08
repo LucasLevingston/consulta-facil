@@ -12,10 +12,10 @@ vi.mock("@/lib/api/conversations/conversations.api", () => ({
 	},
 }));
 
-import { useConversationHistory } from "@/hooks/api/conversations/use-conversation-history";
-import { useConversations } from "@/hooks/api/conversations/use-conversations";
-import { useMarkAsRead } from "@/hooks/api/conversations/use-mark-as-read";
-import { useStartConversation } from "@/hooks/api/conversations/use-start-conversation";
+import { useConversationHistory } from "@/features/messaging/hooks/use-conversation-history";
+import { useConversations } from "@/features/messaging/hooks/use-conversations";
+import { useMarkAsRead } from "@/features/messaging/hooks/use-mark-as-read";
+import { useStartConversation } from "@/features/messaging/hooks/use-start-conversation";
 
 function makeWrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
