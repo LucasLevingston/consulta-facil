@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import type { PlanResponse } from "@/features/plans";
 import { usePlans } from "@/features/plans";
 import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
-import { QueryBoundary } from "@/providers/query-boundary";
 import { PRO_PLAN_IDS } from "../../../utils/constants/pro-plan-ids";
 import { apiPlanToUiPlan } from "./Plans.utils";
 import { PlanCard } from "./plan-card";
@@ -19,16 +18,8 @@ const TIER_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function Plans() {
-	const {
-		data: plansData,
-		isLoading: plansLoading,
-		error: plansError,
-	} = usePlans();
-	const {
-		data: subscription,
-		isLoading: subLoading,
-		error: subError,
-	} = useMySubscription();
+	const { data: plansData } = usePlans();
+	const { data: subscription } = useMySubscription();
 	const checkout = useCreateCheckout();
 
 	function handleSelect(planId: string) {
@@ -42,17 +33,14 @@ export default function Plans() {
 		subscription.status === "ACTIVE" &&
 		PRO_PLAN_IDS.has(subscription.planId);
 
-	const plans = (plansData ?? [])
+	const plans = plansData
 		.sort((a, b) => a.displayOrder - b.displayOrder)
 		.map((p: PlanResponse) =>
 			apiPlanToUiPlan(p, TIER_ICONS[p.tier] ?? <Zap className="h-5 w-5" />),
 		);
 
 	return (
-		<QueryBoundary
-			isLoading={plansLoading || subLoading}
-			error={plansError ?? subError}
-		>
+		<>
 			{subscription && subscription.status !== "EXPIRED" && (
 				<SubscriptionBanner subscription={subscription} />
 			)}
@@ -78,6 +66,6 @@ export default function Plans() {
 					))}
 				</div>
 			</div>
-		</QueryBoundary>
+		</>
 	);
 }

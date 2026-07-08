@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/billing/repositories/billing-plans.repository", () => ({
@@ -17,27 +17,33 @@ import { useAdminDeactivatePlan } from "@/features/billing/hooks/use-admin-deact
 import { useAdminPlans } from "@/features/billing/hooks/use-admin-plans";
 import { usePlans } from "@/features/billing/hooks/use-plans";
 
-function makeWrapper() {
+function makeWrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("billing plans hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("usePlans has data/isLoading", () => {
-		const { result } = renderHook(() => usePlans(), { wrapper: makeWrapper() });
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+	it("usePlans resolves data", async () => {
+		const { result } = renderHook(() => usePlans(), {
+			wrapper: makeWrapper(true),
+		});
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
 
-	it("useAdminPlans has data/isLoading", () => {
+	it("useAdminPlans resolves data", async () => {
 		const { result } = renderHook(() => useAdminPlans(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
 
 	it("useAdminCreatePlan has mutate/isPending", () => {

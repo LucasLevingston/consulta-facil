@@ -1,10 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { billingSettingsRepository } from "../repositories/billing-settings.repository";
 
 export function useBillingSettings() {
-	return useQuery({
+	return useSuspenseQuery({
 		queryKey: ["billing", "settings"],
 		queryFn: billingSettingsRepository.getSettings,
 	});
