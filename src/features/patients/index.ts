@@ -1,32 +1,29 @@
+export { patientKeys } from "@/features/patients/hooks/patient-keys";
+export { useAddEmergencyContact } from "@/features/patients/hooks/use-add-emergency-contact";
+export { useAddVaccine } from "@/features/patients/hooks/use-add-vaccine";
+export { useAllAdminPatients } from "@/features/patients/hooks/use-all-admin-patients";
+export { useDeleteDocument } from "@/features/patients/hooks/use-delete-document";
+export { useDeleteEmergencyContact } from "@/features/patients/hooks/use-delete-emergency-contact";
+export { useDeleteVaccine } from "@/features/patients/hooks/use-delete-vaccine";
+export { useEmergencyContacts } from "@/features/patients/hooks/use-emergency-contacts";
 export { useMedicalHealthForm } from "@/features/patients/hooks/use-medical-health-form";
+export { useMedicalRecords } from "@/features/patients/hooks/use-medical-records";
+export { useMyProfile } from "@/features/patients/hooks/use-my-profile";
+export { usePatientDocuments } from "@/features/patients/hooks/use-patient-documents";
+export { usePatientProfile } from "@/features/patients/hooks/use-patient-profile";
 export { usePatientsPage } from "@/features/patients/hooks/use-patients-page";
-export { patientKeys } from "@/hooks/api/patients/patient-keys";
-export { useAddEmergencyContact } from "@/hooks/api/patients/use-add-emergency-contact";
-export { useAddVaccine } from "@/hooks/api/patients/use-add-vaccine";
-export { useAllAdminPatients } from "@/hooks/api/patients/use-all-admin-patients";
-export { useDeleteDocument } from "@/hooks/api/patients/use-delete-document";
-export { useDeleteEmergencyContact } from "@/hooks/api/patients/use-delete-emergency-contact";
-export { useDeleteVaccine } from "@/hooks/api/patients/use-delete-vaccine";
-export { useEmergencyContacts } from "@/hooks/api/patients/use-emergency-contacts";
-export { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
-export { useMyProfile } from "@/hooks/api/patients/use-my-profile";
-export { usePatientDocuments } from "@/hooks/api/patients/use-patient-documents";
-export { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
-export { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
-export { useUpdateEmergencyContact } from "@/hooks/api/patients/use-update-emergency-contact";
-export { useUpdateMedicalRecords } from "@/hooks/api/patients/use-update-medical-records";
-export { useUpdateMyProfile } from "@/hooks/api/patients/use-update-my-profile";
-export { useUploadDocument } from "@/hooks/api/patients/use-upload-document";
-export { useVaccines } from "@/hooks/api/patients/use-vaccines";
-export { patientDocumentsApi } from "@/lib/api/patients/patient-documents.api";
-export { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
-export { patientHealthApi } from "@/lib/api/patients/patient-health.api";
+export { useProfessionalPatients } from "@/features/patients/hooks/use-professional-patients";
+export { useUpdateEmergencyContact } from "@/features/patients/hooks/use-update-emergency-contact";
+export { useUpdateMedicalRecords } from "@/features/patients/hooks/use-update-medical-records";
+export { useUpdateMyProfile } from "@/features/patients/hooks/use-update-my-profile";
+export { useUploadDocument } from "@/features/patients/hooks/use-upload-document";
+export { useVaccines } from "@/features/patients/hooks/use-vaccines";
+export { patientsRepository } from "@/features/patients/repositories/patients.repository";
+export { getBmiLabel } from "@/features/patients/services/bmi.service";
 export type {
 	PatientSummary,
 	ProfessionalPatientsParams,
-} from "@/lib/api/patients/patient-profile.api";
-export { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
-export { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
+} from "@/lib/api/patients/patient-profile.api.types";
 export {
 	type EmergencyContactInput,
 	emergencyContactSchema,

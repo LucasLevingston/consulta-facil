@@ -1,14 +1,13 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-
-import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
+import { patientsRepository } from "../repositories/patients.repository";
 import { patientKeys } from "./patient-keys";
 
 export function useMyProfile(enabled = true) {
 	return useQuery({
 		queryKey: patientKeys.me(),
-		queryFn: patientProfileApi.getMyProfile,
+		queryFn: patientsRepository.getMyProfile,
 		enabled,
 	});
 }

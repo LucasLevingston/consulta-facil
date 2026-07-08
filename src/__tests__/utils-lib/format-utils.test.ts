@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getBmiLabel } from "@/utils/bmi";
+import { getBmiLabel } from "@/features/patients/services/bmi.service";
 import { formatBRL } from "@/utils/format-brl";
 import { formatCurrency } from "@/utils/format-currency";
 import { formatPercent } from "@/utils/format-percent";
