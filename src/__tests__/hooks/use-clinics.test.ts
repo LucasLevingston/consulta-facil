@@ -15,9 +15,9 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 	},
 }));
 
-import { useClinicById } from "@/hooks/api/clinics/use-clinic-by-id";
-import { useClinics } from "@/hooks/api/clinics/use-clinics";
-import { useClinicsNearby } from "@/hooks/api/clinics/use-clinics-nearby";
+import { useClinicById } from "@/features/clinics/hooks/use-clinic-by-id";
+import { useClinics } from "@/features/clinics/hooks/use-clinics";
+import { useClinicsNearby } from "@/features/clinics/hooks/use-clinics-nearby";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
 
 const mockGetAll = vi.mocked(clinicsCrudApi.getAll);

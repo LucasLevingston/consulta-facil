@@ -1,13 +1,12 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-
-import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { clinicsRepository } from "../repositories/clinics.repository";
 import { clinicKeys } from "./clinic-keys";
 
 export function useMyClinic() {
 	return useSuspenseQuery({
 		queryKey: clinicKeys.my(),
-		queryFn: () => clinicsCrudApi.getMy(),
+		queryFn: () => clinicsRepository.getMy(),
 	});
 }
