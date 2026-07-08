@@ -22,9 +22,9 @@ vi.mock("@/lib/api/appointments/appointment-lifecycle.api", () => ({
 	},
 }));
 
-import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
-import { useCompleteAppointment } from "@/hooks/api/appointments/use-complete-appointment";
-import { useConfirmAppointment } from "@/hooks/api/appointments/use-confirm-appointment";
+import { useCancelAppointment } from "@/features/appointments/hooks/use-cancel-appointment";
+import { useCompleteAppointment } from "@/features/appointments/hooks/use-complete-appointment";
+import { useConfirmAppointment } from "@/features/appointments/hooks/use-confirm-appointment";
 import { appointmentLifecycleApi } from "@/lib/api/appointments/appointment-lifecycle.api";
 
 const mockCancel = vi.mocked(appointmentLifecycleApi.cancel);

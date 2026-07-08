@@ -7,18 +7,18 @@ vi.mock("next/navigation", () => ({
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/hooks/api/appointments/use-schedule-appointment", () => ({
+vi.mock("@/features/appointments/hooks/use-schedule-appointment", () => ({
 	useScheduleAppointment: vi.fn(),
 }));
-vi.mock("@/hooks/api/appointments/use-cancel-appointment", () => ({
+vi.mock("@/features/appointments/hooks/use-cancel-appointment", () => ({
 	useCancelAppointment: vi.fn(),
 }));
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAppointmentSubmit } from "@/features/appointments/hooks/use-appointment-submit";
-import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
-import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
+import { useCancelAppointment } from "@/features/appointments/hooks/use-cancel-appointment";
+import { useScheduleAppointment } from "@/features/appointments/hooks/use-schedule-appointment";
 
 const mockUseRouter = vi.mocked(useRouter);
 const mockUseScheduleAppointment = vi.mocked(useScheduleAppointment);

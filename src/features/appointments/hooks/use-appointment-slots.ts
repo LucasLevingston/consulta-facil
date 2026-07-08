@@ -4,12 +4,12 @@ import { setHours, setMinutes } from "date-fns";
 import { useMemo } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import type { ProfessionalScheduleResponse } from "@/features/schedule";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
 import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
 import type { DayOfWeek } from "@/lib/schemas/schedule/days-of-week.schema";
 import type { TimeSlot } from "@/lib/types/time-slot";
 import { computeSlots } from "@/lib/utils/compute-slots";
 import { JS_DAY_TO_DOW } from "@/utils/constants/day-to-dow";
+import { useProfessionalAppointments } from "./use-professional-appointments";
 
 interface UseAppointmentSlotsProps {
 	professionalId: string;

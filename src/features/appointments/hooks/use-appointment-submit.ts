@@ -5,10 +5,10 @@ import type { Dispatch, SetStateAction } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import type { ProfessionalResponse } from "@/features/professionals";
-import { useCancelAppointment } from "@/hooks/api/appointments/use-cancel-appointment";
-import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
 import type { AppointmentFormValues } from "@/lib/schemas/appointment/appointment-form.schema";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { useCancelAppointment } from "./use-cancel-appointment";
+import { useScheduleAppointment } from "./use-schedule-appointment";
 
 interface UseAppointmentSubmitProps {
 	type: "create" | "schedule" | "cancel";

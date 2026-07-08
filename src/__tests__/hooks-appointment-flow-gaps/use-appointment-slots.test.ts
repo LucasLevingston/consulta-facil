@@ -1,12 +1,12 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/hooks/api/appointments/use-professional-appointments", () => ({
+vi.mock("@/features/appointments/hooks/use-professional-appointments", () => ({
 	useProfessionalAppointments: vi.fn(),
 }));
 
 import { useAppointmentSlots } from "@/features/appointments/hooks/use-appointment-slots";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useProfessionalAppointments } from "@/features/appointments/hooks/use-professional-appointments";
 
 const mockUseProfessionalAppointments = vi.mocked(useProfessionalAppointments);
 

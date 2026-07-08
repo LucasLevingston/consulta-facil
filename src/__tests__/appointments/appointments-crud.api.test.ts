@@ -5,7 +5,7 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
+import { appointmentKeys } from "@/features/appointments/hooks/appointment-keys";
 import { appointmentLifecycleApi } from "@/lib/api/appointments/appointment-lifecycle.api";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
