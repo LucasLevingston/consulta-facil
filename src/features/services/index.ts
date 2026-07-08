@@ -1,12 +1,11 @@
-export { serviceKeys } from "@/hooks/api/services/service-keys";
-export { useCreateService } from "@/hooks/api/services/use-create-service";
-export { useDeactivateService } from "@/hooks/api/services/use-deactivate-service";
-export { useGetProfessionalServices } from "@/hooks/api/services/use-get-professional-services";
-export { useSetConsultationPrice } from "@/hooks/api/services/use-set-consultation-price";
-export { useUpdatePaymentSettings } from "@/hooks/api/services/use-update-payment-settings";
-export { useUpdateService } from "@/hooks/api/services/use-update-service";
-export { professionalSettingsApi } from "@/lib/api/professionals/professional-settings.api";
-export { professionalServicesApi } from "@/lib/api/services/professional-services.api";
+export { serviceKeys } from "@/features/services/hooks/service-keys";
+export { useCreateService } from "@/features/services/hooks/use-create-service";
+export { useDeactivateService } from "@/features/services/hooks/use-deactivate-service";
+export { useGetProfessionalServices } from "@/features/services/hooks/use-get-professional-services";
+export { useSetConsultationPrice } from "@/features/services/hooks/use-set-consultation-price";
+export { useUpdatePaymentSettings } from "@/features/services/hooks/use-update-payment-settings";
+export { useUpdateService } from "@/features/services/hooks/use-update-service";
+export { servicesRepository } from "@/features/services/repositories/services.repository";
 export {
 	type CreateServiceInput,
 	createServiceSchema,
