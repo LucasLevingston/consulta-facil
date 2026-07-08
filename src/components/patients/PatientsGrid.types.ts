@@ -1,4 +1,4 @@
-import type { PatientSummary } from "@/lib/api/patients/patient-profile.api.types";
+import type { PatientSummary } from "@/features/patients";
 
 export interface PatientsGridProps {
 	patients: PatientSummary[];

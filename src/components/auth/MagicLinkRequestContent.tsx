@@ -1,26 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { toast } from "sonner";
 
 import MagicLinkRequestForm from "@/components/forms/auth/MagicLinkRequestForm";
-import { useMagicLinkRequest } from "@/features/auth";
+import { useMagicLinkRequestForm } from "@/features/auth";
 import AuthEmailSentConfirmation from "./AuthEmailSentConfirmation";
 import AuthMobileLogo from "./AuthMobileLogo";
 
 export default function MagicLinkRequestContent() {
-	const [sentTo, setSentTo] = useState<string | null>(null);
-	const request = useMagicLinkRequest();
-
-	async function handleSubmit(email: string) {
-		try {
-			await request.mutateAsync(email);
-			setSentTo(email);
-		} catch {
-			toast.error("Erro ao enviar o link. Tente novamente.");
-		}
-	}
+	const { sentTo, retry, handleSubmit, isPending } = useMagicLinkRequestForm();
 
 	return (
 		<div className="flex flex-1 flex-col items-center justify-center px-6 py-12 lg:px-12">
@@ -35,7 +23,7 @@ export default function MagicLinkRequestContent() {
 								link expira em 15 minutos.
 							</>
 						}
-						onRetry={() => setSentTo(null)}
+						onRetry={retry}
 					/>
 				) : (
 					<>
@@ -49,7 +37,7 @@ export default function MagicLinkRequestContent() {
 						</div>
 						<MagicLinkRequestForm
 							onSubmit={handleSubmit}
-							isPending={request.isPending}
+							isPending={isPending}
 						/>
 					</>
 				)}

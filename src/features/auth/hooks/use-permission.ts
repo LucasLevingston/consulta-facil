@@ -1,6 +1,6 @@
-import { PERMISSIONS } from "@/lib/constants/permissions";
 import type { PermissionKey } from "@/lib/permission-key";
 import { useUserStore } from "@/store/useUserStore";
+import { hasPermission } from "../services/auth.service";
 
 type Attrs = Record<string, unknown>;
 
@@ -18,13 +18,11 @@ type Attrs = Record<string, unknown>;
  */
 export function usePermission() {
 	const { user } = useUserStore();
-	const role = (user?.role ?? "PATIENT") as Parameters<
-		(typeof PERMISSIONS)[PermissionKey]
-	>[0];
+	const role = (user?.role ?? "PATIENT") as Parameters<typeof hasPermission>[0];
 
 	const can = (permission: PermissionKey, attrs?: Attrs): boolean => {
 		if (!user) return false;
-		return PERMISSIONS[permission](role, attrs);
+		return hasPermission(role, permission, attrs);
 	};
 
 	return { can, role };

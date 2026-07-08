@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockPush = vi.fn();
@@ -32,14 +33,40 @@ vi.mock("@/features/auth", async (importOriginal) => {
 			mutateAsync: mockLoginMutateAsync,
 			isPending: false,
 		})),
-		useForgotPassword: vi.fn(() => ({
-			mutateAsync: mockForgotPasswordMutateAsync,
-			isPending: false,
-		})),
-		useMagicLinkRequest: vi.fn(() => ({
-			mutateAsync: mockMagicLinkMutateAsync,
-			isPending: false,
-		})),
+		useForgotPasswordForm: () => {
+			const [sentTo, setSentTo] = useState<string | null>(null);
+			return {
+				sentTo,
+				retry: () => setSentTo(null),
+				isPending: false,
+				handleSubmit: async (email: string) => {
+					try {
+						await mockForgotPasswordMutateAsync(email);
+						setSentTo(email);
+					} catch {
+						const { toast } = await import("sonner");
+						toast.error("Erro ao enviar e-mail. Tente novamente.");
+					}
+				},
+			};
+		},
+		useMagicLinkRequestForm: () => {
+			const [sentTo, setSentTo] = useState<string | null>(null);
+			return {
+				sentTo,
+				retry: () => setSentTo(null),
+				isPending: false,
+				handleSubmit: async (email: string) => {
+					try {
+						await mockMagicLinkMutateAsync(email);
+						setSentTo(email);
+					} catch {
+						const { toast } = await import("sonner");
+						toast.error("Erro ao enviar o link. Tente novamente.");
+					}
+				},
+			};
+		},
 	};
 });
 

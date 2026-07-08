@@ -1,26 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { toast } from "sonner";
 
 import ForgotPasswordForm from "@/components/forms/auth/ForgotPasswordForm";
-import { useForgotPassword } from "@/features/auth";
+import { useForgotPasswordForm } from "@/features/auth";
 import AuthEmailSentConfirmation from "./AuthEmailSentConfirmation";
 import AuthMobileLogo from "./AuthMobileLogo";
 
 export default function ForgotPasswordContent() {
-	const [sentTo, setSentTo] = useState<string | null>(null);
-	const forgotPassword = useForgotPassword();
-
-	async function handleSubmit(email: string) {
-		try {
-			await forgotPassword.mutateAsync(email);
-			setSentTo(email);
-		} catch {
-			toast.error("Erro ao enviar e-mail. Tente novamente.");
-		}
-	}
+	const { sentTo, retry, handleSubmit, isPending } = useForgotPasswordForm();
 
 	return (
 		<div className="flex flex-1 flex-col items-center justify-center px-6 py-12 lg:px-12">
@@ -35,7 +23,7 @@ export default function ForgotPasswordContent() {
 								receberá as instruções de redefinição em instantes.
 							</>
 						}
-						onRetry={() => setSentTo(null)}
+						onRetry={retry}
 					/>
 				) : (
 					<>
@@ -47,10 +35,7 @@ export default function ForgotPasswordContent() {
 								Digite seu e-mail e enviaremos as instruções de redefinição.
 							</p>
 						</div>
-						<ForgotPasswordForm
-							onSubmit={handleSubmit}
-							isPending={forgotPassword.isPending}
-						/>
+						<ForgotPasswordForm onSubmit={handleSubmit} isPending={isPending} />
 					</>
 				)}
 
