@@ -48,26 +48,6 @@ describe("Plans", () => {
 		vi.clearAllMocks();
 	});
 
-	it("exibe o estado de carregamento enquanto os planos carregam", () => {
-		vi.mocked(usePlans).mockReturnValueOnce({
-			data: [],
-			isLoading: true,
-			error: null,
-		} as never);
-		const { container } = render(<Plans />);
-		expect(container.querySelector(".animate-spin")).toBeInTheDocument();
-	});
-
-	it("exibe mensagem de erro quando a busca dos planos falha", () => {
-		vi.mocked(usePlans).mockReturnValueOnce({
-			data: [],
-			isLoading: false,
-			error: new Error("falhou"),
-		} as never);
-		render(<Plans />);
-		expect(screen.getByText("Erro ao carregar dados")).toBeInTheDocument();
-	});
-
 	it("lista os planos ordenados por displayOrder", () => {
 		vi.mocked(usePlans).mockReturnValueOnce({
 			data: [

@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/billing/repositories/billing-coupon.repository", () => ({
@@ -23,28 +23,32 @@ import { useApplyCoupon } from "@/features/billing/hooks/use-apply-coupon";
 import { useUserCouponHistory } from "@/features/billing/hooks/use-user-coupon-history";
 import { useValidateCoupon } from "@/features/billing/hooks/use-validate-coupon";
 
-function makeWrapper() {
+function makeWrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("billing coupon hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("useAdminCouponUsages has data/isLoading", () => {
+	it("useAdminCouponUsages resolves data", async () => {
 		const { result } = renderHook(() => useAdminCouponUsages(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
-	it("useAdminCoupons has data/isLoading", () => {
+	it("useAdminCoupons resolves data", async () => {
 		const { result } = renderHook(() => useAdminCoupons(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
 	it("useUserCouponHistory has data/isLoading", () => {
 		const { result } = renderHook(() => useUserCouponHistory("u1"), {

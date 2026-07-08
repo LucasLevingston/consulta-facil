@@ -46,10 +46,12 @@ describe("useMyExams", () => {
 });
 
 describe("useExamLabs", () => {
-	it("returns data and isLoading", () => {
-		const { result } = renderHook(() => useExamLabs(), { wrapper: wrapper() });
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+	it("resolves with data", async () => {
+		const { result } = renderHook(() => useExamLabs(), {
+			wrapper: wrapper(true),
+		});
+		await waitFor(() => expect(result.current).not.toBeNull());
+		expect(result.current.data).toEqual([]);
 	});
 });
 

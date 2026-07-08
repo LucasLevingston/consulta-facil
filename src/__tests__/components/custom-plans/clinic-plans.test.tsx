@@ -28,27 +28,6 @@ describe("ClinicPlans", () => {
 		vi.clearAllMocks();
 	});
 
-	it("exibe o estado de carregamento quando a subscription está carregando", () => {
-		vi.mocked(useMySubscription).mockReturnValueOnce({
-			data: null,
-			isLoading: true,
-			error: null,
-		} as never);
-		const { container } = render(<ClinicPlans />);
-		expect(container.querySelector(".animate-spin")).toBeInTheDocument();
-		expect(screen.queryByText("Planos pagos")).not.toBeInTheDocument();
-	});
-
-	it("exibe mensagem de erro quando a busca da subscription falha", () => {
-		vi.mocked(useMySubscription).mockReturnValueOnce({
-			data: null,
-			isLoading: false,
-			error: new Error("falhou"),
-		} as never);
-		render(<ClinicPlans />);
-		expect(screen.getByText("Erro ao carregar dados")).toBeInTheDocument();
-	});
-
 	it("exibe as informações de freemium e a calculadora de preço", () => {
 		render(<ClinicPlans />);
 		expect(screen.getByText(/profissionais grátis/)).toBeInTheDocument();

@@ -1,7 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import { CreditCard } from "lucide-react";
 
 import PageHeader from "@/components/custom/page-header";
 import Plans from "@/components/custom/plans/Plans";
+import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 
 export default function BillingPage() {
 	return (
@@ -11,7 +14,9 @@ export default function BillingPage() {
 				description="Gerencie seu plano e acesso à plataforma."
 				icon={<CreditCard className="h-6 w-6" />}
 			/>
-			<Plans />
+			<SuspenseBoundary>
+				<Plans />
+			</SuspenseBoundary>
 		</div>
 	);
 }

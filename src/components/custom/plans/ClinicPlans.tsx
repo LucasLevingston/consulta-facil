@@ -3,7 +3,6 @@
 import { toast } from "sonner";
 import { useMyClinic } from "@/features/clinics";
 import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
-import { QueryBoundary } from "@/providers/query-boundary";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import { ClinicFreemiumInfo } from "./ClinicFreemiumInfo";
 import { clinicPlans } from "./ClinicPlans.utils";
@@ -13,8 +12,8 @@ import { PlanCard } from "./plan-card";
 import { SubscriptionBanner } from "./subscription-banner";
 
 export default function ClinicPlans() {
-	const { data: subscription, isLoading, error } = useMySubscription();
-	const { data: myClinics = [] } = useMyClinic();
+	const { data: subscription } = useMySubscription();
+	const { data: myClinics } = useMyClinic();
 	const checkout = useCreateCheckout();
 
 	const myClinic = myClinics[0] ?? null;
@@ -27,7 +26,7 @@ export default function ClinicPlans() {
 	}
 
 	return (
-		<QueryBoundary isLoading={isLoading} error={error}>
+		<>
 			<ClinicFreemiumInfo />
 			{myClinic && <ClinicUsageCard clinic={myClinic} />}
 			<ClinicPriceCalculator initialProfessionals={currentProfessionals} />
@@ -56,6 +55,6 @@ export default function ClinicPlans() {
 					/>
 				))}
 			</div>
-		</QueryBoundary>
+		</>
 	);
 }

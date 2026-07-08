@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/billing/repositories/billing-payment.repository", () => ({
@@ -24,35 +24,38 @@ import { useBillingPayment } from "@/features/billing/hooks/use-billing-payment"
 import { useMyBillingPayments } from "@/features/billing/hooks/use-my-billing-payments";
 import { useMyInvoices } from "@/features/billing/hooks/use-my-invoices";
 
-function makeWrapper() {
+function makeWrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			useSuspense
+				? createElement(Suspense, { fallback: null }, children)
+				: children,
+		);
 }
 
 describe("billing payment hooks", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("useAdminBillingPayments has data/isLoading", () => {
+	it("useAdminBillingPayments resolves data", async () => {
 		const { result } = renderHook(() => useAdminBillingPayments(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
-	it("useAdminInvoices has data/isLoading", () => {
+	it("useAdminInvoices resolves data", async () => {
 		const { result } = renderHook(() => useAdminInvoices(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
-	it("useMyInvoices has data/isLoading", () => {
+	it("useMyInvoices resolves data", async () => {
 		const { result } = renderHook(() => useMyInvoices(), {
-			wrapper: makeWrapper(),
+			wrapper: makeWrapper(true),
 		});
-		expect(result.current).toHaveProperty("data");
-		expect(result.current).toHaveProperty("isLoading");
+		await waitFor(() => expect(result.current.data).toBeDefined());
 	});
 	it("useMyBillingPayments has data/isLoading", () => {
 		const { result } = renderHook(() => useMyBillingPayments("u1"), {
