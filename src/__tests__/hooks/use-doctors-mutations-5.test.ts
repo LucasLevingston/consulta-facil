@@ -33,8 +33,8 @@ vi.mock("@/lib/api/professionals/my-professional-profile.api", () => ({
 	getMyProfessionalProfileApi: vi.fn(),
 }));
 
-import { useCreateProfessional } from "@/hooks/api/professionals/use-create-professional";
-import { useRejectApplication } from "@/hooks/api/professionals/use-reject-application";
+import { useCreateProfessional } from "@/features/professionals/hooks/use-create-professional";
+import { useRejectApplication } from "@/features/professionals/hooks/use-reject-application";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 
 const mockReject = vi.mocked(professionalApplicationsApi.reject);

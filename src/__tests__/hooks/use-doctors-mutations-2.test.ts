@@ -33,7 +33,7 @@ vi.mock("@/lib/api/professionals/my-professional-profile.api", () => ({
 	getMyProfessionalProfileApi: vi.fn(),
 }));
 
-import { useMyProfessionalProfile } from "@/hooks/api/professionals/use-my-professional-profile";
+import { useMyProfessionalProfile } from "@/features/professionals/hooks/use-my-professional-profile";
 import { getMyProfessionalProfileApi } from "@/lib/api/professionals/my-professional-profile.api";
 
 const mockGetMyProfile = vi.mocked(getMyProfessionalProfileApi);

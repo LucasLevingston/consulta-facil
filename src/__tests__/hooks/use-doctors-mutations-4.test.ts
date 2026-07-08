@@ -33,8 +33,8 @@ vi.mock("@/lib/api/professionals/my-professional-profile.api", () => ({
 	getMyProfessionalProfileApi: vi.fn(),
 }));
 
-import { useApproveApplication } from "@/hooks/api/professionals/use-approve-application";
-import { useSearchProfessionals } from "@/hooks/api/professionals/use-search-professionals";
+import { useApproveApplication } from "@/features/professionals/hooks/use-approve-application";
+import { useSearchProfessionals } from "@/features/professionals/hooks/use-search-professionals";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 

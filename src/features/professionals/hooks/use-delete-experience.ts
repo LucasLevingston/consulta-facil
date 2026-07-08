@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
-import type { UpdateBioInput } from "@/lib/schemas/professional/update-bio.schema";
+import { professionalPortfolioRepository } from "../repositories/professional-portfolio.repository";
 import { professionalKeys } from "./professional-keys";
 
-export function useUpdateBio() {
+export function useDeleteExperience() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (data: UpdateBioInput) => professionalProfileApi.updateBio(data),
+		mutationFn: (experienceId: string) =>
+			professionalPortfolioRepository.deleteExperience(experienceId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

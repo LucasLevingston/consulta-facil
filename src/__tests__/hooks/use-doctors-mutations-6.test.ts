@@ -33,8 +33,8 @@ vi.mock("@/lib/api/professionals/my-professional-profile.api", () => ({
 	getMyProfessionalProfileApi: vi.fn(),
 }));
 
-import { useDeleteProfessional } from "@/hooks/api/professionals/use-delete-professional";
-import { useUpdateProfessional } from "@/hooks/api/professionals/use-update-professional";
+import { useDeleteProfessional } from "@/features/professionals/hooks/use-delete-professional";
+import { useUpdateProfessional } from "@/features/professionals/hooks/use-update-professional";
 import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 
 const mockDelete = vi.mocked(professionalProfileApi.delete);
