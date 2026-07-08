@@ -21,7 +21,7 @@ vi.mock("@/lib/api/patients/patient-health.api", () => ({
 	},
 }));
 
-import { useProfessionalPatients } from "@/hooks/api/patients/use-professional-patients";
+import { useProfessionalPatients } from "@/features/patients/hooks/use-professional-patients";
 import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 
 const mockGetProfessionalPatients = vi.mocked(

@@ -21,8 +21,8 @@ vi.mock("@/lib/api/patients/patient-health.api", () => ({
 	},
 }));
 
-import { useMedicalRecords } from "@/hooks/api/patients/use-medical-records";
-import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
+import { useMedicalRecords } from "@/features/patients/hooks/use-medical-records";
+import { useMyProfile } from "@/features/patients/hooks/use-my-profile";
 import { patientHealthApi } from "@/lib/api/patients/patient-health.api";
 import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 

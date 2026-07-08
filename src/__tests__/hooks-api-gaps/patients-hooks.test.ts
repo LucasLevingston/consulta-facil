@@ -26,13 +26,13 @@ vi.mock("@/lib/api/patients/patient-documents.api", () => ({
 	},
 }));
 
-import { useAddEmergencyContact } from "@/hooks/api/patients/use-add-emergency-contact";
-import { useAddVaccine } from "@/hooks/api/patients/use-add-vaccine";
-import { useDeleteDocument } from "@/hooks/api/patients/use-delete-document";
-import { useDeleteEmergencyContact } from "@/hooks/api/patients/use-delete-emergency-contact";
-import { useDeleteVaccine } from "@/hooks/api/patients/use-delete-vaccine";
-import { useUpdateEmergencyContact } from "@/hooks/api/patients/use-update-emergency-contact";
-import { useUploadDocument } from "@/hooks/api/patients/use-upload-document";
+import { useAddEmergencyContact } from "@/features/patients/hooks/use-add-emergency-contact";
+import { useAddVaccine } from "@/features/patients/hooks/use-add-vaccine";
+import { useDeleteDocument } from "@/features/patients/hooks/use-delete-document";
+import { useDeleteEmergencyContact } from "@/features/patients/hooks/use-delete-emergency-contact";
+import { useDeleteVaccine } from "@/features/patients/hooks/use-delete-vaccine";
+import { useUpdateEmergencyContact } from "@/features/patients/hooks/use-update-emergency-contact";
+import { useUploadDocument } from "@/features/patients/hooks/use-upload-document";
 import { patientDocumentsApi } from "@/lib/api/patients/patient-documents.api";
 import { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
 import { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";

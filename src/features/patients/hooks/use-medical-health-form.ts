@@ -11,8 +11,8 @@ import {
 	useMedicalRecords,
 	useUpdateMedicalRecords,
 } from "@/features/patients";
-import { getBmiLabel } from "@/utils/bmi";
 import { toNumber } from "@/utils/to-number";
+import { getBmiLabel } from "../services/bmi.service";
 
 export { getBmiLabel, toNumber };
 

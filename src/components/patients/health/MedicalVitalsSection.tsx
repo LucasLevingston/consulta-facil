@@ -8,7 +8,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getBmiLabel } from "@/utils/bmi";
+import { getBmiLabel } from "@/features/patients";
 import { toNumber } from "@/utils/to-number";
 import { BloodTypeSelect } from "./BloodTypeSelect";
 import type { MedicalVitalsSectionProps } from "./MedicalVitalsSection.types";

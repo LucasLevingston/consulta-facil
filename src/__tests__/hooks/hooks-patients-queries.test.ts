@@ -19,10 +19,10 @@ vi.mock("@/lib/api/patients/patient-documents.api", () => ({
 	patientDocumentsApi: { listDocuments: vi.fn() },
 }));
 
-import { useAllAdminPatients } from "@/hooks/api/patients/use-all-admin-patients";
-import { useEmergencyContacts } from "@/hooks/api/patients/use-emergency-contacts";
-import { usePatientDocuments } from "@/hooks/api/patients/use-patient-documents";
-import { useVaccines } from "@/hooks/api/patients/use-vaccines";
+import { useAllAdminPatients } from "@/features/patients/hooks/use-all-admin-patients";
+import { useEmergencyContacts } from "@/features/patients/hooks/use-emergency-contacts";
+import { usePatientDocuments } from "@/features/patients/hooks/use-patient-documents";
+import { useVaccines } from "@/features/patients/hooks/use-vaccines";
 import { patientDocumentsApi } from "@/lib/api/patients/patient-documents.api";
 import { patientEmergencyContactsApi } from "@/lib/api/patients/patient-emergency-contacts.api";
 import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";

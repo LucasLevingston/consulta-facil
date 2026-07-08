@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getBmiLabel } from "@/utils/bmi";
+import { getBmiLabel } from "@/features/patients/services/bmi.service";
 
 describe("getBmiLabel", () => {
 	it("below 18.5 → Abaixo do peso", () => {

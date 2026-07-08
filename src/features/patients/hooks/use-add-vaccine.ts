@@ -1,14 +1,14 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { patientVaccinesApi } from "@/lib/api/patients/patient-vaccines.api";
+import { patientsRepository } from "../repositories/patients.repository";
 import { patientKeys } from "./patient-keys";
 
 export function useAddVaccine() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: patientVaccinesApi.addVaccine,
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
+		mutationFn: patientsRepository.addVaccine,
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: patientKeys.vaccines }),
 	});
 }

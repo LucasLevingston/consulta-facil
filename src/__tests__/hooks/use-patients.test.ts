@@ -20,8 +20,8 @@ vi.mock("@/lib/api/patients/patient-profile.api", () => ({
 	},
 }));
 
-import { useMyProfile } from "@/hooks/api/patients/use-my-profile";
-import { usePatientProfile } from "@/hooks/api/patients/use-patient-profile";
+import { useMyProfile } from "@/features/patients/hooks/use-my-profile";
+import { usePatientProfile } from "@/features/patients/hooks/use-patient-profile";
 import { patientProfileApi } from "@/lib/api/patients/patient-profile.api";
 
 const mockGetMine = vi.mocked(patientProfileApi.getMyProfile);
