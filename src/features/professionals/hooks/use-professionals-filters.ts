@@ -2,12 +2,12 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { useProfessionals } from "@/hooks/api/professionals/use-professionals";
-import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
 import { ITEMS_PER_PAGE } from "@/utils/constants/pagination";
 import { RADIUS_OPTIONS } from "@/utils/constants/radius-options";
 import type { UseProfessionalsFiltersReturn } from "./UseProfessionalsFiltersReturn.types";
+import { useProfessionals } from "./use-professionals";
 import { useProfessionalsLocation } from "./use-professionals-location";
+import { useProfessionalsNearby } from "./use-professionals-nearby";
 
 export type { ProfessionalsFiltersActions } from "./ProfessionalsFiltersActions.types";
 export type { ProfessionalsLocationState } from "./ProfessionalsLocationState.types";

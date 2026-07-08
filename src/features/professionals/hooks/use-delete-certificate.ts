@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
+import { professionalPortfolioRepository } from "../repositories/professional-portfolio.repository";
 import { professionalKeys } from "./professional-keys";
 
-export function useDeleteExperience() {
+export function useDeleteCertificate() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (experienceId: string) => professionalPortfolioApi.deleteExperience(experienceId),
+		mutationFn: (certificateId: string) =>
+			professionalPortfolioRepository.deleteCertificate(certificateId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: professionalKeys.all });
 		},

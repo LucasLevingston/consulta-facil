@@ -33,14 +33,14 @@ vi.mock("@/lib/api/professionals/professionals.api", () => ({
 	},
 }));
 
-import { useProfessionalRatings } from "@/hooks/api/professionals/use-professional-ratings";
-import { useUpdateAddress } from "@/hooks/api/professionals/use-update-address";
-import { useUpdateBio } from "@/hooks/api/professionals/use-update-bio";
-import { useUpdateCertificate } from "@/hooks/api/professionals/use-update-certificate";
-import { useUpdateCouncil } from "@/hooks/api/professionals/use-update-council";
-import { useUpdateEducation } from "@/hooks/api/professionals/use-update-education";
-import { useUpdateExperience } from "@/hooks/api/professionals/use-update-experience";
-import { useUpdateSocialLinks } from "@/hooks/api/professionals/use-update-social-links";
+import { useProfessionalRatings } from "@/features/professionals/hooks/use-professional-ratings";
+import { useUpdateAddress } from "@/features/professionals/hooks/use-update-address";
+import { useUpdateBio } from "@/features/professionals/hooks/use-update-bio";
+import { useUpdateCertificate } from "@/features/professionals/hooks/use-update-certificate";
+import { useUpdateCouncil } from "@/features/professionals/hooks/use-update-council";
+import { useUpdateEducation } from "@/features/professionals/hooks/use-update-education";
+import { useUpdateExperience } from "@/features/professionals/hooks/use-update-experience";
+import { useUpdateSocialLinks } from "@/features/professionals/hooks/use-update-social-links";
 import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 import { professionalProfileApi } from "@/lib/api/professionals/professional-profile.api";
 import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";

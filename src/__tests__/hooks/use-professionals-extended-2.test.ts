@@ -26,9 +26,9 @@ vi.mock("@/lib/api/professionals/professional-applications.api", () => ({
 	},
 }));
 
-import { useApplicationStatus } from "@/hooks/api/professionals/use-application-status";
-import { useProfessional } from "@/hooks/api/professionals/use-professional";
-import { useProfessionalsNearby } from "@/hooks/api/professionals/use-professionals-nearby";
+import { useApplicationStatus } from "@/features/professionals/hooks/use-application-status";
+import { useProfessional } from "@/features/professionals/hooks/use-professional";
+import { useProfessionalsNearby } from "@/features/professionals/hooks/use-professionals-nearby";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { professionalsListingApi } from "@/lib/api/professionals/professionals.api";
+import { professionalsListingRepository } from "../repositories/professionals-listing.repository";
 import { professionalKeys } from "./professional-keys";
 
 export function useProfessional(id: string) {
 	return useSuspenseQuery({
 		queryKey: professionalKeys.detail(id),
-		queryFn: () => professionalsListingApi.getById(id),
+		queryFn: () => professionalsListingRepository.getById(id),
 	});
 }

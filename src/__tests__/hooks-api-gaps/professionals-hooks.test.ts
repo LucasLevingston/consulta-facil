@@ -17,12 +17,12 @@ vi.mock("@/lib/api/professionals/professional-portfolio.api", () => ({
 	},
 }));
 
-import { useAddCertificate } from "@/hooks/api/professionals/use-add-certificate";
-import { useAddEducation } from "@/hooks/api/professionals/use-add-education";
-import { useAddExperience } from "@/hooks/api/professionals/use-add-experience";
-import { useDeleteCertificate } from "@/hooks/api/professionals/use-delete-certificate";
-import { useDeleteEducation } from "@/hooks/api/professionals/use-delete-education";
-import { useDeleteExperience } from "@/hooks/api/professionals/use-delete-experience";
+import { useAddCertificate } from "@/features/professionals/hooks/use-add-certificate";
+import { useAddEducation } from "@/features/professionals/hooks/use-add-education";
+import { useAddExperience } from "@/features/professionals/hooks/use-add-experience";
+import { useDeleteCertificate } from "@/features/professionals/hooks/use-delete-certificate";
+import { useDeleteEducation } from "@/features/professionals/hooks/use-delete-education";
+import { useDeleteExperience } from "@/features/professionals/hooks/use-delete-experience";
 import { professionalPortfolioApi } from "@/lib/api/professionals/professional-portfolio.api";
 
 const mockAddEducation = vi.mocked(professionalPortfolioApi.addEducation);
