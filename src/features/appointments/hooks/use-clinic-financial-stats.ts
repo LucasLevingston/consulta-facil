@@ -3,10 +3,10 @@
 import { useQueries } from "@tanstack/react-query";
 import { useMemo } from "react";
 import type { z } from "zod";
-import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 import type { clinicMemberSchema } from "@/lib/schemas/clinic/clinic-member.schema";
 import { FREE_CONSULTS_PER_PROFESSIONAL } from "@/utils/constants/free-consults-per-professional";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
+import { appointmentsRepository } from "../repositories/appointments.repository";
 import { appointmentKeys } from "./appointment-keys";
 
 type ClinicMember = z.infer<typeof clinicMemberSchema>;
@@ -15,7 +15,12 @@ export function useClinicFinancialStats(members: ClinicMember[]) {
 	const results = useQueries({
 		queries: members.map((m) => ({
 			queryKey: appointmentKeys.byProfessional(m.professionalProfileId),
-			queryFn: () => appointmentsCrudApi.getByProfessional(m.professionalProfileId, 0, 100),
+			queryFn: () =>
+				appointmentsRepository.getByProfessional(
+					m.professionalProfileId,
+					0,
+					100,
+				),
 		})),
 	});
 
@@ -27,7 +32,10 @@ export function useClinicFinancialStats(members: ClinicMember[]) {
 				const appts = results[i]?.data?.content ?? [];
 				const completed = appts.filter((a) => a.status === "COMPLETED").length;
 				const freeUsed = Math.min(completed, FREE_CONSULTS_PER_PROFESSIONAL);
-				const paidCount = Math.max(0, completed - FREE_CONSULTS_PER_PROFESSIONAL);
+				const paidCount = Math.max(
+					0,
+					completed - FREE_CONSULTS_PER_PROFESSIONAL,
+				);
 				return { member, completed, freeUsed, paidCount };
 			}),
 		[results, members],

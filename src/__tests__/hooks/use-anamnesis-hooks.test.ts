@@ -15,10 +15,10 @@ vi.mock("@/lib/api/anamnesis/anamnesis.api", () => ({
 	},
 }));
 
-import { useAnamnesis } from "@/hooks/api/anamnesis/use-anamnesis";
-import { useProntuario } from "@/hooks/api/anamnesis/use-prontuario";
-import { useSaveAnamnesis } from "@/hooks/api/anamnesis/use-save-anamnesis";
-import { useSaveProntuario } from "@/hooks/api/anamnesis/use-save-prontuario";
+import { useAnamnesis } from "@/features/appointments/hooks/use-anamnesis";
+import { useProntuario } from "@/features/appointments/hooks/use-prontuario";
+import { useSaveAnamnesis } from "@/features/appointments/hooks/use-save-anamnesis";
+import { useSaveProntuario } from "@/features/appointments/hooks/use-save-prontuario";
 import { anamnesisApi } from "@/lib/api/anamnesis/anamnesis.api";
 
 const mockGetAnamnesis = vi.mocked(anamnesisApi.getAnamnesis);

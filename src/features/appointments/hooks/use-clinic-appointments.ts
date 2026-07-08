@@ -2,15 +2,15 @@
 
 import { useQueries } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
+import { appointmentsRepository } from "../repositories/appointments.repository";
 import { appointmentKeys } from "./appointment-keys";
 
 export function useClinicAppointments(targetIds: string[]) {
 	const results = useQueries({
 		queries: targetIds.map((id) => ({
 			queryKey: appointmentKeys.byProfessional(id),
-			queryFn: () => appointmentsCrudApi.getByProfessional(id, 0, 100),
+			queryFn: () => appointmentsRepository.getByProfessional(id, 0, 100),
 		})),
 	});
 

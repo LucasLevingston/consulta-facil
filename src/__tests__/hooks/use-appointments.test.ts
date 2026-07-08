@@ -18,9 +18,9 @@ vi.mock("@/lib/api/appointments/appointments.api", () => ({
 	},
 }));
 
-import { useAppointment } from "@/hooks/api/appointments/use-appointment";
-import { usePatientAppointments } from "@/hooks/api/appointments/use-patient-appointments";
-import { useProfessionalAppointments } from "@/hooks/api/appointments/use-professional-appointments";
+import { useAppointment } from "@/features/appointments/hooks/use-appointment";
+import { usePatientAppointments } from "@/features/appointments/hooks/use-patient-appointments";
+import { useProfessionalAppointments } from "@/features/appointments/hooks/use-professional-appointments";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockByPatient = vi.mocked(appointmentsCrudApi.getByPatient);

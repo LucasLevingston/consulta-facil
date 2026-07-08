@@ -22,8 +22,8 @@ vi.mock("@/lib/api/appointments/appointment-lifecycle.api", () => ({
 	},
 }));
 
-import { useScheduleAppointment } from "@/hooks/api/appointments/use-schedule-appointment";
-import { useSetModality } from "@/hooks/api/appointments/use-set-modality";
+import { useScheduleAppointment } from "@/features/appointments/hooks/use-schedule-appointment";
+import { useSetModality } from "@/features/appointments/hooks/use-set-modality";
 import { appointmentLifecycleApi } from "@/lib/api/appointments/appointment-lifecycle.api";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 

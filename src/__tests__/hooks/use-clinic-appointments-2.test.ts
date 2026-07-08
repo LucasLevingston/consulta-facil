@@ -12,7 +12,7 @@ vi.mock("@/lib/api/appointments/appointments.api", () => ({
 	},
 }));
 
-import { useClinicFinancialStats } from "@/hooks/api/appointments/use-clinic-financial-stats";
+import { useClinicFinancialStats } from "@/features/appointments/hooks/use-clinic-financial-stats";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockGetByProfessional = vi.mocked(appointmentsCrudApi.getByProfessional);

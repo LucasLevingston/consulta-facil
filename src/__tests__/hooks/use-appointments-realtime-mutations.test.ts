@@ -24,13 +24,13 @@ vi.mock("@/lib/api/appointments/appointment-ratings.api", () => ({
 	appointmentRatingsApi: { rate: vi.fn() },
 }));
 
-import { useCallPatient } from "@/hooks/api/appointments/use-call-patient";
-import { useCheckInByQr } from "@/hooks/api/appointments/use-check-in-by-qr";
-import { useCheckInToken } from "@/hooks/api/appointments/use-check-in-token";
-import { useCreatePayment } from "@/hooks/api/appointments/use-create-payment";
-import { useGenerateMeetLink } from "@/hooks/api/appointments/use-generate-meet-link";
-import { useQueue } from "@/hooks/api/appointments/use-queue";
-import { useRateAppointment } from "@/hooks/api/appointments/use-rate-appointment";
+import { useCallPatient } from "@/features/appointments/hooks/use-call-patient";
+import { useCheckInByQr } from "@/features/appointments/hooks/use-check-in-by-qr";
+import { useCheckInToken } from "@/features/appointments/hooks/use-check-in-token";
+import { useCreatePayment } from "@/features/appointments/hooks/use-create-payment";
+import { useGenerateMeetLink } from "@/features/appointments/hooks/use-generate-meet-link";
+import { useQueue } from "@/features/appointments/hooks/use-queue";
+import { useRateAppointment } from "@/features/appointments/hooks/use-rate-appointment";
 import { appointmentCheckinApi } from "@/lib/api/appointments/appointment-checkin.api";
 import { appointmentPaymentApi } from "@/lib/api/appointments/appointment-payment.api";
 import { appointmentRatingsApi } from "@/lib/api/appointments/appointment-ratings.api";

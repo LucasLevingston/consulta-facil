@@ -15,8 +15,8 @@ vi.mock("@/lib/api/appointments/appointments.api", () => ({
 	},
 }));
 
-import { appointmentKeys } from "@/hooks/api/appointments/appointment-keys";
-import { useAllAdminAppointments } from "@/hooks/api/appointments/use-all-admin-appointments";
+import { appointmentKeys } from "@/features/appointments/hooks/appointment-keys";
+import { useAllAdminAppointments } from "@/features/appointments/hooks/use-all-admin-appointments";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockGetAll = vi.mocked(appointmentsCrudApi.getAll);

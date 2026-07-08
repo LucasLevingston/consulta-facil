@@ -22,8 +22,8 @@ vi.mock("@/lib/api/appointments/appointment-lifecycle.api", () => ({
 	},
 }));
 
-import { useDeleteAppointment } from "@/hooks/api/appointments/use-delete-appointment";
-import { useRescheduleAppointment } from "@/hooks/api/appointments/use-reschedule-appointment";
+import { useDeleteAppointment } from "@/features/appointments/hooks/use-delete-appointment";
+import { useRescheduleAppointment } from "@/features/appointments/hooks/use-reschedule-appointment";
 import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
 
 const mockDelete = vi.mocked(appointmentsCrudApi.delete);
