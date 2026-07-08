@@ -201,9 +201,13 @@ src/
 
 ## Deploy
 
-### Produção (AWS ECS Fargate)
+### Produção (Vercel + Railway)
 
-Deploy automático via GitHub Actions ao push em `main`. Infraestrutura gerenciada por Terraform (`../api/infra/`).
+Frontend em produção roda na Vercel, deploy automático via GitHub Actions ao push em `master`. Backend (API Spring Boot) roda no Railway.
+
+### Vercel
+
+Conectar o repositório no painel da Vercel. Definir `NEXT_PUBLIC_API_URL` apontando para a API em produção (Railway).
 
 ### Docker
 
@@ -211,7 +215,3 @@ Deploy automático via GitHub Actions ao push em `main`. Infraestrutura gerencia
 docker build -t consulta-facil-web .
 cd ../web && docker compose up -d
 ```
-
-### Vercel
-
-Conectar o repositório no painel da Vercel. Definir `NEXT_PUBLIC_API_URL` apontando para a API em produção.
