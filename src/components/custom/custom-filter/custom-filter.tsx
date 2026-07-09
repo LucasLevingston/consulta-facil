@@ -9,13 +9,11 @@ import { cn } from "@/lib/utils/cn";
 import { CustomFilterControls } from "./CustomFilterControls";
 import type { CustomFilterProps } from "./CustomFilterProps.types";
 
-export type {
-	CustomFilterProps,
-	FilterSearchConfig,
-	FilterSelectConfig,
-	FilterSelectOption,
-	FilterSwitchConfig,
-} from "./custom-filter.types";
+export type { CustomFilterProps } from "./CustomFilterProps.types";
+export type { FilterSearchConfig } from "./FilterSearchConfig.types";
+export type { FilterSelectConfig } from "./FilterSelectConfig.types";
+export type { FilterSelectOption } from "./FilterSelectOption.types";
+export type { FilterSwitchConfig } from "./FilterSwitchConfig.types";
 
 export function CustomFilter({
 	search,

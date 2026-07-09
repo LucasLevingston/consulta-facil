@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import ProfessionalsContent from "@/components/custom/ProfessionalsContent";
+import ProfessionalsContent from "@/components/custom/professionals-content";
 
 export const dynamic = "force-dynamic";
 

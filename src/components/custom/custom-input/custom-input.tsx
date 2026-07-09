@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils/cn";
 import { getIconByFormName } from "@/utils/get-icon-by-form-name";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import type { CustomInputProps } from "./custom-input.types";
 
 export const CustomInput = ({

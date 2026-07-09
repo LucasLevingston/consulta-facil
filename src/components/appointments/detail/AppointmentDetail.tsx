@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { VideoRoom } from "@/components/custom/VideoRoom";
+import { VideoRoom } from "@/components/custom/video-room";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { usePermission, useUserStore } from "@/features/auth";
 import { useRoomToken } from "@/features/video";
