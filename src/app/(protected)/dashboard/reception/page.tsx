@@ -1,5 +1,3 @@
-"use client";
-
 import { MonitorCheck } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
 import { CheckInPanel } from "@/components/reception/CheckInPanel";

@@ -8,96 +8,25 @@ import {
 	Users,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { ErrorState } from "@/components/custom/error-state/error-state";
 import { LoadingPage } from "@/components/custom/loading/loading-page";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAllAdminAppointments } from "@/features/appointments";
 import { usePermission } from "@/features/auth";
-import { useAllUsers } from "@/features/users";
-
-function StatCard({
-	title,
-	value,
-	sub,
-	icon,
-}: {
-	title: string;
-	value: string | number;
-	sub?: string;
-	icon: React.ReactNode;
-}) {
-	return (
-		<Card>
-			<CardContent className="p-5">
-				<div className="flex items-center justify-between">
-					<div>
-						<p className="text-sm text-muted-foreground">{title}</p>
-						<p className="mt-1 text-2xl font-bold text-foreground">{value}</p>
-						{sub && (
-							<p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>
-						)}
-					</div>
-					<div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-						{icon}
-					</div>
-				</div>
-			</CardContent>
-		</Card>
-	);
-}
+import { StatCard } from "./stat-card";
+import { useUsageStats } from "./use-usage-stats";
 
 function UsageStatsContent() {
-	const appointmentsQuery = useAllAdminAppointments(0, 1000);
-	const { data: usersData } = useAllUsers(0, 1000);
+	const { totalUsers, stats, isLoading, error, refetch } = useUsageStats();
 
-	const appointments = appointmentsQuery.data?.content ?? [];
-	const totalUsers = usersData.totalElements;
-
-	const stats = useMemo(() => {
-		const totalAppointments = appointmentsQuery.data?.totalElements ?? 0;
-		const completed = appointments.filter(
-			(a) => a.status === "COMPLETED",
-		).length;
-		const pending = appointments.filter((a) => a.status === "PENDING").length;
-		const cancelled = appointments.filter(
-			(a) => a.status === "CANCELED",
-		).length;
-
-		const totalRevenue = appointments
-			.filter((a) => a.paymentStatus === "PAID")
-			.reduce((sum, a) => sum + (a.paymentAmount ?? 0), 0);
-
-		const avgTicket =
-			completed > 0
-				? appointments
-						.filter((a) => a.status === "COMPLETED" && a.paymentAmount)
-						.reduce((sum, a) => sum + (a.paymentAmount ?? 0), 0) / completed
-				: 0;
-
-		const professionals = new Set(
-			appointments.map((a) => a.professionalName).filter(Boolean),
-		).size;
-
-		return {
-			totalAppointments,
-			completed,
-			pending,
-			cancelled,
-			totalRevenue,
-			avgTicket,
-			professionals,
-		};
-	}, [appointments, appointmentsQuery.data?.totalElements]);
-
-	if (appointmentsQuery.isLoading) {
+	if (isLoading) {
 		return <LoadingPage />;
 	}
 
-	if (appointmentsQuery.error) {
-		return <ErrorState onRetry={() => appointmentsQuery.refetch()} />;
+	if (error) {
+		return <ErrorState onRetry={() => refetch()} />;
 	}
 
 	return (

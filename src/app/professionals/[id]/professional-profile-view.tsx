@@ -40,9 +40,11 @@ function ProfessionalProfileContent({ id }: { id: string }) {
 			<ProfessionalHeroCard
 				professional={professional}
 				initials={initials}
-				hasUser={!!user}
-				messagePending={startConversation.isPending}
-				onMessage={handleMessage}
+				messaging={{
+					available: !!user,
+					pending: startConversation.isPending,
+					onSend: handleMessage,
+				}}
 				onSchedule={() =>
 					router.push(
 						`/dashboard/appointments/create?professionalid=${professional.id}`,

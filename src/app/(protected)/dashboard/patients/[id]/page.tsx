@@ -1,15 +1,7 @@
-"use client";
+import { PatientDetailView } from "./patient-detail-view";
 
-import { useParams } from "next/navigation";
-import { Suspense } from "react";
-
-import { PatientDetailContent } from "@/components/patients/detail/PatientDetailContent";
+export const dynamic = "force-dynamic";
 
 export default function PatientDetailPage() {
-	const { id } = useParams<{ id: string }>();
-	return (
-		<Suspense>
-			<PatientDetailContent id={id} />
-		</Suspense>
-	);
+	return <PatientDetailView />;
 }
