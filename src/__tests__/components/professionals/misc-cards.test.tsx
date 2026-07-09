@@ -218,37 +218,31 @@ describe("ProfessionalHeroCard", () => {
 			<ProfessionalHeroCard
 				professional={professional}
 				initials="AS"
-				hasUser={true}
-				messagePending={false}
-				onMessage={vi.fn()}
+				messaging={{ available: true, pending: false, onSend: vi.fn() }}
 				onSchedule={vi.fn()}
 			/>,
 		);
 		expect(screen.getByText("Dra. Ana Silva")).toBeInTheDocument();
 	});
 
-	it("renderiza o botão de mensagem quando hasUser=true", () => {
+	it("renderiza o botão de mensagem quando messaging.available=true", () => {
 		render(
 			<ProfessionalHeroCard
 				professional={professional}
 				initials="AS"
-				hasUser={true}
-				messagePending={false}
-				onMessage={vi.fn()}
+				messaging={{ available: true, pending: false, onSend: vi.fn() }}
 				onSchedule={vi.fn()}
 			/>,
 		);
 		expect(screen.getByText("Enviar mensagem")).toBeInTheDocument();
 	});
 
-	it("não renderiza o botão de mensagem quando hasUser=false", () => {
+	it("não renderiza o botão de mensagem quando messaging.available=false", () => {
 		render(
 			<ProfessionalHeroCard
 				professional={professional}
 				initials="AS"
-				hasUser={false}
-				messagePending={false}
-				onMessage={vi.fn()}
+				messaging={{ available: false, pending: false, onSend: vi.fn() }}
 				onSchedule={vi.fn()}
 			/>,
 		);
@@ -261,9 +255,7 @@ describe("ProfessionalHeroCard", () => {
 			<ProfessionalHeroCard
 				professional={professional}
 				initials="AS"
-				hasUser={true}
-				messagePending={false}
-				onMessage={vi.fn()}
+				messaging={{ available: true, pending: false, onSend: vi.fn() }}
 				onSchedule={onSchedule}
 			/>,
 		);
@@ -271,20 +263,18 @@ describe("ProfessionalHeroCard", () => {
 		expect(onSchedule).toHaveBeenCalledTimes(1);
 	});
 
-	it("chama onMessage ao clicar em 'Enviar mensagem'", async () => {
-		const onMessage = vi.fn();
+	it("chama onSend ao clicar em 'Enviar mensagem'", async () => {
+		const onSend = vi.fn();
 		render(
 			<ProfessionalHeroCard
 				professional={professional}
 				initials="AS"
-				hasUser={true}
-				messagePending={false}
-				onMessage={onMessage}
+				messaging={{ available: true, pending: false, onSend }}
 				onSchedule={vi.fn()}
 			/>,
 		);
 		await userEvent.click(screen.getByText("Enviar mensagem"));
-		expect(onMessage).toHaveBeenCalledTimes(1);
+		expect(onSend).toHaveBeenCalledTimes(1);
 	});
 });
 

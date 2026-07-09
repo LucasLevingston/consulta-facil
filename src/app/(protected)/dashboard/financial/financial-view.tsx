@@ -1,9 +1,12 @@
 "use client";
 
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { TrendingUp } from "lucide-react";
+import { Suspense } from "react";
+import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
 import PageHeader from "@/components/custom/page-header";
-import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { FinancialContent } from "@/components/financial/FinancialContent";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
@@ -42,9 +45,17 @@ export function FinancialView() {
 				icon={<TrendingUp className="h-6 w-6" />}
 			/>
 			<QueryBoundary isLoading={isLoading} error={error}>
-				<SuspenseBoundary>
-					<FinancialContent appointments={appointments} />
-				</SuspenseBoundary>
+				<QueryErrorResetBoundary>
+					{({ reset }) => (
+						<ErrorBoundary onReset={reset}>
+							<Suspense
+								fallback={<Skeleton className="h-64 w-full rounded-2xl" />}
+							>
+								<FinancialContent appointments={appointments} />
+							</Suspense>
+						</ErrorBoundary>
+					)}
+				</QueryErrorResetBoundary>
 			</QueryBoundary>
 		</div>
 	);

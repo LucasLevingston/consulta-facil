@@ -8,21 +8,14 @@ import { toast } from "sonner";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import {
 	type UpdateBillingSettingsValues,
 	updateBillingSettingsSchema,
 	useBillingSettings,
 	useUpdateBillingSettings,
 } from "@/features/billing";
+import { BillingSettingsFormFields } from "./billing-settings-form-fields";
 
 function AdminBillingSettingsContent() {
 	const { data: settings } = useBillingSettings();
@@ -67,83 +60,7 @@ function AdminBillingSettingsContent() {
 			/>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-					<FormField
-						control={form.control}
-						name="defaultCurrency"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Moeda padrão</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="defaultGateway"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Gateway padrão</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="pixExpirationMinutes"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Expiração PIX (minutos)</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="invoiceExpirationDays"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Expiração de cobrança (dias)</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="defaultTrialDays"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Dias de trial padrão</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										{...field}
-										onChange={(e) => field.onChange(Number(e.target.value))}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<BillingSettingsFormFields control={form.control} />
 					<Button type="submit" disabled={updateSettings.isPending}>
 						{updateSettings.isPending ? "Salvando..." : "Salvar"}
 					</Button>

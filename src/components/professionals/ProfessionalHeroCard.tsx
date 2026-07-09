@@ -7,22 +7,25 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ProfessionalResponse } from "@/features/professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
+import { ProfessionalHeroRating } from "./ProfessionalHeroRating";
+
+interface ProfessionalMessaging {
+	available: boolean;
+	pending: boolean;
+	onSend: () => void;
+}
 
 interface Props {
 	professional: ProfessionalResponse;
 	initials: string;
-	hasUser: boolean;
-	messagePending: boolean;
-	onMessage: () => void;
+	messaging: ProfessionalMessaging;
 	onSchedule: () => void;
 }
 
 export function ProfessionalHeroCard({
 	professional,
 	initials,
-	hasUser,
-	messagePending,
-	onMessage,
+	messaging,
 	onSchedule,
 }: Props) {
 	return (
@@ -40,11 +43,11 @@ export function ProfessionalHeroCard({
 						</AvatarFallback>
 					</Avatar>
 					<div className="flex gap-2 flex-wrap">
-						{hasUser && (
+						{messaging.available && (
 							<Button
 								variant="outline"
-								onClick={onMessage}
-								disabled={messagePending}
+								onClick={messaging.onSend}
+								disabled={messaging.pending}
 								className="gap-2 shrink-0"
 							>
 								<MessageCircle className="h-4 w-4" />
@@ -72,26 +75,10 @@ export function ProfessionalHeroCard({
 						</Badge>
 					)}
 					{professional.rating != null && (
-						<div className="flex items-center gap-2 text-sm pt-1">
-							<div className="flex gap-0.5">
-								{[1, 2, 3, 4, 5].map((n) => (
-									<Star
-										key={n}
-										className={`h-4 w-4 ${n <= Math.round(professional.rating ?? 0) ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30"}`}
-									/>
-								))}
-							</div>
-							<span className="font-semibold text-foreground">
-								{professional.rating.toFixed(1)}
-							</span>
-							{professional.consultationCount != null &&
-								professional.consultationCount > 0 && (
-									<span className="text-muted-foreground">
-										· {professional.consultationCount} consulta
-										{professional.consultationCount !== 1 ? "s" : ""}
-									</span>
-								)}
-						</div>
+						<ProfessionalHeroRating
+							rating={professional.rating}
+							consultationCount={professional.consultationCount}
+						/>
 					)}
 				</div>
 			</CardContent>

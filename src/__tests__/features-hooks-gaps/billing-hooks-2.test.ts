@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/billing/repositories/billing-wallet.repository", () => ({
@@ -47,11 +47,17 @@ const mockGetUserWalletTransactions = vi.mocked(
 	billingWalletRepository.getUserWalletTransactions,
 );
 
-function wrapper() {
+function wrapper(useSuspense = false) {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return {
 		wrapper: ({ children }: { children: React.ReactNode }) =>
-			createElement(QueryClientProvider, { client: qc }, children),
+			createElement(
+				QueryClientProvider,
+				{ client: qc },
+				useSuspense
+					? createElement(Suspense, { fallback: null }, children)
+					: children,
+			),
 		qc,
 	};
 }
@@ -139,16 +145,11 @@ describe("useAdminWallets", () => {
 describe("useUserWallet", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("desabilitado quando userId vazio", () => {
-		const { result } = renderHook(() => useUserWallet(""), wrapper());
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("busca a carteira do usuario informado", async () => {
 		const walletData = { id: "w-2", balance: 300 };
 		mockGetUserWallet.mockResolvedValueOnce(walletData as never);
-		const { result } = renderHook(() => useUserWallet("u-1"), wrapper());
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		const { result } = renderHook(() => useUserWallet("u-1"), wrapper(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(mockGetUserWallet).toHaveBeenCalledWith("u-1");
 		expect(result.current.data).toEqual(walletData);
 	});
@@ -157,22 +158,14 @@ describe("useUserWallet", () => {
 describe("useUserWalletTransactions", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("desabilitado quando userId vazio", () => {
-		const { result } = renderHook(
-			() => useUserWalletTransactions(""),
-			wrapper(),
-		);
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
 	it("busca as transacoes da carteira do usuario informado", async () => {
 		const transactions = [{ id: "t-2", amount: 75 }];
 		mockGetUserWalletTransactions.mockResolvedValueOnce(transactions as never);
 		const { result } = renderHook(
 			() => useUserWalletTransactions("u-1"),
-			wrapper(),
+			wrapper(true),
 		);
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		await waitFor(() => expect(result.current).not.toBeNull());
 		expect(mockGetUserWalletTransactions).toHaveBeenCalledWith("u-1");
 		expect(result.current.data).toEqual(transactions);
 	});

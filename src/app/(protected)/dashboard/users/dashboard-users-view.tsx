@@ -1,20 +1,12 @@
 "use client";
 
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { Search, Shield, User, Users } from "lucide-react";
-import {
-	useRouter as useNav,
-	usePathname,
-	useRouter,
-	useSearchParams,
-} from "next/navigation";
+import { Search, Users } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useDeferredValue, useEffect } from "react";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { UserRoleCard } from "@/components/custom/user/UserRoleCard";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -25,26 +17,8 @@ import {
 } from "@/components/ui/select";
 import { usePermission } from "@/features/auth";
 import { useAllUsers } from "@/features/users";
-
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 import type { UsersPageBodyProps } from "./dashboard-users-view.types";
-
-const ROLE_LABELS: Record<string, string> = {
-	PATIENT: "Paciente",
-	PROFESSIONAL: "Profissional",
-	ADMIN: "Admin",
-	RECEPTIONIST: "Recepcionista",
-};
-
-const ROLE_VARIANTS: Record<
-	string,
-	"default" | "secondary" | "destructive" | "outline"
-> = {
-	PATIENT: "secondary",
-	PROFESSIONAL: "default",
-	ADMIN: "destructive",
-	RECEPTIONIST: "outline",
-};
 
 function UsersPageBody({
 	page,
@@ -109,51 +83,7 @@ function UsersPageBody({
 			) : (
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 					{users.map((u) => (
-						<Card
-							key={u.id}
-							className="border-border transition-shadow hover:shadow-md"
-						>
-							<CardContent className="p-5">
-								<div className="flex items-start gap-4">
-									<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-										{u.role === "ADMIN" ? (
-											<Shield className="h-5 w-5 text-primary" />
-										) : (
-											<User className="h-5 w-5 text-primary" />
-										)}
-									</div>
-
-									<div className="min-w-0 flex-1">
-										<p className="truncate font-semibold text-foreground">
-											{u.name ?? "—"}
-										</p>
-										<p className="truncate text-xs text-muted-foreground mt-0.5">
-											{u.email ?? "—"}
-										</p>
-
-										<div className="mt-2 flex flex-wrap gap-2">
-											{u.role && (
-												<Badge
-													variant={ROLE_VARIANTS[u.role] ?? "secondary"}
-													className="text-xs"
-												>
-													{ROLE_LABELS[u.role] ?? u.role}
-												</Badge>
-											)}
-										</div>
-
-										{u.createdAt && (
-											<p className="mt-2 text-xs text-muted-foreground">
-												Cadastro:{" "}
-												{format(new Date(u.createdAt), "dd/MM/yyyy", {
-													locale: ptBR,
-												})}
-											</p>
-										)}
-									</div>
-								</div>
-							</CardContent>
-						</Card>
+						<UserRoleCard key={u.id} user={u} />
 					))}
 				</div>
 			)}
@@ -170,15 +100,13 @@ function UsersPageBody({
 
 function UsersContent() {
 	const { can } = usePermission();
-	const nav = useNav();
-
-	useEffect(() => {
-		if (!can("admin:access")) nav.push("/dashboard");
-	}, [can, nav]);
-
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
+
+	useEffect(() => {
+		if (!can("admin:access")) router.push("/dashboard");
+	}, [can, router]);
 
 	const search = searchParams.get("q") ?? "";
 	const roleFilter = searchParams.get("role") ?? "";
