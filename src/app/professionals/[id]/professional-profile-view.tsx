@@ -2,9 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { ProfessionalDetailCards } from "@/components/professionals/ProfessionalDetailCards";
-import { ProfessionalHeroCard } from "@/components/professionals/ProfessionalHeroCard";
-import { RatingDistributionCard } from "@/components/professionals/RatingDistributionCard";
+import { ProfessionalDetailCards } from "@/components/professionals/professional-detail-cards";
+import { ProfessionalHeroCard } from "@/components/professionals/professional-hero-card";
+import { RatingDistributionCard } from "@/components/professionals/rating-distribution-card";
 import { useUserStore } from "@/features/auth";
 import { useStartConversation } from "@/features/messaging";
 import {

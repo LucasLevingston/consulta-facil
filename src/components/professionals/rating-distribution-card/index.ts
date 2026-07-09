@@ -1,0 +1,1 @@
+export { RatingDistributionCard } from "./RatingDistributionCard";

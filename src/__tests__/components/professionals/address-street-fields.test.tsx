@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/professionals", () => ({}));
 
-import { AddressStreetFields } from "@/components/professionals/AddressStreetFields";
+import { AddressStreetFields } from "@/components/professionals/address-form";
 
 type AddressValues = {
 	zipCode?: string;

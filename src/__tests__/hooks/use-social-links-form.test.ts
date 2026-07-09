@@ -14,7 +14,7 @@ vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
 
-import { useSocialLinksForm } from "@/components/professionals/useSocialLinksForm";
+import { useSocialLinksForm } from "@/components/professionals/social-links-form";
 import { useUpdateSocialLinks } from "@/features/professionals";
 
 const mockUseUpdate = vi.mocked(useUpdateSocialLinks);

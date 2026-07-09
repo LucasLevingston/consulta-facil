@@ -27,31 +27,36 @@ vi.mock("@/components/ui/dialog", () => ({
 		<div>{children}</div>
 	),
 }));
-vi.mock("@/components/professionals/EducationDialogForm", () => ({
-	EducationDialogForm: ({
-		onSubmit,
-		onClose,
-	}: {
-		onSubmit: (data: object) => void;
-		onClose: () => void;
-	}) => (
-		<div>
-			<button
-				type="button"
-				onClick={() => onSubmit({ degree: "GRADUATION", institution: "USP" })}
-			>
-				submit-form
-			</button>
-			<button type="button" onClick={onClose}>
-				close-form
-			</button>
-		</div>
-	),
-}));
+vi.mock(
+	"@/components/professionals/education-list/EducationDialogForm",
+	() => ({
+		EducationDialogForm: ({
+			onSubmit,
+			onClose,
+		}: {
+			onSubmit: (data: object) => void;
+			onClose: () => void;
+		}) => (
+			<div>
+				<button
+					type="button"
+					onClick={() => onSubmit({ degree: "GRADUATION", institution: "USP" })}
+				>
+					submit-form
+				</button>
+				<button type="button" onClick={onClose}>
+					close-form
+				</button>
+			</div>
+		),
+	}),
+);
 
-import { EducationDialog } from "@/components/professionals/EducationDialog";
-import { EducationList } from "@/components/professionals/EducationList";
-import { EducationListItem } from "@/components/professionals/EducationListItem";
+import {
+	EducationDialog,
+	EducationList,
+	EducationListItem,
+} from "@/components/professionals/education-list";
 import {
 	useAddEducation,
 	useDeleteEducation,

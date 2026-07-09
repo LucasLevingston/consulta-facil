@@ -32,7 +32,7 @@ vi.mock("@/components/ui/input", () => ({
 	),
 }));
 
-import { AddressForm } from "@/components/professionals/AddressForm";
+import { AddressForm } from "@/components/professionals/address-form";
 import { useAddressForm } from "@/features/professionals/hooks/use-address-form";
 
 const mockUseAddressForm = vi.mocked(useAddressForm);

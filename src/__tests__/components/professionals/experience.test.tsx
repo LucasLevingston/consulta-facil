@@ -27,31 +27,36 @@ vi.mock("@/components/ui/dialog", () => ({
 		<div>{children}</div>
 	),
 }));
-vi.mock("@/components/professionals/ExperienceDialogForm", () => ({
-	ExperienceDialogForm: ({
-		onSubmit,
-		onClose,
-	}: {
-		onSubmit: (data: object) => void;
-		onClose: () => void;
-	}) => (
-		<div>
-			<button
-				type="button"
-				onClick={() => onSubmit({ position: "Clínico", institution: "HC" })}
-			>
-				submit-form
-			</button>
-			<button type="button" onClick={onClose}>
-				close-form
-			</button>
-		</div>
-	),
-}));
+vi.mock(
+	"@/components/professionals/experience-list/ExperienceDialogForm",
+	() => ({
+		ExperienceDialogForm: ({
+			onSubmit,
+			onClose,
+		}: {
+			onSubmit: (data: object) => void;
+			onClose: () => void;
+		}) => (
+			<div>
+				<button
+					type="button"
+					onClick={() => onSubmit({ position: "Clínico", institution: "HC" })}
+				>
+					submit-form
+				</button>
+				<button type="button" onClick={onClose}>
+					close-form
+				</button>
+			</div>
+		),
+	}),
+);
 
-import { ExperienceDialog } from "@/components/professionals/ExperienceDialog";
-import { ExperienceList } from "@/components/professionals/ExperienceList";
-import { ExperienceListItem } from "@/components/professionals/ExperienceListItem";
+import {
+	ExperienceDialog,
+	ExperienceList,
+	ExperienceListItem,
+} from "@/components/professionals/experience-list";
 import {
 	useAddExperience,
 	useDeleteExperience,

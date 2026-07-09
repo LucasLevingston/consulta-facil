@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Mail } from "lucide-react";
 import { describe, expect, it } from "vitest";
-import { ProfessionalInfoRow } from "@/components/professionals/ProfessionalInfoRow";
+import { ProfessionalInfoRow } from "@/components/professionals/professional-detail-cards";
 
 describe("ProfessionalInfoRow", () => {
 	it("renders label", () => {

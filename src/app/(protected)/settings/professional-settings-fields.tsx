@@ -1,11 +1,11 @@
 import ProfessionalDetailsForm from "@/components/forms/ProfessionalDetails/ProfessionalDetailsForm";
-import { AddressForm } from "@/components/professionals/AddressForm";
-import { BioForm } from "@/components/professionals/BioForm";
-import { CertificateList } from "@/components/professionals/CertificateList";
-import { CouncilForm } from "@/components/professionals/CouncilForm";
-import { EducationList } from "@/components/professionals/EducationList";
-import { ExperienceList } from "@/components/professionals/ExperienceList";
-import { SocialLinksForm } from "@/components/professionals/SocialLinksForm";
+import { AddressForm } from "@/components/professionals/address-form";
+import { BioForm } from "@/components/professionals/bio-form";
+import { CertificateList } from "@/components/professionals/certificate-list";
+import { CouncilForm } from "@/components/professionals/council-form";
+import { EducationList } from "@/components/professionals/education-list";
+import { ExperienceList } from "@/components/professionals/experience-list";
+import { SocialLinksForm } from "@/components/professionals/social-links-form";
 import type { ProfessionalResponse } from "@/features/professionals";
 
 export function ProfessionalSettingsFields({

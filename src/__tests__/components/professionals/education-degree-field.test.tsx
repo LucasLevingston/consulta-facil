@@ -47,7 +47,7 @@ vi.mock("@/components/ui/select", () => ({
 }));
 
 import userEvent from "@testing-library/user-event";
-import { EducationDegreeField } from "@/components/professionals/EducationDegreeField";
+import { EducationDegreeField } from "@/components/professionals/education-list";
 
 type Values = { degree?: string };
 

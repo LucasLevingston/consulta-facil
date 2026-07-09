@@ -15,12 +15,14 @@ vi.mock("@/features/professionals", () => ({
 	useUpdateBio: vi.fn(),
 }));
 
-import { BioForm } from "@/components/professionals/BioForm";
-import { ProfessionalContactCard } from "@/components/professionals/ProfessionalContactCard";
-import { ProfessionalDetailCards } from "@/components/professionals/ProfessionalDetailCards";
-import { ProfessionalHeroCard } from "@/components/professionals/ProfessionalHeroCard";
-import { RatingDistributionCard } from "@/components/professionals/RatingDistributionCard";
-import { SocialLinkField } from "@/components/professionals/SocialLinkField";
+import { BioForm } from "@/components/professionals/bio-form";
+import {
+	ProfessionalContactCard,
+	ProfessionalDetailCards,
+} from "@/components/professionals/professional-detail-cards";
+import { ProfessionalHeroCard } from "@/components/professionals/professional-hero-card";
+import { RatingDistributionCard } from "@/components/professionals/rating-distribution-card";
+import { SocialLinkField } from "@/components/professionals/social-links-form";
 import { useUpdateBio } from "@/features/professionals";
 
 const mockUseUpdateBio = vi.mocked(useUpdateBio);

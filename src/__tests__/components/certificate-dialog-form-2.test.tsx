@@ -43,11 +43,14 @@ vi.mock("@/components/ui/button", () => ({
 		</button>
 	),
 }));
-vi.mock("@/components/professionals/CertificateOptionalFields", () => ({
-	CertificateOptionalFields: () => null,
-}));
+vi.mock(
+	"@/components/professionals/certificate-list/CertificateOptionalFields",
+	() => ({
+		CertificateOptionalFields: () => null,
+	}),
+);
 
-import { CertificateDialogForm } from "@/components/professionals/CertificateDialogForm";
+import { CertificateDialogForm } from "@/components/professionals/certificate-list";
 
 const form = {
 	control: {},

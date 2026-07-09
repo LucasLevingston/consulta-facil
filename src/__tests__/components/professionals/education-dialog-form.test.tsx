@@ -45,11 +45,14 @@ vi.mock("@/components/ui/button", () => ({
 		</button>
 	),
 }));
-vi.mock("@/components/professionals/EducationDegreeField", () => ({
-	EducationDegreeField: () => null,
-}));
+vi.mock(
+	"@/components/professionals/education-list/EducationDegreeField",
+	() => ({
+		EducationDegreeField: () => null,
+	}),
+);
 
-import { EducationDialogForm } from "@/components/professionals/EducationDialogForm";
+import { EducationDialogForm } from "@/components/professionals/education-list";
 
 const formProp = {
 	control: {},

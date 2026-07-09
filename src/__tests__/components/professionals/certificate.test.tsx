@@ -27,31 +27,36 @@ vi.mock("@/components/ui/dialog", () => ({
 		<div>{children}</div>
 	),
 }));
-vi.mock("@/components/professionals/CertificateDialogForm", () => ({
-	CertificateDialogForm: ({
-		onSubmit,
-		onClose,
-		isPending,
-	}: {
-		onSubmit: (data: object) => void;
-		onClose: () => void;
-		isPending: boolean;
-	}) => (
-		<div>
-			<span>form-pending:{String(isPending)}</span>
-			<button type="button" onClick={() => onSubmit({ title: "Curso X" })}>
-				submit-form
-			</button>
-			<button type="button" onClick={onClose}>
-				close-form
-			</button>
-		</div>
-	),
-}));
+vi.mock(
+	"@/components/professionals/certificate-list/CertificateDialogForm",
+	() => ({
+		CertificateDialogForm: ({
+			onSubmit,
+			onClose,
+			isPending,
+		}: {
+			onSubmit: (data: object) => void;
+			onClose: () => void;
+			isPending: boolean;
+		}) => (
+			<div>
+				<span>form-pending:{String(isPending)}</span>
+				<button type="button" onClick={() => onSubmit({ title: "Curso X" })}>
+					submit-form
+				</button>
+				<button type="button" onClick={onClose}>
+					close-form
+				</button>
+			</div>
+		),
+	}),
+);
 
-import { CertificateDialog } from "@/components/professionals/CertificateDialog";
-import { CertificateList } from "@/components/professionals/CertificateList";
-import { CertificateListItem } from "@/components/professionals/CertificateListItem";
+import {
+	CertificateDialog,
+	CertificateList,
+	CertificateListItem,
+} from "@/components/professionals/certificate-list";
 import {
 	useAddCertificate,
 	useDeleteCertificate,
