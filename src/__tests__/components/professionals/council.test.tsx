@@ -53,8 +53,10 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { CouncilForm } from "@/components/professionals/CouncilForm";
-import { CouncilFormFields } from "@/components/professionals/CouncilFormFields";
+import {
+	CouncilForm,
+	CouncilFormFields,
+} from "@/components/professionals/council-form";
 import { useUpdateCouncil } from "@/features/professionals";
 
 const mockUseUpdateCouncil = vi.mocked(useUpdateCouncil);

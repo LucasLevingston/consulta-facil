@@ -27,7 +27,7 @@ vi.mock("@/components/ui/card", () => ({
 vi.mock("@/components/ui/form", () => ({
 	Form: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
-vi.mock("@/components/professionals/SocialLinkField", () => ({
+vi.mock("@/components/professionals/social-links-form/SocialLinkField", () => ({
 	SocialLinkField: ({ label }: { label: string }) => <div>{label}</div>,
 }));
 vi.mock("@/components/ui/button", () => ({
@@ -44,7 +44,7 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 
-import { SocialLinksForm } from "@/components/professionals/SocialLinksForm";
+import { SocialLinksForm } from "@/components/professionals/social-links-form";
 
 const professional = {
 	instagramUrl: null,

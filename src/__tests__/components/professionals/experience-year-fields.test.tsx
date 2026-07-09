@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/professionals", () => ({}));
 
-import { ExperienceYearFields } from "@/components/professionals/ExperienceYearFields";
+import { ExperienceYearFields } from "@/components/professionals/experience-list";
 
 type Values = { startYear?: number; endYear?: number | null };
 

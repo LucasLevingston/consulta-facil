@@ -50,11 +50,14 @@ vi.mock("@/components/ui/button", () => ({
 		</button>
 	),
 }));
-vi.mock("@/components/professionals/ExperienceYearFields", () => ({
-	ExperienceYearFields: () => null,
-}));
+vi.mock(
+	"@/components/professionals/experience-list/ExperienceYearFields",
+	() => ({
+		ExperienceYearFields: () => null,
+	}),
+);
 
-import { ExperienceDialogForm } from "@/components/professionals/ExperienceDialogForm";
+import { ExperienceDialogForm } from "@/components/professionals/experience-list";
 
 const formProp = {
 	control: {},

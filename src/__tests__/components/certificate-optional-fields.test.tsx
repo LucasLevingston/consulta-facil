@@ -29,7 +29,7 @@ vi.mock("@/components/ui/input", () => ({
 	),
 }));
 
-import { CertificateOptionalFields } from "@/components/professionals/CertificateOptionalFields";
+import { CertificateOptionalFields } from "@/components/professionals/certificate-list";
 
 const mockForm = { control: {} } as never;
 
