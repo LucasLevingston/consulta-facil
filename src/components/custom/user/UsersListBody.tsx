@@ -1,11 +1,6 @@
-"use client";
-
 import { Search, Users } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useDeferredValue, useEffect } from "react";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
-import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { UserRoleCard } from "@/components/custom/user/UserRoleCard";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,12 +10,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { usePermission } from "@/features/auth";
 import { useAllUsers } from "@/features/users";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
-import type { UsersPageBodyProps } from "./dashboard-users-view.types";
+import type { UsersPageBodyProps } from "./users-list-view.types";
 
-function UsersPageBody({
+export function UsersListBody({
 	page,
 	roleFilter,
 	search,
@@ -95,55 +89,5 @@ function UsersPageBody({
 				className="pt-2"
 			/>
 		</div>
-	);
-}
-
-function UsersContent() {
-	const { can } = usePermission();
-	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
-	useEffect(() => {
-		if (!can("admin:access")) router.push("/dashboard");
-	}, [can, router]);
-
-	const search = searchParams.get("q") ?? "";
-	const roleFilter = searchParams.get("role") ?? "";
-	const page = Number(searchParams.get("page") ?? "0");
-
-	const debouncedSearch = useDeferredValue(search);
-
-	function updateParams(
-		updates: Record<string, string | null>,
-		resetPage = true,
-	) {
-		const params = new URLSearchParams(searchParams.toString());
-		for (const [key, value] of Object.entries(updates)) {
-			if (value === null) params.delete(key);
-			else params.set(key, value);
-		}
-		if (resetPage) params.delete("page");
-		router.push(`${pathname}?${params.toString()}`, { scroll: false });
-	}
-
-	return (
-		<SuspenseBoundary>
-			<UsersPageBody
-				page={page}
-				roleFilter={roleFilter}
-				search={search}
-				debouncedSearch={debouncedSearch}
-				updateParams={updateParams}
-			/>
-		</SuspenseBoundary>
-	);
-}
-
-export function DashboardUsersView() {
-	return (
-		<Suspense>
-			<UsersContent />
-		</Suspense>
 	);
 }
