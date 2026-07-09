@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Users } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, useDeferredValue, useEffect } from "react";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/select";
 import { usePermission } from "@/features/auth";
 import { useAllUsers } from "@/features/users";
+import { useUrlListState } from "@/hooks/use-url-list-state";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
-import type { UsersPageBodyProps } from "./dashboard-users-view.types";
+import type { UsersPageBodyProps } from "./users-list-view.types";
 
 function UsersPageBody({
 	page,
@@ -101,31 +102,15 @@ function UsersPageBody({
 function UsersContent() {
 	const { can } = usePermission();
 	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
 
 	useEffect(() => {
 		if (!can("admin:access")) router.push("/dashboard");
 	}, [can, router]);
 
-	const search = searchParams.get("q") ?? "";
-	const roleFilter = searchParams.get("role") ?? "";
-	const page = Number(searchParams.get("page") ?? "0");
-
+	const { page, get, updateParams } = useUrlListState();
+	const search = get("q");
+	const roleFilter = get("role");
 	const debouncedSearch = useDeferredValue(search);
-
-	function updateParams(
-		updates: Record<string, string | null>,
-		resetPage = true,
-	) {
-		const params = new URLSearchParams(searchParams.toString());
-		for (const [key, value] of Object.entries(updates)) {
-			if (value === null) params.delete(key);
-			else params.set(key, value);
-		}
-		if (resetPage) params.delete("page");
-		router.push(`${pathname}?${params.toString()}`, { scroll: false });
-	}
 
 	return (
 		<SuspenseBoundary>
@@ -140,7 +125,7 @@ function UsersContent() {
 	);
 }
 
-export function DashboardUsersView() {
+export function UsersListView() {
 	return (
 		<Suspense>
 			<UsersContent />

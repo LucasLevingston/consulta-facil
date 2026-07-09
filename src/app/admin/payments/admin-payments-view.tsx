@@ -1,14 +1,11 @@
 "use client";
 
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { CreditCard, Search } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, useDeferredValue, useEffect } from "react";
+import { AppointmentPaymentCard } from "@/components/custom/appointment/AppointmentPaymentCard";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -17,59 +14,24 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { AppointmentPaymentStatus } from "@/features/appointments";
 import { useAllAdminAppointments } from "@/features/appointments";
 import { usePermission } from "@/features/auth";
+import { useUrlListState } from "@/hooks/use-url-list-state";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
-
-const PAYMENT_LABELS: Record<AppointmentPaymentStatus, string> = {
-	UNPAID: "Não pago",
-	PENDING_PAYMENT: "Aguardando pagamento",
-	PAID: "Pago",
-	REFUNDED: "Reembolsado",
-	FREE: "Gratuito",
-};
-
-const PAYMENT_VARIANTS: Record<
-	AppointmentPaymentStatus,
-	"default" | "secondary" | "destructive" | "outline"
-> = {
-	UNPAID: "outline",
-	PENDING_PAYMENT: "secondary",
-	PAID: "default",
-	REFUNDED: "destructive",
-	FREE: "secondary",
-};
 
 function PaymentsContent() {
 	const { can } = usePermission();
 	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
 
 	useEffect(() => {
 		if (!can("admin:access")) router.push("/dashboard");
 	}, [can, router]);
 
-	const search = searchParams.get("q") ?? "";
-	const statusFilter = searchParams.get("status") ?? "";
-	const page = Number(searchParams.get("page") ?? "0");
-
+	const { page, get, updateParams } = useUrlListState();
+	const search = get("q");
+	const statusFilter = get("status");
 	const debouncedSearch = useDeferredValue(search);
-
-	function updateParams(
-		updates: Record<string, string | null>,
-		resetPage = true,
-	) {
-		const params = new URLSearchParams(searchParams.toString());
-		for (const [key, value] of Object.entries(updates)) {
-			if (value === null) params.delete(key);
-			else params.set(key, value);
-		}
-		if (resetPage) params.delete("page");
-		router.push(`${pathname}?${params.toString()}`, { scroll: false });
-	}
 
 	const { data, isLoading, error } = useAllAdminAppointments(page, PAGE_SIZE);
 
@@ -156,56 +118,11 @@ function PaymentsContent() {
 				) : (
 					<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 						{appointments.map((a) => (
-							<Card
+							<AppointmentPaymentCard
 								key={a.id}
-								className="border-border transition-shadow hover:shadow-md"
-							>
-								<CardContent className="p-5">
-									<div className="flex items-start justify-between gap-2">
-										<div className="min-w-0 flex-1">
-											<p className="truncate font-semibold text-foreground">
-												{a.patientName ?? "Paciente"}
-											</p>
-											{a.professionalName && (
-												<p className="truncate text-xs text-muted-foreground mt-0.5">
-													{a.professionalName}
-												</p>
-											)}
-											<p className="mt-0.5 text-xs text-muted-foreground">
-												{format(
-													new Date(a.scheduledAt),
-													"dd/MM/yyyy 'às' HH:mm",
-													{ locale: ptBR },
-												)}
-											</p>
-										</div>
-
-										{a.paymentStatus && (
-											<Badge
-												variant={PAYMENT_VARIANTS[a.paymentStatus] ?? "outline"}
-												className="shrink-0 text-xs"
-											>
-												{PAYMENT_LABELS[a.paymentStatus] ?? a.paymentStatus}
-											</Badge>
-										)}
-									</div>
-
-									{a.paymentAmount != null && a.paymentAmount > 0 && (
-										<p className="mt-3 text-lg font-bold text-foreground">
-											{a.paymentAmount.toLocaleString("pt-BR", {
-												style: "currency",
-												currency: "BRL",
-											})}
-										</p>
-									)}
-
-									{a.serviceName && (
-										<p className="mt-1 text-xs text-muted-foreground">
-											{a.serviceName}
-										</p>
-									)}
-								</CardContent>
-							</Card>
+								appointment={a}
+								showProfessionalName
+							/>
 						))}
 					</div>
 				)}
