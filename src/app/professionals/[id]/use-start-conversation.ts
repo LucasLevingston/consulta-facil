@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { messagingRepository } from "../repositories/messaging.repository";
-import { conversationKeys } from "./conversation-keys";
+import { conversationKeys } from "@/components/messaging/hooks";
+import { messagingRepository } from "@/features/messaging";
 
 export function useStartConversation() {
 	const queryClient = useQueryClient();

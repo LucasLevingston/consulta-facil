@@ -6,9 +6,9 @@ import { ProfessionalDetailCards } from "@/components/professionals/professional
 import { ProfessionalHeroCard } from "@/components/professionals/professional-hero-card";
 import { RatingDistributionCard } from "@/components/professionals/rating-distribution-card";
 import { useUserStore } from "@/features/auth";
-import { useStartConversation } from "@/features/messaging";
 import { useProfessional } from "./use-professional";
 import { useProfessionalRatings } from "./use-professional-ratings";
+import { useStartConversation } from "./use-start-conversation";
 
 function ProfessionalProfileContent({ id }: { id: string }) {
 	const router = useRouter();

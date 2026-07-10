@@ -6,13 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUserStore } from "@/features/auth";
 import type { MessageResponse } from "@/features/messaging";
-import {
-	useChat,
-	useConversationHistory,
-	useMarkAsRead,
-} from "@/features/messaging";
 import { ChatMessageBubble } from "./ChatMessageBubble";
 import type { ChatThreadProps } from "./ChatThread.types";
+import { useChat } from "./use-chat";
+import { useConversationHistory } from "./use-conversation-history";
+import { useMarkAsRead } from "./use-mark-as-read";
 
 export function ChatThread({ conversation }: ChatThreadProps) {
 	const user = useUserStore((s) => s.user);

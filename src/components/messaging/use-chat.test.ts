@@ -44,8 +44,8 @@ vi.mock("@/store/auth.store", () => ({
 	useAuthStore: vi.fn(),
 }));
 
-import { useChat } from "@/features/messaging/hooks/use-chat";
 import { useAuthStore } from "@/store/auth.store";
+import { useChat } from "./use-chat";
 
 const mockUseAuthStore = vi.mocked(useAuthStore);
 

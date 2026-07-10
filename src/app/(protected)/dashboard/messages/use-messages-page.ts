@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useConversations } from "@/features/messaging";
+import { useConversations } from "./use-conversations";
 
 export function useMessagesPage() {
 	const searchParams = useSearchParams();

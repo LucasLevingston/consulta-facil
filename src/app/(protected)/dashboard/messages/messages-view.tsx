@@ -5,8 +5,8 @@ import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense
 import { ChatThread } from "@/components/messaging/ChatThread";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { Button } from "@/components/ui/button";
-import { useMessagesPage } from "@/features/messaging";
 import { cn } from "@/lib/utils/cn";
+import { useMessagesPage } from "./use-messages-page";
 
 function MessagesContent() {
 	const {
