@@ -8,7 +8,7 @@ import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAppointmentAnalytics } from "@/features/analytics";
+import { useAppointmentAnalytics } from "./use-appointment-analytics";
 
 function AppointmentAnalyticsContent() {
 	const { data } = useAppointmentAnalytics();

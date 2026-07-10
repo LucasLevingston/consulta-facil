@@ -7,7 +7,7 @@ import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useReferralAnalytics } from "@/features/analytics";
+import { useReferralAnalytics } from "./use-referral-analytics";
 
 function ReferralAnalyticsContent() {
 	const { data } = useReferralAnalytics();
