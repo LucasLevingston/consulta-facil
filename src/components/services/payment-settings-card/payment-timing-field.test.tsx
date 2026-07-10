@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
-import { PaymentTimingField } from "@/components/services/PaymentTimingField";
 import type { UpdatePaymentSettingsInput } from "@/features/professionals";
+import { PaymentTimingField } from "./PaymentTimingField";
 
 function TimingHarness({
 	defaultValues,

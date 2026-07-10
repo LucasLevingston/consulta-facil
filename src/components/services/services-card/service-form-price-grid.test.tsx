@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
-import { ServiceFormPriceGrid } from "@/components/services/ServiceFormPriceGrid";
 import type { CreateServiceInput } from "@/features/services";
 import { createServiceSchema } from "@/features/services";
+import { ServiceFormPriceGrid } from "./ServiceFormPriceGrid";
 
 function PriceGridHarness({
 	defaultValues,

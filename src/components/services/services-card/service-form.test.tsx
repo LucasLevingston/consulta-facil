@@ -31,8 +31,8 @@ vi.mock("@/features/services", async (importOriginal) => {
 });
 
 import { toast } from "sonner";
-import { ServiceForm } from "@/components/services/ServiceForm";
 import { useCreateService, useUpdateService } from "@/features/services";
+import { ServiceForm } from "./ServiceForm";
 
 const mockUseCreateService = vi.mocked(useCreateService);
 const mockUseUpdateService = vi.mocked(useUpdateService);

@@ -33,14 +33,14 @@ vi.mock("@/features/services", async (importOriginal) => {
 });
 
 import { toast } from "sonner";
-import { ServiceRow } from "@/components/services/ServiceRow";
-import { ServicesCard } from "@/components/services/ServicesCard";
 import {
 	useCreateService,
 	useDeactivateService,
 	useGetProfessionalServices,
 	useUpdateService,
 } from "@/features/services";
+import { ServiceRow } from "./ServiceRow";
+import { ServicesCard } from "./ServicesCard";
 
 const mockUseDeactivateService = vi.mocked(useDeactivateService);
 const mockUseGetProfessionalServices = vi.mocked(useGetProfessionalServices);

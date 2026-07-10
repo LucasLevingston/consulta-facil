@@ -22,7 +22,7 @@ vi.mock("@/components/ui/checkbox", () => ({
 	),
 }));
 
-import { ServiceFormCheckbox } from "@/components/services/ServiceFormCheckbox";
+import { ServiceFormCheckbox } from "./ServiceFormCheckbox";
 
 function CheckboxHarness({
 	defaultValues,
