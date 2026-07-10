@@ -17,7 +17,7 @@ vi.mock("@/features/patients", () => ({
 	},
 }));
 
-import { EmergencyContactItem } from "@/components/patients/health/EmergencyContactItem";
+import { EmergencyContactItem } from "./EmergencyContactItem";
 
 const contact = {
 	id: "c1",

@@ -2,9 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Testes de DocumentUploadDialog: abertura, preenchimento e submit
-// chamando a mutation de upload de documento.
-
 const { uploadMutate, uploadIsPending } = vi.hoisted(() => ({
 	uploadMutate: vi.fn(),
 	uploadIsPending: { value: false },
@@ -61,7 +58,7 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 
-vi.mock("@/components/patients/health/DocumentTypeSelect", () => ({
+vi.mock("./DocumentTypeSelect", () => ({
 	DocumentTypeSelect: ({
 		onChange,
 	}: {
@@ -75,7 +72,7 @@ vi.mock("@/components/patients/health/DocumentTypeSelect", () => ({
 }));
 
 import { toast } from "sonner";
-import { DocumentUploadDialog } from "@/components/patients/health/DocumentUploadDialog";
+import { DocumentUploadDialog } from "./DocumentUploadDialog";
 
 const file = new File(["conteudo"], "exame.pdf", { type: "application/pdf" });
 
@@ -96,6 +93,18 @@ describe("DocumentUploadDialog", () => {
 		render(<DocumentUploadDialog open={true} onClose={vi.fn()} file={file} />);
 		expect(screen.getByText("Enviar documento")).toBeInTheDocument();
 		expect(screen.getByText("exame.pdf")).toBeInTheDocument();
+	});
+
+	it("renderiza os labels 'Tipo de documento' e 'Descrição (opcional)'", () => {
+		render(<DocumentUploadDialog open={true} onClose={vi.fn()} file={file} />);
+		expect(screen.getByText("Tipo de documento")).toBeInTheDocument();
+		expect(screen.getByText("Descrição (opcional)")).toBeInTheDocument();
+	});
+
+	it("renderiza os botões Cancelar e Enviar", () => {
+		render(<DocumentUploadDialog open={true} onClose={vi.fn()} file={file} />);
+		expect(screen.getByText("Cancelar")).toBeInTheDocument();
+		expect(screen.getByText("Enviar")).toBeInTheDocument();
 	});
 
 	it("chama onClose ao clicar em Cancelar", async () => {

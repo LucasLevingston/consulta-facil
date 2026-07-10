@@ -46,7 +46,7 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 
-import { MedicalHistorySection } from "@/components/patients/health/MedicalHistorySection";
+import { MedicalHistorySection } from "./MedicalHistorySection";
 
 describe("MedicalHistorySection", () => {
 	it("renderiza os labels de todos os campos de histórico", () => {

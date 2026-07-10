@@ -21,7 +21,7 @@ vi.mock("@/features/patients", () => ({
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
-vi.mock("@/components/patients/health/EmergencyContactItem", () => ({
+vi.mock("./EmergencyContactItem", () => ({
 	EmergencyContactItem: ({
 		contact,
 		onEdit,
@@ -43,7 +43,7 @@ vi.mock("@/components/patients/health/EmergencyContactItem", () => ({
 	),
 }));
 
-vi.mock("@/components/patients/health/EmergencyContactDialog", () => ({
+vi.mock("./EmergencyContactDialog", () => ({
 	EmergencyContactDialog: ({
 		open,
 		editing,
@@ -57,7 +57,7 @@ vi.mock("@/components/patients/health/EmergencyContactDialog", () => ({
 }));
 
 import { toast } from "sonner";
-import { EmergencyContactList } from "@/components/patients/health/EmergencyContactList";
+import { EmergencyContactList } from "./EmergencyContactList";
 
 beforeEach(() => {
 	contacts.value = [];

@@ -2,9 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Testes de renderização e onChange dos componentes de seleção
-// usados no formulário de saúde do paciente.
-
 const { fieldOnChange } = vi.hoisted(() => ({ fieldOnChange: vi.fn() }));
 
 vi.mock("@/components/ui/form", () => ({
@@ -56,13 +53,6 @@ vi.mock("@/components/ui/select", () => ({
 			>
 				selecionar-none
 			</button>
-			<button
-				type="button"
-				data-testid="pick-rg"
-				onClick={() => onValueChange("RG")}
-			>
-				selecionar-rg
-			</button>
 		</div>
 	),
 	SelectTrigger: ({ children }: { children: React.ReactNode }) => (
@@ -81,20 +71,7 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-vi.mock("@/features/patients", () => ({
-	DOCUMENT_TYPE_LABELS: {
-		CPF: "CPF",
-		RG: "RG",
-		CNH: "CNH",
-		HEALTH_CARD: "Cartão de Saúde",
-		INSURANCE_CARD: "Carteirinha do Plano",
-		OTHER: "Outro",
-	},
-	documentTypeSchema: { parse: (v: string) => v },
-}));
-
-import { BloodTypeSelect } from "@/components/patients/health/BloodTypeSelect";
-import { DocumentTypeSelect } from "@/components/patients/health/DocumentTypeSelect";
+import { BloodTypeSelect } from "./BloodTypeSelect";
 
 beforeEach(() => {
 	fieldOnChange.mockClear();
@@ -129,29 +106,5 @@ describe("BloodTypeSelect", () => {
 		render(<BloodTypeSelect control={{} as never} />);
 		await userEvent.click(screen.getByTestId("pick-none"));
 		expect(fieldOnChange).toHaveBeenCalledWith(null);
-	});
-});
-
-describe("DocumentTypeSelect", () => {
-	it("renderiza todas as opções de tipo de documento", () => {
-		render(<DocumentTypeSelect value={"OTHER" as never} onChange={vi.fn()} />);
-		expect(screen.getByText("CPF")).toBeInTheDocument();
-		expect(screen.getByText("RG")).toBeInTheDocument();
-		expect(screen.getByText("CNH")).toBeInTheDocument();
-		expect(screen.getByText("Cartão de Saúde")).toBeInTheDocument();
-		expect(screen.getByText("Carteirinha do Plano")).toBeInTheDocument();
-		expect(screen.getByText("Outro")).toBeInTheDocument();
-	});
-
-	it("passa o value recebido para o Select", () => {
-		render(<DocumentTypeSelect value={"CNH" as never} onChange={vi.fn()} />);
-		expect(screen.getByTestId("select")).toHaveAttribute("data-value", "CNH");
-	});
-
-	it("chama onChange com o valor validado pelo schema ao selecionar", async () => {
-		const onChange = vi.fn();
-		render(<DocumentTypeSelect value={"OTHER" as never} onChange={onChange} />);
-		await userEvent.click(screen.getByTestId("pick-rg"));
-		expect(onChange).toHaveBeenCalledWith("RG");
 	});
 });

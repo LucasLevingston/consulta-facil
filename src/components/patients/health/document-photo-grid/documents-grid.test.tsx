@@ -13,13 +13,13 @@ vi.mock("@/features/patients", () => ({
 	usePatientDocuments: () => ({ data: documents.value }),
 }));
 
-vi.mock("@/components/patients/health/DocumentPhotoGridList", () => ({
+vi.mock("./DocumentPhotoGridList", () => ({
 	DocumentPhotoGridList: ({ documents: docs }: { documents: unknown[] }) => (
 		<div data-testid="grid-list">{docs.length} documento(s)</div>
 	),
 }));
 
-vi.mock("@/components/patients/health/DocumentUploadDialog", () => ({
+vi.mock("./DocumentUploadDialog", () => ({
 	DocumentUploadDialog: ({
 		open,
 		file,
@@ -39,7 +39,7 @@ vi.mock("@/components/patients/health/DocumentUploadDialog", () => ({
 		) : null,
 }));
 
-import { DocumentPhotoGrid } from "@/components/patients/health/DocumentPhotoGrid";
+import { DocumentPhotoGrid } from "./DocumentPhotoGrid";
 
 beforeEach(() => {
 	documents.value = [];
