@@ -24,12 +24,14 @@ vi.mock("@/features/schedule", () => ({
 		SATURDAY: "Sábado",
 		SUNDAY: "Domingo",
 	},
+}));
+vi.mock("@/components/schedule/use-save-my-schedule", () => ({
 	useSaveMySchedule: vi.fn(),
 }));
 
 import { toast } from "sonner";
 import { ScheduleEditor } from "@/components/schedule/ScheduleEditor";
-import { useSaveMySchedule } from "@/features/schedule";
+import { useSaveMySchedule } from "@/components/schedule/use-save-my-schedule";
 
 const mockUseSaveMySchedule = vi.mocked(useSaveMySchedule);
 

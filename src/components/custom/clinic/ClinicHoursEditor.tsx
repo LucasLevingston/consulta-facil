@@ -7,13 +7,10 @@ import type {
 	ClinicWorkingHoursItem,
 	ClinicWorkingHoursResponse,
 } from "@/features/schedule";
-import {
-	DAYS_OF_WEEK,
-	type DayOfWeek,
-	useSaveClinicWorkingHours,
-} from "@/features/schedule";
+import { DAYS_OF_WEEK, type DayOfWeek } from "@/features/schedule";
 import type { ClinicHoursEditorProps } from "./ClinicHoursEditor.types";
 import { ClinicHoursRow } from "./ClinicHoursRow";
+import { useSaveClinicWorkingHours } from "./use-save-clinic-working-hours";
 
 export function ClinicHoursEditor({
 	clinicId,

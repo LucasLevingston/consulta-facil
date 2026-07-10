@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/features/auth", () => ({
 	usePermission: vi.fn(),
 }));
-vi.mock("@/features/schedule", () => ({
+vi.mock("@/components/schedule/use-my-schedule", () => ({
 	useMySchedule: vi.fn(),
 }));
 vi.mock("@/providers/query-boundary", () => ({
@@ -32,8 +32,8 @@ vi.mock("@/components/schedule/ScheduleEditor", () => ({
 }));
 
 import { ScheduleContent } from "@/components/schedule/ScheduleContent";
+import { useMySchedule } from "@/components/schedule/use-my-schedule";
 import { usePermission } from "@/features/auth";
-import { useMySchedule } from "@/features/schedule";
 
 const mockUsePermission = vi.mocked(usePermission);
 const mockUseMySchedule = vi.mocked(useMySchedule);

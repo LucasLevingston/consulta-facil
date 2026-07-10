@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/components/professionals/hooks", () => ({
 	useProfessionals: vi.fn(),
 }));
-vi.mock("@/features/schedule/hooks/use-professional-schedule", () => ({
+vi.mock("@/components/schedule/hooks", () => ({
 	useProfessionalSchedule: vi.fn(),
 }));
 vi.mock(
@@ -15,9 +15,9 @@ vi.mock(
 );
 
 import { useProfessionals } from "@/components/professionals/hooks";
+import { useProfessionalSchedule } from "@/components/schedule/hooks";
 import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
 import { useAppointmentProfessionalData } from "@/features/appointments/hooks/use-appointment-professional-data";
-import { useProfessionalSchedule } from "@/features/schedule/hooks/use-professional-schedule";
 
 const mockUseProfessionals = vi.mocked(useProfessionals);
 const mockUseProfessionalSchedule = vi.mocked(useProfessionalSchedule);

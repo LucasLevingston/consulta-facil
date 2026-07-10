@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { scheduleKeys } from "@/components/schedule/hooks";
+import { scheduleRepository } from "@/features/schedule";
 import type { ClinicWorkingHoursItem } from "@/lib/schemas/schedule/clinic-working-hours-item.schema";
-import { scheduleRepository } from "../repositories/schedule.repository";
-import { scheduleKeys } from "./schedule-keys";
 
 export function useSaveClinicWorkingHours(clinicId: string | undefined) {
 	const queryClient = useQueryClient();
