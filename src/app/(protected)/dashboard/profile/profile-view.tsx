@@ -1,5 +1,6 @@
 "use client";
 
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { ProfileAppointmentStats } from "@/components/profile/profile-appointment-stats";
 import { ProfileHero } from "@/components/profile/profile-hero";
 import { ProfileNextAppointment } from "@/components/profile/profile-next-appointment";
@@ -13,7 +14,6 @@ import {
 } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
 import { useMyProfile } from "@/features/patients";
-import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function ProfileView() {

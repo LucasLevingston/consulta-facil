@@ -5,9 +5,9 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import { useProfessionalDetailsForm } from "@/features/professionals/hooks/use-professional-details-form";
 import type { ProfessionalDetailsProps } from "./ProfessionalDetailsForm.types";
 import { ProfessionalPersonalFields } from "./ProfessionalPersonalFields";
+import { useProfessionalDetailsForm } from "./use-professional-details-form";
 
 function ProfessionalDetailsForm(props: ProfessionalDetailsProps) {
 	const {

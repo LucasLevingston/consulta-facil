@@ -8,13 +8,15 @@ vi.mock("@hookform/resolvers/zod", () => ({
 }));
 vi.mock("@/features/professionals", () => ({
 	updateSocialLinksSchema: {},
+}));
+vi.mock("./use-update-social-links", () => ({
 	useUpdateSocialLinks: vi.fn(),
 }));
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
 
-import { useUpdateSocialLinks } from "@/features/professionals";
+import { useUpdateSocialLinks } from "./use-update-social-links";
 import { useSocialLinksForm } from "./useSocialLinksForm";
 
 const mockUseUpdate = vi.mocked(useUpdateSocialLinks);

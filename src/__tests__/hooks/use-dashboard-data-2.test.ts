@@ -12,7 +12,7 @@ vi.mock("@/features/appointments", () => ({
 vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(() => ({ user: { id: "u-1", name: "Test" } })),
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useMyProfessionalProfile: vi.fn(() => ({ data: undefined })),
 }));
 

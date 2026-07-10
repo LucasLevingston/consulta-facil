@@ -12,11 +12,11 @@ import {
 import {
 	type ProfessionalExperienceInput,
 	professionalExperienceSchema,
-	useAddExperience,
-	useUpdateExperience,
 } from "@/features/professionals";
 import type { ExperienceDialogProps } from "./ExperienceDialog.types";
 import { ExperienceDialogForm } from "./ExperienceDialogForm";
+import { useAddExperience } from "./use-add-experience";
+import { useUpdateExperience } from "./use-update-experience";
 
 export function ExperienceDialog({
 	open,

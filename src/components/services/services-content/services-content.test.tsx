@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useApplicationStatus: vi.fn(),
 }));
 vi.mock("@/providers/query-boundary", () => ({
@@ -49,7 +49,7 @@ vi.mock("@/components/services/services-card", () => ({
 	),
 }));
 
-import { useApplicationStatus } from "@/features/professionals";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { ServicesContent } from "./ServicesContent";
 
 const mockUseApplicationStatus = vi.mocked(useApplicationStatus);

@@ -6,17 +6,17 @@ import type { ProfessionalResponse } from "@/features/professionals";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/admin/use-approve-application", () => ({
 	useApproveApplication: vi.fn(),
+}));
+vi.mock("@/components/admin/use-reject-application", () => ({
 	useRejectApplication: vi.fn(),
 }));
 
 import { toast } from "sonner";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
-import {
-	useApproveApplication,
-	useRejectApplication,
-} from "@/features/professionals";
+import { useApproveApplication } from "@/components/admin/use-approve-application";
+import { useRejectApplication } from "@/components/admin/use-reject-application";
 
 const mockUseApprove = vi.mocked(useApproveApplication);
 const mockUseReject = vi.mocked(useRejectApplication);

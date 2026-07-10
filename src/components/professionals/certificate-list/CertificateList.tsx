@@ -11,11 +11,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteCertificate } from "@/features/professionals";
 import { CertificateDialog } from "./CertificateDialog";
 import type { CertificateItem } from "./CertificateDialog.types";
 import type { CertificateListProps } from "./CertificateList.types";
 import { CertificateListItem } from "./CertificateListItem";
+import { useDeleteCertificate } from "./use-delete-certificate";
 
 export function CertificateList({ professional }: CertificateListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);

@@ -7,9 +7,9 @@ import { toast } from "sonner";
 import {
 	type UpdateSocialLinksInput,
 	updateSocialLinksSchema,
-	useUpdateSocialLinks,
 } from "@/features/professionals";
 import type { SocialLinksFormProps } from "./SocialLinksForm.types";
+import { useUpdateSocialLinks } from "./use-update-social-links";
 
 export function useSocialLinksForm({ professional }: SocialLinksFormProps) {
 	const { mutate, isPending } = useUpdateSocialLinks();

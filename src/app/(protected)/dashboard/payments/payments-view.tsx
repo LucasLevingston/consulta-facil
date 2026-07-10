@@ -5,6 +5,7 @@ import { Suspense, useDeferredValue } from "react";
 import { AppointmentPaymentCard } from "@/components/custom/appointment/AppointmentPaymentCard";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -18,7 +19,6 @@ import {
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { usePermission } from "@/features/auth";
-import { useMyProfessionalProfile } from "@/features/professionals";
 import { useUrlListState } from "@/hooks/use-url-list-state";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";

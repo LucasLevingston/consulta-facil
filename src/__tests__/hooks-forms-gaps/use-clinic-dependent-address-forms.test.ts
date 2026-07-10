@@ -21,24 +21,17 @@ vi.mock("@/features/dependents", () => ({
 	useCreateDependent: vi.fn(),
 	useUpdateDependent: vi.fn(),
 }));
-vi.mock("@/features/professionals", () => ({
-	updateAddressSchema: {},
-	useUpdateAddress: vi.fn(),
-}));
 
 import { toast } from "sonner";
 import { useCreateClinic, useUpdateClinic } from "@/features/clinics";
 import { useClinicForm } from "@/features/clinics/hooks/use-clinic-form";
 import { useCreateDependent, useUpdateDependent } from "@/features/dependents";
 import { useDependentForm } from "@/features/dependents/hooks/use-dependent-form";
-import { useUpdateAddress } from "@/features/professionals";
-import { useAddressForm } from "@/features/professionals/hooks/use-address-form";
 
 const mockCreateClinic = vi.mocked(useCreateClinic);
 const mockUpdateClinic = vi.mocked(useUpdateClinic);
 const mockCreateDependent = vi.mocked(useCreateDependent);
 const mockUpdateDependent = vi.mocked(useUpdateDependent);
-const mockUpdateAddress = vi.mocked(useUpdateAddress);
 
 function wrapper() {
 	const qc = new QueryClient({
@@ -272,85 +265,6 @@ describe("useDependentForm", () => {
 			() => useDependentForm({ editing: null, onClose }),
 			{ wrapper: wrapper() },
 		);
-		expect(result.current.isPending).toBe(true);
-	});
-});
-
-describe("useAddressForm", () => {
-	const professional = {
-		id: "p-1",
-		city: "São Paulo",
-		state: "SP",
-		address: "Rua A",
-		zipCode: "01000-000",
-		neighborhood: "Centro",
-		streetNumber: "100",
-		complement: "",
-	};
-
-	beforeEach(() => {
-		mockUpdateAddress.mockReturnValue({
-			mutate: vi.fn(),
-			isPending: false,
-		} as never);
-	});
-
-	it("inicia o form com os valores do profissional", () => {
-		const { result } = renderHook(() => useAddressForm(professional as never), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.form.getValues("city")).toBe("São Paulo");
-		expect(result.current.form.getValues("neighborhood")).toBe("Centro");
-	});
-
-	it("reseta o form quando o profissional muda", () => {
-		const { result, rerender } = renderHook(
-			(props: { professional: typeof professional }) =>
-				useAddressForm(props.professional as never),
-			{ wrapper: wrapper(), initialProps: { professional } },
-		);
-		expect(result.current.form.getValues("city")).toBe("São Paulo");
-		const updated = { ...professional, city: "Rio de Janeiro" };
-		rerender({ professional: updated });
-		expect(result.current.form.getValues("city")).toBe("Rio de Janeiro");
-	});
-
-	it("onSubmit converte strings vazias para null e chama mutate com toast de sucesso", () => {
-		const mutate = vi.fn((_data, opts) => opts?.onSuccess?.());
-		mockUpdateAddress.mockReturnValue({ mutate, isPending: false } as never);
-		const { result } = renderHook(() => useAddressForm(professional as never), {
-			wrapper: wrapper(),
-		});
-		act(() => {
-			result.current.onSubmit({ ...professional, complement: "" } as never);
-		});
-		expect(mutate).toHaveBeenCalledWith(
-			expect.objectContaining({ complement: null }),
-			expect.any(Object),
-		);
-		expect(toast.success).toHaveBeenCalledWith("Endereço atualizado!");
-	});
-
-	it("onSubmit mostra toast de erro quando a mutation falha", () => {
-		const mutate = vi.fn((_data, opts) => opts?.onError?.());
-		mockUpdateAddress.mockReturnValue({ mutate, isPending: false } as never);
-		const { result } = renderHook(() => useAddressForm(professional as never), {
-			wrapper: wrapper(),
-		});
-		act(() => {
-			result.current.onSubmit(professional as never);
-		});
-		expect(toast.error).toHaveBeenCalledWith("Erro ao salvar endereço.");
-	});
-
-	it("isPending reflete o estado da mutation", () => {
-		mockUpdateAddress.mockReturnValue({
-			mutate: vi.fn(),
-			isPending: true,
-		} as never);
-		const { result } = renderHook(() => useAddressForm(professional as never), {
-			wrapper: wrapper(),
-		});
 		expect(result.current.isPending).toBe(true);
 	});
 });

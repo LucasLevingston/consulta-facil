@@ -10,11 +10,13 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/professionals", () => ({
 	updateBioSchema: {},
+}));
+vi.mock("./use-update-bio", () => ({
 	useUpdateBio: vi.fn(),
 }));
 
-import { useUpdateBio } from "@/features/professionals";
 import { BioForm } from "./BioForm";
+import { useUpdateBio } from "./use-update-bio";
 
 const mockUseUpdateBio = vi.mocked(useUpdateBio);
 

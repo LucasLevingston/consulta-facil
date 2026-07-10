@@ -5,13 +5,13 @@ import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import PageHeader from "@/components/custom/page-header";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import {
 	useAllAdminAppointments,
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { usePermission, useUserStore } from "@/features/auth";
-import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function AppointmentsView() {

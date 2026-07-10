@@ -3,10 +3,10 @@
 import { Users } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import PageHeader from "@/components/custom/page-header";
-import { useProfessionalsFilters } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ProfessionalsToolbar } from "./ProfessionalsToolbar";
 import { ProfessionalsViewContent } from "./ProfessionalsViewContent";
+import { useProfessionalsFilters } from "./use-professionals-filters";
 
 export default function ProfessionalsContent() {
 	const searchParams = useSearchParams();

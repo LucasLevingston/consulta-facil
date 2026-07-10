@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/professionals", () => ({
-	useUpdateSocialLinks: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
 	updateSocialLinksSchema: {},
+}));
+vi.mock("./use-update-social-links", () => ({
+	useUpdateSocialLinks: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
 }));
 vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: vi.fn(() => vi.fn()),

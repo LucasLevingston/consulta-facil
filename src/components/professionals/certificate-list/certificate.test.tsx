@@ -10,8 +10,14 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/professionals", () => ({
 	professionalCertificateSchema: {},
+}));
+vi.mock("./use-add-certificate", () => ({
 	useAddCertificate: vi.fn(),
+}));
+vi.mock("./use-update-certificate", () => ({
 	useUpdateCertificate: vi.fn(),
+}));
+vi.mock("./use-delete-certificate", () => ({
 	useDeleteCertificate: vi.fn(),
 }));
 vi.mock("@/components/ui/dialog", () => ({
@@ -49,14 +55,12 @@ vi.mock("./CertificateDialogForm", () => ({
 	),
 }));
 
-import {
-	useAddCertificate,
-	useDeleteCertificate,
-	useUpdateCertificate,
-} from "@/features/professionals";
 import { CertificateDialog } from "./CertificateDialog";
 import { CertificateList } from "./CertificateList";
 import { CertificateListItem } from "./CertificateListItem";
+import { useAddCertificate } from "./use-add-certificate";
+import { useDeleteCertificate } from "./use-delete-certificate";
+import { useUpdateCertificate } from "./use-update-certificate";
 
 const mockUseAdd = vi.mocked(useAddCertificate);
 const mockUseUpdate = vi.mocked(useUpdateCertificate);

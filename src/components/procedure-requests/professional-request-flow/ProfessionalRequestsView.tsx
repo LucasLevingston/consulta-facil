@@ -3,7 +3,7 @@
 import { ErrorState } from "@/components/custom/error-state/error-state";
 import { LoadingPage } from "@/components/custom/loading/loading-page";
 import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
-import { useApplicationStatus } from "@/features/professionals";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { ProfessionalView } from "./ProfessionalView";
 
 export function ProfessionalRequestsView() {

@@ -10,8 +10,14 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/professionals", () => ({
 	professionalEducationSchema: {},
+}));
+vi.mock("./use-add-education", () => ({
 	useAddEducation: vi.fn(),
+}));
+vi.mock("./use-update-education", () => ({
 	useUpdateEducation: vi.fn(),
+}));
+vi.mock("./use-delete-education", () => ({
 	useDeleteEducation: vi.fn(),
 }));
 vi.mock("@/components/ui/dialog", () => ({
@@ -49,14 +55,12 @@ vi.mock("./EducationDialogForm", () => ({
 	),
 }));
 
-import {
-	useAddEducation,
-	useDeleteEducation,
-	useUpdateEducation,
-} from "@/features/professionals";
 import { EducationDialog } from "./EducationDialog";
 import { EducationList } from "./EducationList";
 import { EducationListItem } from "./EducationListItem";
+import { useAddEducation } from "./use-add-education";
+import { useDeleteEducation } from "./use-delete-education";
+import { useUpdateEducation } from "./use-update-education";
 
 const mockUseAdd = vi.mocked(useAddEducation);
 const mockUseUpdate = vi.mocked(useUpdateEducation);

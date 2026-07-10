@@ -10,8 +10,14 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/professionals", () => ({
 	professionalExperienceSchema: {},
+}));
+vi.mock("./use-add-experience", () => ({
 	useAddExperience: vi.fn(),
+}));
+vi.mock("./use-update-experience", () => ({
 	useUpdateExperience: vi.fn(),
+}));
+vi.mock("./use-delete-experience", () => ({
 	useDeleteExperience: vi.fn(),
 }));
 vi.mock("@/components/ui/dialog", () => ({
@@ -49,14 +55,12 @@ vi.mock("./ExperienceDialogForm", () => ({
 	),
 }));
 
-import {
-	useAddExperience,
-	useDeleteExperience,
-	useUpdateExperience,
-} from "@/features/professionals";
 import { ExperienceDialog } from "./ExperienceDialog";
 import { ExperienceList } from "./ExperienceList";
 import { ExperienceListItem } from "./ExperienceListItem";
+import { useAddExperience } from "./use-add-experience";
+import { useDeleteExperience } from "./use-delete-experience";
+import { useUpdateExperience } from "./use-update-experience";
 
 const mockUseAdd = vi.mocked(useAddExperience);
 const mockUseUpdate = vi.mocked(useUpdateExperience);

@@ -6,12 +6,10 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	useApproveApplication,
-	useRejectApplication,
-} from "@/features/professionals";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { PendingApplicationCardProps } from "./PendingApplicationCard.types";
+import { useApproveApplication } from "./use-approve-application";
+import { useRejectApplication } from "./use-reject-application";
 
 export function PendingApplicationCard({
 	professional,

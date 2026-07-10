@@ -5,7 +5,6 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { professionalKeys } from "@/features/professionals/hooks/professional-keys";
 import { professionalApplicationsApi } from "@/lib/api/professionals/professional-applications.api";
 
 const mockGet = vi.mocked(api.get);
@@ -58,39 +57,5 @@ describe("professionalsApi — getApplicationStatus", () => {
 
 		expect(mockGet).toHaveBeenCalledWith("/professionals/application-status");
 		expect(mockGet).toHaveBeenCalledTimes(1);
-	});
-});
-
-describe("professionalKeys", () => {
-	it("all retorna a chave raiz", () => {
-		expect(professionalKeys.all).toEqual(["professionals"]);
-	});
-
-	it("list inclui page e size na chave", () => {
-		expect(professionalKeys.list(0, 20)).toEqual([
-			"professionals",
-			"list",
-			{ page: 0, size: 20 },
-		]);
-	});
-
-	it("list sem argumentos inclui undefined", () => {
-		expect(professionalKeys.list()).toEqual([
-			"professionals",
-			"list",
-			{ page: undefined, size: undefined },
-		]);
-	});
-
-	it("search inclui a especialidade na chave", () => {
-		expect(professionalKeys.search("Cardiologia")).toEqual([
-			"professionals",
-			"search",
-			"Cardiologia",
-		]);
-	});
-
-	it("detail inclui o id na chave", () => {
-		expect(professionalKeys.detail("d-42")).toEqual(["professionals", "d-42"]);
 	});
 });

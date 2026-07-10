@@ -12,11 +12,11 @@ import {
 import {
 	type ProfessionalCertificateInput,
 	professionalCertificateSchema,
-	useAddCertificate,
-	useUpdateCertificate,
 } from "@/features/professionals";
 import type { CertificateDialogProps } from "./CertificateDialog.types";
 import { CertificateDialogForm } from "./CertificateDialogForm";
+import { useAddCertificate } from "./use-add-certificate";
+import { useUpdateCertificate } from "./use-update-certificate";
 
 export function CertificateDialog({
 	open,
