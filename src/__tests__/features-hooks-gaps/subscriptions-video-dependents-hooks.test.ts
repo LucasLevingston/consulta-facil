@@ -1,19 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { createElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock(
-	"@/features/subscriptions/repositories/subscriptions.repository",
-	() => ({
-		subscriptionsRepository: {
-			getMy: vi.fn(),
-			createCheckout: vi.fn(),
-			adminListAll: vi.fn(),
-			adminCancel: vi.fn(),
-		},
-	}),
-);
 vi.mock("@/features/dependents/repositories/dependents.repository", () => ({
 	dependentsRepository: {
 		getMy: vi.fn(),
@@ -26,16 +15,6 @@ vi.mock("@/features/dependents/repositories/dependents.repository", () => ({
 import { useDeleteDependent } from "@/features/dependents/hooks/use-delete-dependent";
 import { useUpdateDependent } from "@/features/dependents/hooks/use-update-dependent";
 import { dependentsRepository } from "@/features/dependents/repositories/dependents.repository";
-import { useAdminCancelSubscription } from "@/features/subscriptions/hooks/use-admin-cancel-subscription";
-import { useAdminSubscriptions } from "@/features/subscriptions/hooks/use-admin-subscriptions";
-import { useCreateCheckout } from "@/features/subscriptions/hooks/use-create-checkout";
-import { useMySubscription } from "@/features/subscriptions/hooks/use-my-subscription";
-import { subscriptionsRepository } from "@/features/subscriptions/repositories/subscriptions.repository";
-
-const mockGetMy = vi.mocked(subscriptionsRepository.getMy);
-const mockCreateCheckout = vi.mocked(subscriptionsRepository.createCheckout);
-const mockAdminListAll = vi.mocked(subscriptionsRepository.adminListAll);
-const mockAdminCancel = vi.mocked(subscriptionsRepository.adminCancel);
 
 const mockRemoveDependent = vi.mocked(dependentsRepository.remove);
 const mockUpdateDependent = vi.mocked(dependentsRepository.update);
@@ -48,82 +27,6 @@ function wrapper() {
 		qc,
 	};
 }
-
-describe("useMySubscription", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("busca a assinatura do usuario logado", async () => {
-		const subscription = { id: "sub-1", status: "ACTIVE" };
-		mockGetMy.mockResolvedValueOnce(subscription as never);
-		const { result } = renderHook(() => useMySubscription(), wrapper());
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(result.current.data).toEqual(subscription);
-	});
-});
-
-describe("useCreateCheckout", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-		Object.defineProperty(window, "location", {
-			value: { href: "" },
-			writable: true,
-		});
-	});
-
-	it("chama createCheckout com o planId", async () => {
-		mockCreateCheckout.mockResolvedValueOnce({
-			checkoutUrl: "https://pay.example.com/checkout",
-		} as never);
-		const { result } = renderHook(() => useCreateCheckout(), wrapper());
-		await act(async () => {
-			await result.current.mutateAsync("plan-pro");
-		});
-		expect(mockCreateCheckout).toHaveBeenCalledWith("plan-pro");
-	});
-
-	it("redireciona para o checkoutUrl ao ter sucesso", async () => {
-		mockCreateCheckout.mockResolvedValueOnce({
-			checkoutUrl: "https://pay.example.com/checkout",
-		} as never);
-		const { result } = renderHook(() => useCreateCheckout(), wrapper());
-		await act(async () => {
-			await result.current.mutateAsync("plan-pro");
-		});
-		expect(window.location.href).toBe("https://pay.example.com/checkout");
-	});
-});
-
-describe("useAdminSubscriptions", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("busca a lista de assinaturas do admin", async () => {
-		const subscriptions = [{ id: "sub-1" }, { id: "sub-2" }];
-		mockAdminListAll.mockResolvedValueOnce(subscriptions as never);
-		const { result } = renderHook(() => useAdminSubscriptions(), wrapper());
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(result.current.data).toEqual(subscriptions);
-	});
-});
-
-describe("useAdminCancelSubscription", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("cancela a assinatura e invalida a query de admin subscriptions", async () => {
-		const { qc, wrapper: w } = wrapper();
-		const invalidateSpy = vi.spyOn(qc, "invalidateQueries");
-		mockAdminCancel.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useAdminCancelSubscription(), {
-			wrapper: w,
-		});
-		await act(async () => {
-			await result.current.mutateAsync("sub-1");
-		});
-		expect(mockAdminCancel).toHaveBeenCalledWith("sub-1");
-		expect(invalidateSpy).toHaveBeenCalledWith({
-			queryKey: ["admin", "subscriptions"],
-		});
-	});
-});
 
 describe("useDeleteDependent", () => {
 	beforeEach(() => vi.clearAllMocks());

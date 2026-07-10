@@ -3,6 +3,7 @@
 import { ArrowLeft, CreditCard, Info } from "lucide-react";
 import Link from "next/link";
 import PageHeader from "@/components/custom/page-header";
+import { useMySubscription } from "@/components/custom/plans/hooks";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useMySubscription } from "@/features/subscriptions";
 
 function PaymentMethodContent() {
 	const { data: subscription } = useMySubscription();

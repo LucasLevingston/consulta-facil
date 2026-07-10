@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { subscriptionsRepository } from "../repositories/subscriptions.repository";
+import { subscriptionsRepository } from "@/features/subscriptions";
 
 export function useMySubscription() {
 	return useSuspenseQuery({

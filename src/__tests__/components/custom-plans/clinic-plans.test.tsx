@@ -9,7 +9,7 @@ vi.mock("@/features/clinics", () => ({
 	useMyClinic: vi.fn(() => ({ data: [] })),
 }));
 
-vi.mock("@/features/subscriptions", () => ({
+vi.mock("@/components/custom/plans/hooks", () => ({
 	useCreateCheckout: vi.fn(() => ({ mutate, isPending: false })),
 	useMySubscription: vi.fn(() => ({
 		data: null,
@@ -20,8 +20,8 @@ vi.mock("@/features/subscriptions", () => ({
 
 vi.mock("sonner", () => ({ toast: { error: vi.fn() } }));
 
+import { useMySubscription } from "@/components/custom/plans/hooks";
 import { useMyClinic } from "@/features/clinics";
-import { useMySubscription } from "@/features/subscriptions";
 
 describe("ClinicPlans", () => {
 	beforeEach(() => {

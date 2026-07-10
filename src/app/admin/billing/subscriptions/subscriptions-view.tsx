@@ -6,10 +6,8 @@ import { SubscriptionsTable } from "@/components/admin/SubscriptionsTable";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import type { AdminSubscriptionResponse } from "@/features/subscriptions";
-import {
-	useAdminCancelSubscription,
-	useAdminSubscriptions,
-} from "@/features/subscriptions";
+import { useAdminCancelSubscription } from "./use-admin-cancel-subscription";
+import { useAdminSubscriptions } from "./use-admin-subscriptions";
 
 function AdminSubscriptionsContent() {
 	const { data: subscriptions } = useAdminSubscriptions();

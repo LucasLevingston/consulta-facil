@@ -4,6 +4,10 @@ import { ArrowLeft, BadgeCheck, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import PageHeader from "@/components/custom/page-header";
+import {
+	useCreateCheckout,
+	useMySubscription,
+} from "@/components/custom/plans/hooks";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +19,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { usePlans } from "@/features/plans";
-import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
 
 const PERIOD_LABELS: Record<string, string> = {
 	MONTHLY: "mês",

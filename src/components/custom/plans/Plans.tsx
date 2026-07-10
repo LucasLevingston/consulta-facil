@@ -2,9 +2,12 @@
 
 import { BadgeCheck, Building2, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
+import {
+	useCreateCheckout,
+	useMySubscription,
+} from "@/components/custom/plans/hooks";
 import type { PlanResponse } from "@/features/plans";
 import { usePlans } from "@/features/plans";
-import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
 import { PRO_PLAN_IDS } from "../../../utils/constants/pro-plan-ids";
 import { apiPlanToUiPlan } from "./Plans.utils";
 import { PlanCard } from "./plan-card";

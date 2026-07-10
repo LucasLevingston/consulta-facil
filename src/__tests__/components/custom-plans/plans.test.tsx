@@ -29,7 +29,7 @@ vi.mock("@/features/plans", () => ({
 	usePlans: vi.fn(() => ({ data: [], isLoading: false, error: null })),
 }));
 
-vi.mock("@/features/subscriptions", () => ({
+vi.mock("@/components/custom/plans/hooks", () => ({
 	useCreateCheckout: vi.fn(() => ({ mutate, isPending: false })),
 	useMySubscription: vi.fn(() => ({
 		data: null,
@@ -40,8 +40,8 @@ vi.mock("@/features/subscriptions", () => ({
 
 vi.mock("sonner", () => ({ toast: { error: vi.fn() } }));
 
+import { useMySubscription } from "@/components/custom/plans/hooks";
 import { usePlans } from "@/features/plans";
-import { useMySubscription } from "@/features/subscriptions";
 
 describe("Plans", () => {
 	beforeEach(() => {
