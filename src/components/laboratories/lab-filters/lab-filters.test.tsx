@@ -42,11 +42,11 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { LabFilters } from "@/components/laboratories/LabFilters";
-import { LabFiltersActiveBadges } from "@/components/laboratories/LabFiltersActiveBadges";
-import { LabFiltersAdvancedPanel } from "@/components/laboratories/LabFiltersAdvancedPanel";
-import { LabFiltersLocationControl } from "@/components/laboratories/LabFiltersLocationControl";
-import { LabFiltersSearchRow } from "@/components/laboratories/LabFiltersSearchRow";
+import { LabFilters } from "./LabFilters";
+import { LabFiltersActiveBadges } from "./LabFiltersActiveBadges";
+import { LabFiltersAdvancedPanel } from "./LabFiltersAdvancedPanel";
+import { LabFiltersLocationControl } from "./LabFiltersLocationControl";
+import { LabFiltersSearchRow } from "./LabFiltersSearchRow";
 
 // Os componentes LabFilters* recebem o retorno do hook useLabFilters via prop
 // `hook`, então basta construir um objeto mockado com o mesmo formato de
