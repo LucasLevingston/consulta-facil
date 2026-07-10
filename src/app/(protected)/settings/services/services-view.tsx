@@ -3,7 +3,7 @@
 import { Briefcase } from "lucide-react";
 
 import PageHeader from "@/components/custom/page-header";
-import { ServicesContent } from "@/components/services/ServicesContent";
+import { ServicesContent } from "@/components/services/services-content";
 import { usePermission } from "@/features/auth";
 
 export function ServicesView() {

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/services", () => ({}));
-vi.mock("@/components/services/ServiceForm", () => ({
+vi.mock("./ServiceForm", () => ({
 	ServiceForm: ({ existing }: { existing: { name: string } }) => (
 		<div>ServiceForm:{existing.name}</div>
 	),
@@ -21,7 +21,7 @@ vi.mock("@/components/ui/dialog", () => ({
 	),
 }));
 
-import { ServicesEditDialog } from "@/components/services/ServicesEditDialog";
+import { ServicesEditDialog } from "./ServicesEditDialog";
 
 describe("ServicesEditDialog", () => {
 	it("renders nothing when editing=null", () => {

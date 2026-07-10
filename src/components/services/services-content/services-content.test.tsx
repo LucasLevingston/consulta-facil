@@ -22,14 +22,14 @@ vi.mock("@/providers/query-boundary", () => ({
 			<div>{children}</div>
 		),
 }));
-vi.mock("@/components/services/ConsultationPriceCard", () => ({
+vi.mock("@/components/services/consultation-price-card", () => ({
 	ConsultationPriceCard: ({
 		consultationPrice,
 	}: {
 		consultationPrice: number | null;
 	}) => <div>ConsultationPriceCard:{String(consultationPrice)}</div>,
 }));
-vi.mock("@/components/services/PaymentSettingsCard", () => ({
+vi.mock("@/components/services/payment-settings-card", () => ({
 	PaymentSettingsCard: ({
 		acceptedPaymentMethods,
 		paymentTiming,
@@ -43,14 +43,14 @@ vi.mock("@/components/services/PaymentSettingsCard", () => ({
 		</div>
 	),
 }));
-vi.mock("@/components/services/ServicesCard", () => ({
+vi.mock("@/components/services/services-card", () => ({
 	ServicesCard: ({ professionalId }: { professionalId: string }) => (
 		<div>ServicesCard:{professionalId}</div>
 	),
 }));
 
-import { ServicesContent } from "@/components/services/ServicesContent";
 import { useApplicationStatus } from "@/features/professionals";
+import { ServicesContent } from "./ServicesContent";
 
 const mockUseApplicationStatus = vi.mocked(useApplicationStatus);
 

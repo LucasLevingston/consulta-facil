@@ -22,7 +22,7 @@ vi.mock("@/components/ui/checkbox", () => ({
 	),
 }));
 
-import { PaymentMethodsField } from "@/components/services/PaymentMethodsField";
+import { PaymentMethodsField } from "./PaymentMethodsField";
 
 function MethodsHarness({
 	defaultValues,

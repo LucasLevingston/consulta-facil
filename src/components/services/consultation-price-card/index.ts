@@ -1,0 +1,1 @@
+export { ConsultationPriceCard } from "./ConsultationPriceCard";

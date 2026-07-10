@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/services/ServiceForm", () => ({
+vi.mock("./ServiceForm", () => ({
 	ServiceForm: ({ onClose }: { onClose: () => void }) => (
 		<div>
 			ServiceForm-mock
@@ -38,7 +38,7 @@ vi.mock("@/components/ui/dialog", () => ({
 	),
 }));
 
-import { NewServiceButton } from "@/components/services/NewServiceButton";
+import { NewServiceButton } from "./NewServiceButton";
 
 describe("NewServiceButton", () => {
 	it("renderiza o botão Novo serviço", () => {
