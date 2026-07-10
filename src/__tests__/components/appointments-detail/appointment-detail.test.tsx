@@ -6,7 +6,7 @@ vi.mock("@/features/auth", () => ({
 	usePermission: vi.fn(),
 	useUserStore: vi.fn(),
 }));
-vi.mock("@/features/video", () => ({
+vi.mock("@/components/appointments/detail/use-room-token", () => ({
 	useRoomToken: vi.fn(),
 }));
 vi.mock("@/components/custom/video-room", () => ({
@@ -50,8 +50,8 @@ vi.mock("@/components/appointments/detail/AppointmentScheduleCard", () => ({
 }));
 
 import { AppointmentDetail } from "@/components/appointments/detail/AppointmentDetail";
+import { useRoomToken } from "@/components/appointments/detail/use-room-token";
 import { usePermission, useUserStore } from "@/features/auth";
-import { useRoomToken } from "@/features/video";
 
 const baseAppointment = {
 	id: "a-1",
