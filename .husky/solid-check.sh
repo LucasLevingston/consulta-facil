@@ -10,7 +10,7 @@ for file in $staged; do
   content=$(git show ":$file" 2>/dev/null)
 
   # 1. Tamanho (excluir gerados, configs, testes, tipos, constants e use-toast)
-  case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js|*__tests__*|*.d.ts|*use-toast*|*/constants/*|*constants.ts|*/app/*) ;;
+  case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js|*__tests__*|*.test.ts|*.test.tsx|*.spec.ts|*.spec.tsx|*.d.ts|*use-toast*|*/constants/*|*constants.ts|*/app/*) ;;
     *)
       lines=$(printf '%s\n' "$content" | wc -l)
       if [ "$lines" -gt "$MAX_LINES" ]; then
@@ -22,7 +22,7 @@ for file in $staged; do
 
   # 2. Múltiplas funções por arquivo — exportadas OU não (SRP — 1 arquivo = 1 função)
   case "$file" in
-    *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js|*/app/*)
+    *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js|*/app/*|*__tests__*|*.test.ts|*.test.tsx|*.spec.ts|*.spec.tsx)
       ;;
     *)
       n=$(printf '%s\n' "$content" | grep -E "^(export (default )?)?(async )?function [A-Za-z]|^(export )?const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" | wc -l)

@@ -81,6 +81,10 @@
   "exclude": [
     "node_modules",
     "src/lib/api/generated",
-    "src/__tests__/**"
+    "src/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
   ]
 }
