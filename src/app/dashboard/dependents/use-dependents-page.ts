@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { useDeleteDependent } from "@/components/dependents/hooks";
 import type { DependentResponse } from "@/features/dependents";
-import { useDeleteDependent } from "@/features/dependents";
 
 export function useDependentsPage() {
 	const deleteMutation = useDeleteDependent();

@@ -5,9 +5,10 @@ import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { DependentCard } from "@/components/dependents/DependentCard";
 import { DependentFormDialog } from "@/components/dependents/DependentFormDialog";
+import { useMyDependents } from "@/components/dependents/hooks";
 import { Button } from "@/components/ui/button";
 import type { DependentResponse } from "@/features/dependents";
-import { useDependentsPage, useMyDependents } from "@/features/dependents";
+import { useDependentsPage } from "./use-dependents-page";
 
 function DependentsList({
 	openEdit,

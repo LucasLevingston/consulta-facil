@@ -3,11 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockMutateAsync = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
 
-vi.mock("@/features/dependents/hooks/use-my-dependents", () => ({
+vi.mock("@/components/dependents/hooks", () => ({
 	useMyDependents: vi.fn().mockReturnValue({ data: [], isLoading: false }),
-}));
-
-vi.mock("@/features/dependents/hooks/use-delete-dependent", () => ({
 	useDeleteDependent: vi.fn().mockReturnValue({
 		mutateAsync: mockMutateAsync,
 		isPending: false,

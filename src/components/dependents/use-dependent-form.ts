@@ -7,9 +7,9 @@ import type { DependentResponse } from "@/features/dependents";
 import {
 	type CreateDependentInput,
 	createDependentSchema,
-	useCreateDependent,
-	useUpdateDependent,
 } from "@/features/dependents";
+import { useCreateDependent } from "./use-create-dependent";
+import { useUpdateDependent } from "./use-update-dependent";
 
 interface UseDependentFormProps {
 	editing?: DependentResponse | null;

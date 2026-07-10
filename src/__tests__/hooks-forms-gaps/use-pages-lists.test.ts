@@ -9,7 +9,7 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(),
 	usePathname: vi.fn(),
 }));
-vi.mock("@/features/dependents", () => ({
+vi.mock("@/components/dependents/hooks", () => ({
 	useDeleteDependent: vi.fn(),
 }));
 vi.mock("@/features/messaging", () => ({
@@ -25,6 +25,8 @@ vi.mock("@/features/billing", () => ({
 
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { useDependentsPage } from "@/app/dashboard/dependents/use-dependents-page";
+import { useDeleteDependent } from "@/components/dependents/hooks";
 import {
 	useCreateFeature,
 	useDeleteFeature,
@@ -34,8 +36,6 @@ import {
 } from "@/features/billing";
 import { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
 import { useSystemFeesPage } from "@/features/billing/hooks/use-system-fees-page";
-import { useDeleteDependent } from "@/features/dependents";
-import { useDependentsPage } from "@/features/dependents/hooks/use-dependents-page";
 import { useConversations } from "@/features/messaging";
 import { useMessagesPage } from "@/features/messaging/hooks/use-messages-page";
 

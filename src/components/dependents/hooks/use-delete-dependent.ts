@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { dependentsRepository } from "../repositories/dependents.repository";
+import { dependentsRepository } from "@/features/dependents";
 import { dependentKeys } from "./dependent-keys";
 
-export function useCreateDependent() {
+export function useDeleteDependent() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: dependentsRepository.create,
+		mutationFn: (id: string) => dependentsRepository.remove(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: dependentKeys.my() });
 		},
