@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { servicesRepository } from "../repositories/services.repository";
+import { servicesRepository } from "@/features/services";
 
 export function useSetConsultationPrice() {
 	const queryClient = useQueryClient();

@@ -21,26 +21,26 @@ vi.mock("@/components/ui/checkbox", () => ({
 		/>
 	),
 }));
-vi.mock("@/features/services", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@/features/services")>();
-	return {
-		...actual,
-		useDeactivateService: vi.fn(),
-		useGetProfessionalServices: vi.fn(),
-		useCreateService: vi.fn(),
-		useUpdateService: vi.fn(),
-	};
-});
+vi.mock("./use-deactivate-service", () => ({
+	useDeactivateService: vi.fn(),
+}));
+vi.mock("./use-get-professional-services", () => ({
+	useGetProfessionalServices: vi.fn(),
+}));
+vi.mock("./use-create-service", () => ({
+	useCreateService: vi.fn(),
+}));
+vi.mock("./use-update-service", () => ({
+	useUpdateService: vi.fn(),
+}));
 
 import { toast } from "sonner";
-import {
-	useCreateService,
-	useDeactivateService,
-	useGetProfessionalServices,
-	useUpdateService,
-} from "@/features/services";
 import { ServiceRow } from "./ServiceRow";
 import { ServicesCard } from "./ServicesCard";
+import { useCreateService } from "./use-create-service";
+import { useDeactivateService } from "./use-deactivate-service";
+import { useGetProfessionalServices } from "./use-get-professional-services";
+import { useUpdateService } from "./use-update-service";
 
 const mockUseDeactivateService = vi.mocked(useDeactivateService);
 const mockUseGetProfessionalServices = vi.mocked(useGetProfessionalServices);

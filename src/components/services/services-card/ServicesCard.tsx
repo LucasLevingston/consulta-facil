@@ -10,11 +10,11 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { ProfessionalService } from "@/features/services";
-import { useGetProfessionalServices } from "@/features/services";
 import { NewServiceButton } from "./NewServiceButton";
 import { ServiceRow } from "./ServiceRow";
 import type { ServicesCardProps } from "./ServicesCard.types";
 import { ServicesEditDialog } from "./ServicesEditDialog";
+import { useGetProfessionalServices } from "./use-get-professional-services";
 
 export function ServicesCard({ professionalId }: ServicesCardProps) {
 	const { data: services = [], isLoading } =

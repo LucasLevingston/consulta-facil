@@ -3,13 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
-vi.mock("@/features/services", () => ({
+vi.mock("./use-set-consultation-price", () => ({
 	useSetConsultationPrice: vi.fn(),
 }));
 
 import { toast } from "sonner";
-import { useSetConsultationPrice } from "@/features/services";
 import { ConsultationPriceCard } from "./ConsultationPriceCard";
+import { useSetConsultationPrice } from "./use-set-consultation-price";
 
 const mockUseSetConsultationPrice = vi.mocked(useSetConsultationPrice);
 

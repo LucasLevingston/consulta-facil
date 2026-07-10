@@ -5,9 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("@/features/exams", () => ({
 	useExamRequestsByAppointment: vi.fn(),
 }));
-vi.mock("@/features/services", () => ({
-	useGetProfessionalServices: vi.fn(),
-}));
+vi.mock(
+	"@/components/services/services-card/use-get-professional-services",
+	() => ({
+		useGetProfessionalServices: vi.fn(),
+	}),
+);
 
 // ExamUploadButton, ExamReviewForm e RequestExamForm têm testes próprios em
 // exam-actions.test.tsx; aqui são mockados para isolar os componentes de composição/exibição.
@@ -32,8 +35,8 @@ import { ExamCard } from "@/components/forms/Appointments/ExamCard";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { ExamsSectionContent } from "@/components/forms/Appointments/ExamsSectionContent";
 import { ServiceSelector } from "@/components/forms/Appointments/ServiceSelector";
+import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
 import { useExamRequestsByAppointment } from "@/features/exams";
-import { useGetProfessionalServices } from "@/features/services";
 
 const mockUseExamRequestsByAppointment = vi.mocked(
 	useExamRequestsByAppointment,

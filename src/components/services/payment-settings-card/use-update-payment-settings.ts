@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { servicesRepository } from "@/features/services";
 import type { UpdatePaymentSettingsInput } from "@/lib/schemas/professional/update-payment-settings.schema";
-import { servicesRepository } from "../repositories/services.repository";
 
 export function useUpdatePaymentSettings() {
 	const queryClient = useQueryClient();

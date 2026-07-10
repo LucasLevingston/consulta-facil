@@ -17,10 +17,10 @@ import {
 	type UpdatePaymentSettingsInput,
 	updatePaymentSettingsSchema,
 } from "@/features/professionals";
-import { useUpdatePaymentSettings } from "@/features/services";
 import { PaymentMethodsField } from "./PaymentMethodsField";
 import type { PaymentSettingsCardProps } from "./PaymentSettingsCard.types";
 import { PaymentTimingField } from "./PaymentTimingField";
+import { useUpdatePaymentSettings } from "./use-update-payment-settings";
 
 export function PaymentSettingsCard({
 	acceptedPaymentMethods,

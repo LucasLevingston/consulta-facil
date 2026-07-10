@@ -56,9 +56,12 @@ vi.mock("sonner", () => ({
 vi.mock("@/features/patients", () => ({
 	useProfessionalPatients: vi.fn(),
 }));
-vi.mock("@/features/services", () => ({
-	useGetProfessionalServices: vi.fn(),
-}));
+vi.mock(
+	"@/components/services/services-card/use-get-professional-services",
+	() => ({
+		useGetProfessionalServices: vi.fn(),
+	}),
+);
 vi.mock("@/features/procedure-requests", async () => {
 	const { z: zodLib } = await import("zod");
 	return {
@@ -76,9 +79,9 @@ vi.mock("./use-create-procedure-request", () => ({
 	})),
 }));
 
+import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
 import { useProfessionalPatients } from "@/features/patients";
 import type { CreateProcedureRequestInput } from "@/features/procedure-requests";
-import { useGetProfessionalServices } from "@/features/services";
 import { CreateProcedureRequestForm } from "./CreateProcedureRequestForm";
 import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";
 import { useCreateProcedureRequest } from "./use-create-procedure-request";

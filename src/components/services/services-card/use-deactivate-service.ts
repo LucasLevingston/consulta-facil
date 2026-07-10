@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { servicesRepository } from "../repositories/services.repository";
+import { servicesRepository } from "@/features/services";
 import { serviceKeys } from "./service-keys";
 
 export function useDeactivateService() {
