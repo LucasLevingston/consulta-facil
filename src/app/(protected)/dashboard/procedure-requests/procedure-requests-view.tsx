@@ -3,7 +3,7 @@
 import { CalendarClock } from "lucide-react";
 
 import PageHeader from "@/components/custom/page-header";
-import { ProcedureRequestsContent } from "@/components/procedure-requests/ProcedureRequestsContent";
+import { ProcedureRequestsContent } from "@/components/procedure-requests/procedure-requests-content";
 import { usePermission } from "@/features/auth";
 
 export function ProcedureRequestsView() {

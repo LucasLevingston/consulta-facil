@@ -74,12 +74,12 @@ vi.mock("@/features/procedure-requests", async () => {
 	};
 });
 
-import { CreateProcedureRequestForm } from "@/components/procedure-requests/CreateProcedureRequestForm";
-import { CreateProcedureRequestFormFields } from "@/components/procedure-requests/CreateProcedureRequestFormFields";
 import { useProfessionalPatients } from "@/features/patients";
 import type { CreateProcedureRequestInput } from "@/features/procedure-requests";
 import { useCreateProcedureRequest } from "@/features/procedure-requests";
 import { useGetProfessionalServices } from "@/features/services";
+import { CreateProcedureRequestForm } from "./CreateProcedureRequestForm";
+import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";
 
 const services = [{ id: "s-1", name: "Consulta Geral", price: 100 }];
 

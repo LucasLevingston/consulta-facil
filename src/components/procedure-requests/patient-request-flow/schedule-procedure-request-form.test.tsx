@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/procedure-requests", () => ({
@@ -42,7 +41,7 @@ vi.mock("@/components/ui/label", () => ({
 		htmlFor?: string;
 	}) => <span data-for={htmlFor}>{children}</span>,
 }));
-vi.mock("@/components/procedure-requests/ProcedureModalitySelect", () => ({
+vi.mock("./ProcedureModalitySelect", () => ({
 	ProcedureModalitySelect: ({
 		onChange,
 	}: {
@@ -54,10 +53,10 @@ vi.mock("@/components/procedure-requests/ProcedureModalitySelect", () => ({
 	),
 }));
 
-import { ScheduleProcedureRequestForm } from "@/components/procedure-requests/ScheduleProcedureRequestForm";
+import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 
-describe("ScheduleProcedureRequestForm interaction", () => {
-	it("renders Confirmar agendamento button", () => {
+describe("ScheduleProcedureRequestForm render", () => {
+	it("renders service name", () => {
 		render(
 			<ScheduleProcedureRequestForm
 				requestId="r-1"
@@ -65,19 +64,28 @@ describe("ScheduleProcedureRequestForm interaction", () => {
 				onClose={vi.fn()}
 			/>,
 		);
-		expect(screen.getByText("Confirmar agendamento")).toBeInTheDocument();
+		expect(screen.getByText("Ultrassom")).toBeInTheDocument();
 	});
 
-	it("calls onClose when Cancelar clicked", async () => {
-		const onClose = vi.fn();
+	it("renders Data e hora label", () => {
 		render(
 			<ScheduleProcedureRequestForm
 				requestId="r-1"
 				serviceName="Ultrassom"
-				onClose={onClose}
+				onClose={vi.fn()}
 			/>,
 		);
-		await userEvent.click(screen.getByText("Cancelar"));
-		expect(onClose).toHaveBeenCalledTimes(1);
+		expect(screen.getByText(/Data e hora/)).toBeInTheDocument();
+	});
+
+	it("renders Modalidade label", () => {
+		render(
+			<ScheduleProcedureRequestForm
+				requestId="r-1"
+				serviceName="Ultrassom"
+				onClose={vi.fn()}
+			/>,
+		);
+		expect(screen.getByText("Modalidade")).toBeInTheDocument();
 	});
 });

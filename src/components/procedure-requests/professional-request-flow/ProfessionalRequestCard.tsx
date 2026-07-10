@@ -2,6 +2,7 @@
 
 import { Clock, DollarSign, X } from "lucide-react";
 import { toast } from "sonner";
+import { StatusBadge } from "@/components/procedure-requests/status-badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -12,7 +13,6 @@ import {
 } from "@/components/ui/card";
 import { useCancelProcedureRequest } from "@/features/procedure-requests";
 import type { ProfessionalRequestCardProps } from "./ProfessionalRequestCard.types";
-import { StatusBadge } from "./StatusBadge";
 
 export function ProfessionalRequestCard({
 	request,

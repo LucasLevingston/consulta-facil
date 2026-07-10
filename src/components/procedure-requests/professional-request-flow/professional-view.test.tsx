@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const refetch = vi.fn();
 
@@ -22,52 +22,24 @@ vi.mock("@/components/custom/error-state/error-state", () => ({
 		</div>
 	),
 }));
-vi.mock("@/components/custom/suspense-boundary/suspense-boundary", () => ({
-	SuspenseBoundary: ({ children }: { children: React.ReactNode }) => (
-		<div>{children}</div>
-	),
-}));
-vi.mock("@/components/procedure-requests/PatientRequestCard", () => ({
-	PatientRequestCard: ({ request }: { request: { id: string } }) => (
-		<div>card-paciente-{request.id}</div>
-	),
-}));
-vi.mock("@/components/procedure-requests/ProfessionalRequestCard", () => ({
+vi.mock("./ProfessionalRequestCard", () => ({
 	ProfessionalRequestCard: ({ request }: { request: { id: string } }) => (
 		<div>card-profissional-{request.id}</div>
 	),
 }));
-vi.mock("@/components/procedure-requests/CreateProcedureRequestForm", () => ({
+vi.mock("./CreateProcedureRequestForm", () => ({
 	CreateProcedureRequestForm: () => <div>form-criar-solicitacao</div>,
 }));
 
-import { PatientRequestsView } from "@/components/procedure-requests/PatientRequestsView";
-import { PatientView } from "@/components/procedure-requests/PatientView";
-import { ProcedureRequestsContent } from "@/components/procedure-requests/ProcedureRequestsContent";
-import { ProfessionalRequestsView } from "@/components/procedure-requests/ProfessionalRequestsView";
-import { ProfessionalView } from "@/components/procedure-requests/ProfessionalView";
 import { useGetMyProcedureRequests } from "@/features/procedure-requests";
 import { useApplicationStatus } from "@/features/professionals";
+import { ProfessionalRequestsView } from "./ProfessionalRequestsView";
+import { ProfessionalView } from "./ProfessionalView";
 
 const requests = [
 	{ id: "r-1", serviceName: "Ultrassom" },
 	{ id: "r-2", serviceName: "Raio-X" },
 ];
-
-describe("PatientView", () => {
-	it("mostra estado vazio quando não há solicitações", () => {
-		render(<PatientView requests={[]} />);
-		expect(
-			screen.getByText("Nenhuma solicitação de procedimento para você."),
-		).toBeInTheDocument();
-	});
-
-	it("renderiza um card por solicitação quando há dados", () => {
-		render(<PatientView requests={requests as never} />);
-		expect(screen.getByText("card-paciente-r-1")).toBeInTheDocument();
-		expect(screen.getByText("card-paciente-r-2")).toBeInTheDocument();
-	});
-});
 
 describe("ProfessionalView", () => {
 	it("mostra estado vazio quando não há solicitações", () => {
@@ -88,26 +60,6 @@ describe("ProfessionalView", () => {
 	it("renderiza botão de nova solicitação", () => {
 		render(<ProfessionalView requests={[]} professionalId="prof-1" />);
 		expect(screen.getByText("Nova solicitação")).toBeInTheDocument();
-	});
-});
-
-describe("PatientRequestsView", () => {
-	it("passa a lista de solicitações do hook para PatientView (estado com dados)", () => {
-		vi.mocked(useGetMyProcedureRequests).mockReturnValue({
-			data: requests,
-		} as never);
-		render(<PatientRequestsView />);
-		expect(screen.getByText("card-paciente-r-1")).toBeInTheDocument();
-	});
-
-	it("mostra estado vazio quando hook retorna lista vazia", () => {
-		vi.mocked(useGetMyProcedureRequests).mockReturnValue({
-			data: [],
-		} as never);
-		render(<PatientRequestsView />);
-		expect(
-			screen.getByText("Nenhuma solicitação de procedimento para você."),
-		).toBeInTheDocument();
 	});
 });
 
@@ -149,33 +101,5 @@ describe("ProfessionalRequestsView", () => {
 		} as never);
 		render(<ProfessionalRequestsView />);
 		expect(screen.getByText("card-profissional-r-1")).toBeInTheDocument();
-	});
-});
-
-describe("ProcedureRequestsContent", () => {
-	beforeEach(() => {
-		vi.mocked(useGetMyProcedureRequests).mockReturnValue({
-			data: [],
-		} as never);
-		vi.mocked(useApplicationStatus).mockReturnValue({
-			isLoading: false,
-			error: null,
-			data: { id: "prof-1" },
-			refetch,
-		} as never);
-	});
-
-	it("renderiza a view do paciente quando isProfessional=false", () => {
-		render(<ProcedureRequestsContent isProfessional={false} />);
-		expect(
-			screen.getByText("Nenhuma solicitação de procedimento para você."),
-		).toBeInTheDocument();
-	});
-
-	it("renderiza a view do profissional quando isProfessional=true", () => {
-		render(<ProcedureRequestsContent isProfessional={true} />);
-		expect(
-			screen.getByText("Nenhuma solicitação criada ainda."),
-		).toBeInTheDocument();
 	});
 });
