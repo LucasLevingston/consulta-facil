@@ -4,7 +4,6 @@ import { useState } from "react";
 import { VideoRoom } from "@/components/custom/video-room";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { usePermission, useUserStore } from "@/features/auth";
-import { useRoomToken } from "@/features/video";
 import { AnamnesisSection } from "./AnamnesisSection";
 import { AppointmentCancellationCard } from "./AppointmentCancellationCard";
 import type { AppointmentDetailProps } from "./AppointmentDetail.types";
@@ -14,6 +13,7 @@ import { AppointmentProfessionalCard } from "./AppointmentProfessionalCard";
 import { AppointmentRatingSection } from "./AppointmentRatingSection";
 import { AppointmentScheduleCard } from "./AppointmentScheduleCard";
 import { ProntuarioSection } from "./ProntuarioSection";
+import { useRoomToken } from "./use-room-token";
 
 export function AppointmentDetail({ appointment }: AppointmentDetailProps) {
 	const { user } = useUserStore();

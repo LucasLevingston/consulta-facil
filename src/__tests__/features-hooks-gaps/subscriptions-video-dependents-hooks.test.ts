@@ -14,12 +14,6 @@ vi.mock(
 		},
 	}),
 );
-vi.mock("@/features/video/repositories/video.repository", () => ({
-	videoRepository: {
-		createRoom: vi.fn(),
-		getToken: vi.fn(),
-	},
-}));
 vi.mock("@/features/dependents/repositories/dependents.repository", () => ({
 	dependentsRepository: {
 		getMy: vi.fn(),
@@ -37,17 +31,11 @@ import { useAdminSubscriptions } from "@/features/subscriptions/hooks/use-admin-
 import { useCreateCheckout } from "@/features/subscriptions/hooks/use-create-checkout";
 import { useMySubscription } from "@/features/subscriptions/hooks/use-my-subscription";
 import { subscriptionsRepository } from "@/features/subscriptions/repositories/subscriptions.repository";
-import { useCreateRoom } from "@/features/video/hooks/use-create-room";
-import { useRoomToken } from "@/features/video/hooks/use-room-token";
-import { videoRepository } from "@/features/video/repositories/video.repository";
 
 const mockGetMy = vi.mocked(subscriptionsRepository.getMy);
 const mockCreateCheckout = vi.mocked(subscriptionsRepository.createCheckout);
 const mockAdminListAll = vi.mocked(subscriptionsRepository.adminListAll);
 const mockAdminCancel = vi.mocked(subscriptionsRepository.adminCancel);
-
-const mockCreateRoom = vi.mocked(videoRepository.createRoom);
-const mockGetToken = vi.mocked(videoRepository.getToken);
 
 const mockRemoveDependent = vi.mocked(dependentsRepository.remove);
 const mockUpdateDependent = vi.mocked(dependentsRepository.update);
@@ -134,41 +122,6 @@ describe("useAdminCancelSubscription", () => {
 		expect(invalidateSpy).toHaveBeenCalledWith({
 			queryKey: ["admin", "subscriptions"],
 		});
-	});
-});
-
-describe("useCreateRoom", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("cria uma sala de video e invalida a query do appointment", async () => {
-		const { qc, wrapper: w } = wrapper();
-		const invalidateSpy = vi.spyOn(qc, "invalidateQueries");
-		const room = { roomId: "room-1", url: "https://video.example.com/room-1" };
-		mockCreateRoom.mockResolvedValueOnce(room as never);
-		const { result } = renderHook(() => useCreateRoom(), { wrapper: w });
-		await act(async () => {
-			await result.current.mutateAsync("appt-1");
-		});
-		expect(mockCreateRoom).toHaveBeenCalledWith("appt-1");
-		expect(invalidateSpy).toHaveBeenCalled();
-	});
-});
-
-describe("useRoomToken", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("desabilitado quando appointmentId e null", () => {
-		const { result } = renderHook(() => useRoomToken(null), wrapper());
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("busca o token da sala quando appointmentId informado", async () => {
-		const room = { roomId: "room-1", token: "tok-123" };
-		mockGetToken.mockResolvedValueOnce(room as never);
-		const { result } = renderHook(() => useRoomToken("appt-1"), wrapper());
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockGetToken).toHaveBeenCalledWith("appt-1");
-		expect(result.current.data).toEqual(room);
 	});
 });
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { videoRepository } from "../repositories/video.repository";
+import { videoRepository } from "@/features/video";
 
 export function useRoomToken(appointmentId: string | null) {
 	return useQuery({
