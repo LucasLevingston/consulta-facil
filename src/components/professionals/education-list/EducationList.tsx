@@ -11,11 +11,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteEducation } from "@/features/professionals";
 import { EducationDialog } from "./EducationDialog";
 import type { EducationItem } from "./EducationDialog.types";
 import type { EducationListProps } from "./EducationList.types";
 import { EducationListItem } from "./EducationListItem";
+import { useDeleteEducation } from "./use-delete-education";
 
 export function EducationList({ professional }: EducationListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);

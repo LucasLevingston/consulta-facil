@@ -12,11 +12,11 @@ import {
 import {
 	type ProfessionalEducationInput,
 	professionalEducationSchema,
-	useAddEducation,
-	useUpdateEducation,
 } from "@/features/professionals";
 import type { EducationDialogProps } from "./EducationDialog.types";
 import { EducationDialogForm } from "./EducationDialogForm";
+import { useAddEducation } from "./use-add-education";
+import { useUpdateEducation } from "./use-update-education";
 
 export function EducationDialog({
 	open,

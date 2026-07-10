@@ -5,12 +5,16 @@ import type { ProfessionalResponse } from "@/features/professionals";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	usePendingApplications: vi.fn(),
+}));
+vi.mock("@/components/admin/use-approve-application", () => ({
 	useApproveApplication: vi.fn(() => ({
 		mutateAsync: vi.fn(),
 		isPending: false,
 	})),
+}));
+vi.mock("@/components/admin/use-reject-application", () => ({
 	useRejectApplication: vi.fn(() => ({
 		mutateAsync: vi.fn(),
 		isPending: false,
@@ -18,7 +22,7 @@ vi.mock("@/features/professionals", () => ({
 }));
 
 import { PendingApplicationsContent } from "@/components/admin/PendingApplicationsContent";
-import { usePendingApplications } from "@/features/professionals";
+import { usePendingApplications } from "@/components/professionals/hooks";
 
 const mockUsePendingApplications = vi.mocked(usePendingApplications);
 

@@ -52,7 +52,7 @@ vi.mock("@/features/clinics", () => ({
 }));
 
 const mockUseApplicationStatus = vi.fn();
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useApplicationStatus: () => mockUseApplicationStatus(),
 }));
 

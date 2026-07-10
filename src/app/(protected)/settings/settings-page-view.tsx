@@ -4,6 +4,7 @@ import { Settings } from "lucide-react";
 
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import {
 	Card,
 	CardContent,
@@ -12,7 +13,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { usePermission, useUserStore } from "@/features/auth";
-import { useApplicationStatus } from "@/features/professionals";
 import { PatientSettingsFields } from "./patient-settings-fields";
 import { ProfessionalSettingsFields } from "./professional-settings-fields";
 

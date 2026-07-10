@@ -6,14 +6,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/professionals", async (importOriginal) => {
-	const actual =
-		await importOriginal<typeof import("@/features/professionals")>();
-	return {
-		...actual,
-		useCreateProfessional: vi.fn(),
-	};
-});
+vi.mock("@/components/professionals/hooks", () => ({
+	useCreateProfessional: vi.fn(),
+}));
 
 type SelectCtxValue = { onValueChange?: (v: string) => void };
 const SelectCtx = createContext<SelectCtxValue>({});
@@ -66,7 +61,7 @@ vi.mock("@/components/ui/select", () => ({
 
 import { toast } from "sonner";
 import { BecomeProfessionalForm } from "@/components/become-professional/BecomeProfessionalForm";
-import { useCreateProfessional } from "@/features/professionals";
+import { useCreateProfessional } from "@/components/professionals/hooks";
 
 const mockUseCreateProfessional = vi.mocked(useCreateProfessional);
 

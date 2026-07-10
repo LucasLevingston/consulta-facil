@@ -1,7 +1,7 @@
 "use client";
 
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
-import { usePendingApplications } from "@/features/professionals";
+import { usePendingApplications } from "@/components/professionals/hooks";
 
 export function PendingApplicationsContent() {
 	const { data } = usePendingApplications(0, 50);

@@ -5,10 +5,10 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(() => ({ replace: vi.fn() })),
 	useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
-vi.mock("@/features/professionals/hooks/use-professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useProfessionals: vi.fn(),
 }));
-vi.mock("@/features/professionals/hooks/use-professionals-nearby", () => ({
+vi.mock("./use-professionals-nearby", () => ({
 	useProfessionalsNearby: vi.fn(),
 }));
 vi.mock("@/components/custom/professional/ProfessionalFilters", () => ({
@@ -49,9 +49,9 @@ vi.mock("@/components/custom/page-header", () => ({
 	default: ({ title }: { title: string }) => <h1>{title}</h1>,
 }));
 
-import { useProfessionals } from "@/features/professionals/hooks/use-professionals";
-import { useProfessionalsNearby } from "@/features/professionals/hooks/use-professionals-nearby";
+import { useProfessionals } from "@/components/professionals/hooks";
 import ProfessionalsContent from "./ProfessionalsContent";
+import { useProfessionalsNearby } from "./use-professionals-nearby";
 
 const mockUseProfessionals = vi.mocked(useProfessionals);
 const mockUseProfessionalsNearby = vi.mocked(useProfessionalsNearby);

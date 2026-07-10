@@ -15,10 +15,10 @@ import { Form } from "@/components/ui/form";
 import {
 	type UpdateCouncilInput,
 	updateCouncilSchema,
-	useUpdateCouncil,
 } from "@/features/professionals";
 import type { CouncilFormProps } from "./CouncilForm.types";
 import { CouncilFormFields } from "./CouncilFormFields";
+import { useUpdateCouncil } from "./use-update-council";
 
 export function CouncilForm({ professional }: CouncilFormProps) {
 	const { mutate, isPending } = useUpdateCouncil();

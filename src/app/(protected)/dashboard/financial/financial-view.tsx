@@ -6,13 +6,13 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
 import PageHeader from "@/components/custom/page-header";
 import { FinancialContent } from "@/components/financial/FinancialContent";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { usePermission } from "@/features/auth";
-import { useMyProfessionalProfile } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function FinancialView() {

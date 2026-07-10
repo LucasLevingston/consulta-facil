@@ -3,6 +3,7 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useProfessionals } from "@/components/professionals/hooks";
 import {
 	Dialog,
 	DialogContent,
@@ -12,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSendClinicInvite } from "@/features/notifications";
-import { useProfessionals } from "@/features/professionals";
 import { ClinicMemberInviteList } from "./ClinicMemberInviteList";
 
 interface Props {

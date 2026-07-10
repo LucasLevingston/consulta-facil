@@ -5,8 +5,8 @@ import { BadgeCheck } from "lucide-react";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
+import { useCreateProfessional } from "@/components/professionals/hooks";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCreateProfessional } from "@/features/professionals";
 import {
 	PROFESSION_SPECIALTIES,
 	SPECIALTY_LABELS,

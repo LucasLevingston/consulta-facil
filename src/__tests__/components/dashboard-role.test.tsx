@@ -17,7 +17,7 @@ vi.mock("@/features/appointments", () => ({
 	useConfirmAppointment: vi.fn(),
 	useCompleteAppointment: vi.fn(),
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useMyProfessionalProfile: vi.fn(),
 }));
 vi.mock("@/components/custom/dashboard/appointments-list", () => ({
@@ -36,6 +36,7 @@ vi.mock("@/components/custom/dashboard/stat-card", () => ({
 }));
 
 import { Dashboard } from "@/components/custom/dashboard/Dashboard";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
@@ -43,7 +44,6 @@ import {
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
-import { useMyProfessionalProfile } from "@/features/professionals";
 
 const emptyPage = { data: { content: [], totalPages: 0, totalElements: 0 } };
 

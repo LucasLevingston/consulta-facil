@@ -16,6 +16,8 @@ vi.mock("@/features/professionals", () => ({
 		{ value: "CRP", label: "CRP" },
 	],
 	updateCouncilSchema: {},
+}));
+vi.mock("./use-update-council", () => ({
 	useUpdateCouncil: vi.fn(),
 }));
 vi.mock("@/components/ui/select", () => ({
@@ -53,9 +55,9 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { useUpdateCouncil } from "@/features/professionals";
 import { CouncilForm } from "./CouncilForm";
 import { CouncilFormFields } from "./CouncilFormFields";
+import { useUpdateCouncil } from "./use-update-council";
 
 const mockUseUpdateCouncil = vi.mocked(useUpdateCouncil);
 

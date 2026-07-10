@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useMyProfessionalProfile: vi.fn(),
 }));
 
 import { ProfessionalHeroSubtitle } from "@/components/custom/dashboard/ProfessionalHeroSubtitle";
-import { useMyProfessionalProfile } from "@/features/professionals";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 
 const mockUseMyProfessionalProfile = vi.mocked(useMyProfessionalProfile);
 

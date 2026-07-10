@@ -6,7 +6,7 @@ const refetch = vi.fn();
 vi.mock("@/components/procedure-requests/hooks", () => ({
 	useGetMyProcedureRequests: vi.fn(),
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useApplicationStatus: vi.fn(),
 }));
 vi.mock("@/components/custom/suspense-boundary/suspense-boundary", () => ({
@@ -16,7 +16,7 @@ vi.mock("@/components/custom/suspense-boundary/suspense-boundary", () => ({
 }));
 
 import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
-import { useApplicationStatus } from "@/features/professionals";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { ProcedureRequestsContent } from "./ProcedureRequestsContent";
 
 describe("ProcedureRequestsContent", () => {

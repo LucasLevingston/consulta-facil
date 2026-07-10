@@ -39,7 +39,7 @@ vi.mock("@/features/notifications", () => ({
 }));
 
 const mockUseProfessionals = vi.fn();
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useProfessionals: (...args: unknown[]) => mockUseProfessionals(...args),
 }));
 

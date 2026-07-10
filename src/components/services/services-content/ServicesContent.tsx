@@ -1,9 +1,9 @@
 ﻿"use client";
 
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { ConsultationPriceCard } from "@/components/services/consultation-price-card";
 import { PaymentSettingsCard } from "@/components/services/payment-settings-card";
 import { ServicesCard } from "@/components/services/services-card";
-import { useApplicationStatus } from "@/features/professionals";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function ServicesContent() {

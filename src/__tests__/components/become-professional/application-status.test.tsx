@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useApplicationStatus: vi.fn(),
 }));
 vi.mock("@/components/become-professional/BecomeProfessionalForm", () => ({
@@ -18,7 +18,7 @@ vi.mock("next/link", () => ({
 }));
 
 import { ApplicationStatus } from "@/components/become-professional/ApplicationStatus";
-import { useApplicationStatus } from "@/features/professionals";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 
 const mockUseApplicationStatus = vi.mocked(useApplicationStatus);
 

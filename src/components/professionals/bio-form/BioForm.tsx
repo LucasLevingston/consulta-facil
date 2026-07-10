@@ -21,12 +21,9 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	type UpdateBioInput,
-	updateBioSchema,
-	useUpdateBio,
-} from "@/features/professionals";
+import { type UpdateBioInput, updateBioSchema } from "@/features/professionals";
 import type { BioFormProps } from "./BioForm.types";
+import { useUpdateBio } from "./use-update-bio";
 
 export function BioForm({ professional }: BioFormProps) {
 	const { mutate, isPending } = useUpdateBio();

@@ -11,11 +11,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteExperience } from "@/features/professionals";
 import { ExperienceDialog } from "./ExperienceDialog";
 import type { ExperienceItem } from "./ExperienceDialog.types";
 import type { ExperienceListProps } from "./ExperienceList.types";
 import { ExperienceListItem } from "./ExperienceListItem";
+import { useDeleteExperience } from "./use-delete-experience";
 
 export function ExperienceList({ professional }: ExperienceListProps) {
 	const [dialogOpen, setDialogOpen] = useState(false);

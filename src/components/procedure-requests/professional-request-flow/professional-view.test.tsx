@@ -6,7 +6,7 @@ const refetch = vi.fn();
 vi.mock("@/components/procedure-requests/hooks", () => ({
 	useGetMyProcedureRequests: vi.fn(),
 }));
-vi.mock("@/features/professionals", () => ({
+vi.mock("@/components/professionals/hooks", () => ({
 	useApplicationStatus: vi.fn(),
 }));
 vi.mock("@/components/custom/loading/loading-page", () => ({
@@ -32,7 +32,7 @@ vi.mock("./CreateProcedureRequestForm", () => ({
 }));
 
 import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
-import { useApplicationStatus } from "@/features/professionals";
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { ProfessionalRequestsView } from "./ProfessionalRequestsView";
 import { ProfessionalView } from "./ProfessionalView";
 

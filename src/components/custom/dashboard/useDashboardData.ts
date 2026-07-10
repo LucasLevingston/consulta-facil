@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
@@ -8,7 +9,6 @@ import {
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
-import { useMyProfessionalProfile } from "@/features/professionals";
 
 export function useDashboardData(isProfessional: boolean, isPatient: boolean) {
 	const { user } = useUserStore();

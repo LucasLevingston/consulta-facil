@@ -1,8 +1,8 @@
 "use client";
 
+import { useApplicationStatus } from "@/components/professionals/hooks";
 import { usePermission, useUserStore } from "@/features/auth";
 import { useClinicById } from "@/features/clinics";
-import { useApplicationStatus } from "@/features/professionals";
 import type {
 	ClinicDetailBodyProps,
 	ClinicTab,
