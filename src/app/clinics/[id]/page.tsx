@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { ClinicDetailContent } from "@/components/clinic/ClinicDetailContent";
+import { ClinicDetailContent } from "@/components/clinic/clinic-detail";
 
 export const dynamic = "force-dynamic";
 

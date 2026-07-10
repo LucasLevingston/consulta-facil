@@ -7,11 +7,11 @@ vi.mock("@/features/appointments", () => ({
 		mockUseClinicFinancialStats(members),
 }));
 
-import { ClinicFinancialSummaryCards } from "@/components/clinic/ClinicFinancialSummaryCards";
-import { ClinicFinancialTab } from "@/components/clinic/ClinicFinancialTab";
-import { ClinicMemberRow } from "@/components/clinic/ClinicMemberRow";
-import { ClinicMemberUsageCard } from "@/components/clinic/ClinicMemberUsageCard";
 import type { ClinicResponse } from "@/features/clinics";
+import { ClinicFinancialSummaryCards } from "./ClinicFinancialSummaryCards";
+import { ClinicFinancialTab } from "./ClinicFinancialTab";
+import { ClinicMemberRow } from "./ClinicMemberRow";
+import { ClinicMemberUsageCard } from "./ClinicMemberUsageCard";
 
 type Member = NonNullable<ClinicResponse["members"]>[number];
 

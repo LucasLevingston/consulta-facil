@@ -16,7 +16,7 @@ vi.mock("@/components/ui/avatar", () => ({
 	),
 }));
 
-import { ClinicMemberInviteList } from "@/components/clinic/ClinicMemberInviteList";
+import { ClinicMemberInviteList } from "./ClinicMemberInviteList";
 
 const professionals = [
 	{ id: "p-1", name: "Dr. João", specialty: "CARDIOLOGY", imageUrl: null },

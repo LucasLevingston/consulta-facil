@@ -10,7 +10,7 @@ vi.mock("next/navigation", () => ({
 	useSearchParams: () => mockUseSearchParams(),
 }));
 
-vi.mock("@/components/clinic/ClinicDetailBody", () => ({
+vi.mock("./ClinicDetailBody", () => ({
 	ClinicDetailBody: ({
 		clinicId,
 		activeTab,
@@ -24,7 +24,7 @@ vi.mock("@/components/clinic/ClinicDetailBody", () => ({
 	),
 }));
 
-import { ClinicDetailContent } from "@/components/clinic/ClinicDetailContent";
+import { ClinicDetailContent } from "./ClinicDetailContent";
 
 describe("ClinicDetailContent", () => {
 	it("renders ClinicDetailBody com o clinicId da rota", () => {

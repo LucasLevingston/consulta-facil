@@ -2,16 +2,16 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/clinics", () => ({}));
-vi.mock("@/components/clinic/ClinicOverviewTab", () => ({
+vi.mock("@/components/clinic/clinic-overview-tab", () => ({
 	ClinicOverviewTab: () => <div>overview</div>,
 }));
-vi.mock("@/components/clinic/ClinicMembersTab", () => ({
+vi.mock("@/components/clinic/clinic-members-tab", () => ({
 	ClinicMembersTab: () => <div>members-tab</div>,
 }));
-vi.mock("@/components/clinic/ClinicAppointmentsTab", () => ({
+vi.mock("@/components/clinic/clinic-appointments-tab", () => ({
 	ClinicAppointmentsTab: () => <div>appointments-tab</div>,
 }));
-vi.mock("@/components/clinic/ClinicFinancialTab", () => ({
+vi.mock("@/components/clinic/clinic-financial-tab", () => ({
 	ClinicFinancialTab: () => <div>financial-tab</div>,
 }));
 vi.mock("@/components/ui/tabs", () => ({
@@ -43,7 +43,7 @@ vi.mock("@/components/ui/tabs", () => ({
 	}) => <div data-tabcontent={value}>{children}</div>,
 }));
 
-import { ClinicDetailTabs } from "@/components/clinic/ClinicDetailTabs";
+import { ClinicDetailTabs } from "./ClinicDetailTabs";
 
 const clinic = {
 	id: "c-1",

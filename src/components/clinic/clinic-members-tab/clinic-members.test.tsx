@@ -53,11 +53,11 @@ vi.mock("@/features/clinics", () => ({
 }));
 
 import { toast } from "sonner";
-import { ClinicMemberCard } from "@/components/clinic/ClinicMemberCard";
-import { ClinicMembersInviteDialog } from "@/components/clinic/ClinicMembersInviteDialog";
-import { ClinicMembersTab } from "@/components/clinic/ClinicMembersTab";
 import type { ClinicResponse } from "@/features/clinics";
 import type { ProfessionalResponse } from "@/features/professionals";
+import { ClinicMemberCard } from "./ClinicMemberCard";
+import { ClinicMembersInviteDialog } from "./ClinicMembersInviteDialog";
+import { ClinicMembersTab } from "./ClinicMembersTab";
 
 type Member = NonNullable<ClinicResponse["members"]>[number];
 
