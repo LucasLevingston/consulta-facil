@@ -28,7 +28,7 @@ vi.mock("@/features/patients", () => ({
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
 import { toast } from "sonner";
-import { DocumentPhotoGridList } from "@/components/patients/health/DocumentPhotoGridList";
+import { DocumentPhotoGridList } from "./DocumentPhotoGridList";
 
 beforeEach(() => {
 	deleteMutate.mockReset();

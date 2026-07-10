@@ -29,13 +29,13 @@ vi.mock("@/features/patients", () => ({
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
-vi.mock("@/components/patients/health/VaccineDialog", () => ({
+vi.mock("./VaccineDialog", () => ({
 	VaccineDialog: ({ open }: { open: boolean }) =>
 		open ? <div data-testid="dialog">dialog-aberto</div> : null,
 }));
 
 import { toast } from "sonner";
-import { VaccineList } from "@/components/patients/health/VaccineList";
+import { VaccineList } from "./VaccineList";
 
 beforeEach(() => {
 	vaccines.value = [];

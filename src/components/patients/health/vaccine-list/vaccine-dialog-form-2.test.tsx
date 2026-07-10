@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/patients", () => ({}));
@@ -42,11 +43,11 @@ vi.mock("@/components/ui/button", () => ({
 		</button>
 	),
 }));
-vi.mock("@/components/patients/health/VaccineOptionalFields", () => ({
+vi.mock("./VaccineOptionalFields", () => ({
 	VaccineOptionalFields: () => null,
 }));
 
-import { VaccineDialogForm } from "@/components/patients/health/VaccineDialogForm";
+import { VaccineDialogForm } from "./VaccineDialogForm";
 
 const form = {
 	control: {},
@@ -56,29 +57,30 @@ const form = {
 	},
 } as never;
 
-describe("VaccineDialogForm render", () => {
-	it("renders 'Nome da vacina' label", () => {
+describe("VaccineDialogForm state", () => {
+	it("shows Salvando... when isPending=true", () => {
 		render(
 			<VaccineDialogForm
 				form={form}
-				isPending={false}
+				isPending={true}
 				onSubmit={vi.fn()}
 				onClose={vi.fn()}
 			/>,
 		);
-		expect(screen.getByText("Nome da vacina")).toBeInTheDocument();
+		expect(screen.getByText("Salvando...")).toBeInTheDocument();
 	});
 
-	it("renders Cancelar and Salvar buttons", () => {
+	it("calls onClose when Cancelar clicked", async () => {
+		const onClose = vi.fn();
 		render(
 			<VaccineDialogForm
 				form={form}
 				isPending={false}
 				onSubmit={vi.fn()}
-				onClose={vi.fn()}
+				onClose={onClose}
 			/>,
 		);
-		expect(screen.getByText("Cancelar")).toBeInTheDocument();
-		expect(screen.getByText("Salvar")).toBeInTheDocument();
+		await userEvent.click(screen.getByText("Cancelar"));
+		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 });

@@ -34,7 +34,7 @@ vi.mock("@/components/ui/textarea", () => ({
 	),
 }));
 
-import { VaccineOptionalFields } from "@/components/patients/health/VaccineOptionalFields";
+import { VaccineOptionalFields } from "./VaccineOptionalFields";
 
 const mockForm = { control: {} } as never;
 

@@ -31,19 +31,19 @@ vi.mock("@/components/ui/form", () => ({
 	Form: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock("@/components/patients/health/MedicalVitalsSection", () => ({
+vi.mock("./MedicalVitalsSection", () => ({
 	MedicalVitalsSection: ({ bmi }: { bmi: number | null }) => (
 		<div data-testid="vitals-section">bmi:{bmi ?? "null"}</div>
 	),
 }));
 
-vi.mock("@/components/patients/health/MedicalHistorySection", () => ({
+vi.mock("./MedicalHistorySection", () => ({
 	MedicalHistorySection: ({ isPending }: { isPending: boolean }) => (
 		<div data-testid="history-section">pending:{String(isPending)}</div>
 	),
 }));
 
-import { MedicalHealthForm } from "@/components/patients/health/MedicalHealthForm";
+import { MedicalHealthForm } from "./MedicalHealthForm";
 
 beforeEach(() => {
 	formState.bmi = null;

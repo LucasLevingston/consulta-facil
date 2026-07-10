@@ -32,7 +32,7 @@ vi.mock("@/components/ui/dialog", () => ({
 	),
 }));
 
-vi.mock("@/components/patients/health/VaccineDialogForm", () => ({
+vi.mock("./VaccineDialogForm", () => ({
 	VaccineDialogForm: ({
 		onSubmit,
 		onClose,
@@ -62,7 +62,7 @@ vi.mock("@/components/patients/health/VaccineDialogForm", () => ({
 }));
 
 import { toast } from "sonner";
-import { VaccineDialog } from "@/components/patients/health/VaccineDialog";
+import { VaccineDialog } from "./VaccineDialog";
 
 beforeEach(() => {
 	addMutate.mockReset();

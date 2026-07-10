@@ -30,11 +30,11 @@ vi.mock("@/components/ui/input", () => ({
 	),
 }));
 
-vi.mock("@/components/patients/health/BloodTypeSelect", () => ({
+vi.mock("./BloodTypeSelect", () => ({
 	BloodTypeSelect: () => <div data-testid="blood-type-select" />,
 }));
 
-import { MedicalVitalsSection } from "@/components/patients/health/MedicalVitalsSection";
+import { MedicalVitalsSection } from "./MedicalVitalsSection";
 
 describe("MedicalVitalsSection", () => {
 	it("renderiza o BloodTypeSelect", () => {

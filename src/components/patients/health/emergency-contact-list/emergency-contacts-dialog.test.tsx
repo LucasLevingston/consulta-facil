@@ -115,9 +115,9 @@ vi.mock("@/components/ui/button", () => ({
 }));
 
 import { toast } from "sonner";
-import { EmergencyContactDialog } from "@/components/patients/health/EmergencyContactDialog";
-import { EmergencyContactDialogForm } from "@/components/patients/health/EmergencyContactDialogForm";
-import { EmergencyContactPhoneFields } from "@/components/patients/health/EmergencyContactPhoneFields";
+import { EmergencyContactDialog } from "./EmergencyContactDialog";
+import { EmergencyContactDialogForm } from "./EmergencyContactDialogForm";
+import { EmergencyContactPhoneFields } from "./EmergencyContactPhoneFields";
 
 beforeEach(() => {
 	addMutate.mockReset();

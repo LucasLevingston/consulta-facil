@@ -1,9 +1,9 @@
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import PatientDetailsForm from "@/components/forms/PatientDetails/PatientDetailsForm";
-import { DocumentPhotoGrid } from "@/components/patients/health/DocumentPhotoGrid";
-import { EmergencyContactList } from "@/components/patients/health/EmergencyContactList";
-import { MedicalHealthForm } from "@/components/patients/health/MedicalHealthForm";
-import { VaccineList } from "@/components/patients/health/VaccineList";
+import { DocumentPhotoGrid } from "@/components/patients/health/document-photo-grid";
+import { EmergencyContactList } from "@/components/patients/health/emergency-contact-list";
+import { MedicalHealthForm } from "@/components/patients/health/medical-health-form";
+import { VaccineList } from "@/components/patients/health/vaccine-list";
 
 export function PatientSettingsFields({
 	userId,
