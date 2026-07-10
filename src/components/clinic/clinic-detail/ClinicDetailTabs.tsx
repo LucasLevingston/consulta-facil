@@ -1,7 +1,7 @@
-import { ClinicAppointmentsTab } from "@/components/clinic/ClinicAppointmentsTab";
-import { ClinicFinancialTab } from "@/components/clinic/ClinicFinancialTab";
-import { ClinicMembersTab } from "@/components/clinic/ClinicMembersTab";
-import { ClinicOverviewTab } from "@/components/clinic/ClinicOverviewTab";
+import { ClinicAppointmentsTab } from "@/components/clinic/clinic-appointments-tab";
+import { ClinicFinancialTab } from "@/components/clinic/clinic-financial-tab";
+import { ClinicMembersTab } from "@/components/clinic/clinic-members-tab";
+import { ClinicOverviewTab } from "@/components/clinic/clinic-overview-tab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ClinicResponse } from "@/features/clinics";
 

@@ -34,11 +34,11 @@ vi.mock("@/features/appointments", () => ({
 	useClinicAppointments: (ids: string[]) => mockUseClinicAppointments(ids),
 }));
 
-import { ClinicAppointmentCard } from "@/components/clinic/ClinicAppointmentCard";
-import { ClinicAppointmentsFilterBar } from "@/components/clinic/ClinicAppointmentsFilterBar";
-import { ClinicAppointmentsTab } from "@/components/clinic/ClinicAppointmentsTab";
 import type { AppointmentResponse } from "@/features/appointments";
 import type { ClinicResponse } from "@/features/clinics";
+import { ClinicAppointmentCard } from "./ClinicAppointmentCard";
+import { ClinicAppointmentsFilterBar } from "./ClinicAppointmentsFilterBar";
+import { ClinicAppointmentsTab } from "./ClinicAppointmentsTab";
 
 const baseAppt = {
 	id: "a-1",

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/clinic/ClinicDetailHeader", () => ({
+vi.mock("./ClinicDetailHeader", () => ({
 	ClinicDetailHeader: ({
 		clinic,
 		isOwner,
@@ -19,7 +19,7 @@ vi.mock("@/components/clinic/ClinicDetailHeader", () => ({
 		</div>
 	),
 }));
-vi.mock("@/components/clinic/ClinicDetailTabs", () => ({
+vi.mock("./ClinicDetailTabs", () => ({
 	ClinicDetailTabs: ({
 		activeTab,
 		isMember,
@@ -56,7 +56,7 @@ vi.mock("@/features/professionals", () => ({
 	useApplicationStatus: () => mockUseApplicationStatus(),
 }));
 
-import { ClinicDetailBody } from "@/components/clinic/ClinicDetailBody";
+import { ClinicDetailBody } from "./ClinicDetailBody";
 
 const clinic = {
 	id: "c-1",
