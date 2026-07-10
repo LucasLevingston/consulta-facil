@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { procedureRequestsRepository } from "../repositories/procedure-requests.repository";
+import { procedureRequestsRepository } from "@/features/procedure-requests";
 import { procedureRequestKeys } from "./procedure-request-keys";
 
 export function useCancelProcedureRequest() {

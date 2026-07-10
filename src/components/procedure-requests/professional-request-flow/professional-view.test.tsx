@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const refetch = vi.fn();
 
-vi.mock("@/features/procedure-requests", () => ({
+vi.mock("@/components/procedure-requests/hooks", () => ({
 	useGetMyProcedureRequests: vi.fn(),
 }));
 vi.mock("@/features/professionals", () => ({
@@ -31,7 +31,7 @@ vi.mock("./CreateProcedureRequestForm", () => ({
 	CreateProcedureRequestForm: () => <div>form-criar-solicitacao</div>,
 }));
 
-import { useGetMyProcedureRequests } from "@/features/procedure-requests";
+import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
 import { useApplicationStatus } from "@/features/professionals";
 import { ProfessionalRequestsView } from "./ProfessionalRequestsView";
 import { ProfessionalView } from "./ProfessionalView";

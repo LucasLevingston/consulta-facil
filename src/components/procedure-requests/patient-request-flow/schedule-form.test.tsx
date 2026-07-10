@@ -51,16 +51,18 @@ vi.mock("@/features/procedure-requests", async () => {
 			scheduledAt: z.string().min(1, "Data e hora são obrigatórias"),
 			modality: z.enum(["IN_PERSON", "ONLINE"]).optional(),
 		}),
-		useScheduleProcedureRequest: vi.fn(() => ({
-			mutateAsync: scheduleMutateAsync,
-			isPending: false,
-		})),
 	};
 });
+vi.mock("./use-schedule-procedure-request", () => ({
+	useScheduleProcedureRequest: vi.fn(() => ({
+		mutateAsync: scheduleMutateAsync,
+		isPending: false,
+	})),
+}));
 
-import { useScheduleProcedureRequest } from "@/features/procedure-requests";
 import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
 import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
+import { useScheduleProcedureRequest } from "./use-schedule-procedure-request";
 
 describe("ProcedureModalitySelect", () => {
 	it("renderiza as opções Presencial e Online", () => {

@@ -3,11 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/procedure-requests", () => ({
+	scheduleProcedureRequestSchema: { parse: vi.fn() },
+}));
+vi.mock("./use-schedule-procedure-request", () => ({
 	useScheduleProcedureRequest: vi.fn(() => ({
 		mutateAsync: vi.fn(),
 		isPending: false,
 	})),
-	scheduleProcedureRequestSchema: { parse: vi.fn() },
 }));
 vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: vi.fn(() => vi.fn()),

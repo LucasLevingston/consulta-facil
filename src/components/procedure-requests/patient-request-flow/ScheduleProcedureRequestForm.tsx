@@ -9,10 +9,10 @@ import { Label } from "@/components/ui/label";
 import {
 	type ScheduleProcedureRequestInput,
 	scheduleProcedureRequestSchema,
-	useScheduleProcedureRequest,
 } from "@/features/procedure-requests";
 import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
 import type { ScheduleProcedureRequestFormProps } from "./ScheduleProcedureRequestForm.types";
+import { useScheduleProcedureRequest } from "./use-schedule-procedure-request";
 
 export function ScheduleProcedureRequestForm({
 	requestId,

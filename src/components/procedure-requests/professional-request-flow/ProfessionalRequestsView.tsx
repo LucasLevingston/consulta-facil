@@ -2,7 +2,7 @@
 
 import { ErrorState } from "@/components/custom/error-state/error-state";
 import { LoadingPage } from "@/components/custom/loading/loading-page";
-import { useGetMyProcedureRequests } from "@/features/procedure-requests";
+import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
 import { useApplicationStatus } from "@/features/professionals";
 import { ProfessionalView } from "./ProfessionalView";
 

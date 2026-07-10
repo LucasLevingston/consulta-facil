@@ -67,19 +67,21 @@ vi.mock("@/features/procedure-requests", async () => {
 			patientId: zodLib.string().min(1, "Paciente é obrigatório"),
 			notes: zodLib.string().optional(),
 		}),
-		useCreateProcedureRequest: vi.fn(() => ({
-			mutateAsync: createMutateAsync,
-			isPending: false,
-		})),
 	};
 });
+vi.mock("./use-create-procedure-request", () => ({
+	useCreateProcedureRequest: vi.fn(() => ({
+		mutateAsync: createMutateAsync,
+		isPending: false,
+	})),
+}));
 
 import { useProfessionalPatients } from "@/features/patients";
 import type { CreateProcedureRequestInput } from "@/features/procedure-requests";
-import { useCreateProcedureRequest } from "@/features/procedure-requests";
 import { useGetProfessionalServices } from "@/features/services";
 import { CreateProcedureRequestForm } from "./CreateProcedureRequestForm";
 import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";
+import { useCreateProcedureRequest } from "./use-create-procedure-request";
 
 const services = [{ id: "s-1", name: "Consulta Geral", price: 100 }];
 

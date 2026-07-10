@@ -2,6 +2,7 @@
 
 import { Clock, DollarSign } from "lucide-react";
 import { toast } from "sonner";
+import { useCancelProcedureRequest } from "@/components/procedure-requests/hooks";
 import { StatusBadge } from "@/components/procedure-requests/status-badge";
 import {
 	Card,
@@ -10,7 +11,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useCancelProcedureRequest } from "@/features/procedure-requests";
 import { PatientRequestActions } from "./PatientRequestActions";
 import type { PatientRequestCardProps } from "./PatientRequestCard.types";
 
