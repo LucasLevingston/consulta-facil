@@ -10,8 +10,10 @@ vi.mock("next/navigation", () => ({
 
 const mockUsePatientProfile = vi.fn();
 const mockUseMedicalRecords = vi.fn();
-vi.mock("@/features/patients", () => ({
+vi.mock("@/components/patients/detail/use-patient-profile", () => ({
 	usePatientProfile: (...args: unknown[]) => mockUsePatientProfile(...args),
+}));
+vi.mock("@/components/patients/hooks", () => ({
 	useMedicalRecords: (...args: unknown[]) => mockUseMedicalRecords(...args),
 }));
 

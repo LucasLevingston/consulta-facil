@@ -11,8 +11,10 @@ const { contacts, deleteMutate, deleteIsPending } = vi.hoisted(() => ({
 	deleteIsPending: { value: false },
 }));
 
-vi.mock("@/features/patients", () => ({
+vi.mock("./use-emergency-contacts", () => ({
 	useEmergencyContacts: () => ({ data: contacts.value }),
+}));
+vi.mock("./use-delete-emergency-contact", () => ({
 	useDeleteEmergencyContact: () => ({
 		mutate: deleteMutate,
 		isPending: deleteIsPending.value,

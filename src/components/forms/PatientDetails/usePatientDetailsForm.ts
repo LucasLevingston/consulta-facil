@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-import { useUpdateMyProfile } from "@/features/patients";
 import { PatientFormValidation } from "./FormValidation";
 import type { PatientDetailsProps } from "./PatientDetailsForm.types";
+import { useUpdateMyProfile } from "./use-update-my-profile";
 
 export function usePatientDetailsForm({
 	userEmail,

@@ -19,6 +19,8 @@ vi.mock("@/features/patients", () => ({
 		INSURANCE_CARD: "Carteirinha do Plano",
 		OTHER: "Outro",
 	},
+}));
+vi.mock("./use-delete-document", () => ({
 	useDeleteDocument: () => ({
 		mutate: deleteMutate,
 		isPending: deleteIsPending.value,

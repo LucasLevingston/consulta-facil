@@ -12,8 +12,8 @@ import {
 import {
 	type PatientVaccineInput,
 	patientVaccineSchema,
-	useAddVaccine,
 } from "@/features/patients";
+import { useAddVaccine } from "./use-add-vaccine";
 import { VaccineDialogForm } from "./VaccineDialogForm";
 import type { VaccineDialogProps } from "./VaccineList.types";
 

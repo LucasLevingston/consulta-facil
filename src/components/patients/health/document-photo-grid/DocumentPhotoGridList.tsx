@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import {
 	DOCUMENT_TYPE_LABELS,
 	type PatientDocumentResponse,
-	useDeleteDocument,
 } from "@/features/patients";
+import { useDeleteDocument } from "./use-delete-document";
 
 interface Props {
 	documents: PatientDocumentResponse[];

@@ -53,7 +53,7 @@ const { createMutateAsync, toastSuccess, toastError } = vi.hoisted(() => ({
 vi.mock("sonner", () => ({
 	toast: { success: toastSuccess, error: toastError },
 }));
-vi.mock("@/features/patients", () => ({
+vi.mock("@/components/patients/hooks", () => ({
 	useProfessionalPatients: vi.fn(),
 }));
 vi.mock(
@@ -79,8 +79,8 @@ vi.mock("./use-create-procedure-request", () => ({
 	})),
 }));
 
+import { useProfessionalPatients } from "@/components/patients/hooks";
 import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
-import { useProfessionalPatients } from "@/features/patients";
 import type { CreateProcedureRequestInput } from "@/features/procedure-requests";
 import { CreateProcedureRequestForm } from "./CreateProcedureRequestForm";
 import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";

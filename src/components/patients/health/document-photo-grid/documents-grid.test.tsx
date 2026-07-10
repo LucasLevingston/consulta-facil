@@ -9,7 +9,7 @@ const { documents } = vi.hoisted(() => ({
 	documents: { value: [] as { id: string }[] },
 }));
 
-vi.mock("@/features/patients", () => ({
+vi.mock("./use-patient-documents", () => ({
 	usePatientDocuments: () => ({ data: documents.value }),
 }));
 

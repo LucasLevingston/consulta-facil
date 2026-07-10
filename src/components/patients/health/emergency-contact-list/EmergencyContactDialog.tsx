@@ -12,11 +12,11 @@ import {
 import {
 	type EmergencyContactInput,
 	emergencyContactSchema,
-	useAddEmergencyContact,
-	useUpdateEmergencyContact,
 } from "@/features/patients";
 import type { EmergencyContactDialogProps } from "./EmergencyContactDialog.types";
 import { EmergencyContactDialogForm } from "./EmergencyContactDialogForm";
+import { useAddEmergencyContact } from "./use-add-emergency-contact";
+import { useUpdateEmergencyContact } from "./use-update-emergency-contact";
 
 export type { ContactItem } from "./EmergencyContactDialog.types";
 
