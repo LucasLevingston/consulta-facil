@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 import { useMyClinic } from "@/features/clinics";
-import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
+import { useCreateCheckout, useMySubscription } from "@/components/custom/plans/hooks";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import { ClinicFreemiumInfo } from "./ClinicFreemiumInfo";
 import { clinicPlans } from "./ClinicPlans.utils";

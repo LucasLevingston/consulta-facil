@@ -15,7 +15,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { usePlans } from "@/features/plans";
-import { useCreateCheckout, useMySubscription } from "@/features/subscriptions";
+import { useCreateCheckout, useMySubscription } from "@/components/custom/plans/hooks";
 
 const PERIOD_LABELS: Record<string, string> = {
 	MONTHLY: "mês",

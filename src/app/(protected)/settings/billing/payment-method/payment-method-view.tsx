@@ -13,7 +13,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useMySubscription } from "@/features/subscriptions";
+import { useMySubscription } from "@/components/custom/plans/hooks";
 
 function PaymentMethodContent() {
 	const { data: subscription } = useMySubscription();
