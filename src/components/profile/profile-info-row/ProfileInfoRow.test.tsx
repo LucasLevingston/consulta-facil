@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { Mail } from "lucide-react";
 import { describe, expect, it } from "vitest";
 
-import { ProfileInfoRow } from "@/components/profile/ProfileInfoRow";
+import { ProfileInfoRow } from "./ProfileInfoRow";
 
 describe("ProfileInfoRow", () => {
 	it("renderiza label e valor quando value é fornecido", () => {

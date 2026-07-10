@@ -1,0 +1,1 @@
+export { ProfilePatientMedicalInfo } from "./ProfilePatientMedicalInfo";

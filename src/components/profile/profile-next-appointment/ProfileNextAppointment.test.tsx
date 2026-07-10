@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-
-import { ProfileNextAppointment } from "@/components/profile/ProfileNextAppointment";
 import type { AppointmentResponse } from "@/features/appointments";
+import { ProfileNextAppointment } from "./ProfileNextAppointment";
 
 // Observação: a página de perfil (ProfilePage) só renderiza este componente
 // quando existe uma próxima consulta agendada (renderização condicional no

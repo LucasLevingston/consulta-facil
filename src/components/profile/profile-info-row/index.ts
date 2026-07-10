@@ -1,0 +1,1 @@
+export { ProfileInfoRow } from "./ProfileInfoRow";
