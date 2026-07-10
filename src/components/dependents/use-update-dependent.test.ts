@@ -12,11 +12,9 @@ vi.mock("@/features/dependents/repositories/dependents.repository", () => ({
 	},
 }));
 
-import { useDeleteDependent } from "@/features/dependents/hooks/use-delete-dependent";
-import { useUpdateDependent } from "@/features/dependents/hooks/use-update-dependent";
 import { dependentsRepository } from "@/features/dependents/repositories/dependents.repository";
+import { useUpdateDependent } from "./use-update-dependent";
 
-const mockRemoveDependent = vi.mocked(dependentsRepository.remove);
 const mockUpdateDependent = vi.mocked(dependentsRepository.update);
 
 function wrapper() {
@@ -27,26 +25,6 @@ function wrapper() {
 		qc,
 	};
 }
-
-describe("useDeleteDependent", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("remove um dependente e invalida a query de dependentes", async () => {
-		const { qc, wrapper: w } = wrapper();
-		const invalidateSpy = vi.spyOn(qc, "invalidateQueries");
-		mockRemoveDependent.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useDeleteDependent(), {
-			wrapper: w,
-		});
-		await act(async () => {
-			await result.current.mutateAsync("dep-1");
-		});
-		expect(mockRemoveDependent).toHaveBeenCalledWith("dep-1");
-		expect(invalidateSpy).toHaveBeenCalledWith({
-			queryKey: ["dependents", "my"],
-		});
-	});
-});
 
 describe("useUpdateDependent", () => {
 	beforeEach(() => vi.clearAllMocks());

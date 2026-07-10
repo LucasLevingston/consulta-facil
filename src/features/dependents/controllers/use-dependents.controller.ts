@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+	useDeleteDependent,
+	useMyDependents,
+} from "@/components/dependents/hooks";
 import type { DependentResponse } from "@/lib/schemas/dependent/dependent-response.schema";
-import { useDeleteDependent } from "../hooks/use-delete-dependent";
-import { useMyDependents } from "../hooks/use-my-dependents";
 
 export function useDependentsController() {
 	const { data: dependents = [], isLoading } = useMyDependents();

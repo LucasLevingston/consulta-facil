@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { dependentsRepository } from "../repositories/dependents.repository";
+import { dependentsRepository } from "@/features/dependents";
 import { dependentKeys } from "./dependent-keys";
 
 export function useMyDependents() {

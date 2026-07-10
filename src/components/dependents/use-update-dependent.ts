@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { dependentKeys } from "@/components/dependents/hooks";
+import { dependentsRepository } from "@/features/dependents";
 import type { CreateDependentInput } from "@/lib/schemas/dependent/create-dependent.schema";
-import { dependentsRepository } from "../repositories/dependents.repository";
-import { dependentKeys } from "./dependent-keys";
 
 export function useUpdateDependent() {
 	const queryClient = useQueryClient();
