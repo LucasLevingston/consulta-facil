@@ -21,18 +21,17 @@ vi.mock("@/components/ui/checkbox", () => ({
 		/>
 	),
 }));
-vi.mock("@/features/services", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@/features/services")>();
-	return {
-		...actual,
-		useCreateService: vi.fn(),
-		useUpdateService: vi.fn(),
-	};
-});
+vi.mock("./use-create-service", () => ({
+	useCreateService: vi.fn(),
+}));
+vi.mock("./use-update-service", () => ({
+	useUpdateService: vi.fn(),
+}));
 
 import { toast } from "sonner";
-import { useCreateService, useUpdateService } from "@/features/services";
 import { ServiceForm } from "./ServiceForm";
+import { useCreateService } from "./use-create-service";
+import { useUpdateService } from "./use-update-service";
 
 const mockUseCreateService = vi.mocked(useCreateService);
 const mockUseUpdateService = vi.mocked(useUpdateService);

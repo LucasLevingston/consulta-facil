@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSetConsultationPrice } from "@/features/services";
 import type { ConsultationPriceCardProps } from "./ConsultationPriceCard.types";
+import { useSetConsultationPrice } from "./use-set-consultation-price";
 
 export function ConsultationPriceCard({
 	consultationPrice,

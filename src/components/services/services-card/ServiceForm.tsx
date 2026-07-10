@@ -9,12 +9,12 @@ import { Label } from "@/components/ui/label";
 import {
 	type CreateServiceInput,
 	createServiceSchema,
-	useCreateService,
-	useUpdateService,
 } from "@/features/services";
 import type { ServiceFormProps } from "./ServiceForm.types";
 import { ServiceFormCheckbox } from "./ServiceFormCheckbox";
 import { ServiceFormPriceGrid } from "./ServiceFormPriceGrid";
+import { useCreateService } from "./use-create-service";
+import { useUpdateService } from "./use-update-service";
 
 export function ServiceForm({ existing, onClose }: ServiceFormProps) {
 	const { mutateAsync: create, isPending: creating } = useCreateService();

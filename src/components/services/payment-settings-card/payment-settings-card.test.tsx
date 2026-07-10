@@ -20,13 +20,13 @@ vi.mock("@/components/ui/checkbox", () => ({
 		/>
 	),
 }));
-vi.mock("@/features/services", () => ({
+vi.mock("./use-update-payment-settings", () => ({
 	useUpdatePaymentSettings: vi.fn(),
 }));
 
 import { toast } from "sonner";
-import { useUpdatePaymentSettings } from "@/features/services";
 import { PaymentSettingsCard } from "./PaymentSettingsCard";
+import { useUpdatePaymentSettings } from "./use-update-payment-settings";
 
 const mockUseUpdatePaymentSettings = vi.mocked(useUpdatePaymentSettings);
 

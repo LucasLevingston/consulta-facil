@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
 import { useProfessionalPatients } from "@/features/patients";
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,
 } from "@/features/procedure-requests";
-import { useGetProfessionalServices } from "@/features/services";
 import type { CreateProcedureRequestFormProps } from "./CreateProcedureRequestForm.types";
 import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";
 import { useCreateProcedureRequest } from "./use-create-procedure-request";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { servicesRepository } from "@/features/services";
 import type { CreateServiceInput } from "@/lib/schemas/service/create-service.schema";
-import { servicesRepository } from "../repositories/services.repository";
 import { serviceKeys } from "./service-keys";
 
 export function useCreateService() {

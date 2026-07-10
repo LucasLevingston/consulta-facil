@@ -2,8 +2,8 @@
 
 import { Stethoscope } from "lucide-react";
 
+import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
 import type { ProfessionalService } from "@/features/services";
-import { useGetProfessionalServices } from "@/features/services";
 import { formatBRL } from "@/utils/format-brl";
 import { ConsultationOnlyServicesSection } from "./ConsultationOnlyServicesSection";
 import type { ServiceSelectorProps } from "./ServiceSelector.types";
