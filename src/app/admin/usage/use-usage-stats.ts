@@ -1,6 +1,6 @@
 import { useMemo } from "react";
+import { useAllUsers } from "@/components/custom/user/hooks";
 import { useAllAdminAppointments } from "@/features/appointments";
-import { useAllUsers } from "@/features/users";
 
 export function useUsageStats() {
 	const appointmentsQuery = useAllAdminAppointments(0, 1000);

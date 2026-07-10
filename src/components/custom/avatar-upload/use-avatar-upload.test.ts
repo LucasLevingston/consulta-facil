@@ -15,8 +15,8 @@ vi.mock("@/store/useUserStore", () => ({
 
 import { toast } from "sonner";
 import { api } from "@/config/api";
-import { useAvatarUpload } from "@/features/users/hooks/use-avatar-upload";
 import { useUserStore } from "@/store/useUserStore";
+import { useAvatarUpload } from "./use-avatar-upload";
 
 const mockApiPost = vi.mocked(api.post);
 const mockUseUserStore = vi.mocked(useUserStore);
