@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { analyticsRepository } from "../repositories/analytics.repository";
-import { analyticsKeys } from "./analytics-keys";
+import { analyticsKeys } from "@/components/analytics/hooks";
+import { analyticsRepository } from "@/features/analytics";
 
 export function useReferralAnalytics() {
 	return useSuspenseQuery({
