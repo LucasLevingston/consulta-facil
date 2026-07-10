@@ -33,7 +33,7 @@ jobs:
             content=$(cat "$file" 2>/dev/null)
 
             # 1. Tamanho (excluir gerados, configs, testes, tipos, constants e use-toast)
-            case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js|*__tests__*|*.d.ts|*use-toast*|*/constants/*|*constants.ts|*/app/*) continue ;; esac
+            case "$file" in *generated*|*orval*|*components/ui/*|*.config.ts|*.config.js|*__tests__*|*.test.ts|*.test.tsx|*.spec.ts|*.spec.tsx|*.d.ts|*use-toast*|*/constants/*|*constants.ts|*/app/*) continue ;; esac
             lines=$(printf '%s\n' "$content" | wc -l)
             if [ "$lines" -gt "$MAX_LINES" ]; then
               echo "BLOCKED [TAMANHO] $file ($lines > $MAX_LINES linhas)"
@@ -42,7 +42,7 @@ jobs:
 
             # 2. SRP — múltiplas funções exportadas
             case "$file" in
-              *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js) ;;
+              *generated*|*orval*|*/components/ui/*|*/index.ts|*.types.ts|*.props.ts|*-keys.ts|*/constants/*|*.schema.ts|*.config.ts|*.config.js|*__tests__*|*.test.ts|*.test.tsx|*.spec.ts|*.spec.tsx) ;;
               *)
                 n=$(printf '%s\n' "$content" | grep -cE "^(export (default )?)?(async )?function [A-Za-z]|^(export )?const [A-Za-z][A-Za-z0-9]* = (async )?(\(|function )" || true)
                 if [ "$n" -gt 1 ]; then
