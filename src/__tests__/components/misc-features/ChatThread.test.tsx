@@ -5,19 +5,21 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(),
 }));
-vi.mock("@/features/messaging", () => ({
+vi.mock("@/components/messaging/use-chat", () => ({
 	useChat: vi.fn(),
+}));
+vi.mock("@/components/messaging/use-conversation-history", () => ({
 	useConversationHistory: vi.fn(),
+}));
+vi.mock("@/components/messaging/use-mark-as-read", () => ({
 	useMarkAsRead: vi.fn(),
 }));
 
 import { ChatThread } from "@/components/messaging/ChatThread";
+import { useChat } from "@/components/messaging/use-chat";
+import { useConversationHistory } from "@/components/messaging/use-conversation-history";
+import { useMarkAsRead } from "@/components/messaging/use-mark-as-read";
 import { useUserStore } from "@/features/auth";
-import {
-	useChat,
-	useConversationHistory,
-	useMarkAsRead,
-} from "@/features/messaging";
 
 const mockUseUserStore = vi.mocked(useUserStore);
 const mockUseChat = vi.mocked(useChat);

@@ -4,16 +4,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("next/navigation", () => ({
-	useSearchParams: vi.fn(),
-	useRouter: vi.fn(),
-	usePathname: vi.fn(),
-}));
 vi.mock("@/components/dependents/hooks", () => ({
 	useDeleteDependent: vi.fn(),
-}));
-vi.mock("@/features/messaging", () => ({
-	useConversations: vi.fn(),
 }));
 vi.mock("@/features/billing", () => ({
 	useSystemFees: vi.fn(),
@@ -23,7 +15,6 @@ vi.mock("@/features/billing", () => ({
 	useDeleteFeature: vi.fn(),
 }));
 
-import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useDependentsPage } from "@/app/dashboard/dependents/use-dependents-page";
 import { useDeleteDependent } from "@/components/dependents/hooks";
@@ -36,17 +27,13 @@ import {
 } from "@/features/billing";
 import { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
 import { useSystemFeesPage } from "@/features/billing/hooks/use-system-fees-page";
-import { useConversations } from "@/features/messaging";
-import { useMessagesPage } from "@/features/messaging/hooks/use-messages-page";
 
-const mockUseSearchParams = vi.mocked(useSearchParams);
 const mockUseSystemFees = vi.mocked(useSystemFees);
 const mockUseUpdateSystemFee = vi.mocked(useUpdateSystemFee);
 const mockUseFeatures = vi.mocked(useFeatures);
 const mockUseCreateFeature = vi.mocked(useCreateFeature);
 const mockUseDeleteFeature = vi.mocked(useDeleteFeature);
 const mockUseDeleteDependent = vi.mocked(useDeleteDependent);
-const mockUseConversations = vi.mocked(useConversations);
 
 beforeEach(() => {
 	vi.clearAllMocks();
@@ -115,46 +102,6 @@ describe("useDependentsPage", () => {
 		} as never);
 		const { result } = renderHook(() => useDependentsPage());
 		expect(result.current.deleting).toBe(true);
-	});
-});
-
-describe("useMessagesPage", () => {
-	const conversations = [
-		{ id: "c-1", name: "Conversa 1" },
-		{ id: "c-2", name: "Conversa 2" },
-	];
-
-	beforeEach(() => {
-		mockUseSearchParams.mockReturnValue(new URLSearchParams() as never);
-		mockUseConversations.mockReturnValue({ data: conversations } as never);
-	});
-
-	it("inicia sem conversa selecionada quando não há parâmetro 'c'", () => {
-		const { result } = renderHook(() => useMessagesPage());
-		expect(result.current.selectedId).toBeNull();
-		expect(result.current.selected).toBeUndefined();
-		expect(result.current.mobileShowThread).toBe(false);
-	});
-
-	it("inicia com a conversa selecionada a partir do parâmetro 'c'", () => {
-		mockUseSearchParams.mockReturnValue(new URLSearchParams("c=c-2") as never);
-		const { result } = renderHook(() => useMessagesPage());
-		expect(result.current.selectedId).toBe("c-2");
-		expect(result.current.selected).toEqual(conversations[1]);
-		expect(result.current.mobileShowThread).toBe(true);
-	});
-
-	it("handleSelect atualiza selectedId e exibe a thread no mobile", () => {
-		const { result } = renderHook(() => useMessagesPage());
-		act(() => result.current.handleSelect("c-1"));
-		expect(result.current.selectedId).toBe("c-1");
-		expect(result.current.selected).toEqual(conversations[0]);
-		expect(result.current.mobileShowThread).toBe(true);
-	});
-
-	it("retorna a lista de conversas do useConversations", () => {
-		const { result } = renderHook(() => useMessagesPage());
-		expect(result.current.conversations).toEqual(conversations);
 	});
 });
 
