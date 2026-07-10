@@ -3,12 +3,12 @@
 import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { SlotPickerDialog } from "@/components/laboratories/slot-picker-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { LabCardProps } from "./LabCard.types";
 import { LabCardHours } from "./LabCardHours";
 import { LabCardInfo } from "./LabCardInfo";
-import { SlotPickerDialog } from "./SlotPickerDialog";
 
 const DAY_ORDER = [
 	"MONDAY",

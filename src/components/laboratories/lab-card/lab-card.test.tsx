@@ -20,14 +20,14 @@ vi.mock("next/image", () => ({
 }));
 
 // Mock do SlotPickerDialog: o fluxo de agendamento é testado em slot-picker.test.tsx
-vi.mock("@/components/laboratories/SlotPickerDialog", () => ({
+vi.mock("@/components/laboratories/slot-picker-dialog", () => ({
 	SlotPickerDialog: ({ open }: { open: boolean }) =>
 		open ? <div data-testid="slot-picker-dialog">dialog aberto</div> : null,
 }));
 
-import { LabCard } from "@/components/laboratories/LabCard";
-import { LabCardHours } from "@/components/laboratories/LabCardHours";
-import { LabCardInfo } from "@/components/laboratories/LabCardInfo";
+import { LabCard } from "./LabCard";
+import { LabCardHours } from "./LabCardHours";
+import { LabCardInfo } from "./LabCardInfo";
 
 const baseLab: ExamLabResponse = {
 	id: "lab-1",

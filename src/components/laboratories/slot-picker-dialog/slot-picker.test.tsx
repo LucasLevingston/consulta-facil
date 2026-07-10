@@ -46,11 +46,11 @@ vi.mock("@/components/ui/dialog", () => ({
 }));
 
 import { toast } from "sonner";
-import { SlotConfirmation } from "@/components/laboratories/SlotConfirmation";
-import { SlotDatePicker } from "@/components/laboratories/SlotDatePicker";
-import { SlotPickerDialog } from "@/components/laboratories/SlotPickerDialog";
-import { SlotTimePicker } from "@/components/laboratories/SlotTimePicker";
 import { useAvailableSlots, useScheduleExam } from "@/features/exams";
+import { SlotConfirmation } from "./SlotConfirmation";
+import { SlotDatePicker } from "./SlotDatePicker";
+import { SlotPickerDialog } from "./SlotPickerDialog";
+import { SlotTimePicker } from "./SlotTimePicker";
 
 const mockUseAvailableSlots = vi.mocked(useAvailableSlots);
 const mockUseScheduleExam = vi.mocked(useScheduleExam);
