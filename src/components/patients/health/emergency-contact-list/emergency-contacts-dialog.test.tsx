@@ -31,7 +31,11 @@ vi.mock("@/features/patients", () => ({
 		FRIEND: "Amigo(a)",
 		OTHER: "Outro",
 	},
+}));
+vi.mock("./use-add-emergency-contact", () => ({
 	useAddEmergencyContact: () => ({ mutate: addMutate, isPending: false }),
+}));
+vi.mock("./use-update-emergency-contact", () => ({
 	useUpdateEmergencyContact: () => ({ mutate: updateMutate, isPending: false }),
 }));
 

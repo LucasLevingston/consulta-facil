@@ -15,14 +15,6 @@ vi.mock("@/features/dependents", () => ({
 vi.mock("@/features/messaging", () => ({
 	useConversations: vi.fn(),
 }));
-vi.mock("@/features/auth", () => ({
-	usePermission: vi.fn(),
-	useUserStore: vi.fn(),
-}));
-vi.mock("@/features/patients", () => ({
-	useAllAdminPatients: vi.fn(),
-	useProfessionalPatients: vi.fn(),
-}));
 vi.mock("@/features/billing", () => ({
 	useSystemFees: vi.fn(),
 	useUpdateSystemFee: vi.fn(),
@@ -31,9 +23,8 @@ vi.mock("@/features/billing", () => ({
 	useDeleteFeature: vi.fn(),
 }));
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { usePermission, useUserStore } from "@/features/auth";
 import {
 	useCreateFeature,
 	useDeleteFeature,
@@ -47,19 +38,8 @@ import { useDeleteDependent } from "@/features/dependents";
 import { useDependentsPage } from "@/features/dependents/hooks/use-dependents-page";
 import { useConversations } from "@/features/messaging";
 import { useMessagesPage } from "@/features/messaging/hooks/use-messages-page";
-import {
-	useAllAdminPatients,
-	useProfessionalPatients,
-} from "@/features/patients";
-import { usePatientsPage } from "@/features/patients/hooks/use-patients-page";
 
 const mockUseSearchParams = vi.mocked(useSearchParams);
-const mockUseRouter = vi.mocked(useRouter);
-const mockUsePathname = vi.mocked(usePathname);
-const mockUsePermission = vi.mocked(usePermission);
-const mockUseUserStore = vi.mocked(useUserStore);
-const mockUseAllAdminPatients = vi.mocked(useAllAdminPatients);
-const mockUseProfessionalPatients = vi.mocked(useProfessionalPatients);
 const mockUseSystemFees = vi.mocked(useSystemFees);
 const mockUseUpdateSystemFee = vi.mocked(useUpdateSystemFee);
 const mockUseFeatures = vi.mocked(useFeatures);
@@ -175,75 +155,6 @@ describe("useMessagesPage", () => {
 	it("retorna a lista de conversas do useConversations", () => {
 		const { result } = renderHook(() => useMessagesPage());
 		expect(result.current.conversations).toEqual(conversations);
-	});
-});
-
-describe("usePatientsPage", () => {
-	const push = vi.fn();
-
-	beforeEach(() => {
-		mockUseRouter.mockReturnValue({ push } as never);
-		mockUsePathname.mockReturnValue("/patients");
-		mockUseSearchParams.mockReturnValue(new URLSearchParams() as never);
-		mockUseAllAdminPatients.mockReturnValue({
-			data: undefined,
-			isLoading: false,
-			error: null,
-		} as never);
-		mockUseProfessionalPatients.mockReturnValue({
-			data: undefined,
-			isLoading: false,
-			error: null,
-		} as never);
-	});
-
-	it("usa useAllAdminPatients quando o papel é ADMIN", () => {
-		mockUsePermission.mockReturnValue({ role: "ADMIN" } as never);
-		mockUseUserStore.mockReturnValue({ user: { id: "u-1" } } as never);
-		renderHook(() => usePatientsPage());
-		expect(mockUseAllAdminPatients).toHaveBeenCalledWith({
-			page: 0,
-			size: 10,
-			search: "",
-			sort: "recent",
-		});
-	});
-
-	it("usa useProfessionalPatients com o id do profissional quando o papel é PROFESSIONAL", () => {
-		mockUsePermission.mockReturnValue({ role: "PROFESSIONAL" } as never);
-		mockUseUserStore.mockReturnValue({ user: { id: "prof-1" } } as never);
-		renderHook(() => usePatientsPage());
-		expect(mockUseProfessionalPatients).toHaveBeenCalledWith(
-			"prof-1",
-			expect.objectContaining({ page: 0, size: 10 }),
-		);
-	});
-
-	it("retorna patients, totalPages e totalElements a partir dos dados", () => {
-		mockUsePermission.mockReturnValue({ role: "ADMIN" } as never);
-		mockUseUserStore.mockReturnValue({ user: { id: "u-1" } } as never);
-		mockUseAllAdminPatients.mockReturnValue({
-			data: {
-				content: [{ id: "p-1" }],
-				totalPages: 3,
-				totalElements: 25,
-			},
-			isLoading: false,
-			error: null,
-		} as never);
-		const { result } = renderHook(() => usePatientsPage());
-		expect(result.current.patients).toEqual([{ id: "p-1" }]);
-		expect(result.current.totalPages).toBe(3);
-		expect(result.current.totalElements).toBe(25);
-	});
-
-	it("updateParams navega com os novos parâmetros e reseta a página", () => {
-		mockUsePermission.mockReturnValue({ role: "ADMIN" } as never);
-		mockUseUserStore.mockReturnValue({ user: { id: "u-1" } } as never);
-		mockUseSearchParams.mockReturnValue(new URLSearchParams("page=2") as never);
-		const { result } = renderHook(() => usePatientsPage());
-		act(() => result.current.updateParams({ q: "maria" }));
-		expect(push).toHaveBeenCalledWith("/patients?q=maria", { scroll: false });
 	});
 });
 

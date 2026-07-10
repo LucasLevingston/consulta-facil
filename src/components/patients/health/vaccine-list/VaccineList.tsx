@@ -11,7 +11,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useDeleteVaccine, useVaccines } from "@/features/patients";
+import { useDeleteVaccine } from "./use-delete-vaccine";
+import { useVaccines } from "./use-vaccines";
 import { VaccineDialog } from "./VaccineDialog";
 
 export function VaccineList() {

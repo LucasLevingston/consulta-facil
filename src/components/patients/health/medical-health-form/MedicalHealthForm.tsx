@@ -8,10 +8,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useMedicalHealthForm } from "@/features/patients/hooks/use-medical-health-form";
 import type { MedicalHealthFormProps } from "./MedicalHealthForm.types";
 import { MedicalHistorySection } from "./MedicalHistorySection";
 import { MedicalVitalsSection } from "./MedicalVitalsSection";
+import { useMedicalHealthForm } from "./use-medical-health-form";
 
 export function MedicalHealthForm({ userId }: MedicalHealthFormProps) {
 	const { form, bmi, isPending, onSubmit } = useMedicalHealthForm(userId);

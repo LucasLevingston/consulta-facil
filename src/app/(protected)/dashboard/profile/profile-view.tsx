@@ -13,8 +13,8 @@ import {
 	useProfessionalAppointments,
 } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
-import { useMyProfile } from "@/features/patients";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { useMyProfile } from "./use-my-profile";
 
 export function ProfileView() {
 	const { user } = useUserStore();

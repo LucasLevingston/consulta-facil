@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { type DocumentType, useUploadDocument } from "@/features/patients";
+import type { DocumentType } from "@/features/patients";
 import type { UploadDialogProps } from "./DocumentPhotoGrid.types";
 import { DocumentTypeSelect } from "./DocumentTypeSelect";
+import { useUploadDocument } from "./use-upload-document";
 
 export function DocumentUploadDialog({
 	open,

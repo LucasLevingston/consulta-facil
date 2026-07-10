@@ -10,9 +10,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { usePatientDocuments } from "@/features/patients";
 import { DocumentPhotoGridList } from "./DocumentPhotoGridList";
 import { DocumentUploadDialog } from "./DocumentUploadDialog";
+import { usePatientDocuments } from "./use-patient-documents";
 
 export function DocumentPhotoGrid() {
 	const { data: documents = [] } = usePatientDocuments();

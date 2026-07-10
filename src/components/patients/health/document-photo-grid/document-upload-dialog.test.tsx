@@ -7,7 +7,7 @@ const { uploadMutate, uploadIsPending } = vi.hoisted(() => ({
 	uploadIsPending: { value: false },
 }));
 
-vi.mock("@/features/patients", () => ({
+vi.mock("./use-upload-document", () => ({
 	useUploadDocument: () => ({
 		mutate: uploadMutate,
 		isPending: uploadIsPending.value,

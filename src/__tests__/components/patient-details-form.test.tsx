@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/patients", () => ({
-	useUpdateMyProfile: vi.fn(() => ({ mutateAsync: vi.fn(), isPending: false })),
 	PatientFormValidation: { _def: {} },
+}));
+vi.mock("@/components/forms/PatientDetails/use-update-my-profile", () => ({
+	useUpdateMyProfile: vi.fn(() => ({ mutateAsync: vi.fn(), isPending: false })),
 }));
 vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: vi.fn(() => vi.fn()),

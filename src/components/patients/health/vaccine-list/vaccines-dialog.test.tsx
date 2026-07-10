@@ -15,6 +15,8 @@ vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
 vi.mock("@/features/patients", () => ({
 	patientVaccineSchema: {},
+}));
+vi.mock("./use-add-vaccine", () => ({
 	useAddVaccine: () => ({ mutate: addMutate, isPending: false }),
 }));
 

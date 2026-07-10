@@ -12,14 +12,12 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import {
-	useDeleteEmergencyContact,
-	useEmergencyContacts,
-} from "@/features/patients";
-import {
 	type ContactItem,
 	EmergencyContactDialog,
 } from "./EmergencyContactDialog";
 import { EmergencyContactItem } from "./EmergencyContactItem";
+import { useDeleteEmergencyContact } from "./use-delete-emergency-contact";
+import { useEmergencyContacts } from "./use-emergency-contacts";
 
 export function EmergencyContactList() {
 	const { data: contacts = [] } = useEmergencyContacts();
