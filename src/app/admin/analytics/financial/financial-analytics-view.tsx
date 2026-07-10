@@ -8,7 +8,7 @@ import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useFinancialAnalytics } from "@/features/analytics";
+import { useFinancialAnalytics } from "./use-financial-analytics";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(

@@ -7,7 +7,7 @@ import { KpiCard } from "@/components/analytics/KpiCard";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUserAnalytics } from "@/features/analytics";
+import { useUserAnalytics } from "./use-user-analytics";
 
 function UserAnalyticsContent() {
 	const { data } = useUserAnalytics();
