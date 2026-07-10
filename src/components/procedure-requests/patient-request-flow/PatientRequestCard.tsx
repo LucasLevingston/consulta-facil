@@ -2,6 +2,7 @@
 
 import { Clock, DollarSign } from "lucide-react";
 import { toast } from "sonner";
+import { StatusBadge } from "@/components/procedure-requests/status-badge";
 import {
 	Card,
 	CardContent,
@@ -12,7 +13,6 @@ import {
 import { useCancelProcedureRequest } from "@/features/procedure-requests";
 import { PatientRequestActions } from "./PatientRequestActions";
 import type { PatientRequestCardProps } from "./PatientRequestCard.types";
-import { StatusBadge } from "./StatusBadge";
 
 export function PatientRequestCard({ request }: PatientRequestCardProps) {
 	const { mutateAsync: cancel, isPending: canceling } =

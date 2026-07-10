@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { cancelMutateAsync, toastSuccess, toastError } = vi.hoisted(() => ({
 	cancelMutateAsync: vi.fn(),
@@ -17,10 +17,10 @@ vi.mock("@/features/procedure-requests", () => ({
 vi.mock("sonner", () => ({
 	toast: { success: toastSuccess, error: toastError },
 }));
-vi.mock("@/components/procedure-requests/StatusBadge", () => ({
+vi.mock("@/components/procedure-requests/status-badge", () => ({
 	StatusBadge: ({ status }: { status: string }) => <span>{status}</span>,
 }));
-vi.mock("@/components/procedure-requests/PatientRequestActions", () => ({
+vi.mock("./PatientRequestActions", () => ({
 	PatientRequestActions: ({
 		canSchedule,
 		canCancel,
@@ -43,8 +43,7 @@ vi.mock("@/components/procedure-requests/PatientRequestActions", () => ({
 	),
 }));
 
-import { PatientRequestCard } from "@/components/procedure-requests/PatientRequestCard";
-import { ProfessionalRequestCard } from "@/components/procedure-requests/ProfessionalRequestCard";
+import { PatientRequestCard } from "./PatientRequestCard";
 
 const patientCardRequest = {
 	id: "req-1",
@@ -57,19 +56,12 @@ const patientCardRequest = {
 	notes: null,
 };
 
-const professionalCardRequest = {
-	id: "req-2",
-	serviceName: "Raio-X",
-	patientName: "Maria Souza",
-	patientId: "pat-1",
-	status: "PENDING",
-	servicePrice: 90,
-	serviceDurationMinutes: 20,
-	notes: null,
-};
-
 describe("PatientRequestCard", () => {
-	beforeEachClears();
+	beforeEach(() => {
+		cancelMutateAsync.mockReset();
+		toastSuccess.mockReset();
+		toastError.mockReset();
+	});
 
 	it("renderiza nome do serviço e do profissional", () => {
 		render(<PatientRequestCard request={patientCardRequest as never} />);
@@ -102,55 +94,33 @@ describe("PatientRequestCard", () => {
 		await userEvent.click(screen.getByText("Cancelar"));
 		expect(toastError).toHaveBeenCalledWith("Erro ao cancelar solicitação.");
 	});
-});
 
-describe("ProfessionalRequestCard", () => {
-	beforeEachClears();
-
-	it("renderiza nome do serviço e do paciente", () => {
-		render(
-			<ProfessionalRequestCard request={professionalCardRequest as never} />,
-		);
-		expect(screen.getByText("Raio-X")).toBeInTheDocument();
-		expect(screen.getByText(/Maria Souza/)).toBeInTheDocument();
+	it("renderiza preço formatado", () => {
+		render(<PatientRequestCard request={patientCardRequest as never} />);
+		expect(screen.getByText(/150\.00/)).toBeInTheDocument();
 	});
 
-	it("renderiza preço e duração formatados", () => {
-		render(
-			<ProfessionalRequestCard request={professionalCardRequest as never} />,
-		);
-		expect(screen.getByText(/90\.00/)).toBeInTheDocument();
-		expect(screen.getByText(/20 min/)).toBeInTheDocument();
+	it("renderiza duração em minutos", () => {
+		render(<PatientRequestCard request={patientCardRequest as never} />);
+		expect(screen.getByText(/30 min/)).toBeInTheDocument();
 	});
 
-	it("renderiza botão Cancelar quando status permite cancelamento", () => {
-		render(
-			<ProfessionalRequestCard request={professionalCardRequest as never} />,
-		);
-		expect(screen.getByText("Cancelar")).toBeInTheDocument();
+	it("renderiza observações quando fornecidas", () => {
+		const req = {
+			...patientCardRequest,
+			notes: "Trazer exames anteriores",
+		};
+		render(<PatientRequestCard request={req as never} />);
+		expect(screen.getByText("Trazer exames anteriores")).toBeInTheDocument();
 	});
 
-	it("não renderiza botão Cancelar quando status é COMPLETED", () => {
-		const req = { ...professionalCardRequest, status: "COMPLETED" };
-		render(<ProfessionalRequestCard request={req as never} />);
-		expect(screen.queryByText("Cancelar")).not.toBeInTheDocument();
+	it("não renderiza observações quando nulo", () => {
+		render(<PatientRequestCard request={patientCardRequest as never} />);
+		expect(screen.queryByText(/Trazer/)).not.toBeInTheDocument();
 	});
 
-	it("chama mutation de cancelamento ao clicar em Cancelar", async () => {
-		cancelMutateAsync.mockResolvedValueOnce(undefined);
-		render(
-			<ProfessionalRequestCard request={professionalCardRequest as never} />,
-		);
-		await userEvent.click(screen.getByText("Cancelar"));
-		expect(cancelMutateAsync).toHaveBeenCalledWith("req-2");
-		expect(toastSuccess).toHaveBeenCalledWith("Solicitação cancelada.");
+	it("renderiza o status badge", () => {
+		render(<PatientRequestCard request={patientCardRequest as never} />);
+		expect(screen.getByText("PENDING")).toBeInTheDocument();
 	});
 });
-
-function beforeEachClears() {
-	beforeEach(() => {
-		cancelMutateAsync.mockReset();
-		toastSuccess.mockReset();
-		toastError.mockReset();
-	});
-}

@@ -31,7 +31,7 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { ProcedureModalitySelect } from "@/components/procedure-requests/ProcedureModalitySelect";
+import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
 
 describe("ProcedureModalitySelect", () => {
 	it("renders Presencial option", () => {

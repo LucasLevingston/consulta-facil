@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/procedure-requests", () => ({
@@ -11,7 +12,7 @@ vi.mock("@/features/procedure-requests", () => ({
 vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: vi.fn(() => vi.fn()),
 }));
-vi.mock("@/components/procedure-requests/ProcedureModalitySelect", () => ({
+vi.mock("./ProcedureModalitySelect", () => ({
 	ProcedureModalitySelect: () => <div />,
 }));
 vi.mock("@/components/ui/button", () => ({
@@ -47,7 +48,7 @@ vi.mock("@/components/ui/dialog", () => ({
 	),
 }));
 
-import { PatientRequestActions } from "@/components/procedure-requests/PatientRequestActions";
+import { PatientRequestActions } from "./PatientRequestActions";
 
 const base = {
 	requestId: "r-1",
@@ -56,25 +57,30 @@ const base = {
 	onCancel: vi.fn(),
 };
 
-describe("PatientRequestActions render", () => {
-	it("renders null when neither canSchedule nor canCancel", () => {
-		const { container } = render(
-			<PatientRequestActions {...base} canSchedule={false} canCancel={false} />,
+describe("PatientRequestActions interaction", () => {
+	it("disables Cancelar when canceling=true", () => {
+		render(
+			<PatientRequestActions
+				{...base}
+				canSchedule={false}
+				canCancel={true}
+				canceling={true}
+			/>,
 		);
-		expect(container.firstChild).toBeNull();
+		expect(screen.getByText("Cancelar")).toBeDisabled();
 	});
 
-	it("renders Agendar button when canSchedule=true", () => {
+	it("calls onCancel when Cancelar clicked", async () => {
+		const onCancel = vi.fn();
 		render(
-			<PatientRequestActions {...base} canSchedule={true} canCancel={false} />,
+			<PatientRequestActions
+				{...base}
+				canSchedule={false}
+				canCancel={true}
+				onCancel={onCancel}
+			/>,
 		);
-		expect(screen.getByText("Agendar")).toBeInTheDocument();
-	});
-
-	it("renders Cancelar button when canCancel=true", () => {
-		render(
-			<PatientRequestActions {...base} canSchedule={false} canCancel={true} />,
-		);
-		expect(screen.getByText("Cancelar")).toBeInTheDocument();
+		await userEvent.click(screen.getByText("Cancelar"));
+		expect(onCancel).toHaveBeenCalledTimes(1);
 	});
 });

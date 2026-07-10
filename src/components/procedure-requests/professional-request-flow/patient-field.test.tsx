@@ -44,7 +44,7 @@ vi.mock("@/components/ui/select", () => ({
 	),
 }));
 
-import { CreateProcedureRequestPatientField } from "@/components/procedure-requests/CreateProcedureRequestPatientField";
+import { CreateProcedureRequestPatientField } from "./CreateProcedureRequestPatientField";
 
 const patientFieldSchema = z.object({
 	patientId: z.string().min(1, "Paciente é obrigatório"),

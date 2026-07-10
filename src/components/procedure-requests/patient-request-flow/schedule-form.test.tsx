@@ -58,9 +58,9 @@ vi.mock("@/features/procedure-requests", async () => {
 	};
 });
 
-import { ProcedureModalitySelect } from "@/components/procedure-requests/ProcedureModalitySelect";
-import { ScheduleProcedureRequestForm } from "@/components/procedure-requests/ScheduleProcedureRequestForm";
 import { useScheduleProcedureRequest } from "@/features/procedure-requests";
+import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
+import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 
 describe("ProcedureModalitySelect", () => {
 	it("renderiza as opções Presencial e Online", () => {

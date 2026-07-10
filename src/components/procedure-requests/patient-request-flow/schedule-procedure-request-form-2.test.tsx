@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/procedure-requests", () => ({
@@ -41,7 +42,7 @@ vi.mock("@/components/ui/label", () => ({
 		htmlFor?: string;
 	}) => <span data-for={htmlFor}>{children}</span>,
 }));
-vi.mock("@/components/procedure-requests/ProcedureModalitySelect", () => ({
+vi.mock("./ProcedureModalitySelect", () => ({
 	ProcedureModalitySelect: ({
 		onChange,
 	}: {
@@ -53,10 +54,10 @@ vi.mock("@/components/procedure-requests/ProcedureModalitySelect", () => ({
 	),
 }));
 
-import { ScheduleProcedureRequestForm } from "@/components/procedure-requests/ScheduleProcedureRequestForm";
+import { ScheduleProcedureRequestForm } from "./ScheduleProcedureRequestForm";
 
-describe("ScheduleProcedureRequestForm render", () => {
-	it("renders service name", () => {
+describe("ScheduleProcedureRequestForm interaction", () => {
+	it("renders Confirmar agendamento button", () => {
 		render(
 			<ScheduleProcedureRequestForm
 				requestId="r-1"
@@ -64,28 +65,19 @@ describe("ScheduleProcedureRequestForm render", () => {
 				onClose={vi.fn()}
 			/>,
 		);
-		expect(screen.getByText("Ultrassom")).toBeInTheDocument();
+		expect(screen.getByText("Confirmar agendamento")).toBeInTheDocument();
 	});
 
-	it("renders Data e hora label", () => {
+	it("calls onClose when Cancelar clicked", async () => {
+		const onClose = vi.fn();
 		render(
 			<ScheduleProcedureRequestForm
 				requestId="r-1"
 				serviceName="Ultrassom"
-				onClose={vi.fn()}
+				onClose={onClose}
 			/>,
 		);
-		expect(screen.getByText(/Data e hora/)).toBeInTheDocument();
-	});
-
-	it("renders Modalidade label", () => {
-		render(
-			<ScheduleProcedureRequestForm
-				requestId="r-1"
-				serviceName="Ultrassom"
-				onClose={vi.fn()}
-			/>,
-		);
-		expect(screen.getByText("Modalidade")).toBeInTheDocument();
+		await userEvent.click(screen.getByText("Cancelar"));
+		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 });
