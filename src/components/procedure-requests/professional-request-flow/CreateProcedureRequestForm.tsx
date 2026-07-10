@@ -7,11 +7,11 @@ import { useProfessionalPatients } from "@/features/patients";
 import {
 	type CreateProcedureRequestInput,
 	createProcedureRequestSchema,
-	useCreateProcedureRequest,
 } from "@/features/procedure-requests";
 import { useGetProfessionalServices } from "@/features/services";
 import type { CreateProcedureRequestFormProps } from "./CreateProcedureRequestForm.types";
 import { CreateProcedureRequestFormFields } from "./CreateProcedureRequestFormFields";
+import { useCreateProcedureRequest } from "./use-create-procedure-request";
 
 export function CreateProcedureRequestForm({
 	professionalId,

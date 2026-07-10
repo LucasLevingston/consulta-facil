@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/procedure-requests", () => ({
+vi.mock("@/components/procedure-requests/hooks", () => ({
 	useGetMyProcedureRequests: vi.fn(),
 }));
 vi.mock("./PatientRequestCard", () => ({
@@ -10,7 +10,7 @@ vi.mock("./PatientRequestCard", () => ({
 	),
 }));
 
-import { useGetMyProcedureRequests } from "@/features/procedure-requests";
+import { useGetMyProcedureRequests } from "@/components/procedure-requests/hooks";
 import { PatientRequestsView } from "./PatientRequestsView";
 import { PatientView } from "./PatientView";
 

@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { procedureRequestKeys } from "@/components/procedure-requests/hooks";
+import { procedureRequestsRepository } from "@/features/procedure-requests";
 import type { CreateProcedureRequestInput } from "@/lib/schemas/procedure-request/create-procedure-request.schema";
-import { procedureRequestsRepository } from "../repositories/procedure-requests.repository";
-import { procedureRequestKeys } from "./procedure-request-keys";
 
 export function useCreateProcedureRequest() {
 	const queryClient = useQueryClient();

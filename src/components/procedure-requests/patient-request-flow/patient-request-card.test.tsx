@@ -8,7 +8,7 @@ const { cancelMutateAsync, toastSuccess, toastError } = vi.hoisted(() => ({
 	toastError: vi.fn(),
 }));
 
-vi.mock("@/features/procedure-requests", () => ({
+vi.mock("@/components/procedure-requests/hooks", () => ({
 	useCancelProcedureRequest: vi.fn(() => ({
 		mutateAsync: cancelMutateAsync,
 		isPending: false,
