@@ -49,7 +49,7 @@ vi.mock("@/components/custom/page-header", () => ({
 	default: ({ title }: { title: string }) => <h1>{title}</h1>,
 }));
 
-import ProfessionalsContent from "@/components/custom/ProfessionalsContent";
+import ProfessionalsContent from "@/components/custom/professionals-content";
 import { useProfessionals } from "@/features/professionals/hooks/use-professionals";
 import { useProfessionalsNearby } from "@/features/professionals/hooks/use-professionals-nearby";
 

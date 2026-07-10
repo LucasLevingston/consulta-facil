@@ -50,9 +50,11 @@ vi.mock("next-themes", () => ({
 	useTheme: mockUseTheme,
 }));
 
-import { HeaderDropdownLinks } from "@/components/custom/HeaderDropdownLinks";
-import { HeaderDropdown } from "@/components/custom/header-dropdown";
-import { ThemeSwitcher } from "@/components/custom/Theme-Switcher";
+import {
+	HeaderDropdown,
+	HeaderDropdownLinks,
+} from "@/components/custom/header-dropdown";
+import { ThemeSwitcher } from "@/components/custom/theme-switcher";
 
 describe("HeaderDropdown", () => {
 	const baseUser = {

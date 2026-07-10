@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils/cn";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import type { CustomButtonProps } from "./custom-button.types";
 
 const baseStyles =

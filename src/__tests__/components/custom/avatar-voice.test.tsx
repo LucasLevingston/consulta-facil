@@ -19,27 +19,30 @@ const mockUseVoiceBooking = vi.hoisted(() => vi.fn());
 vi.mock("@/features/appointments", () => ({
 	useVoiceBooking: mockUseVoiceBooking,
 }));
-vi.mock("@/components/custom/voice-booking-result", () => ({
-	VoiceBookingResultCard: ({
-		result,
-		onReset,
-		onUse,
-	}: {
-		result: { summary: string };
-		onReset: () => void;
-		onUse: () => void;
-	}) => (
-		<div>
-			<span>{result.summary}</span>
-			<button type="button" onClick={onReset}>
-				resetar
-			</button>
-			<button type="button" onClick={onUse}>
-				usar
-			</button>
-		</div>
-	),
-}));
+vi.mock(
+	"@/components/custom/voice-booking-button/voice-booking-result",
+	() => ({
+		VoiceBookingResultCard: ({
+			result,
+			onReset,
+			onUse,
+		}: {
+			result: { summary: string };
+			onReset: () => void;
+			onUse: () => void;
+		}) => (
+			<div>
+				<span>{result.summary}</span>
+				<button type="button" onClick={onReset}>
+					resetar
+				</button>
+				<button type="button" onClick={onUse}>
+					usar
+				</button>
+			</div>
+		),
+	}),
+);
 
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import { VoiceBookingButton } from "@/components/custom/voice-booking-button";

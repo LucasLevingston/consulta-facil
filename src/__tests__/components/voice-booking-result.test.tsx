@@ -24,7 +24,7 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 
-import { VoiceBookingResultCard } from "@/components/custom/voice-booking-result";
+import { VoiceBookingResultCard } from "@/components/custom/voice-booking-button";
 
 const baseResult = {
 	summary: "Consulta de cardiologia amanhã de manhã",

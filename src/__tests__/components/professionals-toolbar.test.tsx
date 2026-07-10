@@ -5,9 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("@/components/custom/professional/ProfessionalFilters", () => ({
 	default: () => <div>professional-filters</div>,
 }));
-vi.mock("@/components/custom/ProfessionalsNearbyControl", () => ({
-	ProfessionalsNearbyControl: () => <div>nearby-control</div>,
-}));
+vi.mock(
+	"@/components/custom/professionals-content/ProfessionalsNearbyControl",
+	() => ({
+		ProfessionalsNearbyControl: () => <div>nearby-control</div>,
+	}),
+);
 vi.mock("@/components/ui/button", () => ({
 	Button: ({
 		children,
@@ -22,7 +25,7 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 
-import { ProfessionalsToolbar } from "@/components/custom/ProfessionalsToolbar";
+import { ProfessionalsToolbar } from "@/components/custom/professionals-content";
 
 const base = {
 	viewMode: "list" as const,

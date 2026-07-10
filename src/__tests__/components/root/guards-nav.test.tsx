@@ -40,7 +40,7 @@ vi.mock("@/components/custom/header-dropdown", () => ({
 vi.mock("@/components/custom/notifications/NotificationBell", () => ({
 	NotificationBell: () => <div data-testid="notification-bell" />,
 }));
-vi.mock("@/components/custom/Theme-Switcher", () => ({
+vi.mock("@/components/custom/theme-switcher", () => ({
 	ThemeSwitcher: () => <div data-testid="theme-switcher" />,
 }));
 vi.mock("@/components/logo", () => ({

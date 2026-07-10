@@ -9,7 +9,7 @@ vi.mock("@/features/auth", () => ({
 vi.mock("@/features/video", () => ({
 	useRoomToken: vi.fn(),
 }));
-vi.mock("@/components/custom/VideoRoom", () => ({
+vi.mock("@/components/custom/video-room", () => ({
 	VideoRoom: () => <div>mock-video-room</div>,
 }));
 vi.mock("@/components/forms/Appointments/ExamsSection", () => ({

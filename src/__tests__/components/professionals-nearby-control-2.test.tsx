@@ -50,7 +50,7 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { ProfessionalsNearbyControl } from "@/components/custom/ProfessionalsNearbyControl";
+import { ProfessionalsNearbyControl } from "@/components/custom/professionals-content";
 
 const radiusOptions = [
 	{ value: "5", label: "5 km" },

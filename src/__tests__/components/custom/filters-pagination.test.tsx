@@ -42,8 +42,10 @@ vi.mock("@/components/ui/select", () => ({
 	}) => <div data-value={value}>{children}</div>,
 }));
 
-import { CustomFilterControls } from "@/components/custom/CustomFilterControls";
-import { CustomFilter } from "@/components/custom/custom-filter";
+import {
+	CustomFilter,
+	CustomFilterControls,
+} from "@/components/custom/custom-filter";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 
 describe("CustomFilterControls", () => {

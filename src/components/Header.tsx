@@ -6,7 +6,7 @@ import { useUserStore } from "@/features/auth";
 import { CustomButton } from "./custom/custom-button";
 import { HeaderDropdown } from "./custom/header-dropdown";
 import { NotificationBell } from "./custom/notifications/NotificationBell";
-import { ThemeSwitcher } from "./custom/Theme-Switcher";
+import { ThemeSwitcher } from "./custom/theme-switcher";
 import { navByRole } from "./Header.nav";
 import { HeaderNav } from "./HeaderNav";
 import { Logo } from "./logo";

@@ -16,10 +16,12 @@ vi.mock("@daily-co/daily-react", () => ({
 	useParticipantIds: mockUseParticipantIds,
 }));
 
-import { VideoControls } from "@/components/custom/VideoControls";
-import { VideoRoom } from "@/components/custom/VideoRoom";
-import { VideoRoomInner } from "@/components/custom/VideoRoomInner";
-import { VideoTiles } from "@/components/custom/VideoTiles";
+import {
+	VideoControls,
+	VideoRoom,
+	VideoRoomInner,
+	VideoTiles,
+} from "@/components/custom/video-room";
 
 describe("VideoTiles", () => {
 	beforeEach(() => {
