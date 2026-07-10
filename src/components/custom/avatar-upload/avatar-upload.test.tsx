@@ -10,7 +10,7 @@ const mockUseAvatarUpload = vi.hoisted(() => vi.fn());
 vi.mock("@/features/auth", () => ({
 	useUserStore: mockUseUserStore,
 }));
-vi.mock("@/features/users", () => ({
+vi.mock("./use-avatar-upload", () => ({
 	useAvatarUpload: mockUseAvatarUpload,
 }));
 

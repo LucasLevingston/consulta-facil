@@ -5,8 +5,8 @@ import { useRef } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUserStore } from "@/features/auth";
-import { useAvatarUpload } from "@/features/users";
 import type { AvatarUploadProps } from "./avatar-upload.types";
+import { useAvatarUpload } from "./use-avatar-upload";
 
 const sizeMap = {
 	sm: {

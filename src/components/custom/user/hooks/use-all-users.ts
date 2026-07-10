@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { usersRepository } from "../repositories/users.repository";
+import { usersRepository } from "@/features/users";
 
 export function useAllUsers(page = 0, size = 20, role?: string) {
 	return useSuspenseQuery({

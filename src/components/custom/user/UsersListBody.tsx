@@ -10,8 +10,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAllUsers } from "@/features/users";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
+import { useAllUsers } from "./hooks";
 import type { UsersPageBodyProps } from "./users-list-view.types";
 
 export function UsersListBody({

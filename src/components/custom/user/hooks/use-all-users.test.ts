@@ -11,8 +11,8 @@ vi.mock("@/lib/api/users/users.api", () => ({
 	usersApi: { getAll: vi.fn() },
 }));
 
-import { useAllUsers } from "@/features/users/hooks/use-all-users";
 import { usersApi } from "@/lib/api/users/users.api";
+import { useAllUsers } from "./use-all-users";
 
 const mockGetAll = vi.mocked(usersApi.getAll);
 
