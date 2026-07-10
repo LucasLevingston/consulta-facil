@@ -2,8 +2,8 @@
 
 import { ScheduleEditor } from "@/components/schedule/ScheduleEditor";
 import { usePermission } from "@/features/auth";
-import { useMySchedule } from "@/features/schedule";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { useMySchedule } from "./use-my-schedule";
 
 export function ScheduleContent() {
 	const { can } = usePermission();

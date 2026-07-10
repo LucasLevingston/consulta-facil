@@ -7,7 +7,6 @@ import {
 	DAYS_OF_WEEK,
 	type DayOfWeek,
 	type ProfessionalScheduleItem,
-	useSaveMySchedule,
 } from "@/features/schedule";
 import { DEFAULT_BREAK } from "@/utils/constants/default-break";
 import { DEFAULT_DURATION } from "@/utils/constants/default-duration";
@@ -15,6 +14,7 @@ import { ScheduleDaysList } from "./ScheduleDaysList";
 import type { ScheduleEditorProps } from "./ScheduleEditor.types";
 import { buildDefaultRow } from "./ScheduleEditor.utils";
 import { ScheduleGlobalSettings } from "./ScheduleGlobalSettings";
+import { useSaveMySchedule } from "./use-save-my-schedule";
 
 export function ScheduleEditor({ savedSchedule }: ScheduleEditorProps) {
 	const [rows, setRows] = useState<ProfessionalScheduleItem[]>(() =>

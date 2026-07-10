@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/schedule", () => ({
+vi.mock("@/components/custom/clinic/use-clinic-working-hours", () => ({
 	useClinicWorkingHours: vi.fn(),
 }));
 vi.mock("@/components/custom/clinic/ClinicHoursEditor", () => ({
@@ -19,7 +19,7 @@ vi.mock("@/components/custom/clinic/ClinicHoursEditor", () => ({
 }));
 
 import { ClinicWorkingHoursSection } from "@/components/custom/clinic/ClinicWorkingHoursSection";
-import { useClinicWorkingHours } from "@/features/schedule";
+import { useClinicWorkingHours } from "@/components/custom/clinic/use-clinic-working-hours";
 
 const mockUseClinicWorkingHours = vi.mocked(useClinicWorkingHours);
 

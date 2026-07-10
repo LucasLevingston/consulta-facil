@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { scheduleRepository } from "../repositories/schedule.repository";
+import { scheduleRepository } from "@/features/schedule";
 import { scheduleKeys } from "./schedule-keys";
 
 export function useProfessionalSchedule(professionalId: string) {

@@ -24,12 +24,14 @@ vi.mock("@/features/schedule", () => ({
 		SATURDAY: "Sábado",
 		SUNDAY: "Domingo",
 	},
+}));
+vi.mock("@/components/custom/clinic/use-save-clinic-working-hours", () => ({
 	useSaveClinicWorkingHours: vi.fn(),
 }));
 
 import { toast } from "sonner";
 import { ClinicHoursEditor } from "@/components/custom/clinic/ClinicHoursEditor";
-import { useSaveClinicWorkingHours } from "@/features/schedule";
+import { useSaveClinicWorkingHours } from "@/components/custom/clinic/use-save-clinic-working-hours";
 
 const mockUseSaveClinicWorkingHours = vi.mocked(useSaveClinicWorkingHours);
 

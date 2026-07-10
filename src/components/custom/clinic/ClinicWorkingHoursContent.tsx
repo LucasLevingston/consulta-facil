@@ -1,8 +1,8 @@
 "use client";
 
-import { useClinicWorkingHours } from "@/features/schedule";
 import { ClinicHoursEditor } from "./ClinicHoursEditor";
 import type { ClinicWorkingHoursSectionProps } from "./ClinicWorkingHoursSection.types";
+import { useClinicWorkingHours } from "./use-clinic-working-hours";
 
 export function ClinicWorkingHoursContent({
 	clinicId,
