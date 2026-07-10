@@ -5,7 +5,7 @@ import { ptBR } from "date-fns/locale";
 import { Calendar, Mail, Phone, Shield, User } from "lucide-react";
 import Link from "next/link";
 
-import { ProfileInfoRow } from "@/components/profile/ProfileInfoRow";
+import { ProfileInfoRow } from "@/components/profile/profile-info-row";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

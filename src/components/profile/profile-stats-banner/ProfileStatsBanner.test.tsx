@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-
-import { ProfileStatsBanner } from "@/components/profile/ProfileStatsBanner";
 import type { AppointmentResponse } from "@/features/appointments";
+import { ProfileStatsBanner } from "./ProfileStatsBanner";
 
 function makeAppointment(
 	overrides: Partial<AppointmentResponse>,

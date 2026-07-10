@@ -15,8 +15,8 @@ vi.mock("@/components/custom/avatar-upload", () => ({
 	AvatarUpload: () => <div data-testid="avatar-upload" />,
 }));
 
-import { ProfileHero } from "@/components/profile/ProfileHero";
 import type { UserResponse } from "@/features/auth";
+import { ProfileHero } from "./ProfileHero";
 
 const baseUser: UserResponse = {
 	id: "u-1",

@@ -11,8 +11,8 @@ vi.mock("next/link", () => ({
 	}) => <a href={href}>{children}</a>,
 }));
 
-import { ProfilePersonalInfo } from "@/components/profile/ProfilePersonalInfo";
 import type { UserResponse } from "@/features/auth";
+import { ProfilePersonalInfo } from "./ProfilePersonalInfo";
 
 const baseUser: UserResponse = {
 	id: "u-1",

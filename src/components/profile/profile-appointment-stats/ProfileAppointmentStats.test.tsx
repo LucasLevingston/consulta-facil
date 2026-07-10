@@ -11,8 +11,8 @@ vi.mock("next/link", () => ({
 	}) => <a href={href}>{children}</a>,
 }));
 
-import { ProfileAppointmentStats } from "@/components/profile/ProfileAppointmentStats";
 import type { AppointmentResponse } from "@/features/appointments";
+import { ProfileAppointmentStats } from "./ProfileAppointmentStats";
 
 function makeAppointment(
 	overrides: Partial<AppointmentResponse>,

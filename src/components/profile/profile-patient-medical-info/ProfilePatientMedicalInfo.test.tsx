@@ -11,7 +11,7 @@ vi.mock("next/link", () => ({
 	}) => <a href={href}>{children}</a>,
 }));
 
-import { ProfilePatientMedicalInfo } from "@/components/profile/ProfilePatientMedicalInfo";
+import { ProfilePatientMedicalInfo } from "./ProfilePatientMedicalInfo";
 
 describe("ProfilePatientMedicalInfo", () => {
 	it("renderiza skeletons quando isLoading é verdadeiro", () => {
