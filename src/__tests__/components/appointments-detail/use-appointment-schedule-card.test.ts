@@ -7,14 +7,14 @@ vi.mock("sonner", () => ({
 vi.mock("@/features/appointments", () => ({
 	useGenerateMeetLink: vi.fn(),
 }));
-vi.mock("@/features/video", () => ({
+vi.mock("@/components/appointments/detail/use-create-room", () => ({
 	useCreateRoom: vi.fn(),
 }));
 
 import { toast } from "sonner";
+import { useCreateRoom } from "@/components/appointments/detail/use-create-room";
 import { useAppointmentScheduleCard } from "@/components/appointments/detail/useAppointmentScheduleCard";
 import { useGenerateMeetLink } from "@/features/appointments";
-import { useCreateRoom } from "@/features/video";
 
 describe("useAppointmentScheduleCard", () => {
 	function setup(opts?: {

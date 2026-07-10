@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useGenerateMeetLink } from "@/features/appointments";
-import { useCreateRoom } from "@/features/video";
+import { useCreateRoom } from "./use-create-room";
 
 export function useAppointmentScheduleCard(
 	appointmentId: string,
