@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { VideoRoom } from "@/components/custom/video-room";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 import { AnamnesisSection } from "./AnamnesisSection";
 import { AppointmentCancellationCard } from "./AppointmentCancellationCard";
 import type { AppointmentDetailProps } from "./AppointmentDetail.types";

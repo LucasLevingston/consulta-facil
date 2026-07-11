@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { ErrorState } from "@/components/custom/error-state/error-state";
 import { LoadingPage } from "@/components/custom/loading/loading-page";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePermission } from "@/features/auth";
 import { StatCard } from "./stat-card";
 import { useUsageStats } from "./use-usage-stats";
 

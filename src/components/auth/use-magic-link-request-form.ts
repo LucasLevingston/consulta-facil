@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { useMagicLinkRequest } from "@/features/auth";
+import { useMagicLinkRequest } from "./use-magic-link-request";
 
 export function useMagicLinkRequestForm() {
 	const [sentTo, setSentTo] = useState<string | null>(null);

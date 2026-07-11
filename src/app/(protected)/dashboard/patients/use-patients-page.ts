@@ -2,8 +2,9 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDeferredValue } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { useProfessionalPatients } from "@/components/patients/hooks";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";
 import { useAllAdminPatients } from "./use-all-admin-patients";
 

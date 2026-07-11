@@ -6,8 +6,10 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(),
 	usePathname: vi.fn(),
 }));
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
+}));
+vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(),
 }));
 vi.mock("@/components/patients/hooks", () => ({
@@ -18,8 +20,9 @@ vi.mock("./use-all-admin-patients", () => ({
 }));
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePermission } from "@/components/auth/hooks";
 import { useProfessionalPatients } from "@/components/patients/hooks";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 import { useAllAdminPatients } from "./use-all-admin-patients";
 import { usePatientsPage } from "./use-patients-page";
 

@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
+}));
+vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(),
 }));
 vi.mock("@/components/appointments/detail/use-room-token", () => ({
@@ -51,7 +53,8 @@ vi.mock("@/components/appointments/detail/AppointmentScheduleCard", () => ({
 
 import { AppointmentDetail } from "@/components/appointments/detail/AppointmentDetail";
 import { useRoomToken } from "@/components/appointments/detail/use-room-token";
-import { usePermission, useUserStore } from "@/features/auth";
+import { usePermission } from "@/components/auth/hooks";
+import { useUserStore } from "@/features/auth";
 
 const baseAppointment = {
 	id: "a-1",

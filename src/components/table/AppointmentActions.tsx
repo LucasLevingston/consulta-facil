@@ -1,12 +1,13 @@
 "use client";
 
 import { toast } from "sonner";
+import { usePermission } from "@/components/auth/hooks";
 import { Button } from "@/components/ui/button";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
 } from "@/features/appointments";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 import type { AppointmentActionsProps } from "./AppointmentActions.types";
 import { AppointmentCancelButton } from "./AppointmentCancelButton";
 import { AppointmentRateButton } from "./AppointmentRateButton";

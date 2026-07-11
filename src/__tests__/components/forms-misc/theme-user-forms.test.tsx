@@ -191,14 +191,14 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(),
 }));
 
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	useLogin: vi.fn(),
 	useRegister: vi.fn(),
 }));
 
 import { useRouter } from "next/navigation";
+import { useLogin, useRegister } from "@/components/auth/hooks";
 import { UserForm } from "@/components/forms/UserForm";
-import { useLogin, useRegister } from "@/features/auth";
 
 const mockUseRouter = vi.mocked(useRouter);
 const mockUseLogin = vi.mocked(useLogin);

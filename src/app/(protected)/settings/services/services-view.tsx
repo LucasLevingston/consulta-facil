@@ -1,10 +1,9 @@
 "use client";
 
 import { Briefcase } from "lucide-react";
-
+import { usePermission } from "@/components/auth/hooks";
 import PageHeader from "@/components/custom/page-header";
 import { ServicesContent } from "@/components/services/services-content";
-import { usePermission } from "@/features/auth";
 
 export function ServicesView() {
 	const { can } = usePermission();

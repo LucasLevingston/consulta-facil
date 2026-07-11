@@ -4,10 +4,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import ResetPasswordForm from "@/components/forms/auth/ResetPasswordForm";
-import { useResetPassword } from "@/features/auth";
 import { ResetPasswordInvalidLink } from "./ResetPasswordInvalidLink";
 import { ResetPasswordMobileLogo } from "./ResetPasswordMobileLogo";
 import { ResetPasswordSuccessView } from "./ResetPasswordSuccessView";
+import { useResetPassword } from "./use-reset-password";
 
 export function ResetPasswordContent() {
 	const searchParams = useSearchParams();

@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { useGoogleGIS } from "@/features/auth/hooks/use-google-gis";
+import { useGoogleGIS } from "./use-google-gis";
 
 const SCRIPT_ID = "google-gis-script";
 

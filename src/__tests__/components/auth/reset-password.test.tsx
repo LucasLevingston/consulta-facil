@@ -22,16 +22,12 @@ vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
 const mockResetPasswordMutateAsync = vi.fn();
 
-vi.mock("@/features/auth", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@/features/auth")>();
-	return {
-		...actual,
-		useResetPassword: vi.fn(() => ({
-			mutateAsync: mockResetPasswordMutateAsync,
-			isPending: false,
-		})),
-	};
-});
+vi.mock("@/components/auth/reset-password/use-reset-password", () => ({
+	useResetPassword: vi.fn(() => ({
+		mutateAsync: mockResetPasswordMutateAsync,
+		isPending: false,
+	})),
+}));
 
 import { toast } from "sonner";
 import { ResetPasswordContent } from "@/components/auth/reset-password/ResetPasswordContent";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { authRepository } from "@/features/auth";
 import type { RegisterInput } from "@/lib/schemas/auth/register.schema";
-import { authRepository } from "../repositories/auth.repository";
 
 export function useRegister() {
 	return useMutation({

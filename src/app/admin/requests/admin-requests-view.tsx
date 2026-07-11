@@ -4,11 +4,11 @@ import { Stethoscope } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { PendingApplicationCard } from "@/components/admin/PendingApplicationCard";
+import { usePermission } from "@/components/auth/hooks";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { usePendingApplications } from "@/components/professionals/hooks";
 import { Badge } from "@/components/ui/badge";
-import { usePermission } from "@/features/auth";
 
 function PendingApplicationsList() {
 	const { data } = usePendingApplications(0, 100);
