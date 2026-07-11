@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { examsRepository } from "@/features/exams";
 import type { ReviewExamRequestInput } from "@/lib/schemas/examRequest/review-exam-request.schema";
-import { examsRepository } from "../repositories/exams.repository";
 import { examRequestKeys } from "./exam-request-keys";
 
 export function useReviewExam() {

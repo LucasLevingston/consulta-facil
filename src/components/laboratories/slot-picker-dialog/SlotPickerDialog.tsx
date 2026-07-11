@@ -11,11 +11,12 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { useAvailableSlots, useScheduleExam } from "@/features/exams";
 import { SlotConfirmation } from "./SlotConfirmation";
 import { SlotDatePicker } from "./SlotDatePicker";
 import type { SlotPickerDialogProps } from "./SlotPickerDialog.types";
 import { SlotTimePicker } from "./SlotTimePicker";
+import { useAvailableSlots } from "./use-available-slots";
+import { useScheduleExam } from "./use-schedule-exam";
 
 export function SlotPickerDialog({
 	lab,

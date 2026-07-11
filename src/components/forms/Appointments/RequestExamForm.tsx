@@ -15,11 +15,11 @@ import { Form } from "@/components/ui/form";
 import {
 	type CreateExamRequestInput,
 	createExamRequestSchema,
-	useCreateExamRequest,
 } from "@/features/exams";
 import { EXAM_TYPE_OPTIONS } from "@/utils/constants/exam-types";
 
 import type { RequestExamFormProps } from "./RequestExamForm.types";
+import { useCreateExamRequest } from "./use-create-exam-request";
 
 export function RequestExamForm({ appointmentId }: RequestExamFormProps) {
 	const { mutateAsync: create } = useCreateExamRequest(appointmentId);

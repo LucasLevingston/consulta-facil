@@ -8,6 +8,7 @@ import {
 	SlidersHorizontal,
 	X,
 } from "lucide-react";
+import type { UseLabFiltersReturn } from "@/app/laboratories/use-lab-filters";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +19,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { UseLabFiltersReturn } from "@/features/exams";
 import { ALL } from "@/utils/constants/filter-sentinels";
 
 interface Props {

@@ -3,10 +3,10 @@
 import { FlaskConical } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useExamRequestsByAppointment } from "@/features/exams";
 import { ExamCard } from "./ExamCard";
 import type { ExamsSectionProps } from "./ExamsSection.types";
 import { RequestExamForm } from "./RequestExamForm";
+import { useExamRequestsByAppointment } from "./use-exam-requests-by-appointment";
 
 export function ExamsSectionContent({
 	appointmentId,

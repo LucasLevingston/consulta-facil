@@ -4,8 +4,8 @@ import { Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
+import { useUploadExamResult } from "@/components/exams/hooks";
 import { Button } from "@/components/ui/button";
-import { useUploadExamResult } from "@/features/exams";
 import type { ExamUploadButtonProps } from "./ExamUploadButton.types";
 
 export function ExamUploadButton({ examId }: ExamUploadButtonProps) {

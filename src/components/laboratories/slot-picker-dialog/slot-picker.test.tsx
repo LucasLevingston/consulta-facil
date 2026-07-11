@@ -5,8 +5,10 @@ import type { ExamLabResponse } from "@/features/exams";
 
 // Mock dos hooks de API usados internamente pelo SlotPickerDialog — o teste
 // não deve chegar até @/config/api.
-vi.mock("@/features/exams", () => ({
+vi.mock("./use-available-slots", () => ({
 	useAvailableSlots: vi.fn(),
+}));
+vi.mock("./use-schedule-exam", () => ({
 	useScheduleExam: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -46,11 +48,12 @@ vi.mock("@/components/ui/dialog", () => ({
 }));
 
 import { toast } from "sonner";
-import { useAvailableSlots, useScheduleExam } from "@/features/exams";
 import { SlotConfirmation } from "./SlotConfirmation";
 import { SlotDatePicker } from "./SlotDatePicker";
 import { SlotPickerDialog } from "./SlotPickerDialog";
 import { SlotTimePicker } from "./SlotTimePicker";
+import { useAvailableSlots } from "./use-available-slots";
+import { useScheduleExam } from "./use-schedule-exam";
 
 const mockUseAvailableSlots = vi.mocked(useAvailableSlots);
 const mockUseScheduleExam = vi.mocked(useScheduleExam);

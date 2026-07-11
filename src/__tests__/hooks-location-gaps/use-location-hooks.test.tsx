@@ -1,8 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { useLabLocation } from "@/app/laboratories/use-lab-location";
 import { useClinicsLocation } from "@/features/clinics/hooks/use-clinics-location";
-import { useLabLocation } from "@/features/exams/hooks/use-lab-location";
 
 function mockGeolocation(
 	kind: "success" | "error" | "unavailable",

@@ -8,7 +8,7 @@ import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense
 import { ExamListItem } from "@/components/exams/ExamListItem";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ExamRequestStatus } from "@/features/exams";
-import { useMyExams } from "@/features/exams";
+import { useMyExams } from "./use-my-exams";
 
 const TABS = [
 	{ value: "ALL", label: "Todos" },

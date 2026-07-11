@@ -12,9 +12,11 @@ const { uploadMutate, reviewMutate, cancelMutate } = vi.hoisted(() => ({
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
-vi.mock("@/features/exams", () => ({
+vi.mock("@/components/exams/hooks", () => ({
 	useUploadExamResult: () => ({ mutateAsync: uploadMutate }),
 	useReviewExam: () => ({ mutateAsync: reviewMutate }),
+}));
+vi.mock("@/components/exams/use-cancel-exam-scheduling", () => ({
 	useCancelExamScheduling: () => ({
 		mutateAsync: cancelMutate,
 		isPending: false,

@@ -1,8 +1,8 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { examsRepository } from "../repositories/exams.repository";
-import { examRequestKeys } from "./exam-request-keys";
+import { examRequestKeys } from "@/components/exams/hooks";
+import { examsRepository } from "@/features/exams";
 
 export function useExamRequestsByAppointment(appointmentId: string) {
 	return useSuspenseQuery({

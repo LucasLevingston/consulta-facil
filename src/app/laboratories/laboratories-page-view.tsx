@@ -7,8 +7,8 @@ import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense
 import { LabCard } from "@/components/laboratories/lab-card";
 import { LabFilters } from "@/components/laboratories/lab-filters";
 import { Button } from "@/components/ui/button";
-import { useLabFilters } from "@/features/exams";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { useLabFilters } from "./use-lab-filters";
 
 function LaboratoriesPageContent() {
 	const searchParams = useSearchParams();

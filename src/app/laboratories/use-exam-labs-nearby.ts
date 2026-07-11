@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { examsRepository } from "../repositories/exams.repository";
-import { examLabKeys } from "./exam-lab-keys";
+import { examLabKeys } from "@/components/exams/hooks";
+import { examsRepository } from "@/features/exams";
 
 export function useExamLabsNearby(
 	lat: number | null,

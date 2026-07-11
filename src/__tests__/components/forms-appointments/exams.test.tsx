@@ -2,9 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/exams", () => ({
-	useExamRequestsByAppointment: vi.fn(),
-}));
+vi.mock(
+	"@/components/forms/Appointments/use-exam-requests-by-appointment",
+	() => ({
+		useExamRequestsByAppointment: vi.fn(),
+	}),
+);
 vi.mock(
 	"@/components/services/services-card/use-get-professional-services",
 	() => ({
@@ -35,8 +38,8 @@ import { ExamCard } from "@/components/forms/Appointments/ExamCard";
 import { ExamsSection } from "@/components/forms/Appointments/ExamsSection";
 import { ExamsSectionContent } from "@/components/forms/Appointments/ExamsSectionContent";
 import { ServiceSelector } from "@/components/forms/Appointments/ServiceSelector";
+import { useExamRequestsByAppointment } from "@/components/forms/Appointments/use-exam-requests-by-appointment";
 import { useGetProfessionalServices } from "@/components/services/services-card/use-get-professional-services";
-import { useExamRequestsByAppointment } from "@/features/exams";
 
 const mockUseExamRequestsByAppointment = vi.mocked(
 	useExamRequestsByAppointment,

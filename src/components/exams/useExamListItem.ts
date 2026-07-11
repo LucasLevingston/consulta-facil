@@ -2,12 +2,9 @@
 
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { useReviewExam, useUploadExamResult } from "@/components/exams/hooks";
 import type { ExamRequestResponse } from "@/features/exams";
-import {
-	useCancelExamScheduling,
-	useReviewExam,
-	useUploadExamResult,
-} from "@/features/exams";
+import { useCancelExamScheduling } from "./use-cancel-exam-scheduling";
 
 export function useExamListItem(exam: ExamRequestResponse) {
 	const { mutateAsync: upload } = useUploadExamResult();
