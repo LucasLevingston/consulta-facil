@@ -2,11 +2,19 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/notifications", () => ({
+vi.mock("@/components/custom/notifications/use-notifications", () => ({
 	useNotifications: vi.fn(),
+}));
+vi.mock("@/components/custom/notifications/use-unread-count", () => ({
 	useUnreadCount: vi.fn(),
+}));
+vi.mock("@/components/custom/notifications/use-mark-all-as-read", () => ({
 	useMarkAllAsRead: vi.fn(),
+}));
+vi.mock("@/components/custom/notifications/use-accept-invite", () => ({
 	useAcceptInvite: vi.fn(),
+}));
+vi.mock("@/components/custom/notifications/use-decline-invite", () => ({
 	useDeclineInvite: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -14,13 +22,11 @@ vi.mock("sonner", () => ({
 }));
 
 import { NotificationBell } from "@/components/custom/notifications/NotificationBell";
-import {
-	useAcceptInvite,
-	useDeclineInvite,
-	useMarkAllAsRead,
-	useNotifications,
-	useUnreadCount,
-} from "@/features/notifications";
+import { useAcceptInvite } from "@/components/custom/notifications/use-accept-invite";
+import { useDeclineInvite } from "@/components/custom/notifications/use-decline-invite";
+import { useMarkAllAsRead } from "@/components/custom/notifications/use-mark-all-as-read";
+import { useNotifications } from "@/components/custom/notifications/use-notifications";
+import { useUnreadCount } from "@/components/custom/notifications/use-unread-count";
 
 function setup({ count = 0, notifications = [] } = {}) {
 	vi.mocked(useUnreadCount).mockReturnValue({ data: count } as never);

@@ -11,12 +11,10 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import {
-	useMarkAllAsRead,
-	useNotifications,
-	useUnreadCount,
-} from "@/features/notifications";
 import { NotificationItem } from "./NotificationItem";
+import { useMarkAllAsRead } from "./use-mark-all-as-read";
+import { useNotifications } from "./use-notifications";
+import { useUnreadCount } from "./use-unread-count";
 
 export function NotificationBell() {
 	const [open, setOpen] = useState(false);

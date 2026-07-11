@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/notifications", () => ({
+vi.mock("@/components/custom/notifications/use-accept-invite", () => ({
 	useAcceptInvite: vi.fn(),
+}));
+vi.mock("@/components/custom/notifications/use-decline-invite", () => ({
 	useDeclineInvite: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -25,7 +27,8 @@ vi.mock("@/components/ui/button", () => ({
 }));
 
 import { NotificationInviteActions } from "@/components/custom/notifications/NotificationInviteActions";
-import { useAcceptInvite, useDeclineInvite } from "@/features/notifications";
+import { useAcceptInvite } from "@/components/custom/notifications/use-accept-invite";
+import { useDeclineInvite } from "@/components/custom/notifications/use-decline-invite";
 
 const mockAccept = vi.mocked(useAcceptInvite);
 const mockDecline = vi.mocked(useDeclineInvite);
