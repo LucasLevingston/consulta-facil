@@ -10,8 +10,14 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/clinics", () => ({
 	inviteReceptionistSchema: {},
+}));
+vi.mock("@/components/custom/clinic/use-clinic-receptionists", () => ({
 	useClinicReceptionists: vi.fn(),
+}));
+vi.mock("@/components/custom/clinic/use-invite-receptionist", () => ({
 	useInviteReceptionist: vi.fn(),
+}));
+vi.mock("@/components/custom/clinic/use-remove-receptionist", () => ({
 	useRemoveReceptionist: vi.fn(),
 }));
 vi.mock("@/components/custom/clinic/ReceptionistInviteForm", () => ({
@@ -55,11 +61,9 @@ vi.mock("@/components/custom/clinic/ReceptionistList", () => ({
 
 import { toast } from "sonner";
 import { ReceptionistsSection } from "@/components/custom/clinic/ReceptionistsSection";
-import {
-	useClinicReceptionists,
-	useInviteReceptionist,
-	useRemoveReceptionist,
-} from "@/features/clinics";
+import { useClinicReceptionists } from "@/components/custom/clinic/use-clinic-receptionists";
+import { useInviteReceptionist } from "@/components/custom/clinic/use-invite-receptionist";
+import { useRemoveReceptionist } from "@/components/custom/clinic/use-remove-receptionist";
 
 const mockUseClinicReceptionists = vi.mocked(useClinicReceptionists);
 const mockUseInviteReceptionist = vi.mocked(useInviteReceptionist);

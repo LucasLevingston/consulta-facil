@@ -3,12 +3,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { ClinicResponse } from "@/features/clinics";
-import {
-	type CreateClinicInput,
-	createClinicSchema,
-	useCreateClinic,
-	useUpdateClinic,
-} from "@/features/clinics";
+import { type CreateClinicInput, createClinicSchema } from "@/features/clinics";
+import { useCreateClinic } from "./use-create-clinic";
+import { useUpdateClinic } from "./use-update-clinic";
 
 export function useClinicForm(clinic?: ClinicResponse) {
 	const isEdit = !!clinic;

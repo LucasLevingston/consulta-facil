@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { clinicKeys } from "@/components/clinic/hooks";
+import { clinicsRepository } from "@/features/clinics";
 import type { InviteReceptionistInput } from "@/lib/schemas/clinic/invite-receptionist.schema";
-import { clinicsRepository } from "../repositories/clinics.repository";
-import { clinicKeys } from "./clinic-keys";
 
 export function useInviteReceptionist(clinicId: string) {
 	const queryClient = useQueryClient();

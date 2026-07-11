@@ -1,8 +1,8 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { clinicsRepository } from "../repositories/clinics.repository";
-import { clinicKeys } from "./clinic-keys";
+import { clinicKeys } from "@/components/clinic/hooks";
+import { clinicsRepository } from "@/features/clinics";
 
 export function useClinics() {
 	return useSuspenseQuery({

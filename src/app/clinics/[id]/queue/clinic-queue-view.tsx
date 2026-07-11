@@ -5,12 +5,12 @@ import { ptBR } from "date-fns/locale";
 import { Loader2, Users } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
-
+import { useClinicById } from "@/components/clinic/hooks";
 import { CheckInQrSection } from "@/components/clinics/queue/CheckInQrSection";
 import { QueueCard } from "@/components/clinics/queue/QueueCard";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import type { AppointmentResponse } from "@/features/appointments";
-import { useClinicById, useClinicQueue } from "@/features/clinics";
+import { useClinicQueue } from "./use-clinic-queue";
 
 function ClinicQueueContent({ id }: { id: string }) {
 	const { data: clinic } = useClinicById(id);

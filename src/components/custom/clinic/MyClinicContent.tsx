@@ -1,6 +1,6 @@
 "use client";
 
-import { useMyClinic } from "@/features/clinics";
+import { useMyClinic } from "@/components/clinic/hooks";
 import { ClinicForm } from "../../forms/ClinicForm";
 import { ClinicWorkingHoursSection } from "./ClinicWorkingHoursSection";
 import { ReceptionistsSection } from "./ReceptionistsSection";

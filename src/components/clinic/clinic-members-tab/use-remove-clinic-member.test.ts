@@ -18,26 +18,11 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 		removeMember: vi.fn(),
 	},
 }));
-vi.mock("@/lib/api/clinics/clinic-staff.api", () => ({
-	clinicStaffApi: {
-		inviteReceptionist: vi.fn(),
-		removeReceptionist: vi.fn(),
-		getReceptionists: vi.fn(),
-	},
-}));
-vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
-	clinicQueueApi: {
-		getQueue: vi.fn(),
-	},
-}));
 
-import { useInviteReceptionist } from "@/features/clinics/hooks/use-invite-receptionist";
-import { useRemoveClinicMember } from "@/features/clinics/hooks/use-remove-clinic-member";
-import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { useRemoveClinicMember } from "./use-remove-clinic-member";
 
 const mockRemoveMember = vi.mocked(clinicsCrudApi.removeMember);
-const mockInviteReceptionist = vi.mocked(clinicStaffApi.inviteReceptionist);
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -58,22 +43,5 @@ describe("useRemoveClinicMember", () => {
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(mockRemoveMember).toHaveBeenCalledWith("c-1", "p-1");
-	});
-});
-
-describe("useInviteReceptionist", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls inviteReceptionist with clinicId and data", async () => {
-		mockInviteReceptionist.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useInviteReceptionist("c-1"), {
-			wrapper: wrapper(),
-		});
-		const data = { email: "recepcao@clinic.com" };
-		await act(async () => {
-			result.current.mutate(data as never);
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockInviteReceptionist).toHaveBeenCalledWith("c-1", data);
 	});
 });

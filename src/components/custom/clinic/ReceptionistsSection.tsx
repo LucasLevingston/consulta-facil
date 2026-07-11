@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import {
 	type InviteReceptionistInput,
 	inviteReceptionistSchema,
-	useClinicReceptionists,
-	useInviteReceptionist,
-	useRemoveReceptionist,
 } from "@/features/clinics";
 import { ReceptionistInviteForm } from "./ReceptionistInviteForm";
 import { ReceptionistList } from "./ReceptionistList";
 import type { ReceptionistsSectionProps } from "./ReceptionistsSection.types";
+import { useClinicReceptionists } from "./use-clinic-receptionists";
+import { useInviteReceptionist } from "./use-invite-receptionist";
+import { useRemoveReceptionist } from "./use-remove-receptionist";
 
 export function ReceptionistsSection({ clinicId }: ReceptionistsSectionProps) {
 	const { data: receptionists = [], isLoading } =

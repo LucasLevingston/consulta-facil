@@ -1,15 +1,14 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { clinicKeys } from "@/components/clinic/hooks";
+import { clinicsRepository } from "@/features/clinics";
 import type { CreateClinicInput } from "@/lib/schemas/clinic/create-clinic.schema";
-import { clinicsRepository } from "../repositories/clinics.repository";
-import { clinicKeys } from "./clinic-keys";
 
-export function useUpdateClinic() {
+export function useCreateClinic() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({ id, data }: { id: string; data: CreateClinicInput }) =>
-			clinicsRepository.update(id, data),
+		mutationFn: (data: CreateClinicInput) => clinicsRepository.create(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},

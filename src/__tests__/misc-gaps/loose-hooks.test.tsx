@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { useClinicFilterOptions } from "@/features/clinics/hooks/use-clinic-filter-options";
+import { useClinicFilterOptions } from "@/app/clinics/use-clinic-filter-options";
 import { useBreadcrumbs } from "@/hooks/shared/use-breadcrumbs";
 import { useIsMobile } from "@/hooks/shared/use-mobile";
 import { reducer, toast, useToast } from "@/hooks/shared/use-toast";

@@ -7,8 +7,8 @@ import { ClinicsMap } from "@/components/custom/map/ClinicsMap";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Button } from "@/components/ui/button";
-import { useClinicsFilters } from "@/features/clinics";
 import { QueryBoundary } from "@/providers/query-boundary";
+import { useClinicsFilters } from "./use-clinics-filters";
 
 function ClinicsPageContent() {
 	const clinics = useClinicsFilters();

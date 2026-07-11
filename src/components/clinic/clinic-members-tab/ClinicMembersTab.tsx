@@ -4,10 +4,10 @@ import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useRemoveClinicMember } from "@/features/clinics";
 import { ClinicMemberCard } from "./ClinicMemberCard";
 import { ClinicMembersInviteDialog } from "./ClinicMembersInviteDialog";
 import type { ClinicMembersTabProps } from "./ClinicMembersTab.types";
+import { useRemoveClinicMember } from "./use-remove-clinic-member";
 
 export function ClinicMembersTab({
 	clinic,

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/clinics/hooks/use-clinic-form", () => ({
+vi.mock("@/components/forms/use-clinic-form", () => ({
 	useClinicForm: vi.fn(),
 }));
 
@@ -49,7 +49,7 @@ vi.mock("@/components/custom/map/LocationPicker", () => ({
 }));
 
 import { ClinicForm } from "@/components/forms/ClinicForm";
-import { useClinicForm } from "@/features/clinics/hooks/use-clinic-form";
+import { useClinicForm } from "@/components/forms/use-clinic-form";
 
 const mockUseClinicForm = vi.mocked(useClinicForm);
 

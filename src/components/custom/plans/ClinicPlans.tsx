@@ -1,11 +1,11 @@
 "use client";
 
 import { toast } from "sonner";
+import { useMyClinic } from "@/components/clinic/hooks";
 import {
 	useCreateCheckout,
 	useMySubscription,
 } from "@/components/custom/plans/hooks";
-import { useMyClinic } from "@/features/clinics";
 import { FREE_PROFESSIONALS } from "@/utils/constants/free-professionals";
 import { ClinicFreemiumInfo } from "./ClinicFreemiumInfo";
 import { clinicPlans } from "./ClinicPlans.utils";

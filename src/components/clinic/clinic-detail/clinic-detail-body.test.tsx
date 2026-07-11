@@ -49,7 +49,7 @@ vi.mock("@/components/auth/hooks", () => ({
 }));
 
 const mockUseClinicById = vi.fn();
-vi.mock("@/features/clinics", () => ({
+vi.mock("@/components/clinic/hooks", () => ({
 	useClinicById: (id: string) => mockUseClinicById(id),
 }));
 

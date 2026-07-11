@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import type { UseClinicsFiltersReturn } from "@/features/clinics";
+import type { UseClinicsFiltersReturn } from "@/app/clinics/use-clinics-filters";
 
 // Mock do Select (Radix) para simplificar a interação em jsdom, seguindo o
 // padrão já usado em src/__tests__/components/laboratories/lab-filters.test.tsx.

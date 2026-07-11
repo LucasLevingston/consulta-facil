@@ -5,7 +5,7 @@ import ClinicPlans from "@/components/custom/plans/ClinicPlans";
 
 const mutate = vi.fn();
 
-vi.mock("@/features/clinics", () => ({
+vi.mock("@/components/clinic/hooks", () => ({
 	useMyClinic: vi.fn(() => ({ data: [] })),
 }));
 
@@ -20,8 +20,8 @@ vi.mock("@/components/custom/plans/hooks", () => ({
 
 vi.mock("sonner", () => ({ toast: { error: vi.fn() } }));
 
+import { useMyClinic } from "@/components/clinic/hooks";
 import { useMySubscription } from "@/components/custom/plans/hooks";
-import { useMyClinic } from "@/features/clinics";
 
 describe("ClinicPlans", () => {
 	beforeEach(() => {
