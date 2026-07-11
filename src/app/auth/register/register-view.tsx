@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import AuthMobileLogo from "@/components/auth/AuthMobileLogo";
+import { useLogin, useRegister } from "@/components/auth/hooks";
 import { RegisterForm } from "@/components/forms/auth/registerForm";
 import type { RegisterInput } from "@/features/auth";
-import { useLogin, useRegister } from "@/features/auth";
 
 export function RegisterView() {
 	const router = useRouter();

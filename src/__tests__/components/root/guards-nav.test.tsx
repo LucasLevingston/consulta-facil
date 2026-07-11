@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
+}));
+vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(),
 }));
 vi.mock("next/navigation", () => ({
@@ -50,10 +52,11 @@ vi.mock("@/components/logo", () => ({
 import { Home, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { AbacGuard } from "@/components/AbacGuard";
+import { usePermission } from "@/components/auth/hooks";
 import { Header } from "@/components/Header";
 import type { NavItem } from "@/components/Header.nav";
 import { HeaderNav } from "@/components/HeaderNav";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 
 const mockUsePermission = vi.mocked(usePermission);
 const mockUseUserStore = vi.mocked(useUserStore);

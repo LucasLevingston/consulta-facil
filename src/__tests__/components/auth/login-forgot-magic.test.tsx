@@ -25,50 +25,50 @@ const mockLoginMutateAsync = vi.fn();
 const mockForgotPasswordMutateAsync = vi.fn();
 const mockMagicLinkMutateAsync = vi.fn();
 
-vi.mock("@/features/auth", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@/features/auth")>();
-	return {
-		...actual,
-		useLogin: vi.fn(() => ({
-			mutateAsync: mockLoginMutateAsync,
+vi.mock("@/components/auth/hooks", () => ({
+	useLogin: vi.fn(() => ({
+		mutateAsync: mockLoginMutateAsync,
+		isPending: false,
+	})),
+}));
+vi.mock("@/components/auth/use-forgot-password-form", () => ({
+	useForgotPasswordForm: () => {
+		const [sentTo, setSentTo] = useState<string | null>(null);
+		return {
+			sentTo,
+			retry: () => setSentTo(null),
 			isPending: false,
-		})),
-		useForgotPasswordForm: () => {
-			const [sentTo, setSentTo] = useState<string | null>(null);
-			return {
-				sentTo,
-				retry: () => setSentTo(null),
-				isPending: false,
-				handleSubmit: async (email: string) => {
-					try {
-						await mockForgotPasswordMutateAsync(email);
-						setSentTo(email);
-					} catch {
-						const { toast } = await import("sonner");
-						toast.error("Erro ao enviar e-mail. Tente novamente.");
-					}
-				},
-			};
-		},
-		useMagicLinkRequestForm: () => {
-			const [sentTo, setSentTo] = useState<string | null>(null);
-			return {
-				sentTo,
-				retry: () => setSentTo(null),
-				isPending: false,
-				handleSubmit: async (email: string) => {
-					try {
-						await mockMagicLinkMutateAsync(email);
-						setSentTo(email);
-					} catch {
-						const { toast } = await import("sonner");
-						toast.error("Erro ao enviar o link. Tente novamente.");
-					}
-				},
-			};
-		},
-	};
-});
+			handleSubmit: async (email: string) => {
+				try {
+					await mockForgotPasswordMutateAsync(email);
+					setSentTo(email);
+				} catch {
+					const { toast } = await import("sonner");
+					toast.error("Erro ao enviar e-mail. Tente novamente.");
+				}
+			},
+		};
+	},
+}));
+vi.mock("@/components/auth/use-magic-link-request-form", () => ({
+	useMagicLinkRequestForm: () => {
+		const [sentTo, setSentTo] = useState<string | null>(null);
+		return {
+			sentTo,
+			retry: () => setSentTo(null),
+			isPending: false,
+			handleSubmit: async (email: string) => {
+				try {
+					await mockMagicLinkMutateAsync(email);
+					setSentTo(email);
+				} catch {
+					const { toast } = await import("sonner");
+					toast.error("Erro ao enviar o link. Tente novamente.");
+				}
+			},
+		};
+	},
+}));
 
 import { toast } from "sonner";
 import ForgotPasswordContent from "@/components/auth/ForgotPasswordContent";

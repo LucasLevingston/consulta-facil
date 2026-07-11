@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
 }));
 vi.mock("@/components/schedule/use-my-schedule", () => ({
@@ -31,9 +31,9 @@ vi.mock("@/components/schedule/ScheduleEditor", () => ({
 	),
 }));
 
+import { usePermission } from "@/components/auth/hooks";
 import { ScheduleContent } from "@/components/schedule/ScheduleContent";
 import { useMySchedule } from "@/components/schedule/use-my-schedule";
-import { usePermission } from "@/features/auth";
 
 const mockUsePermission = vi.mocked(usePermission);
 const mockUseMySchedule = vi.mocked(useMySchedule);

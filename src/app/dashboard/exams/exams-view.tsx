@@ -2,11 +2,11 @@
 
 import { FlaskConical } from "lucide-react";
 import { useDeferredValue, useState } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { ExamListItem } from "@/components/exams/ExamListItem";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePermission } from "@/features/auth";
 import type { ExamRequestStatus } from "@/features/exams";
 import { useMyExams } from "@/features/exams";
 

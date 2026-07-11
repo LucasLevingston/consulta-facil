@@ -3,9 +3,9 @@
 import Link from "next/link";
 
 import MagicLinkRequestForm from "@/components/forms/auth/MagicLinkRequestForm";
-import { useMagicLinkRequestForm } from "@/features/auth";
 import AuthEmailSentConfirmation from "./AuthEmailSentConfirmation";
 import AuthMobileLogo from "./AuthMobileLogo";
+import { useMagicLinkRequestForm } from "./use-magic-link-request-form";
 
 export default function MagicLinkRequestContent() {
 	const { sentTo, retry, handleSubmit, isPending } = useMagicLinkRequestForm();

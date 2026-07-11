@@ -5,7 +5,7 @@ vi.mock("next/navigation", () => ({
 	useRouter: vi.fn(() => ({ replace: vi.fn() })),
 	useSearchParams: vi.fn(() => ({ get: vi.fn(() => "test-token") })),
 }));
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/use-magic-link-verify", () => ({
 	useMagicLinkVerify: vi.fn(),
 }));
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
@@ -23,8 +23,8 @@ vi.mock("@/components/auth/VerifyStatusIcon", () => ({
 	),
 }));
 
+import { useMagicLinkVerify } from "@/components/auth/use-magic-link-verify";
 import VerifyContent from "@/components/auth/VerifyContent";
-import { useMagicLinkVerify } from "@/features/auth";
 
 const mockVerify = vi.mocked(useMagicLinkVerify);
 

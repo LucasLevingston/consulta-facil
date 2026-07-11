@@ -3,9 +3,9 @@
 import Link from "next/link";
 
 import ForgotPasswordForm from "@/components/forms/auth/ForgotPasswordForm";
-import { useForgotPasswordForm } from "@/features/auth";
 import AuthEmailSentConfirmation from "./AuthEmailSentConfirmation";
 import AuthMobileLogo from "./AuthMobileLogo";
+import { useForgotPasswordForm } from "./use-forgot-password-form";
 
 export default function ForgotPasswordContent() {
 	const { sentTo, retry, handleSubmit, isPending } = useForgotPasswordForm();

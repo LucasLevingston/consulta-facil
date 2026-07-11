@@ -3,6 +3,7 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { TrendingUp } from "lucide-react";
 import { Suspense } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
 import PageHeader from "@/components/custom/page-header";
 import { FinancialContent } from "@/components/financial/FinancialContent";
@@ -12,7 +13,6 @@ import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
-import { usePermission } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function FinancialView() {

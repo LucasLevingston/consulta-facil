@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { useMagicLinkVerify } from "@/features/auth";
+import { useMagicLinkVerify } from "./use-magic-link-verify";
 import { VerifyStatusIcon } from "./VerifyStatusIcon";
 
 export default function VerifyContent() {

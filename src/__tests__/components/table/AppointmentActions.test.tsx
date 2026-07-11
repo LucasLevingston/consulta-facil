@@ -6,8 +6,10 @@ vi.mock("@/features/appointments", () => ({
 	useConfirmAppointment: vi.fn(),
 	useCompleteAppointment: vi.fn(),
 }));
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
+}));
+vi.mock("@/features/auth", () => ({
 	useUserStore: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -20,12 +22,13 @@ vi.mock("@/components/table/AppointmentRateButton", () => ({
 	AppointmentRateButton: () => <div>mock-rate-button</div>,
 }));
 
+import { usePermission } from "@/components/auth/hooks";
 import { AppointmentActions } from "@/components/table/AppointmentActions";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
 } from "@/features/appointments";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 
 const mockConfirm = vi.mocked(useConfirmAppointment);
 const mockComplete = vi.mocked(useCompleteAppointment);

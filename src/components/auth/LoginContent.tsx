@@ -8,8 +8,8 @@ import LoginForm from "@/components/forms/auth/LoginForm";
 import SocialAuthButtons from "@/components/forms/auth/SocialAuthButtons";
 import { env } from "@/env";
 import type { LoginInput } from "@/features/auth";
-import { useLogin } from "@/features/auth";
 import AuthMobileLogo from "./AuthMobileLogo";
+import { useLogin } from "./hooks";
 
 export default function LoginContent() {
 	const router = useRouter();

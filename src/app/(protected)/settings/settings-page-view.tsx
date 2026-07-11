@@ -1,7 +1,7 @@
 "use client";
 
 import { Settings } from "lucide-react";
-
+import { usePermission } from "@/components/auth/hooks";
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import { useApplicationStatus } from "@/components/professionals/hooks";
@@ -12,7 +12,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { usePermission, useUserStore } from "@/features/auth";
+import { useUserStore } from "@/features/auth";
 import { PatientSettingsFields } from "./patient-settings-fields";
 import { ProfessionalSettingsFields } from "./professional-settings-fields";
 

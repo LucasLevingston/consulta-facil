@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/auth", () => ({
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: vi.fn(),
 }));
 vi.mock("@/components/ui/dialog", () => ({
@@ -36,7 +36,7 @@ import { AppointmentScheduleCardBookingActions } from "@/components/appointments
 import { AppointmentScheduleCardInfo } from "@/components/appointments/detail/AppointmentScheduleCardInfo";
 import { AppointmentScheduleCardVideoActions } from "@/components/appointments/detail/AppointmentScheduleCardVideoActions";
 import { useAppointmentScheduleCard } from "@/components/appointments/detail/useAppointmentScheduleCard";
-import { usePermission } from "@/features/auth";
+import { usePermission } from "@/components/auth/hooks";
 
 const baseAppointment = {
 	id: "a-1",

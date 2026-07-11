@@ -2,8 +2,8 @@
 
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
+import { authRepository } from "@/features/auth";
 import { useAuthStore } from "@/store/auth.store";
-import { authRepository } from "../repositories/auth.repository";
 
 export function useMagicLinkVerify() {
 	const setAuth = useAuthStore((s) => s.setAuth);

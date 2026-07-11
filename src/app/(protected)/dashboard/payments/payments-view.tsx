@@ -2,6 +2,7 @@
 
 import { CreditCard, Search } from "lucide-react";
 import { Suspense, useDeferredValue } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { AppointmentPaymentCard } from "@/components/custom/appointment/AppointmentPaymentCard";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
@@ -18,7 +19,6 @@ import {
 	useAllAdminAppointments,
 	useProfessionalAppointments,
 } from "@/features/appointments";
-import { usePermission } from "@/features/auth";
 import { useUrlListState } from "@/hooks/use-url-list-state";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { ITEMS_PER_PAGE as PAGE_SIZE } from "@/utils/constants/pagination";

@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useDeferredValue, useEffect } from "react";
+import { usePermission } from "@/components/auth/hooks";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { usePermission } from "@/features/auth";
 import { useUrlListState } from "@/hooks/use-url-list-state";
 import { UsersListBody } from "./UsersListBody";
 

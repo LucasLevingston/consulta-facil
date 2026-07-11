@@ -43,6 +43,8 @@ const mockUsePermission = vi.fn();
 vi.mock("@/features/auth", () => ({
 	useUserStore: (selector: (s: unknown) => unknown) =>
 		selector(mockUseUserStore()),
+}));
+vi.mock("@/components/auth/hooks", () => ({
 	usePermission: () => mockUsePermission(),
 }));
 

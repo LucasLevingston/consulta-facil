@@ -1,6 +1,6 @@
+import { hasPermission } from "@/features/auth";
 import type { PermissionKey } from "@/lib/permission-key";
 import { useUserStore } from "@/store/useUserStore";
-import { hasPermission } from "../services/auth.service";
 
 type Attrs = Record<string, unknown>;
 
