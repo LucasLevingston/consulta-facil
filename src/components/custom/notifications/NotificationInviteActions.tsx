@@ -3,7 +3,8 @@
 import { Check, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useAcceptInvite, useDeclineInvite } from "@/features/notifications";
+import { useAcceptInvite } from "./use-accept-invite";
+import { useDeclineInvite } from "./use-decline-invite";
 
 interface Props {
 	notificationId: string;

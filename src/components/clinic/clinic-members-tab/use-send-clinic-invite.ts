@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { notificationsRepository } from "../repositories/notifications.repository";
+import { notificationsRepository } from "@/features/notifications";
 
 export function useSendClinicInvite() {
 	return useMutation({

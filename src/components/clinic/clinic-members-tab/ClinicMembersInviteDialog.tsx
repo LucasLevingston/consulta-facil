@@ -12,8 +12,8 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useSendClinicInvite } from "@/features/notifications";
 import { ClinicMemberInviteList } from "./ClinicMemberInviteList";
+import { useSendClinicInvite } from "./use-send-clinic-invite";
 
 interface Props {
 	clinicId: string;

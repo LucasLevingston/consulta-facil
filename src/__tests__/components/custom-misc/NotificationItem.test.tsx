@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/notifications", () => ({
+vi.mock("@/components/custom/notifications/use-accept-invite", () => ({
 	useAcceptInvite: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+}));
+vi.mock("@/components/custom/notifications/use-decline-invite", () => ({
 	useDeclineInvite: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
 }));
 vi.mock("sonner", () => ({

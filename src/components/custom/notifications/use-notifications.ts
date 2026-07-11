@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { notificationsRepository } from "../repositories/notifications.repository";
+import { notificationsRepository } from "@/features/notifications";
 import { notificationKeys } from "./notification-keys";
 
 export function useNotifications() {

@@ -34,7 +34,7 @@ const mockUseSendClinicInvite = vi.fn(() => ({
 	mutate: mockMutateInvite,
 	isPending: false,
 }));
-vi.mock("@/features/notifications", () => ({
+vi.mock("./use-send-clinic-invite", () => ({
 	useSendClinicInvite: () => mockUseSendClinicInvite(),
 }));
 
