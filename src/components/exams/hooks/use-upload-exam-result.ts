@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { examsRepository } from "../repositories/exams.repository";
+import { examsRepository } from "@/features/exams";
 import { examRequestKeys } from "./exam-request-keys";
 
 export function useUploadExamResult() {

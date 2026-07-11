@@ -8,10 +8,14 @@ vi.mock("@hookform/resolvers/zod", () => ({
 	zodResolver: () => async (values: unknown) => ({ errors: {}, values }),
 }));
 
-vi.mock("@/features/exams", () => ({
+vi.mock("@/components/exams/hooks", () => ({
 	useReviewExam: vi.fn(),
 	useUploadExamResult: vi.fn(),
+}));
+vi.mock("@/components/forms/Appointments/use-create-exam-request", () => ({
 	useCreateExamRequest: vi.fn(),
+}));
+vi.mock("@/features/exams", () => ({
 	createExamRequestSchema: {},
 }));
 
@@ -65,14 +69,11 @@ vi.mock("@/components/custom/forms-components/custom-form-field", () => ({
 }));
 
 import { toast } from "sonner";
+import { useReviewExam, useUploadExamResult } from "@/components/exams/hooks";
 import { ExamReviewForm } from "@/components/forms/Appointments/ExamReviewForm";
 import { ExamUploadButton } from "@/components/forms/Appointments/ExamUploadButton";
 import { RequestExamForm } from "@/components/forms/Appointments/RequestExamForm";
-import {
-	useCreateExamRequest,
-	useReviewExam,
-	useUploadExamResult,
-} from "@/features/exams";
+import { useCreateExamRequest } from "@/components/forms/Appointments/use-create-exam-request";
 
 const mockUseReviewExam = vi.mocked(useReviewExam);
 const mockUseUploadExamResult = vi.mocked(useUploadExamResult);

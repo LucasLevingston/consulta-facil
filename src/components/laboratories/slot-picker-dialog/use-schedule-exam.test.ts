@@ -19,12 +19,10 @@ vi.mock("@/lib/api/exam-labs/exam-labs.api", () => ({
 	},
 }));
 
-import { useCancelExamScheduling } from "@/features/exams/hooks/use-cancel-exam-scheduling";
-import { useScheduleExam } from "@/features/exams/hooks/use-schedule-exam";
 import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
+import { useScheduleExam } from "./use-schedule-exam";
 
 const mockScheduleExam = vi.mocked(examLabApi.scheduleExam);
-const mockCancelScheduling = vi.mocked(examLabApi.cancelScheduling);
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -52,21 +50,5 @@ describe("useScheduleExam", () => {
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(mockScheduleExam.mock.calls[0][0]).toEqual(data);
-	});
-});
-
-describe("useCancelExamScheduling", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("chama examLabApi.cancelScheduling com o id do agendamento", async () => {
-		mockCancelScheduling.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useCancelExamScheduling(), {
-			wrapper: wrapper(),
-		});
-		await act(async () => {
-			result.current.mutate("sched-1" as never);
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockCancelScheduling).toHaveBeenCalledWith("sched-1");
 	});
 });

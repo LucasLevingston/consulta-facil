@@ -4,9 +4,9 @@ import { FileText } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { useReviewExam } from "@/components/exams/hooks";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useReviewExam } from "@/features/exams";
 import type { ExamReviewFormProps } from "./ExamReviewForm.types";
 
 export function ExamReviewForm({ examId }: ExamReviewFormProps) {

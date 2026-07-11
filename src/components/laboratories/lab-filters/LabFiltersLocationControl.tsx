@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2, Navigation, X } from "lucide-react";
+import type { UseLabFiltersReturn } from "@/app/laboratories/use-lab-filters";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { UseLabFiltersReturn } from "@/features/exams";
 
 interface Props {
 	hook: UseLabFiltersReturn;

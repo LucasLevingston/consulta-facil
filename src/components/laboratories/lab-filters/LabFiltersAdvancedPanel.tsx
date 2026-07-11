@@ -1,8 +1,8 @@
 "use client";
 
 import { MapPin, Search } from "lucide-react";
+import type { UseLabFiltersReturn } from "@/app/laboratories/use-lab-filters";
 import { Input } from "@/components/ui/input";
-import type { UseLabFiltersReturn } from "@/features/exams";
 
 interface Props {
 	hook: UseLabFiltersReturn;

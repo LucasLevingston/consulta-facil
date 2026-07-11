@@ -1,8 +1,8 @@
 "use client";
 
 import { MapPin, Search, X } from "lucide-react";
+import type { UseLabFiltersReturn } from "@/app/laboratories/use-lab-filters";
 import { Badge } from "@/components/ui/badge";
-import type { UseLabFiltersReturn } from "@/features/exams";
 
 interface Props {
 	hook: UseLabFiltersReturn;

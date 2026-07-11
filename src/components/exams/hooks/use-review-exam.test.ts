@@ -15,12 +15,10 @@ vi.mock("@/lib/api/exam-requests/exam-requests.api", () => ({
 	},
 }));
 
-import { useReviewExam } from "@/features/exams/hooks/use-review-exam";
-import { useUploadExamResult } from "@/features/exams/hooks/use-upload-exam-result";
 import { examRequestApi } from "@/lib/api/exam-requests/exam-requests.api";
+import { useReviewExam } from "./use-review-exam";
 
 const mockReview = vi.mocked(examRequestApi.review);
-const mockUpload = vi.mocked(examRequestApi.upload);
 
 const examRequest = { id: "exam-1", appointmentId: "a-1", status: "PENDING" };
 
@@ -44,24 +42,5 @@ describe("useReviewExam", () => {
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(mockReview).toHaveBeenCalledWith("exam-1", data);
-	});
-});
-
-describe("useUploadExamResult", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls upload with examId and file", async () => {
-		mockUpload.mockResolvedValueOnce(examRequest as never);
-		const { result } = renderHook(() => useUploadExamResult(), {
-			wrapper: wrapper(),
-		});
-		const file = new File(["content"], "result.pdf", {
-			type: "application/pdf",
-		});
-		await act(async () => {
-			result.current.mutate({ examId: "exam-1", file });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockUpload).toHaveBeenCalledWith("exam-1", file);
 	});
 });
