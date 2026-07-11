@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { clinicsRepository } from "../repositories/clinics.repository";
-import { clinicKeys } from "./clinic-keys";
+import { clinicKeys } from "@/components/clinic/hooks";
+import { clinicsRepository } from "@/features/clinics";
 
 export function useClinicReceptionists(clinicId: string) {
 	return useQuery({

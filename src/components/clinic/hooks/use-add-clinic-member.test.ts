@@ -18,50 +18,17 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 		removeMember: vi.fn(),
 	},
 }));
-vi.mock("@/lib/api/clinics/clinic-staff.api", () => ({
-	clinicStaffApi: {
-		inviteReceptionist: vi.fn(),
-		removeReceptionist: vi.fn(),
-		getReceptionists: vi.fn(),
-	},
-}));
-vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
-	clinicQueueApi: {
-		getQueue: vi.fn(),
-	},
-}));
 
-import { useAddClinicMember } from "@/features/clinics/hooks/use-add-clinic-member";
-import { useUpdateClinic } from "@/features/clinics/hooks/use-update-clinic";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { useAddClinicMember } from "./use-add-clinic-member";
 
-const mockUpdate = vi.mocked(clinicsCrudApi.update);
 const mockAddMember = vi.mocked(clinicsCrudApi.addMember);
-
-const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP" };
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
 		createElement(QueryClientProvider, { client: qc }, children);
 }
-
-describe("useUpdateClinic", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("calls update with id and data", async () => {
-		mockUpdate.mockResolvedValueOnce(clinic as never);
-		const { result } = renderHook(() => useUpdateClinic(), {
-			wrapper: wrapper(),
-		});
-		const data = { name: "Clínica Atualizada" };
-		await act(async () => {
-			result.current.mutate({ id: "c-1", data: data as never });
-		});
-		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockUpdate).toHaveBeenCalledWith("c-1", data);
-	});
-});
 
 describe("useAddClinicMember", () => {
 	beforeEach(() => vi.clearAllMocks());

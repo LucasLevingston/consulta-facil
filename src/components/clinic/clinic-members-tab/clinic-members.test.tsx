@@ -48,7 +48,7 @@ const mockUseRemoveClinicMember = vi.fn(() => ({
 	mutate: mockMutateRemove,
 	isPending: false,
 }));
-vi.mock("@/features/clinics", () => ({
+vi.mock("./use-remove-clinic-member", () => ({
 	useRemoveClinicMember: () => mockUseRemoveClinicMember(),
 }));
 

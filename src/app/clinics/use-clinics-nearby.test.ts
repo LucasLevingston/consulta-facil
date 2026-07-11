@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement, Suspense } from "react";
+import { createElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -15,54 +15,18 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 	},
 }));
 
-import { useClinicById } from "@/features/clinics/hooks/use-clinic-by-id";
-import { useClinics } from "@/features/clinics/hooks/use-clinics";
-import { useClinicsNearby } from "@/features/clinics/hooks/use-clinics-nearby";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { useClinicsNearby } from "./use-clinics-nearby";
 
-const mockGetAll = vi.mocked(clinicsCrudApi.getAll);
-const mockGetById = vi.mocked(clinicsCrudApi.getById);
 const mockGetNearby = vi.mocked(clinicsCrudApi.getNearby);
 
 const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP", state: "SP" };
 
-function wrapper(useSuspense = false) {
+function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(
-			QueryClientProvider,
-			{ client: qc },
-			useSuspense
-				? createElement(Suspense, { fallback: null }, children)
-				: children,
-		);
+		createElement(QueryClientProvider, { client: qc }, children);
 }
-
-describe("useClinics", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("fetches clinics list", async () => {
-		mockGetAll.mockResolvedValueOnce([clinic] as never);
-		const { result } = renderHook(() => useClinics(), {
-			wrapper: wrapper(true),
-		});
-		await waitFor(() => expect(result.current).not.toBeNull());
-		expect(result.current.data).toHaveLength(1);
-	});
-});
-
-describe("useClinicById", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("fetches when id provided", async () => {
-		mockGetById.mockResolvedValueOnce(clinic as never);
-		const { result } = renderHook(() => useClinicById("c-1"), {
-			wrapper: wrapper(true),
-		});
-		await waitFor(() => expect(result.current).not.toBeNull());
-		expect(result.current.data).toEqual(clinic);
-	});
-});
 
 describe("useClinicsNearby", () => {
 	beforeEach(() => vi.clearAllMocks());

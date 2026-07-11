@@ -1,10 +1,10 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { clinicsRepository } from "../repositories/clinics.repository";
+import { clinicsRepository } from "@/features/clinics";
 import { clinicKeys } from "./clinic-keys";
 
-export function useRemoveClinicMember() {
+export function useAddClinicMember() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: ({
@@ -13,7 +13,7 @@ export function useRemoveClinicMember() {
 		}: {
 			clinicId: string;
 			professionalProfileId: string;
-		}) => clinicsRepository.removeMember(clinicId, professionalProfileId),
+		}) => clinicsRepository.addMember(clinicId, professionalProfileId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: clinicKeys.all });
 		},

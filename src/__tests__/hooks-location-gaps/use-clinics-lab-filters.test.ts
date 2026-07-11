@@ -4,10 +4,10 @@ import { createElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mocks das queries internas de clinics
-vi.mock("@/features/clinics/hooks/use-clinics", () => ({
+vi.mock("@/app/clinics/use-clinics", () => ({
 	useClinics: vi.fn(),
 }));
-vi.mock("@/features/clinics/hooks/use-clinics-nearby", () => ({
+vi.mock("@/app/clinics/use-clinics-nearby", () => ({
 	useClinicsNearby: vi.fn(),
 }));
 
@@ -19,12 +19,12 @@ vi.mock("@/app/laboratories/use-exam-labs-nearby", () => ({
 	useExamLabsNearby: vi.fn(),
 }));
 
+import { useClinics } from "@/app/clinics/use-clinics";
+import { useClinicsFilters } from "@/app/clinics/use-clinics-filters";
+import { useClinicsNearby } from "@/app/clinics/use-clinics-nearby";
 import { useExamLabs } from "@/app/laboratories/use-exam-labs";
 import { useExamLabsNearby } from "@/app/laboratories/use-exam-labs-nearby";
 import { useLabFilters } from "@/app/laboratories/use-lab-filters";
-import { useClinics } from "@/features/clinics/hooks/use-clinics";
-import { useClinicsFilters } from "@/features/clinics/hooks/use-clinics-filters";
-import { useClinicsNearby } from "@/features/clinics/hooks/use-clinics-nearby";
 
 const mockUseClinics = vi.mocked(useClinics);
 const mockUseClinicsNearby = vi.mocked(useClinicsNearby);

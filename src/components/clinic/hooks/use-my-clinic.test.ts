@@ -16,8 +16,8 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 	clinicsCrudApi: { getMy: vi.fn() },
 }));
 
-import { useMyClinic } from "@/features/clinics/hooks/use-my-clinic";
 import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { useMyClinic } from "./use-my-clinic";
 
 const mockGetMy = vi.mocked(clinicsCrudApi.getMy);
 

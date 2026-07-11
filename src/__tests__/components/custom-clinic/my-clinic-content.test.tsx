@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/clinics", () => ({
+vi.mock("@/components/clinic/hooks", () => ({
 	useMyClinic: vi.fn(),
 }));
 vi.mock("@/components/forms/ClinicForm", () => ({
@@ -20,8 +20,8 @@ vi.mock("@/components/custom/clinic/ReceptionistsSection", () => ({
 	),
 }));
 
+import { useMyClinic } from "@/components/clinic/hooks";
 import { MyClinicContent } from "@/components/custom/clinic/MyClinicContent";
-import { useMyClinic } from "@/features/clinics";
 
 const mockUseMyClinic = vi.mocked(useMyClinic);
 

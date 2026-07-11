@@ -13,7 +13,11 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/features/clinics", () => ({
 	createClinicSchema: {},
+}));
+vi.mock("@/components/forms/use-create-clinic", () => ({
 	useCreateClinic: vi.fn(),
+}));
+vi.mock("@/components/forms/use-update-clinic", () => ({
 	useUpdateClinic: vi.fn(),
 }));
 vi.mock("@/components/dependents/use-create-dependent", () => ({
@@ -27,8 +31,9 @@ import { toast } from "sonner";
 import { useCreateDependent } from "@/components/dependents/use-create-dependent";
 import { useDependentForm } from "@/components/dependents/use-dependent-form";
 import { useUpdateDependent } from "@/components/dependents/use-update-dependent";
-import { useCreateClinic, useUpdateClinic } from "@/features/clinics";
-import { useClinicForm } from "@/features/clinics/hooks/use-clinic-form";
+import { useClinicForm } from "@/components/forms/use-clinic-form";
+import { useCreateClinic } from "@/components/forms/use-create-clinic";
+import { useUpdateClinic } from "@/components/forms/use-update-clinic";
 
 const mockCreateClinic = vi.mocked(useCreateClinic);
 const mockUpdateClinic = vi.mocked(useUpdateClinic);

@@ -18,23 +18,13 @@ vi.mock("@/lib/api/clinics/clinics.api", () => ({
 		removeMember: vi.fn(),
 	},
 }));
-vi.mock("@/lib/api/clinics/clinic-staff.api", () => ({
-	clinicStaffApi: {
-		inviteReceptionist: vi.fn(),
-		removeReceptionist: vi.fn(),
-		getReceptionists: vi.fn(),
-	},
-}));
-vi.mock("@/lib/api/clinics/clinic-queue.api", () => ({
-	clinicQueueApi: {
-		getQueue: vi.fn(),
-	},
-}));
 
-import { useRemoveReceptionist } from "@/features/clinics/hooks/use-remove-receptionist";
-import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
+import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { useCreateClinic } from "./use-create-clinic";
 
-const mockRemoveReceptionist = vi.mocked(clinicStaffApi.removeReceptionist);
+const mockCreate = vi.mocked(clinicsCrudApi.create);
+
+const clinic = { id: "c-1", name: "Clínica Saúde", city: "SP" };
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -42,18 +32,19 @@ function wrapper() {
 		createElement(QueryClientProvider, { client: qc }, children);
 }
 
-describe("useRemoveReceptionist", () => {
+describe("useCreateClinic", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("calls removeReceptionist with clinicId and receptionistId", async () => {
-		mockRemoveReceptionist.mockResolvedValueOnce(undefined as never);
-		const { result } = renderHook(() => useRemoveReceptionist("c-1"), {
+	it("calls create with data", async () => {
+		mockCreate.mockResolvedValueOnce(clinic as never);
+		const { result } = renderHook(() => useCreateClinic(), {
 			wrapper: wrapper(),
 		});
+		const data = { name: "Nova Clínica", city: "RJ" };
 		await act(async () => {
-			result.current.mutate("r-1");
+			result.current.mutate(data as never);
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
-		expect(mockRemoveReceptionist).toHaveBeenCalledWith("c-1", "r-1");
+		expect(mockCreate).toHaveBeenCalledWith(data);
 	});
 });
