@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { appointmentKeys } from "@/features/appointments";
+import { appointmentKeys } from "@/components/appointments/hooks";
 import { videoRepository } from "@/features/video";
 
 export function useCreateRoom() {

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/detail/use-generate-meet-link", () => ({
 	useGenerateMeetLink: vi.fn(),
 }));
 vi.mock("@/components/appointments/detail/use-create-room", () => ({
@@ -13,8 +13,8 @@ vi.mock("@/components/appointments/detail/use-create-room", () => ({
 
 import { toast } from "sonner";
 import { useCreateRoom } from "@/components/appointments/detail/use-create-room";
+import { useGenerateMeetLink } from "@/components/appointments/detail/use-generate-meet-link";
 import { useAppointmentScheduleCard } from "@/components/appointments/detail/useAppointmentScheduleCard";
-import { useGenerateMeetLink } from "@/features/appointments";
 
 describe("useAppointmentScheduleCard", () => {
 	function setup(opts?: {

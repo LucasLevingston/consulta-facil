@@ -30,7 +30,7 @@ vi.mock("@/components/ui/select", () => ({
 }));
 
 const mockUseClinicAppointments = vi.fn();
-vi.mock("@/features/appointments", () => ({
+vi.mock("./use-clinic-appointments", () => ({
 	useClinicAppointments: (ids: string[]) => mockUseClinicAppointments(ids),
 }));
 

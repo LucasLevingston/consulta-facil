@@ -10,11 +10,9 @@ import CustomFormField, {
 } from "@/components/custom/forms-components/custom-form-field";
 import { CustomSubmitButton } from "@/components/custom/forms-components/custom-submit-button";
 import { Form } from "@/components/ui/form";
-import {
-	cancelAppointmentSchema,
-	useCancelAppointment,
-} from "@/features/appointments";
+import { cancelAppointmentSchema } from "@/features/appointments";
 import type { CancelAppointmentFormProps } from "./CancelAppointmentForm.types";
+import { useCancelAppointment } from "./use-cancel-appointment";
 
 export function CancelAppointmentForm({
 	appointment,

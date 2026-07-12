@@ -7,9 +7,10 @@ import { ProntuarioReadView } from "@/components/appointments/detail/ProntuarioR
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProntuarioInput } from "@/features/appointments";
-import { useProntuario, useSaveProntuario } from "@/features/appointments";
 import { ProntuarioEditForm } from "./ProntuarioEditForm";
 import type { ProntuarioSectionProps } from "./ProntuarioSection.types";
+import { useProntuario } from "./use-prontuario";
+import { useSaveProntuario } from "./use-save-prontuario";
 
 export function ProntuarioSection({
 	appointmentId,

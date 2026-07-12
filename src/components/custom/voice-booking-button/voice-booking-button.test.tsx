@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mocks dos hooks usados internamente por VoiceBookingButton
 const mockUseVoiceBooking = vi.hoisted(() => vi.fn());
-vi.mock("@/features/appointments", () => ({
+vi.mock("./use-voice-booking", () => ({
 	useVoiceBooking: mockUseVoiceBooking,
 }));
 vi.mock("./voice-booking-result", () => ({

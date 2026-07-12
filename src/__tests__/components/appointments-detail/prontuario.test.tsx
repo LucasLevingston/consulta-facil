@@ -5,8 +5,10 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/detail/use-prontuario", () => ({
 	useProntuario: vi.fn(),
+}));
+vi.mock("@/components/appointments/detail/use-save-prontuario", () => ({
 	useSaveProntuario: vi.fn(),
 }));
 
@@ -15,7 +17,8 @@ import { MedicalRecordField } from "@/components/appointments/detail/MedicalReco
 import { ProntuarioEditForm } from "@/components/appointments/detail/ProntuarioEditForm";
 import { ProntuarioReadView } from "@/components/appointments/detail/ProntuarioReadView";
 import { ProntuarioSection } from "@/components/appointments/detail/ProntuarioSection";
-import { useProntuario, useSaveProntuario } from "@/features/appointments";
+import { useProntuario } from "@/components/appointments/detail/use-prontuario";
+import { useSaveProntuario } from "@/components/appointments/detail/use-save-prontuario";
 
 describe("MedicalRecordField", () => {
 	it("renderiza o rótulo e o valor", () => {

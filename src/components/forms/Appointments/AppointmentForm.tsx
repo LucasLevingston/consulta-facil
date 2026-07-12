@@ -3,7 +3,6 @@
 import { Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useAppointmentFormSetup } from "@/features/appointments";
 import { AppointmentCancelStep } from "./AppointmentCancelStep";
 import type { AppointmentFormProps } from "./AppointmentForm.types";
 import { ServiceSelector } from "./ServiceSelector";
@@ -11,6 +10,7 @@ import { DateTimeStep } from "./steps/DateTimeStep";
 import { DetailsStep } from "./steps/DetailsStep";
 import { ModalityStep } from "./steps/ModalityStep";
 import { ProfessionalStep } from "./steps/ProfessionalStep";
+import { useAppointmentFormSetup } from "./use-appointment-form-setup";
 
 export const AppointmentForm = ({
 	type = "create",

@@ -2,11 +2,11 @@
 
 import { CalendarDays, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useClinicAppointments } from "@/features/appointments";
 import { ALL } from "@/utils/constants/filter-sentinels";
 import { ClinicAppointmentCard } from "./ClinicAppointmentCard";
 import { ClinicAppointmentsFilterBar } from "./ClinicAppointmentsFilterBar";
 import type { ClinicAppointmentsTabProps } from "./ClinicAppointmentsTab.types";
+import { useClinicAppointments } from "./use-clinic-appointments";
 
 export function ClinicAppointmentsTab({
 	clinic,

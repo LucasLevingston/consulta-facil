@@ -3,16 +3,16 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { TrendingUp } from "lucide-react";
 import { Suspense } from "react";
+import {
+	useAllAdminAppointments,
+	useProfessionalAppointments,
+} from "@/components/appointments/hooks";
 import { usePermission } from "@/components/auth/hooks";
 import { ErrorBoundary } from "@/components/custom/error-boundary/error-boundary";
 import PageHeader from "@/components/custom/page-header";
 import { FinancialContent } from "@/components/financial/FinancialContent";
 import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-	useAllAdminAppointments,
-	useProfessionalAppointments,
-} from "@/features/appointments";
 import { QueryBoundary } from "@/providers/query-boundary";
 
 export function FinancialView() {

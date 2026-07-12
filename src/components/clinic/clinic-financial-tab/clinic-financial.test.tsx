@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 const mockUseClinicFinancialStats = vi.fn();
-vi.mock("@/features/appointments", () => ({
+vi.mock("./use-clinic-financial-stats", () => ({
 	useClinicFinancialStats: (members: unknown[]) =>
 		mockUseClinicFinancialStats(members),
 }));

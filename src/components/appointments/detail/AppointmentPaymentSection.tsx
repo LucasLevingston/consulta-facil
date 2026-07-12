@@ -3,8 +3,8 @@
 import { CreditCard } from "lucide-react";
 import { CustomButton } from "@/components/custom/custom-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCreatePayment } from "@/features/appointments";
 import type { AppointmentPaymentSectionProps } from "./AppointmentPaymentSection.types";
+import { useCreatePayment } from "./use-create-payment";
 
 export function AppointmentPaymentSection({
 	appointment,

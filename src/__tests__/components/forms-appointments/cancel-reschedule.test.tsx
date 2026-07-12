@@ -12,10 +12,14 @@ vi.mock("@hookform/resolvers/zod", () => ({
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 
 vi.mock("@/features/appointments", () => ({
-	useCancelAppointment: vi.fn(),
-	useRescheduleAppointment: vi.fn(),
 	cancelAppointmentSchema: {},
 	rescheduleAppointmentSchema: {},
+}));
+vi.mock("@/components/forms/Appointments/use-cancel-appointment", () => ({
+	useCancelAppointment: vi.fn(),
+}));
+vi.mock("@/components/forms/Appointments/use-reschedule-appointment", () => ({
+	useRescheduleAppointment: vi.fn(),
 }));
 
 // Mocka o campo de formulário genérico usado pelos dois componentes, ligando os
@@ -73,10 +77,8 @@ vi.mock("@/components/custom/forms-components/custom-form-field", () => ({
 import { toast } from "sonner";
 import { CancelAppointmentForm } from "@/components/forms/Appointments/CancelAppointmentForm";
 import { RescheduleAppointmentForm } from "@/components/forms/Appointments/RescheduleAppointmentForm";
-import {
-	useCancelAppointment,
-	useRescheduleAppointment,
-} from "@/features/appointments";
+import { useCancelAppointment } from "@/components/forms/Appointments/use-cancel-appointment";
+import { useRescheduleAppointment } from "@/components/forms/Appointments/use-reschedule-appointment";
 
 const mockUseCancelAppointment = vi.mocked(useCancelAppointment);
 const mockUseRescheduleAppointment = vi.mocked(useRescheduleAppointment);

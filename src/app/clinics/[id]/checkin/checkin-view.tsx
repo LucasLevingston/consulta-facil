@@ -4,11 +4,10 @@ import { format, isToday } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarCheck, Clock, Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
-
+import { usePatientAppointments } from "@/components/appointments/hooks";
 import { AppointmentCheckInCard } from "@/components/clinics/checkin/AppointmentCheckInCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePatientAppointments } from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
 
 export function CheckInView() {

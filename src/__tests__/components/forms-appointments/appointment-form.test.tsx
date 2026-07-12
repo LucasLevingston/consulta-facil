@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 // Mocka o hook principal que compõe todo o wizard de agendamento.
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/forms/Appointments/use-appointment-form-setup", () => ({
 	useAppointmentFormSetup: vi.fn(),
 }));
 
@@ -31,7 +31,7 @@ vi.mock("@/components/forms/Appointments/steps/DetailsStep", () => ({
 }));
 
 import { AppointmentForm } from "@/components/forms/Appointments/AppointmentForm";
-import { useAppointmentFormSetup } from "@/features/appointments";
+import { useAppointmentFormSetup } from "@/components/forms/Appointments/use-appointment-form-setup";
 
 const mockUseAppointmentFormSetup = vi.mocked(useAppointmentFormSetup);
 

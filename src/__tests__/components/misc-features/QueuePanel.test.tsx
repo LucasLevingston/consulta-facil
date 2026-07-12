@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/reception/use-queue", () => ({
 	useQueue: vi.fn(),
+}));
+vi.mock("@/components/reception/use-call-patient", () => ({
 	useCallPatient: vi.fn(() => ({
 		mutateAsync: vi.fn().mockResolvedValue(undefined),
 		isPending: false,
@@ -14,7 +16,7 @@ vi.mock("sonner", () => ({
 }));
 
 import { QueuePanel } from "@/components/reception/QueuePanel";
-import { useQueue } from "@/features/appointments";
+import { useQueue } from "@/components/reception/use-queue";
 
 const mockUseQueue = vi.mocked(useQueue);
 

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/reception/use-call-patient", () => ({
 	useCallPatient: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -11,7 +11,7 @@ vi.mock("sonner", () => ({
 
 import { toast } from "sonner";
 import { QueueCard } from "@/components/reception/QueueCard";
-import { useCallPatient } from "@/features/appointments";
+import { useCallPatient } from "@/components/reception/use-call-patient";
 
 const mockUseCallPatient = vi.mocked(useCallPatient);
 

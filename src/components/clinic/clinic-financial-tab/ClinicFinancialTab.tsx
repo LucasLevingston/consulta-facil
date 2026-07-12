@@ -1,10 +1,10 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useClinicFinancialStats } from "@/features/appointments";
 import { ClinicFinancialSummaryCards } from "./ClinicFinancialSummaryCards";
 import type { ClinicFinancialTabProps } from "./ClinicFinancialTab.types";
 import { ClinicMemberUsageCard } from "./ClinicMemberUsageCard";
+import { useClinicFinancialStats } from "./use-clinic-financial-stats";
 
 export function ClinicFinancialTab({ clinic }: ClinicFinancialTabProps) {
 	const members = clinic.members ?? [];

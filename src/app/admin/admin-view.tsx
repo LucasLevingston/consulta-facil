@@ -6,9 +6,9 @@ import { Suspense, useEffect } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
 import { PendingApplications } from "@/components/admin/PendingApplications";
+import { useProfessionalAppointments } from "@/components/appointments/hooks";
 import { usePermission } from "@/components/auth/hooks";
 import PageHeader from "@/components/custom/page-header";
-import { useProfessionalAppointments } from "@/features/appointments";
 import { useAuthStore, useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 

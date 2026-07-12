@@ -5,11 +5,13 @@ import { ptBR } from "date-fns/locale";
 import { CheckCircle2, Loader2, Stethoscope } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
+import {
+	useCheckInByQr,
+	useCheckInToken,
+} from "@/components/appointments/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useCheckInByQr, useCheckInToken } from "@/features/appointments";
 import { SPECIALTY_LABELS } from "@/utils/constants/profession-specialties";
 import type { AppointmentCheckInCardProps } from "./AppointmentCheckInCard.types";
 
