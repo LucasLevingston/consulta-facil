@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	useConfirmAppointment: vi.fn(),
 	useCompleteAppointment: vi.fn(),
 }));
@@ -22,12 +22,12 @@ vi.mock("@/components/table/AppointmentRateButton", () => ({
 	AppointmentRateButton: () => <div>mock-rate-button</div>,
 }));
 
-import { usePermission } from "@/components/auth/hooks";
-import { AppointmentActions } from "@/components/table/AppointmentActions";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
-} from "@/features/appointments";
+} from "@/components/appointments/hooks";
+import { usePermission } from "@/components/auth/hooks";
+import { AppointmentActions } from "@/components/table/AppointmentActions";
 import { useUserStore } from "@/features/auth";
 
 const mockConfirm = vi.mocked(useConfirmAppointment);

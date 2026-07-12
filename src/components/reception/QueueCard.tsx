@@ -6,8 +6,8 @@ import { PhoneCall } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCallPatient } from "@/features/appointments";
 import type { QueueCardProps } from "./QueueCard.types";
+import { useCallPatient } from "./use-call-patient";
 
 export function QueueCard({ appointment }: QueueCardProps) {
 	const { mutateAsync: call, isPending } = useCallPatient();

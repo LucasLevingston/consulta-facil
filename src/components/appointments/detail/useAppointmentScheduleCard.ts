@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { useGenerateMeetLink } from "@/features/appointments";
 import { useCreateRoom } from "./use-create-room";
+import { useGenerateMeetLink } from "./use-generate-meet-link";
 
 export function useAppointmentScheduleCard(
 	appointmentId: string,

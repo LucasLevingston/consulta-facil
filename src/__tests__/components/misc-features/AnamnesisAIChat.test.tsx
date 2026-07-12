@@ -2,12 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/anamnesis/use-anamnesis-chat", () => ({
 	useAnamnesisChat: vi.fn(),
 }));
 
 import { AnamnesisAIChat } from "@/components/anamnesis/AnamnesisAIChat";
-import { useAnamnesisChat } from "@/features/appointments";
+import { useAnamnesisChat } from "@/components/anamnesis/use-anamnesis-chat";
 
 const mockUseAnamnesisChat = vi.mocked(useAnamnesisChat);
 

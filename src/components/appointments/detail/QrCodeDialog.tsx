@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useCheckInToken } from "@/features/appointments";
+import { useCheckInToken } from "@/components/appointments/hooks";
 import type { QrCodeDialogProps } from "./QrCodeDialog.types";
 
 export function QrCodeDialog({ appointmentId }: QrCodeDialogProps) {

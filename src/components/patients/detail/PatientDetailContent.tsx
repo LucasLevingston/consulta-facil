@@ -3,11 +3,11 @@
 import { ArrowLeft, UserRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { usePatientAppointments } from "@/components/appointments/hooks";
 import { PatientScoreCard } from "@/components/patients/detail/PatientScoreCard";
 import { useMedicalRecords } from "@/components/patients/hooks";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePatientAppointments } from "@/features/appointments";
 import type { PatientDetailContentProps } from "./PatientDetailContent.types";
 import { PatientDetailTabs } from "./PatientDetailTabs";
 import { PatientProfileCard } from "./PatientProfileCard";

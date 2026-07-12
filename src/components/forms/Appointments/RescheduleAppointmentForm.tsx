@@ -12,9 +12,9 @@ import { Form } from "@/components/ui/form";
 import {
 	type RescheduleAppointmentInput,
 	rescheduleAppointmentSchema,
-	useRescheduleAppointment,
 } from "@/features/appointments";
 import type { RescheduleAppointmentFormProps } from "./RescheduleAppointmentForm.types";
+import { useRescheduleAppointment } from "./use-reschedule-appointment";
 
 export function RescheduleAppointmentForm({
 	appointment,

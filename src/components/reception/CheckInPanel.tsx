@@ -3,10 +3,10 @@
 import { QrCode } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { useCheckInByQr } from "@/components/appointments/hooks";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useCheckInByQr } from "@/features/appointments";
 
 export function CheckInPanel() {
 	const { mutateAsync: checkIn, isPending } = useCheckInByQr();

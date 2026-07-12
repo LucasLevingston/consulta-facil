@@ -2,8 +2,8 @@
 
 import { Loader2, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useVoiceBooking } from "@/features/appointments";
 import { cn } from "@/lib/utils/cn";
+import { useVoiceBooking } from "./use-voice-booking";
 import type { VoiceBookingButtonProps } from "./voice-booking-button.types";
 import { VoiceBookingResultCard } from "./voice-booking-result";
 

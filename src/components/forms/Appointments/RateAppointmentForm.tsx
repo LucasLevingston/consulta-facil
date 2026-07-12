@@ -5,9 +5,9 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useRateAppointment } from "@/features/appointments";
 import type { RateAppointmentFormProps } from "./RateAppointmentForm.types";
 import { StarRating } from "./StarRating";
+import { useRateAppointment } from "./use-rate-appointment";
 
 export function RateAppointmentForm({
 	appointment,

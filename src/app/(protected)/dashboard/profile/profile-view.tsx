@@ -1,5 +1,9 @@
 "use client";
 
+import {
+	usePatientAppointments,
+	useProfessionalAppointments,
+} from "@/components/appointments/hooks";
 import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { ProfileAppointmentStats } from "@/components/profile/profile-appointment-stats";
 import { ProfileHero } from "@/components/profile/profile-hero";
@@ -8,10 +12,6 @@ import { ProfilePatientMedicalInfo } from "@/components/profile/profile-patient-
 import { ProfilePersonalInfo } from "@/components/profile/profile-personal-info";
 import { ProfileStatsBanner } from "@/components/profile/profile-stats-banner";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-	usePatientAppointments,
-	useProfessionalAppointments,
-} from "@/features/appointments";
 import { useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useMyProfile } from "./use-my-profile";

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	useCheckInByQr: vi.fn(),
 }));
 vi.mock("sonner", () => ({
@@ -10,8 +10,8 @@ vi.mock("sonner", () => ({
 }));
 
 import { toast } from "sonner";
+import { useCheckInByQr } from "@/components/appointments/hooks";
 import { CheckInPanel } from "@/components/reception/CheckInPanel";
-import { useCheckInByQr } from "@/features/appointments";
 
 const mockUseCheckInByQr = vi.mocked(useCheckInByQr);
 

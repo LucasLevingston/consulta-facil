@@ -37,8 +37,8 @@ import { ProfessionalFormField } from "@/components/forms/Appointments/steps/Pro
 import { ProfessionalOption } from "@/components/forms/Appointments/steps/ProfessionalOption";
 import { ProfessionalStep } from "@/components/forms/Appointments/steps/ProfessionalStep";
 import { SelectedProfessionalCard } from "@/components/forms/Appointments/steps/SelectedProfessionalCard";
+import type { UseAppointmentFormSetupReturn } from "@/components/forms/Appointments/use-appointment-form-setup";
 import { Command, CommandGroup, CommandList } from "@/components/ui/command";
-import type { UseAppointmentFormSetupReturn } from "@/features/appointments/hooks/use-appointment-form-setup";
 
 function makeProfessional(
 	overrides: Partial<ProfessionalResponse> = {},

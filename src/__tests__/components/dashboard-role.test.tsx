@@ -11,7 +11,7 @@ vi.mock("next/link", () => ({
 	}) => <a href={href}>{children}</a>,
 }));
 vi.mock("@/features/auth", () => ({ useUserStore: vi.fn() }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	usePatientAppointments: vi.fn(),
 	useProfessionalAppointments: vi.fn(),
 	useConfirmAppointment: vi.fn(),
@@ -35,14 +35,14 @@ vi.mock("@/components/custom/dashboard/stat-card", () => ({
 	),
 }));
 
-import { Dashboard } from "@/components/custom/dashboard/Dashboard";
-import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import {
 	useCompleteAppointment,
 	useConfirmAppointment,
 	usePatientAppointments,
 	useProfessionalAppointments,
-} from "@/features/appointments";
+} from "@/components/appointments/hooks";
+import { Dashboard } from "@/components/custom/dashboard/Dashboard";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { useUserStore } from "@/features/auth";
 
 const emptyPage = { data: { content: [], totalPages: 0, totalElements: 0 } };

@@ -5,11 +5,12 @@ import { toast } from "sonner";
 import { AnamnesisReadView } from "@/components/appointments/detail/AnamnesisReadView";
 import { Card, CardContent } from "@/components/ui/card";
 import type { AnamnesisInput } from "@/features/appointments";
-import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
 import { AnamnesisAIChatDialog } from "./AnamnesisAIChatDialog";
 import { AnamnesisEditForm } from "./AnamnesisEditForm";
 import type { AnamnesisSectionProps } from "./AnamnesisSection.types";
 import { AnamnesisSectionHeader } from "./AnamnesisSectionHeader";
+import { useAnamnesis } from "./use-anamnesis";
+import { useSaveAnamnesis } from "./use-save-anamnesis";
 
 export function AnamnesisSection({
 	appointmentId,

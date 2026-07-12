@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react";
 import { createElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	usePatientAppointments: vi.fn(() => ({ data: undefined })),
 	useProfessionalAppointments: vi.fn(() => ({ data: undefined })),
 	useConfirmAppointment: vi.fn(() => ({ mutateAsync: vi.fn() })),
@@ -16,11 +16,11 @@ vi.mock("@/components/professionals/hooks", () => ({
 	useMyProfessionalProfile: vi.fn(() => ({ data: undefined })),
 }));
 
-import { useDashboardData } from "@/components/custom/dashboard/useDashboardData";
 import {
 	usePatientAppointments,
 	useProfessionalAppointments,
-} from "@/features/appointments";
+} from "@/components/appointments/hooks";
+import { useDashboardData } from "@/components/custom/dashboard/useDashboardData";
 
 const mockPatient = vi.mocked(usePatientAppointments);
 const mockProfessional = vi.mocked(useProfessionalAppointments);

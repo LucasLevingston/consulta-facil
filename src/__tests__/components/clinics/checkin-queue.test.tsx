@@ -6,16 +6,19 @@ import type { AppointmentResponse } from "@/features/appointments";
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	useCheckInByQr: vi.fn(),
 	useCheckInToken: vi.fn(),
 }));
 
 import { toast } from "sonner";
+import {
+	useCheckInByQr,
+	useCheckInToken,
+} from "@/components/appointments/hooks";
 import { AppointmentCheckInCard } from "@/components/clinics/checkin/AppointmentCheckInCard";
 import { CheckInQrSection } from "@/components/clinics/queue/CheckInQrSection";
 import { QueueCard } from "@/components/clinics/queue/QueueCard";
-import { useCheckInByQr, useCheckInToken } from "@/features/appointments";
 
 const mockUseCheckInByQr = vi.mocked(useCheckInByQr);
 const mockUseCheckInToken = vi.mocked(useCheckInToken);

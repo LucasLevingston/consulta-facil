@@ -24,8 +24,10 @@ vi.mock("@/components/ui/dialog", () => ({
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/detail/use-anamnesis", () => ({
 	useAnamnesis: vi.fn(),
+}));
+vi.mock("@/components/appointments/detail/use-save-anamnesis", () => ({
 	useSaveAnamnesis: vi.fn(),
 }));
 
@@ -35,7 +37,8 @@ import { AnamnesisEditForm } from "@/components/appointments/detail/AnamnesisEdi
 import { AnamnesisReadView } from "@/components/appointments/detail/AnamnesisReadView";
 import { AnamnesisSection } from "@/components/appointments/detail/AnamnesisSection";
 import { AnamnesisSectionHeader } from "@/components/appointments/detail/AnamnesisSectionHeader";
-import { useAnamnesis, useSaveAnamnesis } from "@/features/appointments";
+import { useAnamnesis } from "@/components/appointments/detail/use-anamnesis";
+import { useSaveAnamnesis } from "@/components/appointments/detail/use-save-anamnesis";
 
 describe("AnamnesisAIChatDialog", () => {
 	it("renderiza o título e a descrição quando aberto", () => {

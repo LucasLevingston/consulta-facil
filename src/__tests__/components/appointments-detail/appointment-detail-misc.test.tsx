@@ -11,8 +11,10 @@ vi.mock("next/link", () => ({
 		children: React.ReactNode;
 	}) => <a href={href}>{children}</a>,
 }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/detail/use-create-payment", () => ({
 	useCreatePayment: vi.fn(),
+}));
+vi.mock("@/components/appointments/hooks", () => ({
 	useCheckInToken: vi.fn(),
 }));
 vi.mock("@/components/forms/Appointments/RateAppointmentForm", () => ({
@@ -41,7 +43,8 @@ import { AppointmentProfessionalCard } from "@/components/appointments/detail/Ap
 import { AppointmentRatingSection } from "@/components/appointments/detail/AppointmentRatingSection";
 import { QrCodeDialog } from "@/components/appointments/detail/QrCodeDialog";
 import { StarDisplay } from "@/components/appointments/detail/StarDisplay";
-import { useCheckInToken, useCreatePayment } from "@/features/appointments";
+import { useCreatePayment } from "@/components/appointments/detail/use-create-payment";
+import { useCheckInToken } from "@/components/appointments/hooks";
 
 const baseAppointment = {
 	id: "a-1",

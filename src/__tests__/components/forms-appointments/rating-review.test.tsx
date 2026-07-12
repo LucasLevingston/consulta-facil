@@ -3,14 +3,14 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/forms/Appointments/use-rate-appointment", () => ({
 	useRateAppointment: vi.fn(),
 }));
 
 import { toast } from "sonner";
 import { RateAppointmentForm } from "@/components/forms/Appointments/RateAppointmentForm";
 import { StarRating } from "@/components/forms/Appointments/StarRating";
-import { useRateAppointment } from "@/features/appointments";
+import { useRateAppointment } from "@/components/forms/Appointments/use-rate-appointment";
 
 const mockUseRateAppointment = vi.mocked(useRateAppointment);
 

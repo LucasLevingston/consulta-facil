@@ -4,14 +4,14 @@ import { CalendarDays } from "lucide-react";
 import { Suspense } from "react";
 
 import AppointmentsDashboard from "@/components/AppointmentDashboard";
-import { usePermission } from "@/components/auth/hooks";
-import PageHeader from "@/components/custom/page-header";
-import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import {
 	useAllAdminAppointments,
 	usePatientAppointments,
 	useProfessionalAppointments,
-} from "@/features/appointments";
+} from "@/components/appointments/hooks";
+import { usePermission } from "@/components/auth/hooks";
+import PageHeader from "@/components/custom/page-header";
+import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 

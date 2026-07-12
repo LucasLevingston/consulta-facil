@@ -18,7 +18,7 @@ vi.mock("@/components/patients/hooks", () => ({
 }));
 
 const mockUsePatientAppointments = vi.fn();
-vi.mock("@/features/appointments", () => ({
+vi.mock("@/components/appointments/hooks", () => ({
 	usePatientAppointments: (...args: unknown[]) =>
 		mockUsePatientAppointments(...args),
 }));
