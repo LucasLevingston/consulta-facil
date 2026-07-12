@@ -7,7 +7,8 @@ import { CreateCouponDialog } from "@/components/billing/coupons/CreateCouponDia
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAdminCoupons, useAdminCouponUsages } from "@/features/billing";
+import { useAdminCouponUsages } from "./use-admin-coupon-usages";
+import { useAdminCoupons } from "./use-admin-coupons";
 
 function AdminCouponsContent() {
 	const { data: coupons } = useAdminCoupons();

@@ -4,7 +4,7 @@ import { FileText } from "lucide-react";
 import { InvoiceTable } from "@/components/billing/InvoiceTable";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { useAdminInvoices } from "@/features/billing";
+import { useAdminInvoices } from "./use-admin-invoices";
 
 function AdminBillingInvoicesContent() {
 	const { data: invoices } = useAdminInvoices();

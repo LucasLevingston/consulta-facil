@@ -6,7 +6,8 @@ import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { WalletCard } from "@/components/wallet/WalletCard";
 import { WalletHistoryTable } from "@/components/wallet/WalletHistoryTable";
-import { useUserWallet, useUserWalletTransactions } from "@/features/billing";
+import { useUserWallet } from "./use-user-wallet";
+import { useUserWalletTransactions } from "./use-user-wallet-transactions";
 
 function WalletDetailContent() {
 	const { userId } = useParams<{ userId: string }>();

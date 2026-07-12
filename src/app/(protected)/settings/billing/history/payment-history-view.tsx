@@ -6,7 +6,7 @@ import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUserStore } from "@/features/auth";
-import { useMyBillingPayments } from "@/features/billing";
+import { useMyBillingPayments } from "./use-my-billing-payments";
 
 function PaymentHistoryContent() {
 	const { user } = useUserStore();

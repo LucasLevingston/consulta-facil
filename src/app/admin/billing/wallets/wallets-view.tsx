@@ -12,7 +12,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useAdminWallets } from "@/features/billing";
+import { useAdminWallets } from "./use-admin-wallets";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {

@@ -6,9 +6,12 @@ vi.mock("@/features/billing", async () => {
 	const schema = await import("@/lib/schemas/billing/coupon.schema");
 	return {
 		updateCouponSchema: schema.updateCouponSchema,
-		useAdminUpdateCoupon: vi.fn(),
 	};
 });
+
+vi.mock("@/components/billing/coupons/use-admin-update-coupon", () => ({
+	useAdminUpdateCoupon: vi.fn(),
+}));
 
 vi.mock("@/components/ui/dialog", async () => {
 	const { createContext, useContext } = await import("react");
@@ -55,7 +58,7 @@ vi.mock("@/components/ui/dialog", async () => {
 });
 
 import { EditCouponDialog } from "@/components/billing/coupons/EditCouponDialog";
-import { useAdminUpdateCoupon } from "@/features/billing";
+import { useAdminUpdateCoupon } from "@/components/billing/coupons/use-admin-update-coupon";
 import type { CouponResponse } from "@/lib/schemas/billing/coupon.schema";
 
 const mockUseAdminUpdateCoupon = vi.mocked(useAdminUpdateCoupon);

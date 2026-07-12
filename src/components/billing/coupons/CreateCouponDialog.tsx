@@ -13,13 +13,10 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import {
-	type CreateCouponData,
-	createCouponSchema,
-	useAdminCreateCoupon,
-} from "@/features/billing";
+import { type CreateCouponData, createCouponSchema } from "@/features/billing";
 import { CreateCouponFormBasic } from "./CreateCouponFormBasic";
 import { CreateCouponFormLimits } from "./CreateCouponFormLimits";
+import { useAdminCreateCoupon } from "./use-admin-create-coupon";
 
 export function CreateCouponDialog() {
 	const [open, setOpen] = useState(false);

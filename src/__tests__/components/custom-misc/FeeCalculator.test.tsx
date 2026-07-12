@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/billing", () => ({
-	useFeeConfig: vi.fn(),
 	FEE_PAYMENT_METHOD_LABELS: {
 		PIX: "PIX",
 		CREDIT_CARD: "Cartão de crédito",
@@ -12,8 +11,12 @@ vi.mock("@/features/billing", () => ({
 	},
 }));
 
+vi.mock("@/components/custom/fees/use-fee-config", () => ({
+	useFeeConfig: vi.fn(),
+}));
+
 import { FeeCalculator } from "@/components/custom/fees/FeeCalculator";
-import { useFeeConfig } from "@/features/billing";
+import { useFeeConfig } from "@/components/custom/fees/use-fee-config";
 
 const mockUseFeeConfig = vi.mocked(useFeeConfig);
 

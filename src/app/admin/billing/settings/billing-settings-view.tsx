@@ -12,10 +12,10 @@ import { Form } from "@/components/ui/form";
 import {
 	type UpdateBillingSettingsValues,
 	updateBillingSettingsSchema,
-	useBillingSettings,
-	useUpdateBillingSettings,
 } from "@/features/billing";
 import { BillingSettingsFormFields } from "./billing-settings-form-fields";
+import { useBillingSettings } from "./use-billing-settings";
+import { useUpdateBillingSettings } from "./use-update-billing-settings";
 
 function AdminBillingSettingsContent() {
 	const { data: settings } = useBillingSettings();

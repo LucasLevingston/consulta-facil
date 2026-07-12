@@ -4,7 +4,7 @@ import { CreditCard } from "lucide-react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { useAdminBillingPayments } from "@/features/billing";
+import { useAdminBillingPayments } from "./use-admin-billing-payments";
 
 function AdminBillingPaymentsContent() {
 	const { data: payments } = useAdminBillingPayments();

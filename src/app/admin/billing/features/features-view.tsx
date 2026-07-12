@@ -6,7 +6,7 @@ import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useBillingFeaturesPage } from "@/features/billing/hooks/use-billing-features-page";
+import { useBillingFeaturesPage } from "./use-billing-features-page";
 
 function AdminFeaturesContent() {
 	const {
