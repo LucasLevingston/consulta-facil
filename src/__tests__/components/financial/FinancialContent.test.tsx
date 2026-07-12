@@ -5,7 +5,7 @@ import type { AppointmentResponse } from "@/features/appointments";
 
 // Mocka o hook de config de taxas usado internamente pelo FeeCalculator,
 // evitando a necessidade de um QueryClientProvider real.
-vi.mock("@/features/billing", () => ({
+vi.mock("@/components/custom/fees/use-fee-config", () => ({
 	useFeeConfig: () => ({ data: undefined }),
 }));
 

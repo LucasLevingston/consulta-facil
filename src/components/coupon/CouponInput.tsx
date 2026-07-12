@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useValidateCoupon } from "@/features/billing";
 import { formatBRL } from "@/utils/format-brl";
 import type { CouponInputProps } from "./CouponInput.types";
+import { useValidateCoupon } from "./use-validate-coupon";
 
 export function CouponInput({ amount, userId, onApply }: CouponInputProps) {
 	const [code, setCode] = useState("");

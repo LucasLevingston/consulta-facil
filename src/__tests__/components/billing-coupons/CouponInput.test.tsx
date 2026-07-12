@@ -2,12 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/features/billing", () => ({
+vi.mock("@/components/coupon/use-validate-coupon", () => ({
 	useValidateCoupon: vi.fn(),
 }));
 
 import { CouponInput } from "@/components/coupon/CouponInput";
-import { useValidateCoupon } from "@/features/billing";
+import { useValidateCoupon } from "@/components/coupon/use-validate-coupon";
 
 const mockUseValidateCoupon = vi.mocked(useValidateCoupon);
 

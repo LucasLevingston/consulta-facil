@@ -13,7 +13,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { ReferralStatus } from "@/features/billing";
-import { useAdminReferrals } from "@/features/billing";
+import { useAdminReferrals } from "./use-admin-referrals";
 
 const STATUS_LABELS: Record<ReferralStatus, string> = {
 	PENDING: "Pendente",

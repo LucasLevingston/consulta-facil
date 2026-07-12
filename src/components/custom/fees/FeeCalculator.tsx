@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useFeeConfig } from "@/features/billing";
 import { calculateFees } from "@/lib/utils/calculate-fees";
 import { FeeComparisonTable } from "./FeeComparisonTable";
+import { useFeeConfig } from "./use-fee-config";
 
 export function FeeCalculator() {
 	const { data: config } = useFeeConfig();

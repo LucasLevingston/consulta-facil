@@ -11,7 +11,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { useUserStore } from "@/features/auth";
-import { useUserCouponHistory } from "@/features/billing";
+import { useUserCouponHistory } from "./use-user-coupon-history";
 
 const brl = (n: number) =>
 	new Intl.NumberFormat("pt-BR", {

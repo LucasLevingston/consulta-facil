@@ -6,7 +6,8 @@ import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense
 import { ReferralCodeCard } from "@/components/referral/ReferralCodeCard";
 import { ReferralStatsCard } from "@/components/referral/ReferralStatsCard";
 import { Button } from "@/components/ui/button";
-import { useMyReferralStats, useRegenerateCode } from "@/features/billing";
+import { useMyReferralStats } from "./use-my-referral-stats";
+import { useRegenerateCode } from "./use-regenerate-code";
 
 function ReferralsSettingsContent() {
 	const { data: stats } = useMyReferralStats();

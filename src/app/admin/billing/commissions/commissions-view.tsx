@@ -4,7 +4,7 @@ import { BadgePercent } from "lucide-react";
 import { CommissionTable } from "@/components/billing/CommissionTable";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
-import { useAdminCommissions } from "@/features/billing";
+import { useAdminCommissions } from "./use-admin-commissions";
 
 function AdminCommissionsContent() {
 	const { data: commissions } = useAdminCommissions();

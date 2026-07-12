@@ -12,13 +12,10 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import {
-	type UpdateCouponData,
-	updateCouponSchema,
-	useAdminUpdateCoupon,
-} from "@/features/billing";
+import { type UpdateCouponData, updateCouponSchema } from "@/features/billing";
 import type { EditCouponDialogProps } from "./EditCouponDialog.types";
 import { EditCouponForm } from "./EditCouponForm";
+import { useAdminUpdateCoupon } from "./use-admin-update-coupon";
 
 export function EditCouponDialog({ coupon }: EditCouponDialogProps) {
 	const [open, setOpen] = useState(false);
