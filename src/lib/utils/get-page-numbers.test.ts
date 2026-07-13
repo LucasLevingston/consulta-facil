@@ -44,4 +44,31 @@ describe("getPageNumbers", () => {
 	it("returns empty array for total = 0", () => {
 		expect(getPageNumbers(0, 0)).toEqual([]);
 	});
+
+	it("single page returns [0]", () => {
+		expect(getPageNumbers(0, 1)).toEqual([0]);
+	});
+
+	it("shows ellipsis on right when current page near start", () => {
+		const pages = getPageNumbers(0, 10);
+		expect(pages).toContain("...");
+		expect(pages[0]).toBe(0);
+	});
+
+	it("shows ellipsis on left when current page near end", () => {
+		const pages = getPageNumbers(9, 10);
+		expect(pages).toContain("...");
+		expect(pages[pages.length - 1]).toBe(9);
+	});
+
+	it("shows both ellipses when current page in middle", () => {
+		const pages = getPageNumbers(5, 15);
+		const ellipses = pages.filter((p) => p === "...");
+		expect(ellipses.length).toBe(2);
+	});
+
+	it("always includes current page", () => {
+		const pages = getPageNumbers(7, 20);
+		expect(pages).toContain(7);
+	});
 });
