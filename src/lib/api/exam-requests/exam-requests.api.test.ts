@@ -193,3 +193,67 @@ describe("examRequestApi — review", () => {
 		expect(mockPut.mock.calls[1][0]).toBe("/exams/exam-2/review");
 	});
 });
+
+// ── getMy / upload ────────────────────────────────────────────────────────────
+
+describe("examRequestApi — getMy e upload", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	describe("getMy", () => {
+		it("chama GET /exams/my sem params quando nenhum status é informado", async () => {
+			mockGet.mockResolvedValueOnce({ data: [exam] });
+
+			const result = await examRequestApi.getMy();
+
+			expect(mockGet).toHaveBeenCalledWith("/exams/my", { params: {} });
+			expect(result).toEqual([exam]);
+		});
+
+		it("chama GET /exams/my com o status filtrado quando informado", async () => {
+			mockGet.mockResolvedValueOnce({ data: [exam] });
+
+			await examRequestApi.getMy("PENDING");
+
+			expect(mockGet).toHaveBeenCalledWith("/exams/my", {
+				params: { status: "PENDING" },
+			});
+		});
+	});
+
+	describe("upload", () => {
+		it("chama PUT /exams/:examId/upload com FormData contendo o arquivo", async () => {
+			const uploaded = {
+				...exam,
+				status: "UPLOADED" as const,
+				fileUrl: "https://s3.com/exam.pdf",
+			};
+			mockPut.mockResolvedValueOnce({ data: uploaded });
+			const file = new File(["resultado"], "resultado.pdf", {
+				type: "application/pdf",
+			});
+
+			const result = await examRequestApi.upload("exam-1", file);
+
+			expect(mockPut).toHaveBeenCalledWith(
+				"/exams/exam-1/upload",
+				expect.any(FormData),
+				{ headers: { "Content-Type": "multipart/form-data" } },
+			);
+			const sentForm = mockPut.mock.calls[0][1] as FormData;
+			expect(sentForm.get("file")).toBe(file);
+			expect(result.status).toBe("UPLOADED");
+		});
+
+		it("propaga erro 400 quando o arquivo enviado é inválido", async () => {
+			const error = Object.assign(new Error("Bad Request"), {
+				response: { status: 400 },
+			});
+			mockPut.mockRejectedValueOnce(error);
+			const file = new File(["invalido"], "invalido.exe");
+
+			await expect(examRequestApi.upload("exam-1", file)).rejects.toThrow(
+				"Bad Request",
+			);
+		});
+	});
+});
