@@ -4,10 +4,8 @@ vi.mock("@/config/api", () => ({
 	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
 
-import { appointmentKeys } from "@/components/appointments/hooks/appointment-keys";
 import { api } from "@/config/api";
-import { appointmentLifecycleApi } from "@/lib/api/appointments/appointment-lifecycle.api";
-import { appointmentsCrudApi } from "@/lib/api/appointments/appointments.api";
+import { appointmentsCrudApi } from "./appointments.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPost = vi.mocked(api.post);
@@ -22,8 +20,28 @@ const appointment = {
 	status: "PENDING" as const,
 };
 
+const adminAppt = {
+	id: "a-1",
+	patientId: "p-1",
+	professionalId: "d-1",
+	patientName: "João Silva",
+	professionalName: "Dra. Ana",
+	status: "COMPLETED" as const,
+	paymentStatus: "PAID" as const,
+	paymentAmount: 200,
+	scheduledAt: "2026-06-01T10:00:00Z",
+	serviceName: "Consulta",
+};
+
 const page = {
 	content: [appointment],
+	totalElements: 1,
+	totalPages: 1,
+	number: 0,
+};
+
+const adminPage = {
+	content: [adminAppt],
 	totalElements: 1,
 	totalPages: 1,
 	number: 0,
@@ -112,91 +130,87 @@ describe("appointmentsCrudApi", () => {
 	});
 });
 
-describe("appointmentLifecycleApi", () => {
+describe("appointmentsCrudApi.getAll — admin endpoint", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("confirm — chama PUT /appointments/:id/confirm e retorna confirmada", async () => {
-		const confirmed = { ...appointment, status: "CONFIRMED" as const };
-		mockPut.mockResolvedValueOnce({ data: confirmed });
+	it("chama GET /appointments com page e size padrão", async () => {
+		mockGet.mockResolvedValueOnce({ data: adminPage });
 
-		const result = await appointmentLifecycleApi.confirm("a-1");
+		const result = await appointmentsCrudApi.getAll();
 
-		expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/confirm");
-		expect(result.status).toBe("CONFIRMED");
-	});
-
-	it("cancel — chama PUT /appointments/:id/cancel com o motivo", async () => {
-		const canceled = { ...appointment, status: "CANCELED" as const };
-		mockPut.mockResolvedValueOnce({ data: canceled });
-
-		const result = await appointmentLifecycleApi.cancel("a-1", {
-			cancellationReason: "Viagem",
+		expect(mockGet).toHaveBeenCalledWith("/appointments", {
+			params: { page: 0, size: 100 },
 		});
+		expect(result.content).toHaveLength(1);
+	});
 
-		expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/cancel", {
-			cancellationReason: "Viagem",
+	it("chama GET /appointments com page e size customizados", async () => {
+		mockGet.mockResolvedValueOnce({ data: adminPage });
+
+		await appointmentsCrudApi.getAll(2, 50);
+
+		expect(mockGet).toHaveBeenCalledWith("/appointments", {
+			params: { page: 2, size: 50 },
 		});
-		expect(result.status).toBe("CANCELED");
 	});
 
-	it("complete — chama PUT /appointments/:id/complete e retorna concluída", async () => {
-		const completed = { ...appointment, status: "COMPLETED" as const };
-		mockPut.mockResolvedValueOnce({ data: completed });
+	it("retorna totalElements e totalPages", async () => {
+		const bigPage = { ...adminPage, totalElements: 99, totalPages: 2 };
+		mockGet.mockResolvedValueOnce({ data: bigPage });
 
-		const result = await appointmentLifecycleApi.complete("a-1");
+		const result = await appointmentsCrudApi.getAll(0, 50);
 
-		expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/complete");
-		expect(result.status).toBe("COMPLETED");
+		expect(result.totalElements).toBe(99);
+		expect(result.totalPages).toBe(2);
 	});
 
-	it("setModality — chama PUT /appointments/:id/modality com ONLINE", async () => {
-		const online = {
-			...appointment,
-			modality: "ONLINE" as const,
-			meetLink: "https://meet.google.com/abc",
+	it("retorna appointments com paymentStatus e paymentAmount", async () => {
+		mockGet.mockResolvedValueOnce({ data: adminPage });
+
+		const result = await appointmentsCrudApi.getAll();
+
+		expect(result.content[0].paymentStatus).toBe("PAID");
+		expect(result.content[0].paymentAmount).toBe(200);
+	});
+
+	it("retorna appointments com patientName e professionalName", async () => {
+		mockGet.mockResolvedValueOnce({ data: adminPage });
+
+		const result = await appointmentsCrudApi.getAll();
+
+		expect(result.content[0].patientName).toBe("João Silva");
+		expect(result.content[0].professionalName).toBe("Dra. Ana");
+	});
+
+	it("retorna página vazia sem erros", async () => {
+		const empty = { content: [], totalElements: 0, totalPages: 0, number: 0 };
+		mockGet.mockResolvedValueOnce({ data: empty });
+
+		const result = await appointmentsCrudApi.getAll();
+
+		expect(result.content).toHaveLength(0);
+		expect(result.totalElements).toBe(0);
+	});
+
+	it("retorna múltiplas consultas de profissionais diferentes", async () => {
+		const appt2 = {
+			...adminAppt,
+			id: "a-2",
+			professionalName: "Dr. Carlos",
+			paymentAmount: 350,
 		};
-		mockPut.mockResolvedValueOnce({ data: online });
+		const multiPage = {
+			...adminPage,
+			content: [adminAppt, appt2],
+			totalElements: 2,
+		};
+		mockGet.mockResolvedValueOnce({ data: multiPage });
 
-		const result = await appointmentLifecycleApi.setModality("a-1", {
-			modality: "ONLINE",
-		});
+		const result = await appointmentsCrudApi.getAll();
 
-		expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/modality", {
-			modality: "ONLINE",
-		});
-		expect(result.modality).toBe("ONLINE");
-	});
-
-	it("setModality — chama PUT com IN_PERSON", async () => {
-		const inPerson = { ...appointment, modality: "IN_PERSON" as const };
-		mockPut.mockResolvedValueOnce({ data: inPerson });
-
-		await appointmentLifecycleApi.setModality("a-1", { modality: "IN_PERSON" });
-
-		expect(mockPut).toHaveBeenCalledWith("/appointments/a-1/modality", {
-			modality: "IN_PERSON",
-		});
-	});
-});
-
-describe("appointmentKeys", () => {
-	it("byPatient gera a query key correta", () => {
-		expect(appointmentKeys.byPatient("p-1")).toEqual([
-			"appointments",
-			"patient",
-			"p-1",
-		]);
-	});
-
-	it("byProfessional gera a query key correta", () => {
-		expect(appointmentKeys.byProfessional("d-1")).toEqual([
-			"appointments",
-			"professional",
-			"d-1",
-		]);
-	});
-
-	it("detail gera a query key correta", () => {
-		expect(appointmentKeys.detail("a-1")).toEqual(["appointments", "a-1"]);
+		expect(result.content).toHaveLength(2);
+		const names = result.content.map((a) => a.professionalName);
+		expect(names).toContain("Dra. Ana");
+		expect(names).toContain("Dr. Carlos");
 	});
 });
