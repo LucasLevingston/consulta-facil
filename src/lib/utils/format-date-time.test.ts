@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatDateTime } from "@/lib/utils/format-date-time";
+import { formatDateTime } from "./format-date-time";
 
 describe("formatDateTime", () => {
 	const date = new Date(2024, 0, 15, 10, 30); // 15/01/2024 10:30
@@ -20,5 +20,19 @@ describe("formatDateTime", () => {
 
 	it("dateTime contains 'às'", () => {
 		expect(formatDateTime(date).dateTime).toContain("às");
+	});
+
+	it("formata meia-noite corretamente", () => {
+		const midnight = new Date("2026-12-31T00:00:00");
+		const result = formatDateTime(midnight);
+		expect(result.timeOnly).toBe("00:00");
+		expect(result.dateOnly).toBe("31/12/2026");
+	});
+
+	it("retorna objeto com três campos: dateTime, dateOnly, timeOnly", () => {
+		const result = formatDateTime(new Date("2026-06-15T14:30:00"));
+		expect(result).toHaveProperty("dateTime");
+		expect(result).toHaveProperty("dateOnly");
+		expect(result).toHaveProperty("timeOnly");
 	});
 });

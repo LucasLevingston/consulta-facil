@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getInitials } from "@/lib/utils/get-initials";
+import { getInitials } from "./get-initials";
 
 describe("getInitials", () => {
 	it("null → ?", () => expect(getInitials(null)).toBe("?"));
@@ -25,5 +25,13 @@ describe("getInitials", () => {
 		// "".split(" ") → [""], map n[0] → [undefined], join → "", slice → "", toUpperCase → ""
 		// ?? "?" only catches null/undefined, not ""
 		expect(getInitials("")).toBe("");
+	});
+
+	it("two-word name → 2 initials (João Silva)", () => {
+		expect(getInitials("João Silva")).toBe("JS");
+	});
+
+	it("three words → first 2 initials only (Ana Clara Souza)", () => {
+		expect(getInitials("Ana Clara Souza")).toBe("AC");
 	});
 });

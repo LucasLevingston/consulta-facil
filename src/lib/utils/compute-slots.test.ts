@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeSlots } from "@/lib/utils/compute-slots";
+import { computeSlots } from "./compute-slots";
 
 const baseSchedule = {
 	startTime: "08:00",
@@ -58,5 +58,35 @@ describe("computeSlots", () => {
 			60,
 		);
 		expect(slots).toHaveLength(0);
+	});
+
+	it("generates 4 slots for 4-hour schedule with 60-min sessions", () => {
+		const schedule = {
+			startTime: "08:00",
+			endTime: "12:00",
+			consultationDurationMinutes: 60,
+			breakBetweenConsultationsMinutes: 0,
+		};
+		expect(computeSlots(schedule)).toHaveLength(4);
+	});
+
+	it("includes break time between slots (15-min break)", () => {
+		const schedule = {
+			startTime: "08:00",
+			endTime: "12:00",
+			consultationDurationMinutes: 60,
+			breakBetweenConsultationsMinutes: 15,
+		};
+		expect(computeSlots(schedule)[1].label).toBe("09:15");
+	});
+
+	it("respects serviceDuration override (4-hour schedule)", () => {
+		const schedule = {
+			startTime: "08:00",
+			endTime: "12:00",
+			consultationDurationMinutes: 60,
+			breakBetweenConsultationsMinutes: 0,
+		};
+		expect(computeSlots(schedule, 30)).toHaveLength(8);
 	});
 });

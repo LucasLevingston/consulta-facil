@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-import {
-	clinicPlans,
-	fmtBRL,
-} from "@/components/custom/plans/ClinicPlans.utils";
+import { clinicPlans, fmtBRL } from "./ClinicPlans.utils";
 
 describe("fmtBRL", () => {
 	it("formats zero as 0,00", () => {

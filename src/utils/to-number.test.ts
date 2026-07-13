@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { toNumber } from "@/utils/to-number";
+import { toNumber } from "./to-number";
 
 describe("toNumber", () => {
 	it("null → null", () => expect(toNumber(null)).toBeNull());
@@ -12,4 +12,5 @@ describe("toNumber", () => {
 	it("zero → 0", () => expect(toNumber(0)).toBe(0));
 	it("float string → float", () => expect(toNumber("3.14")).toBeCloseTo(3.14));
 	it("negative → negative", () => expect(toNumber("-5")).toBe(-5));
+	it("float number passthrough", () => expect(toNumber(3.14)).toBe(3.14));
 });

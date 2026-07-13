@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatBRL } from "@/utils/format-brl";
+import { formatBRL } from "./format-brl";
 
 describe("formatBRL", () => {
 	it("formats zero", () => {
@@ -24,5 +24,9 @@ describe("formatBRL", () => {
 
 	it("includes currency symbol", () => {
 		expect(formatBRL(10)).toMatch(/R\$/);
+	});
+
+	it("formats 9.99", () => {
+		expect(formatBRL(9.99)).toMatch(/9,99/);
 	});
 });

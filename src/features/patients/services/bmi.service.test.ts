@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getBmiLabel } from "@/features/patients/services/bmi.service";
+import { getBmiLabel } from "./bmi.service";
 
 describe("getBmiLabel", () => {
 	it("below 18.5 → Abaixo do peso", () => {
@@ -22,5 +22,9 @@ describe("getBmiLabel", () => {
 	it("30+ → Obesidade", () => {
 		expect(getBmiLabel(30)).toBe("Obesidade");
 		expect(getBmiLabel(40)).toBe("Obesidade");
+	});
+
+	it("35 → 'Obesidade'", () => {
+		expect(getBmiLabel(35)).toBe("Obesidade");
 	});
 });
