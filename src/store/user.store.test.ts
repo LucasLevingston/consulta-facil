@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "./useUserStore";
 
 vi.mock("@/config/api", () => ({
 	api: {
