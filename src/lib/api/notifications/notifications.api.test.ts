@@ -5,12 +5,10 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { invitesApi } from "@/lib/api/notifications/invites.api";
-import { notificationsApi } from "@/lib/api/notifications/notifications.api";
+import { notificationsApi } from "./notifications.api";
 
 const mockGet = vi.mocked(api.get);
 const mockPut = vi.mocked(api.put);
-const mockPost = vi.mocked(api.post);
 
 const notification = {
 	id: "notif-1",
@@ -165,57 +163,5 @@ describe("notificationsApi — markAllAsRead", () => {
 		await notificationsApi.markAllAsRead();
 
 		expect(mockPut).toHaveBeenCalledWith("/notifications/read-all");
-	});
-});
-
-// ── acceptInvite / declineInvite ──────────────────────────────────────────────
-
-describe("notificationsApi — acceptInvite e declineInvite", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("acceptInvite chama PUT no ID correto e retorna status ACCEPTED", async () => {
-		const accepted = { ...notification, status: "ACCEPTED" as const };
-		mockPut.mockResolvedValueOnce({ data: accepted });
-
-		const result = await invitesApi.acceptInvite("notif-1");
-
-		expect(mockPut).toHaveBeenCalledWith("/notifications/notif-1/accept");
-		expect(result.status).toBe("ACCEPTED");
-	});
-
-	it("declineInvite chama PUT no ID correto e retorna status DECLINED", async () => {
-		const declined = { ...notification, status: "DECLINED" as const };
-		mockPut.mockResolvedValueOnce({ data: declined });
-
-		const result = await invitesApi.declineInvite("notif-1");
-
-		expect(mockPut).toHaveBeenCalledWith("/notifications/notif-1/decline");
-		expect(result.status).toBe("DECLINED");
-	});
-});
-
-// ── sendClinicInvite ──────────────────────────────────────────────────────────
-
-describe("notificationsApi — sendClinicInvite", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("chama POST com clinicId e professionalProfileId corretos", async () => {
-		mockPost.mockResolvedValueOnce({ data: undefined });
-
-		await invitesApi.sendClinicInvite("clinic-1", "prof-1");
-
-		expect(mockPost).toHaveBeenCalledWith("/clinics/clinic-1/invites/prof-1");
-	});
-
-	it("IDs diferentes produzem URLs diferentes", async () => {
-		mockPost
-			.mockResolvedValueOnce({ data: undefined })
-			.mockResolvedValueOnce({ data: undefined });
-
-		await invitesApi.sendClinicInvite("clinic-1", "prof-1");
-		await invitesApi.sendClinicInvite("clinic-2", "prof-2");
-
-		expect(mockPost.mock.calls[0][0]).toBe("/clinics/clinic-1/invites/prof-1");
-		expect(mockPost.mock.calls[1][0]).toBe("/clinics/clinic-2/invites/prof-2");
 	});
 });
