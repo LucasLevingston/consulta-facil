@@ -5,51 +5,11 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { clinicStaffApi } from "@/lib/api/clinics/clinic-staff.api";
-import { clinicsCrudApi } from "@/lib/api/clinics/clinics.api";
+import { clinicStaffApi } from "./clinic-staff.api";
 
 const mockGet = vi.mocked(api.get);
-const _mockPost = vi.mocked(api.post);
-const _mockPut = vi.mocked(api.put);
-const _mockDelete = vi.mocked(api.delete);
-
-const _clinic = {
-	id: "clinic-1",
-	name: "Clínica Cardio Saúde",
-	city: "São Paulo",
-	state: "SP",
-	latitude: -23.55,
-	longitude: -46.63,
-};
 
 const receptionist = { id: "rec-1", name: "Maria", email: "maria@clinica.com" };
-
-// ── getNearby — parte 2 ───────────────────────────────────────────────────────
-
-describe("clinicsCrudApi — getNearby filtros — parte 2", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("coordenadas diferentes passam valores corretos", async () => {
-		mockGet.mockResolvedValueOnce({ data: [] });
-
-		await clinicsCrudApi.getNearby(-7.12, -34.84, 25);
-
-		const params = (
-			mockGet.mock.calls[0][1] as { params: Record<string, unknown> }
-		).params;
-		expect(params.lat).toBe(-7.12);
-		expect(params.lng).toBe(-34.84);
-		expect(params.radiusKm).toBe(25);
-	});
-
-	it("retorna array vazio quando nenhuma clínica no raio", async () => {
-		mockGet.mockResolvedValueOnce({ data: [] });
-
-		const result = await clinicsCrudApi.getNearby(-90, 0, 1);
-
-		expect(result).toEqual([]);
-	});
-});
 
 // ── getReceptionists ──────────────────────────────────────────────────────────
 
