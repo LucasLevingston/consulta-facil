@@ -16,7 +16,7 @@ vi.mock("sonner", () => ({
 }));
 
 import { toast } from "sonner";
-import { useDependentsController } from "@/features/dependents/controllers/use-dependents.controller";
+import { useDependentsController } from "./use-dependents.controller";
 
 describe("useDependentsController", () => {
 	beforeEach(() => vi.clearAllMocks());
