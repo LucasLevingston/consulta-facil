@@ -9,7 +9,7 @@ vi.mock("@/config/api", () => ({
 	},
 }));
 
-import { dependentsRepository } from "@/features/dependents/repositories/dependents.repository";
+import { dependentsRepository } from "./dependents.repository";
 
 describe("dependentsRepository", () => {
 	beforeEach(() => vi.clearAllMocks());

@@ -6,7 +6,7 @@ vi.mock("@/config/api", () => ({
 	},
 }));
 
-import { analyticsRepository } from "@/features/analytics/repositories/analytics.repository";
+import { analyticsRepository } from "./analytics.repository";
 
 describe("analyticsRepository", () => {
 	beforeEach(() => vi.clearAllMocks());

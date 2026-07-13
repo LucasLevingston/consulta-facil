@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dependentsService } from "@/features/dependents/services/dependents.service";
+import { dependentsService } from "./dependents.service";
 
 const dep = { id: "d1", name: "Alice" } as never;
 const depNoName = { id: "d2" } as never;
