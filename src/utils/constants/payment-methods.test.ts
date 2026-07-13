@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ALL_METHODS } from "@/utils/constants/payment-methods";
+import { ALL_METHODS } from "./payment-methods";
 
 describe("ALL_METHODS (payment)", () => {
 	it("is a non-empty array", () => {

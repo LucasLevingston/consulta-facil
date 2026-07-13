@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SETTINGS_LINKS } from "@/utils/constants/settings-links";
+import { SETTINGS_LINKS } from "./settings-links";
 
 describe("SETTINGS_LINKS", () => {
 	it("is non-empty array", () => {
