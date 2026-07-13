@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PERMISSIONS } from "@/lib/constants/permissions";
+import { PERMISSIONS } from "./permissions";
 
 describe("PERMISSIONS — ownership-aware rules (allowOwn)", () => {
 	const user = "user-1";
