@@ -11,17 +11,10 @@ vi.mock("@/config/api", () => ({
 }));
 
 import { api } from "@/config/api";
-import { loginApi } from "@/lib/api/auth/login.api";
-import { registerApi } from "@/lib/api/auth/register.api";
+import { registerApi } from "./register.api";
 
 const mockPost = vi.mocked(api.post);
 
-const loginResponse = {
-	token: "jwt-token",
-	expiresIn: 86400,
-	userId: "u-1",
-	role: "PATIENT",
-};
 const userResponse = {
 	id: "u-1",
 	name: "João",
@@ -29,28 +22,13 @@ const userResponse = {
 	role: "PATIENT",
 };
 
-describe("loginApi", () => {
-	beforeEach(() => vi.clearAllMocks());
-
-	it("posts to /auth/login with credentials", async () => {
-		mockPost.mockResolvedValueOnce({ data: loginResponse });
-		await loginApi({ email: "j@e.com", password: "pass123" });
-		expect(mockPost).toHaveBeenCalledWith("/auth/login", {
-			email: "j@e.com",
-			password: "pass123",
-		});
-	});
-
-	it("returns LoginResponse", async () => {
-		mockPost.mockResolvedValueOnce({ data: loginResponse });
-		const result = await loginApi({
-			email: "j@e.com",
-			password: "pass123",
-		});
-		expect(result.token).toBe("jwt-token");
-		expect(result.userId).toBe("u-1");
-	});
-});
+const baseInput = {
+	name: "João Silva",
+	email: "joao@test.com",
+	password: "Senha@123",
+	confirmPassword: "Senha@123",
+	cpf: "12345678901",
+};
 
 describe("registerApi", () => {
 	beforeEach(() => vi.clearAllMocks());
@@ -84,5 +62,26 @@ describe("registerApi", () => {
 			gender: "MALE",
 		});
 		expect(result.id).toBe("u-1");
+	});
+
+	it("chama POST /auth/register e retorna os dados do usuário criado", async () => {
+		const responseData = {
+			id: "u-1",
+			name: baseInput.name,
+			email: baseInput.email,
+			role: "PATIENT" as const,
+		};
+		mockPost.mockResolvedValueOnce({ data: responseData });
+
+		const result = await registerApi(baseInput);
+
+		expect(mockPost).toHaveBeenCalledWith("/auth/register", baseInput);
+		expect(result).toEqual(responseData);
+	});
+
+	it("propaga o erro quando o e-mail já está em uso", async () => {
+		mockPost.mockRejectedValueOnce(new Error("Conflict"));
+
+		await expect(registerApi(baseInput)).rejects.toThrow("Conflict");
 	});
 });
