@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-import { apiPlanToUiPlan } from "@/components/custom/plans/Plans.utils";
+import { apiPlanToUiPlan } from "./Plans.utils";
 
 const basePlan = {
 	slug: "basic",

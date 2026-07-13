@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateFees } from "@/lib/utils/calculate-fees";
+import { calculateFees } from "./calculate-fees";
 
 const cfg = {
 	platformFeeRate: 0.05,
@@ -27,8 +27,8 @@ describe("calculateFees", () => {
 
 	it("CASH has zero MP fee", () => {
 		const { comparison } = calculateFees(100, "CASH", cfg);
-		const cash = comparison.find((c) => c.paymentMethod === "CASH")!;
-		expect(cash.mpFeeAmount).toBe(0);
+		const cash = comparison.find((c) => c.paymentMethod === "CASH");
+		expect(cash?.mpFeeAmount).toBe(0);
 	});
 
 	it("professional absorbs fees: patientPays = gross = amount", () => {
@@ -49,6 +49,18 @@ describe("calculateFees", () => {
 		expect(selected.totalFees).toBeCloseTo(
 			selected.mpFeeAmount + selected.platformFeeAmount,
 			2,
+		);
+	});
+
+	it("patientPays equals amount when profAbsorbs=true (alternate fee config)", () => {
+		const altCfg = {
+			pixFeeRate: 0.01,
+			creditCardFeeRate: 0.03,
+			debitFeeRate: 0.015,
+			platformFeeRate: 0.05,
+		};
+		expect(calculateFees(100, "PIX", altCfg, true).selected.patientPays).toBe(
+			100,
 		);
 	});
 });

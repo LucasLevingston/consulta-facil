@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getLabelByFormName } from "@/lib/utils/get-label-by-form-name";
+import { getLabelByFormName } from "./get-label-by-form-name";
 
 describe("getLabelByFormName", () => {
 	it("email → E-mail", () =>
@@ -15,5 +15,12 @@ describe("getLabelByFormName", () => {
 	});
 	it("unknown field → returns field name as-is", () => {
 		expect(getLabelByFormName("customField")).toBe("customField");
+	});
+	it("specialty → Especialidade", () => {
+		expect(getLabelByFormName("specialty")).toBe("Especialidade");
+	});
+	it("é case-sensitive — 'Email' != 'email'", () => {
+		expect(getLabelByFormName("Email")).toBe("Email");
+		expect(getLabelByFormName("email")).toBe("E-mail");
 	});
 });

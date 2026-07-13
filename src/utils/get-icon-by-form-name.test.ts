@@ -1,6 +1,6 @@
 import { AtSign, Calendar, FileText, Lock, Phone, User } from "lucide-react";
 import { describe, expect, it } from "vitest";
-import { getIconByFormName } from "@/utils/get-icon-by-form-name";
+import { getIconByFormName } from "./get-icon-by-form-name";
 
 describe("getIconByFormName", () => {
 	it("name → User", () => expect(getIconByFormName("name")).toBe(User));

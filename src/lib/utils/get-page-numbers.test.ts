@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPageNumbers } from "@/lib/utils/get-page-numbers";
+import { getPageNumbers } from "./get-page-numbers";
 
 describe("getPageNumbers", () => {
 	it("total ≤ 7 → returns all pages", () => {
@@ -39,5 +39,9 @@ describe("getPageNumbers", () => {
 		const result = getPageNumbers(3, 20);
 		// pages around current visible
 		expect(result).toContain(3);
+	});
+
+	it("returns empty array for total = 0", () => {
+		expect(getPageNumbers(0, 0)).toEqual([]);
 	});
 });

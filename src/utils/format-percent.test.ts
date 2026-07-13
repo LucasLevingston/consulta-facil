@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPercent } from "@/utils/format-percent";
+import { formatPercent } from "./format-percent";
 
 describe("formatPercent", () => {
 	it("0 → 0.00%", () => {
@@ -20,5 +20,9 @@ describe("formatPercent", () => {
 
 	it("includes % symbol", () => {
 		expect(formatPercent(0.25)).toMatch(/%$/);
+	});
+
+	it("0.1 → '10.00%'", () => {
+		expect(formatPercent(0.1)).toBe("10.00%");
 	});
 });

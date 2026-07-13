@@ -1,8 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
-import { convertFileToUrl } from "@/lib/utils/convert-file-to-url";
-
-// ── convertFileToUrl ──────────────────────────────────────────────────────────
+import { convertFileToUrl } from "./convert-file-to-url";
 
 describe("convertFileToUrl — File → object URL", () => {
 	beforeEach(() => {
