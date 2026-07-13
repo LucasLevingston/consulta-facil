@@ -1,15 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { EXAM_TYPE_LABELS } from "@/utils/constants/exam-types";
 import {
 	PROFESSION_SPECIALTIES,
 	professions,
 	SPECIALTY_LABELS,
 	specialties,
-} from "@/utils/constants/profession-specialties";
-import {
-	PROFESSIONAL_TYPE_LABELS,
-	PROFESSIONAL_TYPE_OPTIONS,
-} from "@/utils/constants/professional-types";
+} from "./profession-specialties";
 
 describe("SPECIALTY_LABELS", () => {
 	it("CLINICA_GERAL is 'Clínica Geral'", () => {
@@ -53,44 +48,5 @@ describe("professions and specialties", () => {
 	});
 	it("specialties includes CARDIOLOGIA", () => {
 		expect(specialties).toContain("CARDIOLOGIA");
-	});
-});
-
-describe("PROFESSIONAL_TYPE_LABELS", () => {
-	it("MEDICO is 'Médico'", () => {
-		expect(PROFESSIONAL_TYPE_LABELS.MEDICO).toBe("Médico");
-	});
-	it("DENTISTA is 'Dentista'", () => {
-		expect(PROFESSIONAL_TYPE_LABELS.DENTISTA).toBe("Dentista");
-	});
-	it("VETERINARIO is 'Veterinário'", () => {
-		expect(PROFESSIONAL_TYPE_LABELS.VETERINARIO).toBe("Veterinário");
-	});
-	it("is non-empty", () => {
-		expect(Object.keys(PROFESSIONAL_TYPE_LABELS).length).toBeGreaterThan(0);
-	});
-});
-
-describe("PROFESSIONAL_TYPE_OPTIONS", () => {
-	it("each item has value and label", () => {
-		expect(PROFESSIONAL_TYPE_OPTIONS[0]).toHaveProperty("value");
-		expect(PROFESSIONAL_TYPE_OPTIONS[0]).toHaveProperty("label");
-	});
-	it("length matches PROFESSIONAL_TYPE_LABELS count", () => {
-		expect(PROFESSIONAL_TYPE_OPTIONS).toHaveLength(
-			Object.keys(PROFESSIONAL_TYPE_LABELS).length,
-		);
-	});
-});
-
-describe("EXAM_TYPE_LABELS", () => {
-	it("HEMOGRAMA_COMPLETO is 'Hemograma Completo'", () => {
-		expect(EXAM_TYPE_LABELS.HEMOGRAMA_COMPLETO).toBe("Hemograma Completo");
-	});
-	it("RAIO_X is 'Raio-X'", () => {
-		expect(EXAM_TYPE_LABELS.RAIO_X).toBe("Raio-X");
-	});
-	it("is non-empty", () => {
-		expect(Object.keys(EXAM_TYPE_LABELS).length).toBeGreaterThan(0);
 	});
 });
