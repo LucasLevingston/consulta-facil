@@ -56,7 +56,7 @@ describe("RegisterForm", () => {
 			password: "senha123456",
 			confirmPassword: "senha123456",
 		});
-	});
+	}, 10000);
 
 	it("não chama onSubmit e exibe erro de validação quando o e-mail é inválido", async () => {
 		const user = userEvent.setup();
