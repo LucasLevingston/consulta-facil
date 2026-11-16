@@ -20,6 +20,7 @@ export const userResponseSchema = z.object({
 	imageUrl: z.string().nullable().optional(),
 	createdAt: z.string().nullable().optional(),
 	updatedAt: z.string().nullable().optional(),
+	whatsappNotificationsEnabled: z.boolean().optional(),
 });
 
 export type UserResponse = z.infer<typeof userResponseSchema>;

@@ -1,5 +1,6 @@
 import { api } from "@/config/api";
 import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
+import type { UpdateNotificationPreferences } from "@/lib/schemas/user/notification-preferences.schema";
 import type { UserResponse } from "@/lib/schemas/user/user-response.schema";
 
 export const usersApi = {
@@ -11,6 +12,16 @@ export const usersApi = {
 		const response = await api.get<ApiPage<UserResponse>>("/users", {
 			params: { page, size, role: role || undefined },
 		});
+		return response.data;
+	},
+
+	updateNotificationPreferences: async (
+		preferences: UpdateNotificationPreferences,
+	): Promise<UserResponse> => {
+		const response = await api.patch<UserResponse>(
+			"/users/me/notification-preferences",
+			preferences,
+		);
 		return response.data;
 	},
 };

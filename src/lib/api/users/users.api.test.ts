@@ -109,3 +109,39 @@ describe("usersApi — getAll paginação e filtros", () => {
 		expect(result.content[0].role).toBe("ADMIN");
 	});
 });
+
+// ── updateNotificationPreferences ─────────────────────────────────────────────
+
+describe("usersApi — updateNotificationPreferences", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	it("faz PATCH em /users/me/notification-preferences com o corpo e retorna o usuário", async () => {
+		const mockPatch = vi.fn().mockResolvedValueOnce({
+			data: { ...user, whatsappNotificationsEnabled: false },
+		});
+		(api as unknown as { patch: typeof mockPatch }).patch = mockPatch;
+
+		const result = await usersApi.updateNotificationPreferences({
+			whatsappNotificationsEnabled: false,
+		});
+
+		expect(mockPatch).toHaveBeenCalledWith(
+			"/users/me/notification-preferences",
+			{
+				whatsappNotificationsEnabled: false,
+			},
+		);
+		expect(result.whatsappNotificationsEnabled).toBe(false);
+	});
+
+	it("propaga erros da API", async () => {
+		const mockPatch = vi.fn().mockRejectedValueOnce(new Error("401"));
+		(api as unknown as { patch: typeof mockPatch }).patch = mockPatch;
+
+		await expect(
+			usersApi.updateNotificationPreferences({
+				whatsappNotificationsEnabled: true,
+			}),
+		).rejects.toThrow("401");
+	});
+});
