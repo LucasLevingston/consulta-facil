@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/appointments/hooks", () => ({
 	useProfessionalAppointments: vi.fn(),
@@ -14,7 +14,9 @@ function makeForm() {
 	return { setValue: vi.fn() } as never;
 }
 
-// Segunda-feira fixa e no futuro para os testes de disponibilidade.
+// Relógio congelado em 03/08/2026 (segunda) para que as datas abaixo fiquem
+// sempre no futuro — isDayDisabled compara com "hoje".
+const NOW = new Date(2026, 7, 3, 12, 0, 0);
 const MONDAY = new Date(2026, 7, 10); // 10/08/2026 é uma segunda-feira
 
 const activeMondaySchedule = {
@@ -30,7 +32,13 @@ const activeMondaySchedule = {
 
 beforeEach(() => {
 	vi.clearAllMocks();
+	vi.useFakeTimers({ toFake: ["Date"] });
+	vi.setSystemTime(NOW);
 	mockUseProfessionalAppointments.mockReturnValue({ data: undefined } as never);
+});
+
+afterEach(() => {
+	vi.useRealTimers();
 });
 
 describe("useAppointmentSlots", () => {
