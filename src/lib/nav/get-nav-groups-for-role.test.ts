@@ -5,6 +5,7 @@ import { getNavGroupsForRole } from "./get-nav-groups-for-role";
 import "./registrations/default.nav";
 import "./registrations/patient.nav";
 import "./registrations/professional.nav";
+import "./registrations/professional-financial.nav";
 import "./registrations/admin.nav";
 import "./registrations/receptionist.nav";
 
@@ -51,7 +52,7 @@ describe("getNavGroupsForRole", () => {
 			].sort(),
 		);
 		const totalItems = groups.reduce((acc, g) => acc + g.items.length, 0);
-		expect(totalItems).toBe(14);
+		expect(totalItems).toBe(15);
 	});
 
 	it("agrupa os itens do RECEPTIONIST em 2 grupos (Home e Recepção)", () => {
