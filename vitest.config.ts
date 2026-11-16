@@ -1,11 +1,19 @@
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 
+// Node >= 25 ships a native `localStorage` global (Web Storage API) that stays
+// `undefined` unless --localstorage-file is set. Vitest's jsdom environment does
+// not override globals that already exist, so jsdom's storage gets shadowed and
+// anything touching localStorage (zustand persist stores, etc.) crashes.
+// Disable Node's implementation in the workers when the runtime has it.
+const nodeHasWebStorage = "localStorage" in globalThis;
+
 export default defineConfig({
 	test: {
 		environment: "jsdom",
 		globals: true,
 		setupFiles: "./src/__tests__/setup.ts",
+		execArgv: nodeHasWebStorage ? ["--no-experimental-webstorage"] : [],
 		passWithNoTests: true,
 		exclude: ["node_modules/**", ".claude/**", "dist/**"],
 		coverage: {
