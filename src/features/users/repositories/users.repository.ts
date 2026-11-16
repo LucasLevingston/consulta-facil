@@ -1,5 +1,6 @@
 import { usersApi } from "@/lib/api/users/users.api";
 import type { ApiPage } from "@/lib/schemas/professional/api-page.schema";
+import type { UpdateNotificationPreferences } from "@/lib/schemas/user/notification-preferences.schema";
 import type { UserResponse } from "@/lib/schemas/user/user-response.schema";
 
 export const usersRepository = {
@@ -8,4 +9,8 @@ export const usersRepository = {
 		size = 20,
 		role?: string,
 	): Promise<ApiPage<UserResponse>> => usersApi.getAll(page, size, role),
+	updateNotificationPreferences: (
+		preferences: UpdateNotificationPreferences,
+	): Promise<UserResponse> =>
+		usersApi.updateNotificationPreferences(preferences),
 };
