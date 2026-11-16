@@ -5,10 +5,8 @@ import {
 	CalendarDays,
 	CalendarPlus,
 	Clock,
-	CreditCard,
 	FlaskConical,
 	MessageCircle,
-	TrendingUp,
 	UserRound,
 } from "lucide-react";
 import { registerNavItem } from "../nav-registry";
@@ -78,18 +76,4 @@ registerNavItem({
 	title: "Horários",
 	url: "/dashboard/schedule",
 	icon: Clock,
-});
-registerNavItem({
-	roles: ["PROFESSIONAL"],
-	label: "Financeiro",
-	title: "Financeiro",
-	url: "/dashboard/financial",
-	icon: TrendingUp,
-});
-registerNavItem({
-	roles: ["PROFESSIONAL"],
-	label: "Financeiro",
-	title: "Pagamentos",
-	url: "/dashboard/payments",
-	icon: CreditCard,
 });

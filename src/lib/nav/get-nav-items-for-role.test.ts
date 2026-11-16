@@ -5,6 +5,7 @@ import { getNavItemsForRole } from "./get-nav-items-for-role";
 import "./registrations/default.nav";
 import "./registrations/patient.nav";
 import "./registrations/professional.nav";
+import "./registrations/professional-financial.nav";
 import "./registrations/admin.nav";
 import "./registrations/receptionist.nav";
 
@@ -37,9 +38,9 @@ describe("registrations por role", () => {
 		}
 	});
 
-	it("PROFESSIONAL tem 14 itens (3 default + 11 específicos)", () => {
+	it("PROFESSIONAL tem 15 itens (3 default + 12 específicos)", () => {
 		const items = getNavItemsForRole("PROFESSIONAL");
-		expect(items).toHaveLength(14);
+		expect(items).toHaveLength(15);
 		for (const item of items) {
 			expect(item.roles).toContain("PROFESSIONAL");
 			expect(item.url.length).toBeGreaterThan(0);
