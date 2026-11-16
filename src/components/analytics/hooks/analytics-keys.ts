@@ -5,4 +5,6 @@ export const analyticsKeys = {
 	appointments: () => [...analyticsKeys.all, "appointments"] as const,
 	referrals: () => [...analyticsKeys.all, "referrals"] as const,
 	subscriptions: () => [...analyticsKeys.all, "subscriptions"] as const,
+	professional: (period: string) =>
+		[...analyticsKeys.all, "professional", period] as const,
 };
