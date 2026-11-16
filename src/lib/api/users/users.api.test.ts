@@ -1,13 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
-	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
+	api: {
+		get: vi.fn(),
+		post: vi.fn(),
+		put: vi.fn(),
+		patch: vi.fn(),
+		delete: vi.fn(),
+	},
 }));
 
 import { api } from "@/config/api";
 import { usersApi } from "./users.api";
 
 const mockGet = vi.mocked(api.get);
+const mockPatch = vi.mocked(api.patch);
 
 const user = {
 	id: "u-1",
@@ -116,10 +123,9 @@ describe("usersApi — updateNotificationPreferences", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("faz PATCH em /users/me/notification-preferences com o corpo e retorna o usuário", async () => {
-		const mockPatch = vi.fn().mockResolvedValueOnce({
+		mockPatch.mockResolvedValueOnce({
 			data: { ...user, whatsappNotificationsEnabled: false },
 		});
-		(api as unknown as { patch: typeof mockPatch }).patch = mockPatch;
 
 		const result = await usersApi.updateNotificationPreferences({
 			whatsappNotificationsEnabled: false,
@@ -135,8 +141,7 @@ describe("usersApi — updateNotificationPreferences", () => {
 	});
 
 	it("propaga erros da API", async () => {
-		const mockPatch = vi.fn().mockRejectedValueOnce(new Error("401"));
-		(api as unknown as { patch: typeof mockPatch }).patch = mockPatch;
+		mockPatch.mockRejectedValueOnce(new Error("401"));
 
 		await expect(
 			usersApi.updateNotificationPreferences({
