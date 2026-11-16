@@ -71,6 +71,28 @@ function setupMocks() {
 	} as never);
 }
 
+describe("ProfessionalsContent — render", () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		setupMocks();
+	});
+
+	it("renders page header", () => {
+		render(<ProfessionalsContent />);
+		expect(screen.getByText("Profissionais")).toBeInTheDocument();
+	});
+
+	it("renders ProfessionalFilters", () => {
+		render(<ProfessionalsContent />);
+		expect(screen.getByTestId("professional-filters")).toBeInTheDocument();
+	});
+
+	it("shows list view by default", () => {
+		render(<ProfessionalsContent />);
+		expect(screen.getByTestId("professionals-list")).toBeInTheDocument();
+	});
+});
+
 describe("ProfessionalsContent — pagination and map", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
@@ -94,5 +116,32 @@ describe("ProfessionalsContent — pagination and map", () => {
 			.filter((b) => b.className.includes("rounded-none"));
 		await userEvent.click(viewButtons[1]);
 		expect(screen.getByTestId("professionals-map")).toBeInTheDocument();
+	});
+});
+
+describe("ProfessionalsContent — loading and error", () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		setupMocks();
+	});
+
+	it("shows loading state", () => {
+		mockUseProfessionals.mockReturnValue({
+			data: null,
+			isLoading: true,
+			error: null,
+		} as never);
+		render(<ProfessionalsContent />);
+		expect(screen.getByTestId("loading")).toBeInTheDocument();
+	});
+
+	it("shows error state", () => {
+		mockUseProfessionals.mockReturnValue({
+			data: null,
+			isLoading: false,
+			error: new Error("fail"),
+		} as never);
+		render(<ProfessionalsContent />);
+		expect(screen.getByTestId("error")).toBeInTheDocument();
 	});
 });

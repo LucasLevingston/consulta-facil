@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/procedure-requests", () => ({
@@ -78,5 +79,33 @@ describe("PatientRequestActions render", () => {
 			<PatientRequestActions {...base} canSchedule={false} canCancel={true} />,
 		);
 		expect(screen.getByText("Cancelar")).toBeInTheDocument();
+	});
+});
+
+describe("PatientRequestActions interaction", () => {
+	it("disables Cancelar when canceling=true", () => {
+		render(
+			<PatientRequestActions
+				{...base}
+				canSchedule={false}
+				canCancel={true}
+				canceling={true}
+			/>,
+		);
+		expect(screen.getByText("Cancelar")).toBeDisabled();
+	});
+
+	it("calls onCancel when Cancelar clicked", async () => {
+		const onCancel = vi.fn();
+		render(
+			<PatientRequestActions
+				{...base}
+				canSchedule={false}
+				canCancel={true}
+				onCancel={onCancel}
+			/>,
+		);
+		await userEvent.click(screen.getByText("Cancelar"));
+		expect(onCancel).toHaveBeenCalledTimes(1);
 	});
 });

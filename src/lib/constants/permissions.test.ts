@@ -1,29 +1,214 @@
 import { describe, expect, it } from "vitest";
+import type { PermissionKey } from "@/lib/permission-key";
 import { PERMISSIONS } from "./permissions";
 
-describe("PERMISSIONS — role-only rules", () => {
-	it("appointment:schedule — PATIENT allowed, PROFESSIONAL denied", () => {
-		expect(PERMISSIONS["appointment:schedule"]("PATIENT")).toBe(true);
-		expect(PERMISSIONS["appointment:schedule"]("PROFESSIONAL")).toBe(false);
-		expect(PERMISSIONS["appointment:schedule"]("ADMIN")).toBe(false);
+type Role = "PATIENT" | "PROFESSIONAL" | "ADMIN" | "RECEPTIONIST";
+const ALL_ROLES: Role[] = ["PATIENT", "PROFESSIONAL", "ADMIN", "RECEPTIONIST"];
+
+function allowed(permission: PermissionKey, ...roles: Role[]) {
+	for (const role of roles) {
+		it(`${permission} — ${role} → true`, () => {
+			expect(PERMISSIONS[permission](role)).toBe(true);
+		});
+	}
+	const denied = ALL_ROLES.filter((r) => !roles.includes(r));
+	for (const role of denied) {
+		it(`${permission} — ${role} → false`, () => {
+			expect(PERMISSIONS[permission](role)).toBe(false);
+		});
+	}
+}
+
+describe("PERMISSIONS — role matrix", () => {
+	describe("appointments", () => {
+		allowed("appointment:schedule", "PATIENT");
+		allowed("appointment:view:patient", "PATIENT", "ADMIN");
+		allowed("appointment:view:professional", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:confirm", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:reschedule", "PATIENT", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:complete", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:rate", "PATIENT");
+		allowed("appointment:checkin", "RECEPTIONIST", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:delete", "ADMIN");
+		allowed("appointment:set_modality", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:queue", "PROFESSIONAL", "ADMIN", "RECEPTIONIST");
+		allowed("appointment:anamnesis:save", "PATIENT", "PROFESSIONAL", "ADMIN");
+		allowed("appointment:clinical_note:save", "PROFESSIONAL", "ADMIN");
+	});
+	describe("clinic", () => {
+		allowed("clinic:manage", "PROFESSIONAL", "ADMIN");
+	});
+	describe("professional", () => {
+		allowed("professional:apply", "PATIENT", "ADMIN");
+		allowed("professional:manage", "PROFESSIONAL", "ADMIN");
+		allowed("professional:approve", "ADMIN");
+	});
+	describe("patient", () => {
+		allowed("patient:profile:view", "PROFESSIONAL", "ADMIN");
+		allowed("patient:profile:manage", "PATIENT");
+	});
+	describe("schedule", () => {
+		allowed("schedule:manage", "PROFESSIONAL");
+	});
+	describe("services", () => {
+		allowed("services:manage", "PROFESSIONAL", "ADMIN");
+	});
+	describe("exam", () => {
+		allowed("exam:manage", "PROFESSIONAL", "ADMIN");
+		allowed("exam:view", "PATIENT", "PROFESSIONAL", "ADMIN");
+		allowed("exam:review:patient", "PATIENT");
+		allowed("procedure:manage", "PROFESSIONAL", "ADMIN");
+		allowed("procedure:review:patient", "PATIENT");
+	});
+	describe("billing", () => {
+		allowed("billing:view", "PATIENT", "PROFESSIONAL");
+		allowed("billing:clinic", "PROFESSIONAL", "ADMIN");
+	});
+	describe("reception", () => {
+		allowed("reception:access", "RECEPTIONIST", "PROFESSIONAL", "ADMIN");
+	});
+	describe("admin", () => {
+		allowed("admin:access", "ADMIN");
+	});
+});
+
+describe("PERMISSIONS — ownership-aware rules (allowOwn)", () => {
+	const OWNER = { userId: "user-1", ownerId: "user-1" };
+	const NOT_OWNER = { userId: "user-1", ownerId: "user-2" };
+
+	it.each<{
+		permission: PermissionKey;
+		role: Role;
+		scenario: "owner" | "non-owner";
+		expected: boolean;
+	}>([
+		{
+			permission: "appointment:cancel:own",
+			role: "PATIENT",
+			scenario: "owner",
+			expected: true,
+		},
+		{
+			permission: "appointment:cancel:own",
+			role: "PATIENT",
+			scenario: "non-owner",
+			expected: false,
+		},
+		{
+			permission: "appointment:cancel:own",
+			role: "ADMIN",
+			scenario: "non-owner",
+			expected: true,
+		},
+		{
+			permission: "appointment:cancel:own",
+			role: "PROFESSIONAL",
+			scenario: "owner",
+			expected: false,
+		},
+		{
+			permission: "appointment:reschedule:own",
+			role: "PROFESSIONAL",
+			scenario: "owner",
+			expected: true,
+		},
+		{
+			permission: "appointment:reschedule:own",
+			role: "PATIENT",
+			scenario: "non-owner",
+			expected: false,
+		},
+		{
+			permission: "appointment:reschedule:own",
+			role: "RECEPTIONIST",
+			scenario: "owner",
+			expected: false,
+		},
+		{
+			permission: "clinical-note:edit:own",
+			role: "PROFESSIONAL",
+			scenario: "owner",
+			expected: true,
+		},
+		{
+			permission: "clinical-note:edit:own",
+			role: "PROFESSIONAL",
+			scenario: "non-owner",
+			expected: false,
+		},
+		{
+			permission: "clinical-note:edit:own",
+			role: "PATIENT",
+			scenario: "owner",
+			expected: false,
+		},
+		{
+			permission: "clinical-note:view:own",
+			role: "PATIENT",
+			scenario: "owner",
+			expected: true,
+		},
+		{
+			permission: "clinical-note:view:own",
+			role: "PATIENT",
+			scenario: "non-owner",
+			expected: false,
+		},
+		{
+			permission: "clinical-note:view:own",
+			role: "ADMIN",
+			scenario: "non-owner",
+			expected: true,
+		},
+		{
+			permission: "clinical-note:view:own",
+			role: "RECEPTIONIST",
+			scenario: "owner",
+			expected: false,
+		},
+		{
+			permission: "clinic:manage:own",
+			role: "PROFESSIONAL",
+			scenario: "owner",
+			expected: true,
+		},
+		{
+			permission: "clinic:manage:own",
+			role: "PROFESSIONAL",
+			scenario: "non-owner",
+			expected: false,
+		},
+		{
+			permission: "clinic:manage:own",
+			role: "ADMIN",
+			scenario: "non-owner",
+			expected: true,
+		},
+		{
+			permission: "clinic:manage:own",
+			role: "PATIENT",
+			scenario: "owner",
+			expected: false,
+		},
+	])("$permission — $role ($scenario) → $expected", ({
+		permission,
+		role,
+		scenario,
+		expected,
+	}) => {
+		const attrs = scenario === "owner" ? OWNER : NOT_OWNER;
+		expect(PERMISSIONS[permission](role, attrs)).toBe(expected);
 	});
 
-	it("appointment:confirm — PROFESSIONAL and ADMIN allowed, PATIENT denied", () => {
-		expect(PERMISSIONS["appointment:confirm"]("PROFESSIONAL")).toBe(true);
-		expect(PERMISSIONS["appointment:confirm"]("ADMIN")).toBe(true);
-		expect(PERMISSIONS["appointment:confirm"]("PATIENT")).toBe(false);
-	});
-
-	it("admin:access — only ADMIN", () => {
-		expect(PERMISSIONS["admin:access"]("ADMIN")).toBe(true);
-		expect(PERMISSIONS["admin:access"]("PROFESSIONAL")).toBe(false);
-		expect(PERMISSIONS["admin:access"]("PATIENT")).toBe(false);
-		expect(PERMISSIONS["admin:access"]("RECEPTIONIST")).toBe(false);
-	});
-
-	it("clinic:manage — PROFESSIONAL and ADMIN", () => {
-		expect(PERMISSIONS["clinic:manage"]("PROFESSIONAL")).toBe(true);
-		expect(PERMISSIONS["clinic:manage"]("ADMIN")).toBe(true);
-		expect(PERMISSIONS["clinic:manage"]("PATIENT")).toBe(false);
+	it("appointment:view:own — without ownerId falls back to the role check", () => {
+		expect(
+			PERMISSIONS["appointment:view:own"]("PATIENT", { userId: "user-1" }),
+		).toBe(true);
+		expect(
+			PERMISSIONS["appointment:view:own"]("PROFESSIONAL", { userId: "user-1" }),
+		).toBe(true);
+		expect(
+			PERMISSIONS["appointment:view:own"]("RECEPTIONIST", { userId: "user-1" }),
+		).toBe(false);
 	});
 });
