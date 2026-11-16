@@ -1,26 +1,34 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
+// Native <select> stand-in for the Radix select so value/onValueChange can be exercised in jsdom.
 vi.mock("@/components/ui/select", () => ({
 	Select: ({
 		children,
 		value,
+		onValueChange,
 	}: {
 		children: React.ReactNode;
 		value?: string;
+		onValueChange?: (v: string) => void;
 	}) => (
-		<div data-testid="select" data-value={value}>
+		<select
+			aria-label="modalidade"
+			value={value ?? ""}
+			onChange={(e) => onValueChange?.(e.target.value)}
+		>
 			{children}
-		</div>
+		</select>
 	),
 	SelectTrigger: ({ children }: { children: React.ReactNode }) => (
-		<div>{children}</div>
+		<>{children}</>
 	),
 	SelectValue: ({ placeholder }: { placeholder?: string }) => (
-		<span>{placeholder}</span>
+		<option value="">{placeholder}</option>
 	),
 	SelectContent: ({ children }: { children: React.ReactNode }) => (
-		<div>{children}</div>
+		<>{children}</>
 	),
 	SelectItem: ({
 		children,
@@ -28,32 +36,37 @@ vi.mock("@/components/ui/select", () => ({
 	}: {
 		children: React.ReactNode;
 		value: string;
-	}) => <div data-value={value}>{children}</div>,
+	}) => <option value={value}>{children}</option>,
 }));
 
 import { ProcedureModalitySelect } from "./ProcedureModalitySelect";
 
 describe("ProcedureModalitySelect", () => {
-	it("renders Presencial option", () => {
+	it("renderiza as opções Presencial e Online", () => {
 		render(<ProcedureModalitySelect onChange={vi.fn()} />);
-		expect(screen.getByText("Presencial")).toBeInTheDocument();
+		expect(screen.getByRole("option", { name: "Presencial" })).toHaveValue(
+			"IN_PERSON",
+		);
+		expect(screen.getByRole("option", { name: "Online" })).toHaveValue(
+			"ONLINE",
+		);
 	});
 
-	it("renders Online option", () => {
+	it("mostra o placeholder quando nada foi escolhido", () => {
 		render(<ProcedureModalitySelect onChange={vi.fn()} />);
-		expect(screen.getByText("Online")).toBeInTheDocument();
-	});
-
-	it("renders placeholder text", () => {
-		render(<ProcedureModalitySelect onChange={vi.fn()} />);
+		expect(screen.getByRole("combobox")).toHaveValue("");
 		expect(screen.getByText("Selecione (opcional)")).toBeInTheDocument();
 	});
 
-	it("passes value to Select", () => {
+	it("chama onChange com o valor selecionado", async () => {
+		const onChange = vi.fn();
+		render(<ProcedureModalitySelect onChange={onChange} />);
+		await userEvent.selectOptions(screen.getByRole("combobox"), "ONLINE");
+		expect(onChange).toHaveBeenCalledWith("ONLINE");
+	});
+
+	it("reflete o valor selecionado no select", () => {
 		render(<ProcedureModalitySelect value="IN_PERSON" onChange={vi.fn()} />);
-		expect(screen.getByTestId("select")).toHaveAttribute(
-			"data-value",
-			"IN_PERSON",
-		);
+		expect(screen.getByRole("combobox")).toHaveValue("IN_PERSON");
 	});
 });

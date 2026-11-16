@@ -23,8 +23,16 @@ vi.mock("@/components/ui/button", () => ({
 	),
 }));
 vi.mock("@/components/ui/select", () => ({
-	Select: ({ children }: { children: React.ReactNode }) => (
-		<div>{children}</div>
+	Select: ({
+		children,
+		onValueChange,
+	}: {
+		children: React.ReactNode;
+		onValueChange?: (v: string) => void;
+	}) => (
+		<button type="button" onClick={() => onValueChange?.("20")}>
+			{children}
+		</button>
 	),
 	SelectTrigger: ({ children }: { children: React.ReactNode }) => (
 		<div>{children}</div>
@@ -87,5 +95,33 @@ describe("ProfessionalsNearbyControl not-nearby", () => {
 			/>,
 		);
 		expect(screen.getByText("Perto de mim")).toBeDisabled();
+	});
+});
+
+describe("ProfessionalsNearbyControl nearby", () => {
+	it("renders 'Perto de você' badge when in nearby mode", () => {
+		render(<ProfessionalsNearbyControl {...base} isNearbyMode={true} />);
+		expect(screen.getByText(/Perto de você/)).toBeInTheDocument();
+	});
+
+	it("renders radius options when in nearby mode", () => {
+		render(<ProfessionalsNearbyControl {...base} isNearbyMode={true} />);
+		expect(screen.getByText("5 km")).toBeInTheDocument();
+		expect(screen.getByText("10 km")).toBeInTheDocument();
+	});
+
+	it("calls onClearLocation when X button clicked in nearby mode", async () => {
+		const onClearLocation = vi.fn();
+		render(
+			<ProfessionalsNearbyControl
+				{...base}
+				isNearbyMode={true}
+				onClearLocation={onClearLocation}
+			/>,
+		);
+		const buttons = screen.getAllByRole("button");
+		const xButton = buttons[buttons.length - 1];
+		await userEvent.click(xButton);
+		expect(onClearLocation).toHaveBeenCalledTimes(1);
 	});
 });

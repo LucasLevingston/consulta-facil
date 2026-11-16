@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/features/professionals", () => ({}));
@@ -80,5 +81,45 @@ describe("CertificateDialogForm render", () => {
 		);
 		expect(screen.getByText("Cancelar")).toBeInTheDocument();
 		expect(screen.getByText("Salvar")).toBeInTheDocument();
+	});
+});
+
+describe("CertificateDialogForm state", () => {
+	it("shows Salvando... when isPending=true", () => {
+		render(
+			<CertificateDialogForm
+				form={form}
+				isPending={true}
+				onSubmit={vi.fn()}
+				onClose={vi.fn()}
+			/>,
+		);
+		expect(screen.getByText("Salvando...")).toBeInTheDocument();
+	});
+
+	it("disables submit when isPending=true", () => {
+		render(
+			<CertificateDialogForm
+				form={form}
+				isPending={true}
+				onSubmit={vi.fn()}
+				onClose={vi.fn()}
+			/>,
+		);
+		expect(screen.getByText("Salvando...")).toBeDisabled();
+	});
+
+	it("calls onClose when Cancelar clicked", async () => {
+		const onClose = vi.fn();
+		render(
+			<CertificateDialogForm
+				form={form}
+				isPending={false}
+				onSubmit={vi.fn()}
+				onClose={onClose}
+			/>,
+		);
+		await userEvent.click(screen.getByText("Cancelar"));
+		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 });
