@@ -14,6 +14,10 @@ export default defineConfig({
 		globals: true,
 		setupFiles: "./src/__tests__/setup.ts",
 		execArgv: nodeHasWebStorage ? ["--no-experimental-webstorage"] : [],
+		// Dialog/form tests driven by userEvent take several seconds once v8
+		// coverage instrumentation is on and the machine is busy (pre-push, CI);
+		// the 5s default made them flaky.
+		testTimeout: 15_000,
 		passWithNoTests: true,
 		exclude: ["node_modules/**", ".claude/**", "dist/**"],
 		coverage: {
