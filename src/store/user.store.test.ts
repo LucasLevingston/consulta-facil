@@ -25,7 +25,12 @@ const mockUser = {
 describe("useUserStore", () => {
 	beforeEach(() => {
 		localStorage.clear();
-		useUserStore.setState({ user: null, token: null, isLoading: false });
+		useUserStore.setState({
+			user: null,
+			token: null,
+			isLoading: false,
+			error: null,
+		});
 		vi.clearAllMocks();
 	});
 

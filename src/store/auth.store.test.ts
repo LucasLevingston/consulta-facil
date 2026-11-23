@@ -25,8 +25,14 @@ describe("useAuthStore", () => {
 			token: null,
 			isAuthenticated: false,
 			isLoading: false,
+			error: null,
 		});
-		useUserStore.setState({ user: null, token: null, isLoading: false });
+		useUserStore.setState({
+			user: null,
+			token: null,
+			isLoading: false,
+			error: null,
+		});
 		vi.clearAllMocks();
 	});
 
