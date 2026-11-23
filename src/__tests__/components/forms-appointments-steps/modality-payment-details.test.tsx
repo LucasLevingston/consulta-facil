@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormProvider, useForm } from "react-hook-form";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { DetailsStep } from "@/components/forms/Appointments/steps/DetailsStep";
 import { ModalityStep } from "@/components/forms/Appointments/steps/ModalityStep";
 import { PaymentStep } from "@/components/forms/Appointments/steps/PaymentStep";
@@ -20,6 +20,7 @@ function makeProfessional(
 }
 
 describe("ModalityStep", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({ defaultModality }: { defaultModality?: string } = {}) {
 		const form = useForm<{ modality: string | undefined }>({
 			defaultValues: { modality: defaultModality },
@@ -70,6 +71,7 @@ describe("ModalityStep", () => {
 });
 
 describe("PaymentStep", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({
 		selectedProfessional,
 		defaultMethod,
@@ -185,6 +187,7 @@ describe("PaymentStep", () => {
 });
 
 describe("DetailsStep", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper() {
 		const form = useForm<{
 			reason: string | undefined;

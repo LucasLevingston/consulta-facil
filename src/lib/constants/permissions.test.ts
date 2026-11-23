@@ -190,15 +190,13 @@ describe("PERMISSIONS — ownership-aware rules (allowOwn)", () => {
 			scenario: "owner",
 			expected: false,
 		},
-	])("$permission — $role ($scenario) → $expected", ({
-		permission,
-		role,
-		scenario,
-		expected,
-	}) => {
-		const attrs = scenario === "owner" ? OWNER : NOT_OWNER;
-		expect(PERMISSIONS[permission](role, attrs)).toBe(expected);
-	});
+	])(
+		"$permission — $role ($scenario) → $expected",
+		({ permission, role, scenario, expected }) => {
+			const attrs = scenario === "owner" ? OWNER : NOT_OWNER;
+			expect(PERMISSIONS[permission](role, attrs)).toBe(expected);
+		},
+	);
 
 	it("appointment:view:own — without ownerId falls back to the role check", () => {
 		expect(

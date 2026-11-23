@@ -1,10 +1,14 @@
 "use client";
 
 import {
+	coreFeatures,
+	createCoreRowModel,
+	createPaginatedRowModel,
 	flexRender,
-	getCoreRowModel,
-	getPaginationRowModel,
-	useReactTable,
+	type RowData,
+	stockFeatures,
+	tableFeatures,
+	useTable,
 } from "@tanstack/react-table";
 
 import {
@@ -17,12 +21,22 @@ import {
 } from "@/components/ui/table";
 import type { DataTableProps } from "./DataTable.types";
 
-export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
-	const table = useReactTable({
+const _features = tableFeatures({
+	...coreFeatures,
+	...stockFeatures,
+	coreRowModel: createCoreRowModel(),
+	paginatedRowModel: createPaginatedRowModel(),
+});
+
+export function DataTable<TData extends RowData>({
+	columns,
+	data,
+}: DataTableProps<TData>) {
+	const table = useTable({
+		features: _features,
 		data,
-		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
+		// biome-ignore lint/suspicious/noExplicitAny: v9 column definitions use any for feature types
+		columns: columns as any,
 	});
 
 	return (

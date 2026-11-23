@@ -161,6 +161,7 @@ describe("TimeSlotPicker", () => {
 });
 
 describe("DatePickerField", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({
 		isQueueMode = false,
 		isDayDisabled = () => false,
@@ -264,6 +265,7 @@ describe("DatePickerField", () => {
 });
 
 describe("DateTimeStep", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({
 		hookOverrides = {},
 	}: {

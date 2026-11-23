@@ -1,7 +1,7 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, RowData } from "@tanstack/react-table";
 
-export interface DataTableProps<TData> {
-	// biome-ignore lint/suspicious/noExplicitAny: tanstack table requires any for column value type
-	columns: ColumnDef<TData, any>[];
+export interface DataTableProps<TData extends RowData> {
+	// biome-ignore lint/suspicious/noExplicitAny: tanstack table v9 requires any for feature/value types
+	columns: ColumnDef<any, TData, any>[];
 	data: TData[];
 }

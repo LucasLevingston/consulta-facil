@@ -25,9 +25,9 @@ class ResizeObserverMock {
 	unobserve() {}
 	disconnect() {}
 }
-// biome-ignore lint: polyfill de teste
-(global as any).ResizeObserver =
-	(global as any).ResizeObserver ?? ResizeObserverMock;
+// biome-ignore lint/suspicious/noExplicitAny: test polyfill — jsdom não tem ResizeObserver
+const _g = global as any;
+_g.ResizeObserver = _g.ResizeObserver ?? ResizeObserverMock;
 if (!Element.prototype.scrollIntoView) {
 	Element.prototype.scrollIntoView = () => {};
 }
@@ -206,6 +206,7 @@ describe("SelectedProfessionalCard", () => {
 });
 
 describe("ProfessionalFormField", () => {
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({
 		professionals,
 		professionalsLoading = false,
@@ -310,6 +311,7 @@ describe("ProfessionalStep", () => {
 	// ProfessionalStep não envolve o form em <Form>/<FormProvider> — isso é
 	// feito pelo componente pai (AppointmentForm) — então o teste precisa
 	// fornecer o contexto do react-hook-form manualmente.
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Wrapper({
 		hookOverrides = {},
 		initialSpecialtyFilter,

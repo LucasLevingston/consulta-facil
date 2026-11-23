@@ -5,9 +5,9 @@ import { reducer, toast, useToast } from "./use-toast";
 describe("reducer (use-toast)", () => {
 	it("ADD_TOAST adiciona um novo toast respeitando o TOAST_LIMIT (1)", () => {
 		const state = { toasts: [] };
-		// biome-ignore lint/suspicious/noExplicitAny: fixture mínima de ToasterToast em teste
 		const next = reducer(state, {
 			type: "ADD_TOAST",
+			// biome-ignore lint/suspicious/noExplicitAny: fixture mínima de ToasterToast em teste
 			toast: { id: "1", open: true } as any,
 		});
 		expect(next.toasts).toHaveLength(1);

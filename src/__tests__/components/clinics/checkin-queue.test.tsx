@@ -3,6 +3,9 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AppointmentResponse } from "@/features/appointments";
 
+vi.mock("next/dynamic", () => ({
+	default: () => () => <svg />,
+}));
 vi.mock("sonner", () => ({
 	toast: { success: vi.fn(), error: vi.fn() },
 }));

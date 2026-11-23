@@ -57,26 +57,30 @@ describe("PatientConsentSection", () => {
 			"privacyConsent",
 			"Você deve concordar com a política de privacidade.",
 		] as const,
-	])("exibe a mensagem de erro de %s quando o form possui esse erro", async (fieldName, message) => {
-		function ErrorHarness() {
-			const form = useForm<ConsentValues>({
-				defaultValues: {
-					treatmentConsent: false,
-					disclosureConsent: false,
-					privacyConsent: false,
-				},
-			});
-			useEffect(() => {
-				form.setError(fieldName, { message });
-				// eslint-disable-next-line react-hooks/exhaustive-deps
-			}, [form.setError]);
-			return (
-				<FormProvider {...form}>
-					<PatientConsentSection form={form as never} />
-				</FormProvider>
-			);
-		}
-		render(<ErrorHarness />);
-		expect(await screen.findByText(message)).toBeInTheDocument();
-	});
+	])(
+		"exibe a mensagem de erro de %s quando o form possui esse erro",
+		async (fieldName, message) => {
+			// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
+			function ErrorHarness() {
+				const form = useForm<ConsentValues>({
+					defaultValues: {
+						treatmentConsent: false,
+						disclosureConsent: false,
+						privacyConsent: false,
+					},
+				});
+				useEffect(() => {
+					form.setError(fieldName, { message });
+					// eslint-disable-next-line react-hooks/exhaustive-deps
+				}, [form.setError]);
+				return (
+					<FormProvider {...form}>
+						<PatientConsentSection form={form as never} />
+					</FormProvider>
+				);
+			}
+			render(<ErrorHarness />);
+			expect(await screen.findByText(message)).toBeInTheDocument();
+		},
+	);
 });

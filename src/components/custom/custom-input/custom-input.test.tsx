@@ -33,6 +33,7 @@ describe("CustomInput", () => {
 	});
 
 	it("renders with explicit Icon prop", () => {
+		// biome-ignore lint/correctness/noComponentHookFactories: inline icon fixture
 		const Icon = () => <svg data-testid="custom-icon" />;
 		render(<CustomInput icon={Icon} />);
 		expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
