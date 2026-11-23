@@ -30,6 +30,11 @@ export default function RootLayout({
 		>
 			<head>
 				<link rel="icon" href="/logo.png" />
+				{/* FIGMA CAPTURE TEMP - REMOVE AFTER IMPORT */}
+				<script
+					src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+					async
+				></script>
 			</head>
 			<body className="min-h-screen">
 				<Providers>{children}</Providers>
