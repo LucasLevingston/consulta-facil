@@ -7,7 +7,6 @@ import { ClinicsMap } from "@/components/custom/map/ClinicsMap";
 import PageHeader from "@/components/custom/page-header";
 import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { Button } from "@/components/ui/button";
-import { QueryBoundary } from "@/providers/query-boundary";
 import { useClinicsFilters } from "./use-clinics-filters";
 
 function ClinicsPageContent() {
@@ -18,12 +17,10 @@ function ClinicsPageContent() {
 		derived,
 		actions,
 		displayed,
-		isLoading,
-		error,
 	} = clinics;
 
 	return (
-		<QueryBoundary isLoading={isLoading} error={error}>
+		<>
 			<PageHeader
 				title="Clínicas"
 				description="Encontre clínicas e centros médicos cadastrados na plataforma."
@@ -83,7 +80,7 @@ function ClinicsPageContent() {
 					))}
 				</div>
 			)}
-		</QueryBoundary>
+		</>
 	);
 }
 

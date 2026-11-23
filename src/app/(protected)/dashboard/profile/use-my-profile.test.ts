@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -24,22 +24,19 @@ const patient = { id: "p-1", name: "João", email: "joao@test.com" };
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("useMyProfile", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when enabled=false", () => {
-		const { result } = renderHook(() => useMyProfile(false), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("fetches when enabled", async () => {
+	it("fetches profile data", async () => {
 		mockGetMyProfile.mockResolvedValueOnce(patient as never);
-		const { result } = renderHook(() => useMyProfile(true), {
+		const { result } = renderHook(() => useMyProfile(), {
 			wrapper: wrapper(),
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));

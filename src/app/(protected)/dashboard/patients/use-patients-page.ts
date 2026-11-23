@@ -47,7 +47,7 @@ export function usePatientsPage() {
 		queryParams,
 	);
 
-	const { data, isLoading, error } = isAdmin ? adminQuery : professionalQuery;
+	const { data } = isAdmin ? adminQuery : professionalQuery;
 
 	const patients = data?.content ?? [];
 	const totalPages = data?.totalPages ?? 0;
@@ -60,8 +60,6 @@ export function usePatientsPage() {
 		page,
 		search,
 		sort,
-		isLoading,
-		error,
 		isAdmin,
 		updateParams,
 	};

@@ -6,18 +6,10 @@ export function useClinicsListSource(
 	loc: ReturnType<typeof useClinicsLocation>,
 ) {
 	const isNearbyMode = loc.userLocation !== null;
-	const {
-		data: allClinics = [],
-		isLoading: allLoading,
-		error: allError,
-	} = useClinics();
-	const {
-		data: nearbyClinics = [],
-		isLoading: nearbyLoading,
-		error: nearbyError,
-	} = useClinicsNearby(
-		loc.userLocation?.lat ?? null,
-		loc.userLocation?.lng ?? null,
+	const { data: allClinics = [] } = useClinics();
+	const { data: nearbyClinics = [] } = useClinicsNearby(
+		loc.userLocation?.lat ?? 0,
+		loc.userLocation?.lng ?? 0,
 		loc.radiusKm,
 	);
 
@@ -25,7 +17,7 @@ export function useClinicsListSource(
 		isNearbyMode,
 		allClinics,
 		baseList: isNearbyMode ? nearbyClinics : allClinics,
-		isLoading: isNearbyMode ? nearbyLoading : allLoading,
-		error: isNearbyMode ? nearbyError : allError,
+		isLoading: false,
+		error: null,
 	};
 }

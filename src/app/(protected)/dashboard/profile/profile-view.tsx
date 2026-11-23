@@ -4,6 +4,7 @@ import {
 	usePatientAppointments,
 	useProfessionalAppointments,
 } from "@/components/appointments/hooks";
+import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { useMyProfessionalProfile } from "@/components/professionals/hooks";
 import { ProfileAppointmentStats } from "@/components/profile/profile-appointment-stats";
 import { ProfileHero } from "@/components/profile/profile-hero";
@@ -16,7 +17,17 @@ import { useUserStore } from "@/features/auth";
 import { QueryBoundary } from "@/providers/query-boundary";
 import { useMyProfile } from "./use-my-profile";
 
-export function ProfileView() {
+function PatientMedicalSection() {
+	const { data: patientProfile } = useMyProfile();
+	return (
+		<ProfilePatientMedicalInfo
+			patientProfile={patientProfile}
+			isLoading={false}
+		/>
+	);
+}
+
+function ProfileContent() {
 	const { user } = useUserStore();
 
 	const isProfessional =
@@ -29,7 +40,6 @@ export function ProfileView() {
 		isProfessional ? (user?.id ?? "") : "",
 	);
 	const professionalProfile = useMyProfessionalProfile(isProfessional);
-	const patientProfile = useMyProfile(!isProfessional);
 
 	const appointments = isProfessional
 		? (professionalQuery.data?.content ?? [])
@@ -79,10 +89,9 @@ export function ProfileView() {
 					{isProfessional ? (
 						<ProfileAppointmentStats appointments={appointments} />
 					) : (
-						<ProfilePatientMedicalInfo
-							patientProfile={patientProfile.data}
-							isLoading={patientProfile.isLoading}
-						/>
+						<SuspenseBoundary>
+							<PatientMedicalSection />
+						</SuspenseBoundary>
 					)}
 				</div>
 
@@ -90,4 +99,8 @@ export function ProfileView() {
 			</div>
 		</QueryBoundary>
 	);
+}
+
+export function ProfileView() {
+	return <ProfileContent />;
 }

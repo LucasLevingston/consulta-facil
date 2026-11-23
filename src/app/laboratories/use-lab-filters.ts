@@ -23,23 +23,12 @@ export function useLabFilters(): UseLabFiltersReturn {
 	const loc = useLabLocation();
 	const isNearbyMode = loc.userLocation !== null;
 
-	const {
-		data: allLabs = [],
-		isLoading: allLoading,
-		error: allError,
-	} = useExamLabs();
-	const {
-		data: nearbyLabs = [],
-		isLoading: nearbyLoading,
-		error: nearbyError,
-	} = useExamLabsNearby(
-		loc.userLocation?.lat ?? null,
-		loc.userLocation?.lng ?? null,
+	const { data: allLabs = [] } = useExamLabs();
+	const { data: nearbyLabs = [] } = useExamLabsNearby(
+		loc.userLocation?.lat ?? 0,
+		loc.userLocation?.lng ?? 0,
 		loc.radiusKm,
 	);
-
-	const isLoading = isNearbyMode ? nearbyLoading : allLoading;
-	const error = isNearbyMode ? nearbyError : allError;
 
 	const availableStates = useMemo(
 		() =>
@@ -92,7 +81,7 @@ export function useLabFilters(): UseLabFiltersReturn {
 			clearLocation: loc.clearLocation,
 		},
 		displayed,
-		isLoading,
-		error,
+		isLoading: false,
+		error: null,
 	};
 }

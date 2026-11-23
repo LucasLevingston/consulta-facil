@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -16,7 +16,11 @@ import { useAllAdminPatients } from "./use-all-admin-patients";
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("useAllAdminPatients", () => {

@@ -7,7 +7,6 @@ import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense
 import { LabCard } from "@/components/laboratories/lab-card";
 import { LabFilters } from "@/components/laboratories/lab-filters";
 import { Button } from "@/components/ui/button";
-import { QueryBoundary } from "@/providers/query-boundary";
 import { useLabFilters } from "./use-lab-filters";
 
 function LaboratoriesPageContent() {
@@ -15,10 +14,10 @@ function LaboratoriesPageContent() {
 	const examRequestId = searchParams.get("examId");
 
 	const labs = useLabFilters();
-	const { derived, actions, displayed, isLoading, error } = labs;
+	const { derived, actions, displayed } = labs;
 
 	return (
-		<QueryBoundary isLoading={isLoading} error={error}>
+		<>
 			<PageHeader
 				title="Laboratórios de Exames"
 				description={
@@ -72,7 +71,7 @@ function LaboratoriesPageContent() {
 					))}
 				</div>
 			)}
-		</QueryBoundary>
+		</>
 	);
 }
 

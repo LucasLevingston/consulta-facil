@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Loader2, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { useClinicById } from "@/components/clinic/hooks";
@@ -14,7 +14,7 @@ import { useClinicQueue } from "./use-clinic-queue";
 
 function ClinicQueueContent({ id }: { id: string }) {
 	const { data: clinic } = useClinicById(id);
-	const { data: queue = [], isLoading } = useClinicQueue(id);
+	const { data: queue = [] } = useClinicQueue(id);
 
 	const byProfessional = useMemo(() => {
 		const map = new Map<string, AppointmentResponse[]>();
@@ -52,11 +52,7 @@ function ClinicQueueContent({ id }: { id: string }) {
 					<CheckInQrSection clinicId={id} />
 				</div>
 
-				{isLoading ? (
-					<div className="flex h-40 items-center justify-center">
-						<Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-					</div>
-				) : byProfessional.length === 0 ? (
+				{byProfessional.length === 0 ? (
 					<div className="flex h-48 flex-col items-center justify-center rounded-2xl border border-dashed border-border gap-3">
 						<Users className="h-10 w-10 text-muted-foreground/40" />
 						<p className="text-muted-foreground">
