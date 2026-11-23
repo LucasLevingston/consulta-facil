@@ -8,6 +8,7 @@ interface AuthState {
 	token: string | null;
 	isLoading: boolean;
 	isAuthenticated: boolean;
+	error: string | null;
 	getToken: () => string | null;
 	setAuth: (token: string) => void;
 	login: (email: string, password: string) => Promise<void>;
@@ -19,12 +20,14 @@ interface AuthState {
 	) => Promise<void>;
 	recover: (email: string) => Promise<void>;
 	logout: () => void;
+	clearError: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
 	token: getStoredToken(),
 	isLoading: false,
 	isAuthenticated: !!getStoredToken(),
+	error: null,
 
 	getToken: () => get().token,
 
@@ -35,20 +38,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 	},
 
 	login: async (email, password) => {
-		set({ isLoading: true });
+		set({ isLoading: true, error: null });
 		try {
 			const { data } = await api.post("/auth/login", { email, password });
 			const token = data?.token ?? null;
 			set({ token, isAuthenticated: !!token });
 			setStoredToken(token);
 			if (token) await useUserStore.getState().loadUser();
+		} catch (e: unknown) {
+			set({
+				error: e instanceof Error ? e.message : "Erro inesperado",
+				isLoading: false,
+			});
+			throw e;
 		} finally {
 			set({ isLoading: false });
 		}
 	},
 
 	register: async (name, email, password, cpf) => {
-		set({ isLoading: true });
+		set({ isLoading: true, error: null });
 		try {
 			const { data } = await api.post("/auth/register", {
 				name,
@@ -60,12 +69,31 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 			set({ token, isAuthenticated: !!token });
 			setStoredToken(token);
 			if (token) await useUserStore.getState().loadUser();
+		} catch (e: unknown) {
+			set({
+				error: e instanceof Error ? e.message : "Erro inesperado",
+				isLoading: false,
+			});
+			throw e;
 		} finally {
 			set({ isLoading: false });
 		}
 	},
 
-	recover: async () => Promise.resolve(),
+	recover: async (email) => {
+		set({ isLoading: true, error: null });
+		try {
+			await api.post("/auth/forgot-password", { email });
+		} catch (e: unknown) {
+			set({
+				error: e instanceof Error ? e.message : "Erro inesperado",
+				isLoading: false,
+			});
+			throw e;
+		} finally {
+			set({ isLoading: false });
+		}
+	},
 
 	logout: () => {
 		const { clearUser } = useUserStore.getState();
@@ -73,4 +101,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 		clearUser();
 		setStoredToken(null);
 	},
+
+	clearError: () => set({ error: null }),
 }));

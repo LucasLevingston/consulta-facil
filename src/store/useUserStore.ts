@@ -16,18 +16,21 @@ interface UserStore {
 	user: UserResponse | null;
 	token: string | null;
 	isLoading: boolean;
+	error: string | null;
 	getToken: () => string | null;
 	loadUser: () => Promise<void>;
 	clearUser: () => void;
+	clearError: () => void;
 }
 
 export const useUserStore = create<UserStore>((set, get) => ({
 	user: null,
 	isLoading: false,
+	error: null,
 	token: getStoredToken(),
 	getToken: () => get().token,
 	loadUser: async () => {
-		set({ isLoading: true });
+		set({ isLoading: true, error: null });
 		try {
 			const token = getStoredToken();
 
@@ -44,7 +47,12 @@ export const useUserStore = create<UserStore>((set, get) => ({
 				set({ user: null, token: null, isLoading: false });
 				return;
 			}
-			set({ user: null, token: getStoredToken(), isLoading: false });
+			set({
+				user: null,
+				token: getStoredToken(),
+				isLoading: false,
+				error: error instanceof Error ? error.message : "Erro inesperado",
+			});
 		}
 	},
 
@@ -52,4 +60,6 @@ export const useUserStore = create<UserStore>((set, get) => ({
 		setStoredToken(null);
 		set({ user: null, token: null });
 	},
+
+	clearError: () => set({ error: null }),
 }));
