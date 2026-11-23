@@ -1,13 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
-	api: { get: vi.fn(), post: vi.fn(), put: vi.fn(), delete: vi.fn() },
+	api: {
+		get: vi.fn(),
+		post: vi.fn(),
+		put: vi.fn(),
+		patch: vi.fn(),
+		delete: vi.fn(),
+	},
 }));
 
 import { api } from "@/config/api";
 import { usersApi } from "./users.api";
 
 const mockGet = vi.mocked(api.get);
+const mockPatch = vi.mocked(api.patch);
 
 const user = {
 	id: "u-1",
@@ -107,5 +114,39 @@ describe("usersApi — getAll paginação e filtros", () => {
 			params: { page: 0, size: 20, role: "ADMIN" },
 		});
 		expect(result.content[0].role).toBe("ADMIN");
+	});
+});
+
+// ── updateNotificationPreferences ─────────────────────────────────────────────
+
+describe("usersApi — updateNotificationPreferences", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	it("faz PATCH em /users/me/notification-preferences com o corpo e retorna o usuário", async () => {
+		mockPatch.mockResolvedValueOnce({
+			data: { ...user, whatsappNotificationsEnabled: false },
+		});
+
+		const result = await usersApi.updateNotificationPreferences({
+			whatsappNotificationsEnabled: false,
+		});
+
+		expect(mockPatch).toHaveBeenCalledWith(
+			"/users/me/notification-preferences",
+			{
+				whatsappNotificationsEnabled: false,
+			},
+		);
+		expect(result.whatsappNotificationsEnabled).toBe(false);
+	});
+
+	it("propaga erros da API", async () => {
+		mockPatch.mockRejectedValueOnce(new Error("401"));
+
+		await expect(
+			usersApi.updateNotificationPreferences({
+				whatsappNotificationsEnabled: true,
+			}),
+		).rejects.toThrow("401");
 	});
 });

@@ -5,6 +5,7 @@ import { usePermission } from "@/components/auth/hooks";
 import { AvatarUpload } from "@/components/custom/avatar-upload";
 import PageHeader from "@/components/custom/page-header";
 import { useApplicationStatus } from "@/components/professionals/hooks";
+import { NotificationPreferencesCard } from "@/components/profile/notification-preferences";
 import {
 	Card,
 	CardContent,
@@ -40,6 +41,7 @@ export function SettingsPageView() {
 					<AvatarUpload size="lg" />
 				</CardContent>
 			</Card>
+			<NotificationPreferencesCard />
 			{isProfessional ? (
 				<ProfessionalSettingsFields
 					userId={user?.id ?? ""}
