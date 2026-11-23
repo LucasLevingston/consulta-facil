@@ -1,17 +1,12 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { examLabKeys } from "@/components/exams/hooks";
 import { examsRepository } from "@/features/exams";
 
-export function useExamLabsNearby(
-	lat: number | null,
-	lng: number | null,
-	radiusKm = 50,
-) {
-	return useQuery({
-		queryKey: examLabKeys.nearby(lat ?? 0, lng ?? 0, radiusKm),
-		queryFn: () => examsRepository.getLabsNearby(lat ?? 0, lng ?? 0, radiusKm),
-		enabled: lat !== null && lng !== null,
+export function useExamLabsNearby(lat: number, lng: number, radiusKm = 50) {
+	return useSuspenseQuery({
+		queryKey: examLabKeys.nearby(lat, lng, radiusKm),
+		queryFn: () => examsRepository.getLabsNearby(lat, lng, radiusKm),
 	});
 }

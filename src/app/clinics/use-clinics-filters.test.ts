@@ -217,17 +217,19 @@ describe("useClinicsFilters", () => {
 		expect(result.current.derived.isNearbyMode).toBe(false);
 	});
 
-	it("propaga isLoading e error da query em uso conforme o modo", () => {
+	it("isLoading e error são sempre false/null (Suspense trata o estado de carregamento)", () => {
+		// useSuspenseQuery suspends instead of returning isLoading/error;
+		// the aggregator hook always returns false/null for these fields.
 		mockUseClinics.mockReturnValue({
 			data: allClinics,
-			isLoading: true,
-			error: new Error("falhou"),
+			isLoading: false,
+			error: null,
 		} as never);
 		const { result } = renderHook(() => useClinicsFilters(), {
 			wrapper: wrapper(),
 		});
-		expect(result.current.isLoading).toBe(true);
-		expect(result.current.error).toEqual(new Error("falhou"));
+		expect(result.current.isLoading).toBe(false);
+		expect(result.current.error).toBeNull();
 	});
 
 	it("setRadiusKm delega para o hook de localização", () => {

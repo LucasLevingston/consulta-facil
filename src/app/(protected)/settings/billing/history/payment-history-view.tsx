@@ -1,22 +1,15 @@
 "use client";
 
 import { Receipt } from "lucide-react";
-import { Suspense } from "react";
 import { PaymentTable } from "@/components/billing/PaymentTable";
 import PageHeader from "@/components/custom/page-header";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { useUserStore } from "@/features/auth";
 import { useMyBillingPayments } from "./use-my-billing-payments";
 
 function PaymentHistoryContent() {
 	const { user } = useUserStore();
-	const { data: payments = [], isLoading } = useMyBillingPayments(
-		user?.id ?? "",
-	);
-
-	if (isLoading) {
-		return <Skeleton className="h-64 w-full" />;
-	}
+	const { data: payments = [] } = useMyBillingPayments(user?.id ?? "");
 
 	return <PaymentTable payments={payments} />;
 }
@@ -29,9 +22,9 @@ export function PaymentHistoryView() {
 				description="Todos os seus pagamentos realizados na plataforma."
 				icon={<Receipt className="h-6 w-6" />}
 			/>
-			<Suspense fallback={<Skeleton className="h-64 w-full" />}>
+			<SuspenseBoundary>
 				<PaymentHistoryContent />
-			</Suspense>
+			</SuspenseBoundary>
 		</div>
 	);
 }

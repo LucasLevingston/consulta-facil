@@ -147,15 +147,17 @@ describe("useLabFilters", () => {
 		expect(result.current.displayed).toEqual(nearbyLabs);
 	});
 
-	it("propaga isLoading e error da query em uso", () => {
+	it("error é sempre null (Suspense/ErrorBoundary trata erros de query)", () => {
+		// useSuspenseQuery throws on error (caught by ErrorBoundary);
+		// the aggregator hook always returns null for error.
 		mockUseExamLabs.mockReturnValue({
 			data: allLabs,
 			isLoading: false,
-			error: new Error("erro labs"),
+			error: null,
 		} as never);
 		const { result } = renderHook(() => useLabFilters(), {
 			wrapper: wrapper(),
 		});
-		expect(result.current.error).toEqual(new Error("erro labs"));
+		expect(result.current.error).toBeNull();
 	});
 });

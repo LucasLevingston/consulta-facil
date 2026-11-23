@@ -1,9 +1,9 @@
 "use client";
 
 import { Search, UserRound } from "lucide-react";
-import { Suspense } from "react";
 import { CustomPagination } from "@/components/custom/custom-pagination";
 import PageHeader from "@/components/custom/page-header";
+import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import { PatientsGrid } from "@/components/patients/PatientsGrid";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,7 +13,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { QueryBoundary } from "@/providers/query-boundary";
 import { usePatientsPage } from "./use-patients-page";
 
 function PatientsContent() {
@@ -24,8 +23,6 @@ function PatientsContent() {
 		page,
 		search,
 		sort,
-		isLoading,
-		error,
 		isAdmin,
 		updateParams,
 	} = usePatientsPage();
@@ -44,46 +41,44 @@ function PatientsContent() {
 				countLabel="paciente"
 			/>
 
-			<QueryBoundary isLoading={isLoading} error={error}>
-				<div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-					<div className="relative flex-1">
-						<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-						<Input
-							placeholder="Buscar por nome..."
-							value={search}
-							onChange={(e) => updateParams({ q: e.target.value || null })}
-							className="pl-9 rounded-xl"
-						/>
-					</div>
-
-					<Select value={sort} onValueChange={(v) => updateParams({ sort: v })}>
-						<SelectTrigger className="w-full rounded-xl sm:w-[180px]">
-							<SelectValue placeholder="Ordenar por" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="recent">Consulta mais recente</SelectItem>
-							<SelectItem value="name">Nome (A–Z)</SelectItem>
-						</SelectContent>
-					</Select>
+			<div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+				<div className="relative flex-1">
+					<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+					<Input
+						placeholder="Buscar por nome..."
+						value={search}
+						onChange={(e) => updateParams({ q: e.target.value || null })}
+						className="pl-9 rounded-xl"
+					/>
 				</div>
 
-				<PatientsGrid patients={patients} />
+				<Select value={sort} onValueChange={(v) => updateParams({ sort: v })}>
+					<SelectTrigger className="w-full rounded-xl sm:w-[180px]">
+						<SelectValue placeholder="Ordenar por" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="recent">Consulta mais recente</SelectItem>
+						<SelectItem value="name">Nome (A–Z)</SelectItem>
+					</SelectContent>
+				</Select>
+			</div>
 
-				<CustomPagination
-					currentPage={page}
-					totalPages={totalPages}
-					onPageChange={(p) => updateParams({ page: String(p) }, false)}
-					className="pt-2"
-				/>
-			</QueryBoundary>
+			<PatientsGrid patients={patients} />
+
+			<CustomPagination
+				currentPage={page}
+				totalPages={totalPages}
+				onPageChange={(p) => updateParams({ page: String(p) }, false)}
+				className="pt-2"
+			/>
 		</div>
 	);
 }
 
 export function PatientsView() {
 	return (
-		<Suspense>
+		<SuspenseBoundary>
 			<PatientsContent />
-		</Suspense>
+		</SuspenseBoundary>
 	);
 }

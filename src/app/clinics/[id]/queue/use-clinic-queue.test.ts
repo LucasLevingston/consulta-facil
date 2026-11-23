@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/config/api", () => ({
@@ -22,25 +22,31 @@ const queueItem = { id: "a-1", status: "WAITING" };
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("useClinicQueue", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it("disabled when clinicId empty", () => {
-		const { result } = renderHook(() => useClinicQueue(""), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("fetches when clinicId provided", async () => {
+	it("fetches queue for given clinicId", async () => {
 		mockGetQueue.mockResolvedValueOnce([queueItem] as never);
 		const { result } = renderHook(() => useClinicQueue("c-1"), {
 			wrapper: wrapper(),
 		});
 		await waitFor(() => expect(result.current.isSuccess).toBe(true));
 		expect(result.current.data).toHaveLength(1);
+	});
+
+	it("fetches empty queue when clinicId is empty string", async () => {
+		mockGetQueue.mockResolvedValueOnce([] as never);
+		const { result } = renderHook(() => useClinicQueue(""), {
+			wrapper: wrapper(),
+		});
+		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		expect(result.current.data).toHaveLength(0);
 	});
 });

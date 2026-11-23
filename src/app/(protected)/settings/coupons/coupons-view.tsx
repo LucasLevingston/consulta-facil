@@ -2,6 +2,7 @@
 
 import { Tag } from "lucide-react";
 import PageHeader from "@/components/custom/page-header";
+import { SuspenseBoundary } from "@/components/custom/suspense-boundary/suspense-boundary";
 import {
 	Table,
 	TableBody,
@@ -19,9 +20,9 @@ const brl = (n: number) =>
 		currency: "BRL",
 	}).format(n);
 
-export function CouponsSettingsView() {
+function CouponsContent() {
 	const { user } = useUserStore();
-	const { data: usages = [], isLoading } = useUserCouponHistory(user?.id ?? "");
+	const { data: usages = [] } = useUserCouponHistory(user?.id ?? "");
 
 	return (
 		<div className="space-y-6">
@@ -33,9 +34,7 @@ export function CouponsSettingsView() {
 				icon={<Tag className="h-6 w-6" />}
 			/>
 
-			{isLoading ? (
-				<p className="text-sm text-muted-foreground">Carregando...</p>
-			) : usages.length === 0 ? (
+			{usages.length === 0 ? (
 				<p className="text-sm text-muted-foreground">
 					Nenhum cupom utilizado ainda.
 				</p>
@@ -64,5 +63,13 @@ export function CouponsSettingsView() {
 				</Table>
 			)}
 		</div>
+	);
+}
+
+export function CouponsSettingsView() {
+	return (
+		<SuspenseBoundary>
+			<CouponsContent />
+		</SuspenseBoundary>
 	);
 }

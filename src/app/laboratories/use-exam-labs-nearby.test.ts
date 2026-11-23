@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook } from "@testing-library/react";
-import { createElement } from "react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { createElement, Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/api/exam-labs/exam-labs.api", () => ({
@@ -11,26 +11,34 @@ vi.mock("@/lib/api/exam-labs/exam-labs.api", () => ({
 	},
 }));
 
+import { examLabApi } from "@/lib/api/exam-labs/exam-labs.api";
 import { useExamLabsNearby } from "./use-exam-labs-nearby";
 
 function wrapper() {
 	const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	return ({ children }: { children: React.ReactNode }) =>
-		createElement(QueryClientProvider, { client: qc }, children);
+		createElement(
+			QueryClientProvider,
+			{ client: qc },
+			createElement(Suspense, { fallback: null }, children),
+		);
 }
 
 describe("useExamLabsNearby", () => {
-	it("is disabled when lat or lng is null", () => {
-		const { result } = renderHook(() => useExamLabsNearby(null, null), {
-			wrapper: wrapper(),
-		});
-		expect(result.current.fetchStatus).toBe("idle");
-	});
-
-	it("is enabled when lat and lng are provided", () => {
+	it("fetches nearby labs with given coordinates", async () => {
+		vi.mocked(examLabApi.getNearby).mockResolvedValueOnce([] as never);
 		const { result } = renderHook(() => useExamLabsNearby(-23.5, -46.6), {
 			wrapper: wrapper(),
 		});
-		expect(result.current.fetchStatus).not.toBe("idle");
+		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+	});
+
+	it("fetches with zero coordinates when no location", async () => {
+		vi.mocked(examLabApi.getNearby).mockResolvedValueOnce([] as never);
+		const { result } = renderHook(() => useExamLabsNearby(0, 0), {
+			wrapper: wrapper(),
+		});
+		await waitFor(() => expect(result.current.isSuccess).toBe(true));
+		expect(result.current.data).toEqual([]);
 	});
 });
