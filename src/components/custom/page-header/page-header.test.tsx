@@ -62,6 +62,7 @@ describe("PageHeader", () => {
 	});
 
 	it("renders custom icon when provided", () => {
+		// biome-ignore lint/correctness/noComponentHookFactories: inline icon fixture
 		const Icon = () => <svg data-testid="custom-icon" />;
 		render(
 			<PageHeader title="Título" description="Descrição" icon={<Icon />} />,

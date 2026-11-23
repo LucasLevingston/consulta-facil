@@ -27,9 +27,9 @@ let lastInstance: MockSpeechRecognition | null = null;
 function setSpeechRecognitionInstalled(installed: boolean) {
 	if (installed) {
 		lastInstance = null;
-		(window as unknown as { SpeechRecognition: unknown }).SpeechRecognition = vi
-			.fn()
-			.mockImplementation(function MockSpeechRecognitionCtor() {
+		(window as unknown as { SpeechRecognition: unknown }).SpeechRecognition =
+			// biome-ignore lint/correctness/noComponentHookFactories: mock constructor
+			vi.fn().mockImplementation(function MockSpeechRecognitionCtor() {
 				lastInstance = new MockSpeechRecognition();
 				return lastInstance;
 			});

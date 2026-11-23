@@ -40,7 +40,9 @@ echo ""
 
 # 3. Build
 echo "▶ [3/3] Build de produção..."
-npm run build
+# NEXT_TURBOPACK_DISABLE=1: Turbopack spawns child processes for PostCSS that fail on
+# Windows with exit code 0xc0000142 (DLL init failure). Railway CI runs Linux — unaffected.
+NEXT_TURBOPACK_DISABLE=1 npm run build
 echo "✓ Build concluído"
 echo ""
 

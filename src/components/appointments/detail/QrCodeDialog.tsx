@@ -1,7 +1,13 @@
 ﻿"use client";
 
+import dynamic from "next/dynamic";
 import { useCheckInToken } from "@/components/appointments/hooks";
 import type { QrCodeDialogProps } from "./QrCodeDialog.types";
+
+const QRCodeSVG = dynamic(
+	() => import("qrcode.react").then((mod) => mod.QRCodeSVG),
+	{ ssr: false },
+);
 
 export function QrCodeDialog({ appointmentId }: QrCodeDialogProps) {
 	const { data, isLoading } = useCheckInToken(appointmentId);
@@ -19,8 +25,6 @@ export function QrCodeDialog({ appointmentId }: QrCodeDialogProps) {
 			</p>
 		);
 
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
 	return (
 		<div className="flex flex-col items-center gap-4 py-2">
 			<QRCodeSVG value={data.token} size={220} level="M" />

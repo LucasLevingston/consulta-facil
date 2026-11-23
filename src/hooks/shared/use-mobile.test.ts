@@ -10,7 +10,6 @@ describe("useIsMobile", () => {
 			value: width,
 		});
 		const listeners: Array<() => void> = [];
-		// biome-ignore lint/suspicious/noExplicitAny: mock simplificado de MediaQueryList
 		window.matchMedia = vi.fn().mockImplementation((query: string) => ({
 			matches: width < 768,
 			media: query,

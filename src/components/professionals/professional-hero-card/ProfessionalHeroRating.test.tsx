@@ -29,13 +29,12 @@ describe("ProfessionalHeroRating", () => {
 		expect(screen.getByText(text)).toBeInTheDocument();
 	});
 
-	it.each([
-		0,
-		null,
-		undefined,
-	])("hides the consultation count when it is %s", (count) => {
-		render(<ProfessionalHeroRating rating={5} consultationCount={count} />);
+	it.each([0, null, undefined])(
+		"hides the consultation count when it is %s",
+		(count) => {
+			render(<ProfessionalHeroRating rating={5} consultationCount={count} />);
 
-		expect(screen.queryByText(/consulta/)).not.toBeInTheDocument();
-	});
+			expect(screen.queryByText(/consulta/)).not.toBeInTheDocument();
+		},
+	);
 });

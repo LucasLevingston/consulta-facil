@@ -30,6 +30,7 @@ describe("SuspenseBoundary", () => {
 		const deferred = createDeferred<string>();
 		const resource = createResource(deferred.promise);
 
+		// biome-ignore lint/correctness/noComponentHookFactories: test fixture
 		function Reader() {
 			return <div>{resource.read()}</div>;
 		}
@@ -53,6 +54,7 @@ describe("SuspenseBoundary", () => {
 		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
 		let shouldThrow = true;
 
+		// biome-ignore lint/correctness/noComponentHookFactories: test fixture
 		function Reader() {
 			if (shouldThrow) throw new Error("boom");
 			return <div>recovered</div>;

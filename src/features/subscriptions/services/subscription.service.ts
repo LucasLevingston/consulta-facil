@@ -12,6 +12,6 @@ export const subscriptionService = {
 	},
 
 	canUpgrade: (sub: SubscriptionResponse | null | undefined): boolean => {
-		return !sub || sub.status !== "ACTIVE";
+		return sub?.status !== "ACTIVE";
 	},
 };

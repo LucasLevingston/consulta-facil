@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import type { AppointmentResponse } from "@/lib/schemas/appointment/appointment-response.schema";
 import { formatDateTime } from "@/lib/utils/format-date-time";
 
-export function makeColumns(): ColumnDef<AppointmentResponse>[] {
+// biome-ignore lint/suspicious/noExplicitAny: tanstack table v9 requires any for feature type
+export function makeColumns(): ColumnDef<any, AppointmentResponse>[] {
 	return [
 		{
 			header: "#",

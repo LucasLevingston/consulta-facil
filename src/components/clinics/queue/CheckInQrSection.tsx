@@ -1,11 +1,15 @@
 "use client";
 
 import { QrCode } from "lucide-react";
+import dynamic from "next/dynamic";
 import type { CheckInQrSectionProps } from "./CheckInQrSection.types";
 
+const QRCodeSVG = dynamic(
+	() => import("qrcode.react").then((mod) => mod.QRCodeSVG),
+	{ ssr: false },
+);
+
 export function CheckInQrSection({ clinicId }: CheckInQrSectionProps) {
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	const QRCodeSVG = require("qrcode.react").QRCodeSVG;
 	const url =
 		typeof window !== "undefined"
 			? `${window.location.origin}/clinics/${clinicId}/checkin`

@@ -8,6 +8,7 @@ import { SocialLinkField } from "./SocialLinkField";
 describe("SocialLinkField", () => {
 	type Values = { instagramUrl?: string };
 
+	// biome-ignore lint/correctness/noComponentHookFactories: test wrapper
 	function Harness({ defaultValues }: { defaultValues?: Values }) {
 		const form = useForm<Values>({ defaultValues });
 		return (
