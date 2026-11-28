@@ -20,27 +20,33 @@ function setup(user: Record<string, unknown> | null, isPending = false) {
 		isPending,
 	} as never);
 	render(<NotificationPreferencesCard />);
-	return screen.getByRole("switch", { name: "Mensagens pelo WhatsApp" });
 }
 
-describe("NotificationPreferencesCard", () => {
+describe("NotificationPreferencesCard — WhatsApp toggle", () => {
 	beforeEach(() => vi.clearAllMocks());
 
 	it("is on for users who never changed the setting", () => {
-		const toggle = setup({ id: "u1" });
+		setup({ id: "u1" });
+		const toggle = screen.getByRole("switch", {
+			name: "Mensagens pelo WhatsApp",
+		});
 
 		expect(toggle).toBeChecked();
 		expect(toggle).toBeEnabled();
 	});
 
 	it("reflects an opt-out saved on the account", () => {
+		setup({ id: "u1", whatsappNotificationsEnabled: false });
 		expect(
-			setup({ id: "u1", whatsappNotificationsEnabled: false }),
+			screen.getByRole("switch", { name: "Mensagens pelo WhatsApp" }),
 		).not.toBeChecked();
 	});
 
 	it("saves the new preference when toggled", async () => {
-		const toggle = setup({ id: "u1", whatsappNotificationsEnabled: true });
+		setup({ id: "u1", whatsappNotificationsEnabled: true });
+		const toggle = screen.getByRole("switch", {
+			name: "Mensagens pelo WhatsApp",
+		});
 
 		await userEvent.click(toggle);
 
@@ -50,9 +56,58 @@ describe("NotificationPreferencesCard", () => {
 	});
 
 	it("is disabled while saving or before the user is loaded", () => {
-		expect(setup({ id: "u1" }, true)).toBeDisabled();
+		setup({ id: "u1" }, true);
+		expect(
+			screen.getByRole("switch", { name: "Mensagens pelo WhatsApp" }),
+		).toBeDisabled();
 		vi.clearAllMocks();
 		document.body.innerHTML = "";
-		expect(setup(null)).toBeDisabled();
+		setup(null);
+		expect(
+			screen.getByRole("switch", { name: "Mensagens pelo WhatsApp" }),
+		).toBeDisabled();
+	});
+});
+
+describe("NotificationPreferencesCard — email toggle", () => {
+	beforeEach(() => vi.clearAllMocks());
+
+	it("is on for users who never changed the email setting", () => {
+		setup({ id: "u1" });
+		const toggle = screen.getByRole("switch", { name: "Mensagens por e-mail" });
+
+		expect(toggle).toBeChecked();
+		expect(toggle).toBeEnabled();
+	});
+
+	it("reflects an opt-out saved on the account", () => {
+		setup({ id: "u1", emailNotificationsEnabled: false });
+		expect(
+			screen.getByRole("switch", { name: "Mensagens por e-mail" }),
+		).not.toBeChecked();
+	});
+
+	it("saves the new email preference when toggled", async () => {
+		setup({ id: "u1", emailNotificationsEnabled: true });
+		const toggle = screen.getByRole("switch", { name: "Mensagens por e-mail" });
+
+		await userEvent.click(toggle);
+
+		expect(mutate).toHaveBeenCalledWith({
+			emailNotificationsEnabled: false,
+		});
+	});
+
+	it("is disabled while saving or before the user is loaded", () => {
+		setup({ id: "u1" }, true);
+		expect(
+			screen.getByRole("switch", { name: "Mensagens por e-mail" }),
+		).toBeDisabled();
+		vi.clearAllMocks();
+		document.body.innerHTML = "";
+		setup(null);
+		expect(
+			screen.getByRole("switch", { name: "Mensagens por e-mail" }),
+		).toBeDisabled();
 	});
 });

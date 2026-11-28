@@ -13,6 +13,7 @@ export const userResponseSchema = z.object({
 	createdAt: z.string().nullable().optional(),
 	updatedAt: z.string().nullable().optional(),
 	whatsappNotificationsEnabled: z.boolean().optional(),
+	emailNotificationsEnabled: z.boolean().optional(),
 });
 
 export type UserResponse = z.infer<typeof userResponseSchema>;
