@@ -63,6 +63,38 @@ describe("useUpdateNotificationPreferences", () => {
 		);
 	});
 
+	it("confirms when email notifications are turned off", async () => {
+		mockUpdate.mockResolvedValueOnce({ id: "u1" } as never);
+		const { result } = renderHook(() => useUpdateNotificationPreferences(), {
+			wrapper,
+		});
+
+		await act(async () => {
+			result.current.mutate({ emailNotificationsEnabled: false });
+		});
+
+		await waitFor(() =>
+			expect(toast.success).toHaveBeenCalledWith(
+				"Avisos por e-mail desativados.",
+			),
+		);
+	});
+
+	it("confirms when email notifications are turned on", async () => {
+		mockUpdate.mockResolvedValueOnce({ id: "u1" } as never);
+		const { result } = renderHook(() => useUpdateNotificationPreferences(), {
+			wrapper,
+		});
+
+		await act(async () => {
+			result.current.mutate({ emailNotificationsEnabled: true });
+		});
+
+		await waitFor(() =>
+			expect(toast.success).toHaveBeenCalledWith("Avisos por e-mail ativados."),
+		);
+	});
+
 	it("reports failures without reloading the user", async () => {
 		mockUpdate.mockRejectedValueOnce(new Error("500"));
 		const { result } = renderHook(() => useUpdateNotificationPreferences(), {

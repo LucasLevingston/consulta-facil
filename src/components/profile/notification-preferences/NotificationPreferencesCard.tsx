@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -9,6 +9,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useUserStore } from "@/features/auth";
 import { useUpdateNotificationPreferences } from "./use-update-notification-preferences";
@@ -18,6 +19,7 @@ export function NotificationPreferencesCard() {
 	const { mutate, isPending } = useUpdateNotificationPreferences();
 	// Opt-out model: users who never touched the setting receive messages.
 	const whatsappEnabled = user?.whatsappNotificationsEnabled ?? true;
+	const emailEnabled = user?.emailNotificationsEnabled ?? true;
 
 	return (
 		<Card>
@@ -27,7 +29,7 @@ export function NotificationPreferencesCard() {
 					Escolha como quer receber avisos sobre suas consultas.
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="flex flex-col gap-4">
 				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-start gap-3">
 						<MessageCircle className="mt-0.5 h-5 w-5 text-muted-foreground" />
@@ -46,6 +48,26 @@ export function NotificationPreferencesCard() {
 						disabled={isPending || !user}
 						onCheckedChange={(checked) =>
 							mutate({ whatsappNotificationsEnabled: checked })
+						}
+					/>
+				</div>
+				<Separator />
+				<div className="flex items-center justify-between gap-4">
+					<div className="flex items-start gap-3">
+						<Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
+						<div>
+							<Label htmlFor="email-notifications">Mensagens por e-mail</Label>
+							<p className="text-sm text-muted-foreground">
+								Confirmações, cancelamentos e lembretes de consulta.
+							</p>
+						</div>
+					</div>
+					<Switch
+						id="email-notifications"
+						checked={emailEnabled}
+						disabled={isPending || !user}
+						onCheckedChange={(checked) =>
+							mutate({ emailNotificationsEnabled: checked })
 						}
 					/>
 				</div>
